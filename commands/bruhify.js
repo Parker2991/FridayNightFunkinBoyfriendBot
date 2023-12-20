@@ -4,9 +4,7 @@ module.exports = {
   name: 'bruhify',
    description:['bruhify text'],
         aliases:['bruhifytext', 'bruh'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+     trustLevel: 0,
   execute (context) {
   const bot = context.bot
 const args = context.arguments

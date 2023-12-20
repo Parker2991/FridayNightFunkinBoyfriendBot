@@ -3,9 +3,7 @@ const between = require('../util/between')
 module.exports = {
   name: 'tpr',
   description:['teleport to a random place'],
-hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+trustLevel: 0,
         aliases:['rtp', 'teleportrandom', 'randomteleport'],
   execute (context) {
     const bot = context.bot

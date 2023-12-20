@@ -3,9 +3,7 @@ const CommandError = require('../CommandModules/command_error')
 module.exports = {
   name: 'crash',
    description:['crashes a server'],
-  hashOnly: true, 
-        consoleOnly:false,
-        ownerOnly:false,
+trustLevel: 1,
         aliases:['crashserver', '69'],//69 cuz yes
   execute (context) {
    

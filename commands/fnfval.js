@@ -3,7 +3,7 @@ const crypto = require('crypto')
 module.exports = {
   name: 'botval',
 
-  consoleOnly: true,
+  trustLevel: 3,
 
   execute (context) {
     const bot = context.bot

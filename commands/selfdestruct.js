@@ -5,9 +5,7 @@ let timer = null
 module.exports = {
   name: 'selfdestruct',
 //why i put it in here probably cuz so it can be rewritten or smh idk
-hashOnly: false,
-        ownerOnly:true,
-        consoleOnly:false,
+trustLevel: 2,
         aliases:['sfd'],
   description:['selfdestruct server'],
   execute (context) {

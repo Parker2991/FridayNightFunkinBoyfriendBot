@@ -1,9 +1,7 @@
 module.exports = {
   name: 'rc',
        description:['refill the bots core'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+       trustLevel: 0,
         aliases:['refillcore'],
   execute (context) {
       const bot = context.bot

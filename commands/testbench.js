@@ -5,8 +5,7 @@ module.exports = {
 //<< this one line of code broke it lmao
   description:[''],
         aliases:['tstbench'],
-hashOnly:false,
-        consoleOnly:false,
+trustLevel: 0,
   execute (context) {
 const bot = context.bot
     const args = context.arguments

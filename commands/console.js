@@ -3,9 +3,7 @@ const buildstring = process.env['buildstring']
 const foundation = process.env['FoundationBuildString']
 module.exports = {
   name: 'console',
-consoleOnly:true,
-        hashOnly:false,
-        ownerOnly:false,
+trustLevel: 3,
         description:['no :)'],
   // description:['make me say something in custom chat'],
   execute (context) {

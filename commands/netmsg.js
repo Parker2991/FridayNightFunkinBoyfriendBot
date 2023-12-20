@@ -2,9 +2,7 @@ const CommandError = require('../CommandModules/command_error.js')
 module.exports = {
   name: 'netmsg',
    description:['send a message to other servers'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+     trustLevel: 0,
         aliases:['networkmessage', 'netmessage', 'networkmsg'],
   execute (context) {
      

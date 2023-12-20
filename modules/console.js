@@ -33,9 +33,15 @@ bot.console.source,
                     
   
     
+      
+//probably gotta somehow have it get its username
+               //tried that already didnt work just errored
+               //profile or smh :shrug:
+        // what does it have to be
+          
 if (line.startsWith('')){
         return bot.commandManager.executeString(
-          bot.console.source,
+bot.console.source,
                 'console ' + line.substring(0)
                 )
                 }
@@ -135,8 +141,10 @@ const date = new Date().toLocaleDateString("en-US", {timeZone:"America/CHICAGO"}
 
 //       bot.username
         //const amogus = username,
-        //name: message?.member?.displayName
-  bot.console.source = new CommandSource(null,{console:true, discord:false });
+   
+            //name: message?.member?.displayName
+             const isConsole = bot.username ? true : false
+  bot.console.source = new CommandSource( bot.username,{console:true,  discord:false });
   bot.console.source.sendFeedback = message => {
   //profile:{displayName:bot.username}
     const ansi = bot.getMessageAsPrismarine(message)?.toAnsi()

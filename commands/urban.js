@@ -4,9 +4,7 @@ module.exports = {
   name: 'urban',
   description:['urban dictionary'],
         aliases:['urbandictionary'],
-hashOnly:false,
-        ownerOnly:false,
-        consoleOnly:false,
+trustLevel: 0,
   async execute (context) {
     const source = context.source
     const args = context.arguments
@@ -56,9 +54,7 @@ hashOnly:false,
         
         
         //source.sendFeedback(results[0].data)
-      }).catch((error) => {
-        console.error(error.message)
-      })
+     })
        //  source.sendFeedback([cmd, { text: definitions2.replaceAll("\r", ""), color: 'white' }, { text: ' - ', color: 'white' }, { text: definition.definition.replaceAll("\r", ""), color: 'white' }])
       //console.log(urban.define.definition.example(args.join(' ')))
 

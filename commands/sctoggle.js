@@ -5,14 +5,13 @@ module.exports = {
 //<< this one line of code broke it lmao
    description:['selfcare toggle'],
         aliases:['selfcaretoggle'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+  trustLevel: 1,
   execute (context) {
     const bot = context.bot
     const source = context.source
     const args = context.arguments
-    switch (args[0]) {
+          if (!args && !args[0] && !args[1] && !args[2]) return
+    switch (args[1]) {
             case 'vanishon':
                     bot.visibility.on()
                     source.sendFeedback({text:'Vanish selfcare on', color:'green'})
@@ -88,8 +87,10 @@ break
                     break
                     
             default:
-          throw new CommandError('Invalid argument')
-      }
+         source.sendFeedback({text:'Invalid argument',  color:'red'})
+    source.sendFeedback({text:'the on arguments are vanishon, muteon, tptoggleon, godon, prefixon, usernameon, skinon, cspyon, nicknameon'})
+                    source.sendFeedback({text:'the off arguments are vanishoff, muteoff, tptoggleoff, godoff, prefixoff, usernameoff, skinoff, cspyoff, nicknameoff'})
+    }
     },
 
   }

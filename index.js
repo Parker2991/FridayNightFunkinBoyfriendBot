@@ -19,9 +19,7 @@ const bots = []
  bot.console.useReadlineInterface(rl)
      
 //  bot.on('error', (error), util.inspect(error))
-bot.on('error', error => {
-        console.log((error))
-})  
+bot.on('error', console.error)
 }
 
 

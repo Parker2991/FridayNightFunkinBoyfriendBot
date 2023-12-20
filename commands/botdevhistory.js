@@ -3,9 +3,8 @@ const CommandError = require('../CommandModules/command_error')
 module.exports = {
   name: 'botdevhistory',
    description:['bots dev history'],
-   hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+ 
+trustLevel: 0,
         execute (context) {
   
    const message = context.arguments.join(' ')

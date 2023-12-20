@@ -4,9 +4,7 @@ module.exports = {
   name: 'help',
   aliases:['heko', 'cmd', '?', 'commands', 'cmds' ],
   description:['shows the command list'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+        trustLevel: 0,
  async execute (context) {
    const bot = context.bot
     const commandList = []
@@ -40,9 +38,13 @@ module.exports = {
           
           if (args[0].toLowerCase() === command.name )
          //  if (args[0].toLowerCase() === command.aliases)
-           {
+           {//text:`Trust Level: `,color:'white'},
+                                        //{text:`${command.trustLevel}\n`,color:'red'},                 
             valid = true
             source.sendFeedback([cmd, `Description: ${command.description}`])
+                
+                   source.sendFeedback([cmd, {text:`Trust Level: ${command.trustLevel}`}])
+                   
                    source.sendFeedback([cmd, `aliases: ${command.aliases}`])
             break
           } else valid = false
@@ -69,7 +71,7 @@ module.exports = {
           const command = bot.commandManager.amogus[fard]
          
             // if (command.consoleOnly == true) return console.log(command);
-            if(command.consoleOnly) {
+            if(command.trustLevel === 3) {
               cons_ole.push(
                 {
                   text: command.name + ' ',
@@ -101,7 +103,7 @@ module.exports = {
           
             else 
                    
-                    if (command.ownerOnly) {
+                    if (command.trustLevel === 2) {
                   own_her.push(
                 {
                   text: command.name + ' ',
@@ -115,15 +117,9 @@ module.exports = {
                                         {
                                                 text:`Command:${command.name}\n`,
                                                 color:'white'
-                                        },{
-                                                text:"HashOnly:",
-                                        color:'white'},
-                                        {text:`${command.hashOnly}\n`,color:'red'},
-                                        {text:'consoleOnly:',color:'white'},
-                                        {text:`${command.consoleOnly && !context.console}\n`, color:'red'},
-                               {text:'ownerOnly:', color:'white'},
-                                      {text:`${command.ownerOnly}\n`, color:'red'},
-                                        {text:`${command.description}\n`, color:'white'},
+                                        },                        {text:`Trust Level: `,color:'white'},
+                                        {text:`${command.trustLevel}\n`,color:'dark_red'},                 
+ {text:`${command.description}\n`, color:'white'},
                                                                {text:`Command Aliases: ${command.aliases}\n`,color:'white'},
                                         {text:'click on me to use me :)'},
                                 ]
@@ -138,7 +134,7 @@ module.exports = {
               )//my w
             }   
         //  let valid
-            else if (command.hashOnly && !command.ownerOnly && !command.consoleOnly){
+            else if (command.trustLevel === 1){
               t_rust.push(
                 {
                   text: command.name + ' ',
@@ -152,15 +148,8 @@ module.exports = {
                                         {
                                                 text:`Command:${command.name}\n`,
                                                 color:'white'
-                                        },{
-                                                text:"HashOnly:",
-                                        color:'white'},
-                                        {text:`${command.hashOnly}\n`,color:'red'},
-                                        {text:'consoleOnly:',color:'white'},
-                                        {text:`${command.consoleOnly && !context.console}\n`, color:'red'},
-                               {text:'ownerOnly:', color:'white'},
-                                      {text:`${command.ownerOnly}\n`, color:'red'},
-                                        {text:`${command.description}\n`, color:'white'},
+                                        },                                        {text:`Trust Level: `,color:'white'},
+                                        {text:`${command.trustLevel}\n`,color:'red'},                  {text:`${command.description}\n`, color:'white'},
                                                                {text:`Command Aliases: ${command.aliases}\n`,color:'white'},
                                         {text:'click on me to use me :)'},
                                 ]
@@ -176,7 +165,7 @@ module.exports = {
               )
            //my w
             }   
-         else if (!command.hashOnly && !command.ownerOnly && !command.consoleOnly){
+         else if (command.trustLevel === 0){
                     pub_lick.push(
               {
                 text: command.name + ' ',
@@ -189,14 +178,8 @@ module.exports = {
                                               text:`Command:${command.name}\n`,
                                               color:'white'
                                       },{
-                                              text:"HashOnly:",
-                                      color:'white'},
-                                      {text:`${command.hashOnly}\n`,color:'red'},
-                                      {text:'consoleOnly:',color:'white'},
-                                      {text:`${command.consoleOnly && !context.console}\n`, color:'red'},
-                                      {text:'ownerOnly:', color:'white'},
-                                      {text:`${command.ownerOnly}\n`,color:'red'},
-                                      
+                                              text:`Trust Level: `,color:'green'},
+                                        {text:`${command.trustLevel}\n`,color:'red'},                 
                                       {text:`${command.description}\n`, color:'white'},
                                        {text:`Command Aliases: ${command.aliases}\n`,color:'white'},
                                       {text:'click on me to use me :)'},
@@ -228,8 +211,8 @@ module.exports = {
 
           context.source.sendFeedback([cmd, 'Commands (', length, ') ', category, ...pub_lick, t_rust, own_her, cons_ole], false)
         } else {
-          const length = context.bot.commandManager.amogus.filter(c => !c.consoleOnly).length
-
+          const length = context.bot.commandManager.amogus.filter(c => c.trustLevel != 3).length
+//trustlevel
           context.source.sendFeedback([cmd, 'Commands (', length, ') ', category, ...pub_lick, t_rust ,own_her], false)
         
     

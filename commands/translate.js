@@ -5,9 +5,7 @@ module.exports = {
 //<< this one line of code broke it lmao
    description:['<language 1> <language 2> <message>'],
         aliases:['translation'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+   trustLevel: 0,
   async execute (context) {
     const { translate } = require('@vitalets/google-translate-api')
     const message = context.arguments.join(' ')

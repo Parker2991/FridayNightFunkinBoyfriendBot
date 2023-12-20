@@ -3,10 +3,8 @@ const CommandError = require('../CommandModules/command_error')
 module.exports = {
   name: 'memusage',
 //<< this one line of code broke it lmao
-   description:['tps'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+   description:['check the bots memusage'],
+   trustLevel: 0,
         aliases:['memoryusage', 'memused','memoryused'],
   execute (context) {
     const bot = context.bot

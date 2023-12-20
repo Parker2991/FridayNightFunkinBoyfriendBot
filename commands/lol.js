@@ -6,9 +6,7 @@ module.exports = {
   name: 'lol',
    description:['idfk dont ask'],
         aliases:['ohio'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+      trustLevel: 0,
   execute (context) {    
 throw new CommandError('idfk lmao')
 

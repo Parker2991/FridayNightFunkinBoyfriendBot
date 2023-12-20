@@ -2,9 +2,7 @@ const wiki = require('wikipedia') //
 module.exports = {
   name: 'wiki',
   description:['wikipedia'],
-hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+trustLevel: 0,
         aliases:['wikipedia'],
   async execute (context) {
        const source = context.source

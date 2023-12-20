@@ -4,11 +4,10 @@ let timer = null
 
 module.exports = {
   name: 'kick',
-hashOnly:true,//now its not
+
    description:['kicks a player'],
        
-        consoleOnly:false,
-        ownerOnly:false,
+     trustLevel: 1,
         aliases:[],
   execute(context) {
    // throw new CommandError('temp disabled')

@@ -3,9 +3,7 @@ const CommandError = require('../CommandModules/command_error')
 module.exports = {
   name: 'list',
    description:['check the player list'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+      trustLevel: 0,
         aliases:['playerlist', 'plist'],
   execute (context) {
     const bot = context.bot

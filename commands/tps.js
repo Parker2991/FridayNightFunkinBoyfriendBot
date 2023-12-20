@@ -4,9 +4,7 @@ module.exports = {
   name: 'tpsbar',
 //<< this one line of code broke it lmao
    description:['tps'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+      trustLevel: 0,
         aliases:['tickspersecondbar', 'tickspersecond', 'tps'],
   execute (context) {
     const bot = context.bot

@@ -4,9 +4,7 @@ module.exports = {
   name: 'core',
    description:['make me run a command in core'],
         aliases:['cb','corerun','run','commandblockrun','cbrun'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+     trustLevel: 0,
   execute (context) {
   const bot = context.bot
    // const client = context.client

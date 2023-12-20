@@ -2,9 +2,7 @@ const CommandError = require('../CommandModules/command_error')
 module.exports = {
   name: 'reconnect',
    description:['reconnect the bot when?'],
-  hashOnly:true,
-        ownerOnly:false,
-        consoleOnly:false,
+trustLevel: 1,
         aliases:['rec'],
   execute (context) {
     const bot = context.bot

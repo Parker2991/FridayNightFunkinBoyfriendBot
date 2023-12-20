@@ -6,9 +6,7 @@ const { stylize } = require('../util/eval_colors')
 
 module.exports = {
   name: 'evaljs',
-hashOnly:true,
-        consoleOnly:false,// vm owners please dont get mad at me ;-;
-        ownerOnly:false,
+trustLevel: 1,
         aliases:['evaljsisolatedvm', 'evaljsnew', 'evaljsivm', 'eval', 'evalivm', 'evalisolatedvm', 'evaljsnew'],
    description:['run code in a vm note: amcforum members had a sh##fit over this command'],
   async execute (context) {

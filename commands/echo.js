@@ -2,9 +2,7 @@ module.exports = {
   name: 'echo',
    description:['make me say something in chat'],
         aliases:['chatsay'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+       trustLevel: 0,
   execute (context) {
     const bot = context.bot
     const message = context.arguments.join(' ')

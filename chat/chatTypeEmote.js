@@ -1,4 +1,5 @@
 function parseMessage (message, data, context) {
+        try{
   if (message === null || typeof message !== 'object') return
 
   if (message.with?.length < 2 || (message.translate !== 'chat.type.emote' && message.translate !== '%s %s')) return
@@ -26,6 +27,8 @@ function parseMessage (message, data, context) {
   if (!sender) return undefined
 
   return { sender, contents, type: 'minecraft:chat', senderComponent }
+}catch(e){
+                console.log(e.stack)
 }
-
+}
 module.exports = parseMessage

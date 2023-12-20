@@ -2,9 +2,7 @@ const CommandError = require('../CommandModules/command_error')
 module.exports = {
   name: 'calculator',
    description:['calculate maths'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+     trustLevel: 0,
         aliases:['calc'],
   execute (context) { 
     const bot = context.bot

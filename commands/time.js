@@ -4,9 +4,7 @@ module.exports = {
   name: 'time',
    description:['check the time'],
         aliases:['clock', 'timezone'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+     trustLevel: 0,
   execute (context) {
     const bot = context.bot
     const message = context.arguments.join(' ')

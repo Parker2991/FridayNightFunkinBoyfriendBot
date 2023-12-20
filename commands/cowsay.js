@@ -4,9 +4,7 @@ module.exports = {
   name: 'cowsay',
    description:['mooooo'],
         aliases:['cws', 'cow'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+      trustLevel: 0,
   execute (context, selector) {
     const bot = context.bot
     const args = context.arguments

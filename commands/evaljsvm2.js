@@ -9,9 +9,7 @@ let vm = new VM(options)
 
 module.exports = {
   name: 'evaljsvm2',
-hashOnly:true,
-        consoleOnly:false,
-        ownerOnly:false,
+trustLevel: 1,
         description:['old evaljs code'],
         aliases:['evaljsold', 'evalvm2', 'evalold'],
   execute (context) {

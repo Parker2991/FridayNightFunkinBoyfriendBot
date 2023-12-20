@@ -2,9 +2,7 @@ module.exports = {
   name: 'validate',
   description:['validate in the bot'],
 
- hashOnly: true,
-        consoleOnly:false,
-        ownerOnly:false,
+trustLevel: 1,
         aliases:['val'],
   execute (context)  {
    const source = context.source

@@ -117,7 +117,7 @@ function inject (bot, options) {
     if (message.author.id === bot.discord.client.user.id) return
 
     if (message.channel.id !== bot.discord.channel.id) return
-
+//
     if (message.content.startsWith(bot.discord.commandPrefix)) { // TODO: Don't hardcode this
       const source = new CommandSource({ profile: { name: message?.member?.displayName } }, { discord: true, console: false }, false, message)
             

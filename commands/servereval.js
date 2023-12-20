@@ -2,10 +2,7 @@ const CommandError = require('../CommandModules/command_error')
 module.exports = {
   name: 'servereval',
    description:['no'],
-  hashOnly:false,
-  //ownerOnly:true,
-   ownerOnly:true,
-        consoleOnly:false,
+  trustLevel: 2,
         aliases:['svreval'],
   execute (context, arguments, selector) {
     const bot = context.bot

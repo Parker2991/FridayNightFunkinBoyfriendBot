@@ -196,9 +196,7 @@ module.exports = {
   name: 'bots',
    description:['shows a list of known bots'],
         aliases:['knownbots'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+        trustLevel: 0,
   execute (context) {
     const query = context.arguments.join(' ').toLowerCase()
 const bot = context.bot

@@ -5,9 +5,7 @@ module.exports = {
 //<< this one line of code broke it lmao
    description:[''],
         aliases:[],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+       trustLevel: 0,
   execute (context) {
 
     const message = context.arguments.join(' ')

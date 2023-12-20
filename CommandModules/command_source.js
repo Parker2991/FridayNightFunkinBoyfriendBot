@@ -1,8 +1,14 @@
 class CommandSource {
-  constructor (player, sources, hash = false, owner = false, discordMessageEvent = null, consoleOnly = sources) {
+  constructor (player, sources, hash, owner, discordMessageEvent = null, consoleOnly, name, profile, bot) {//this worked just fine in v4.3.4
+   //does it get defined in discord thingy wherever dat is
+   // sus
+       
     this.player = player
+       this.name = player
     this.sources = sources
+          this.profile = bot
     this.hash = hash
+          this.trustLevel
             this.owner = owner
     this.consoleOnly = consoleOnly
    this.discordMessageEvent = discordMessageEvent

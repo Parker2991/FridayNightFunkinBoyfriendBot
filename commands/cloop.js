@@ -1,9 +1,10 @@
 const CommandError = require('../CommandModules/command_error')
 module.exports = {
   name: 'cloop',
-hashOnly: true, 
-        consoleOnly:false,
-        ownerOnly:false,
+//hashOnly: true, 
+  //      consoleOnly:false,
+    //    ownerOnly:false,
+      trustLevel: 1,
    description:['command loop commands, the args are add, remove, clear, and list'],
         aliases:['commandloop'],
   execute (context, selector) {

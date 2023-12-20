@@ -5,9 +5,7 @@ module.exports = {
   name: 'say',
 //<< this one line of code broke it lmao
    description:['make me say something in custom chat'],
-        hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+       trustLevel: 0,
         aliases:['tellrawsay', 'tellrawmsg', 'trmessage', 'tellrawmessage', 'sourcesendfeedbacksay','sourcesendfeedbackmsg','sourcesendfeedbackmessage', 'ssfbmsg', 'ssfmessage'],
   execute (context) {
 

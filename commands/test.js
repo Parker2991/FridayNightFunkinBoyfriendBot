@@ -3,9 +3,7 @@ const CommandSource = require('../CommandModules/command_source')
 module.exports = {
   name: 'test',
   description:['very 1st command in the bot to test to see if things are working'],
-hashOnly:false,
-        consoleOnly:false,
-        ownerOnly:false,
+trustLevel: 0,
         aliases:['tst'],
   execute (context) {
 

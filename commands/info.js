@@ -14,9 +14,7 @@ module.exports = {
   name: 'info',
    description:['check the bots info. the args are version, discord, serverinfo, logininfo, uptime, memused, creators'],
         aliases:['information'],
-        hashOnly:false,
-        consoleOnly:false,
-         ownerOnly:false,
+        trustLevel: 0,
  async execute (context, client) { 
     const bot = context.bot
     const args = context.arguments
@@ -192,9 +190,9 @@ module.exports = {
 
                     source.sendFeedback({text:`Discord Username: "${bot.discord.client.user.username}#${bot.discord.client.user.discriminator}"`, color:'gray'})
 
-
-
+source.sendFeedback({text:`Discord Channel: ${bot.discord.channel.name}`})
                     source.sendFeedback({ color: "gray", text: `ConsoleServer:"${bot.console.consoleServer}"`})
+                    
                     const amonger = bot.bots.map(eachBot => eachBot.options.host + '\n')
                      const port = bot.bots.map(eachBot => eachBot.options.port)
                     
@@ -207,8 +205,26 @@ if (amonger.length === 0){
         }
         
 }
-                  source.sendFeedback('Servers:' + amonger.length)
- 
+                    source.sendFeedback('Servers in Config: ' + amonger.length)//real
+ /*
+                    const util = fs.readdir('./util')
+                    source.sendFeedback({text:`Util Files loaded: ${util.length}`, color:'gray'})
+  
+                     const modules = fs.readdir('./modules')
+                    source.sendFeedback({text:`Modules Files loaded: ${modules.length}`, color:'gray'})
+   const commands = fs.readdir('./commands')   
+           source.sendFeedback({text:`Commands Files loaded: ${commands.length}`, color:'gray'})
+                        const CommandModules = fs.readdir('./CommandModules')
+                                source.sendFeedback({text:`CommandModules Files loaded: ${CommandModules.length}`, color:'gray'})
+                  const chat = fs.readdir('./chat')
+                          source.sendFeedback({text:`Chat Files loaded: ${chat.length}`, color:'gray'})
+                    /*
+                     const  = '../'
+         fs.readdir(, (err, files) => {
+                             source.sendFeedback({text:` Files loaded: ${file.length}`, color:'gray'})
+         });
+         */
+                    
                     /*context.source.sendFeedback({
           translate: '\n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s',
             with: [

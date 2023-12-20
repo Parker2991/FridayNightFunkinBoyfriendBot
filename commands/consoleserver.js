@@ -2,9 +2,7 @@ const CommandError = require('../CommandModules/command_error')
 module.exports = {
   name: 'consoleserver',
 
-  consoleOnly: true,
-        hashOnly:false,
-        ownerOnly:false,
+  trustLevel: 3,
    description:['consoleserver'],
         aliases:['csvr'],
   execute (context) {
