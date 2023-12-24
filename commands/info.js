@@ -181,11 +181,10 @@ module.exports = {
 
 
 
-                    source.sendFeedback({text:`Prefix: "${bot.options.commands.prefix}"`, color:"gray"})
-
-
-
-                    source.sendFeedback({text:`Discord Prefix: "${bot.options.discord.commandPrefix}"`, color:'gray'})
+                    source.sendFeedback({text:`Main Prefix: "${bot.options.commands.MainPrefix}"`, color:"gray"})
+source.sendFeedback({text:`Secondary Prefix: "${bot.options.commands.SecondaryPrefix}"`, color:"gray"})
+source.sendFeedback({text:`Tertiary Prefix: "${bot.options.commands.TertiaryPrefix}"`, color:"gray"})
+ source.sendFeedback({text:`Discord Prefix: "${bot.options.discord.commandPrefix}"`, color:'gray'})
 
 
                     source.sendFeedback({text:`Discord Username: "${bot.discord.client.user.username}#${bot.discord.client.user.discriminator}"`, color:'gray'})

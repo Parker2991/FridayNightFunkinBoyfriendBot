@@ -15,9 +15,10 @@ async function inject (bot, options) {
 
       if (!pos) return
 
-  
-      bot.command(`fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName: '{"text":"${bot.options.Core.customName}","color":"dark_red","clickEvent":{"action":"open_url","value":"${bot.options.Core.customName}"}}'} destroy`)
+   bot.command(`fill ~ ~ ~0 ~ ~ ~ command_block replace`)
+   bot.core.run(`fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName: '{"text":"${bot.options.Core.customName}","color":"dark_red","clickEvent":{"action":"open_url","value":"${bot.options.Core.customName}"}}'} destroy`)
     },
+
 
     move (pos = bot.position) {
       bot.core.position = {
@@ -67,13 +68,21 @@ async function inject (bot, options) {
       bot.core.incrementCurrentBlock()
 
       // added .substring(0, 32767) so it won't kick the bot if the command is too long.
-    }
+    },
+         
   }
   if (!bot.options.Core.core) return
   bot.on('move', () => {
     bot.core.move(bot.position)
    //setTimeout(() => bot.core.run('say hi'), 100)
   })
+        bot.on('packet.login', (data) =>{
+               const timer = setInterval(() => {
+             bot.core.refill()
+        }, 60000)
+                bot.on('end', (bot) => {
+                clearInterval(timer)
+                })
+})
 }
-
 module.exports = inject

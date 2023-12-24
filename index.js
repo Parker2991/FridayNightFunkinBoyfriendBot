@@ -19,7 +19,11 @@ const bots = []
  bot.console.useReadlineInterface(rl)
      
 //  bot.on('error', (error), util.inspect(error))
+         try{
 bot.on('error', console.error)
+         }catch(error){
+                 console.log(error.stack)
+         }
 }
 
 

@@ -55,7 +55,7 @@ module.exports = {
           
         } else {
            const args = context.arguments
-         source.sendFeedback([cmd, {translate: `Unknown command %s. Type "${bot.options.commands.prefix}help" for help or click on this for the command`,color:'red', with: [args[0]], clickEvent: bot.options.Core.customName ? { action: 'suggest_command', value:  `${bot.options.commands.prefix}help` } : undefined}])
+         source.sendFeedback([cmd, {translate: `Unknown command %s. Type "${bot.options.commands.MainPrefix}help" for help or click on this for the command`,color:'red', with: [args[0]], clickEvent: bot.options.Core.customName ? { action: 'suggest_command', value:  `${bot.options.commands.MainPrefix}help` } : undefined}])
            //  bot.tellraw([cmd, {translate: `Unknown command %s. Type "${bot.options.commands.prefix}help" for help or click on this for the command`, with: [args[0]], clickEvent: bot.options.Core.customName ? { action: 'suggest_command', value:  `${bot.options.commands.prefix}help`, color:'red' } : undefined}])  
         }//i will add the descriptions reading as tests and action add the descriptions for the commands after
          const length = context.bot.commandManager.amogus.length // ok
@@ -124,7 +124,7 @@ module.exports = {
                                         {text:'click on me to use me :)'},
                                 ]
                         },clickEvent:{
-                                action:"run_command",value:`${bot.options.commands.prefix}${command.name}`
+                                action:"run_command",value:`${bot.options.commands.MainPrefix}${command.name}`
                         },
                         // ${command.name}\nhashOnly:§c${command.hashOnly}§r\nconsoleOnly:§c${command.consoleOnly && !context.console}§r\n${command.description}
   
@@ -154,7 +154,7 @@ module.exports = {
                                         {text:'click on me to use me :)'},
                                 ]
                         },clickEvent:{
-                                action:"run_command",value:`${bot.options.commands.prefix}${command.name}`
+                                action:"run_command",value:`${bot.options.commands.MainPrefix}${command.name}`
                         },
                         // ${command.name}\nhashOnly:§c${command.hashOnly}§r\nconsoleOnly:§c${command.consoleOnly && !context.console}§r\n${command.description}
   
@@ -178,14 +178,14 @@ module.exports = {
                                               text:`Command:${command.name}\n`,
                                               color:'white'
                                       },{
-                                              text:`Trust Level: `,color:'green'},
+                                              text:`Trust Level: `,color:'white'},
                                         {text:`${command.trustLevel}\n`,color:'red'},                 
                                       {text:`${command.description}\n`, color:'white'},
                                        {text:`Command Aliases: ${command.aliases}\n`,color:'white'},
                                       {text:'click on me to use me :)'},
                               ]
                       },clickEvent:{
-                              action:"suggest_command",value:`${bot.options.commands.prefix}${command.name}`}
+                              action:"suggest_command",value:`${bot.options.commands.MainPrefix}${command.name}`}
                
                         })
                 

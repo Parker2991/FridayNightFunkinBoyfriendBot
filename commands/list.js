@@ -4,7 +4,7 @@ module.exports = {
   name: 'list',
    description:['check the player list'],
       trustLevel: 0,
-        aliases:['playerlist', 'plist'],
+        aliases:['playerlist', 'plist', 'pl'],
   execute (context) {
     const bot = context.bot
 const args = context.arguments

@@ -28,7 +28,7 @@ let unmuted = false
     else if (stringmessage === "You have been unmuted.") unmuted = false
     else if (util.isDeepStrictEqual(message, COMMANDSPY_ENABLED_MESSAGE)) commandSpyEnabled = true
     else if (util.isDeepStrictEqual(message, COMMANDSPY_DISABLED_MESSAGE)) commandSpyEnabled = false
-    else if (stringmessage === `You now have the tag: &8[&bPrefix &4${bot.options.commands.prefix}&8]`) {
+    else if (stringmessage === `You now have the tag: &8[&bPrefix &4${bot.options.commands.MainPrefix}&8]`) {
       prefix = true
       return
     }
@@ -110,7 +110,7 @@ let unmuted = false
      if (!commandSpyEnabled && bot.options.selfcare.cspy) bot.command('commandspy:commandspy on')
       else if (!vanished && bot.options.selfcare.vanished) bot.core.run(`essentials:vanish ${bot.username} enable`)
    else if (unmuted && bot.options.selfcare.unmuted) bot.core.run(`essentials:mute ${bot.uuid}`)
-     else if (!prefix && bot.options.selfcare.prefix) bot.command(`prefix &8[&bPrefix &4${bot.options.commands.prefix}&8]`)
+     else if (!prefix && bot.options.selfcare.prefix) bot.command(`prefix &8[&bPrefix &4${bot.options.commands.MainPrefix}&8]`)
     else if (gameMode !== 1 && bot.options.selfcare.gmc) bot.command('gamemode creative @s[type=player]')
     else if (!skin && bot.options.selfcare.skin) bot.command('skin Parker2991')
       else if (!username && bot.options.selfcare.username) bot.command(`username ${bot.username}`)

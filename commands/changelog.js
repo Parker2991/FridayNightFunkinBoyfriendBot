@@ -14,7 +14,14 @@ const bots = [
     foundation: '12/20/23',
     exclaimer:'since the old validation system was able to barely handle owner validation it was completely remove and replaced with trust levels which handle validation way better also added command aliases (shoutouts to poopbob with the command aliases). made a whole new changelog command for v5.0.0 and renamed the old one changelogv4.3.4. also fixed the issue with the console not properly refreshing lines that are sent',
   },
-]//§4Lullaby §cGirlfriend's §cLost§bCause
+        {//
+    name: { text: 'v5.0.1', color: 'green', bold:false },
+    authors: [''],
+   
+    foundation: 'added botsrun for the funni along with making the bot be able to auto refill its core now and fill the core from a command block and adding a hover event to netmsg along with having the test command tellraw the players display name in the command',
+    exclaimer:'',
+  },
+]//
 //back
   
 

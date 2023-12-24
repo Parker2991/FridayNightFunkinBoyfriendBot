@@ -5,12 +5,13 @@ function reconnect (bot, options) {
 
   bot.on('end', () => {
     if (bot.reconnectDelay < 0) return
-
+ 
     setTimeout(() => {
      
             const client = options.client ?? mc.createClient(options)
      bot._client = client
             bot.emit('init_client', client)
+          
     }, bot.reconnectDelay)
   })
 }

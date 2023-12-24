@@ -17,7 +17,14 @@ const rs = require('randomstring')
   options.hideErrors ??= false // HACK: Hide errors by default as a lazy fix to console being spammed with them
   options.console ??= true
 options.input ??= true
-         
+
+         //  MainPrefix: "~",
+            //  SecondaryPrefix:'%',
+              //TertiaryPrefix:'@'
+                   
+         options.commands.MainPrefix ??= '!'
+         options.commands.SecondaryPrefix ??= '!'
+          options.commands.TertiaryPrefix ??= '!'
    options.selfcare.unmuted ??= true
          
    options.selfcare.vanished ??= true
@@ -36,7 +43,7 @@ options.input ??= true
          
    options.Core.core ??= true
          
-   options.commands.prefix ??= '!'
+  
          
    options.discord.commandPrefix ??= '!'
          
@@ -86,12 +93,20 @@ options.input ??= true
   })
   
 const buildstring = process.env['buildstring']
+bot.end = (reason = 'end', event) => {
+    bot.emit('end', reason, event)
+    bot.removeAllListeners()
+    bot._client.end()
+    bot._client.removeAllListeners()
+  }
 
   const client = options.client ?? mc.createClient(options)
   bot._client = client
   bot.emit('init_client', client)
   
   bot.bots = options.bots ?? [bot]
+bot.setMaxListeners(20)
+  bot._client.setMaxListeners(20)
 
   // Modules
   bot.loadModule = module => module(bot, options)

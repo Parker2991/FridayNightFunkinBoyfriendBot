@@ -5,7 +5,9 @@ const CommandError = require('../CommandModules/command_error.js')
 //it would be both the command_source.js and command_manager.js files
 function inject (bot, options) {
   bot.commandManager = {
-    prefix: options.commands?.prefix ?? 'default',
+    MainPrefix: options.commands?.MainPrefix ?? 'default',
+          SecondaryPrefix: options.commands?.SecondaryPrefix ?? 'default',
+          TertiaryPrefix: options.commands?.TertiaryPrefix ?? 'default',
     commands: {},
     amogus: [],
 //ohio
@@ -14,10 +16,12 @@ function inject (bot, options) {
 //Unknown command. Type "/help" for help
 const now = new Date().toLocaleString("en-US",{timeZone:"America/CHICAGO"})
       try {
-        if (!command || !command.execute) throw new CommandError({ translate: `Unknown command %s. Type "${bot.options.commands.prefix}help" for help or click on this for the command`, with: [commandName], clickEvent: bot.options.Core.customName ? { action: 'suggest_command', value:  `${bot.options.commands.prefix}help` } : undefined})
-              if (command.consoleOnly && !source.sources.console) throw new CommandError({ translate: 'This command can only be executed via console', color: 'blue' })
+        if (!command || !command.execute) throw new CommandError({ translate: `Unknown command %s. Type "${bot.options.commands.MainPrefix}help" for help or click on this for the command`, with: [commandName], clickEvent: bot.options.Core.customName ? { action: 'suggest_command', value:  `${bot.options.commands.MainPrefix}help` } : undefined})//ohio
+             
+
+                      
               if (command.trustLevel > 0){
-                    const event = source.discordMessageEvent
+                    const event = source?.discordMessageEvent
 
           const roles = event?.member?.roles?.cache
 
@@ -27,30 +31,47 @@ const now = new Date().toLocaleString("en-US",{timeZone:"America/CHICAGO"})
                    //    const hash = `${args[0]}` 
                      //  const owner = `${args[0]}` 
                       if(
-                              source.sources.discord && 
+                              source?.sources?.discord && 
                               command.trustLevel === 1 &&
-                       !roles?.some(role => role.name === 'trusted' || role.name === 'FNFBoyfriendBot Owner')         
+                       !roles?.some(role => role.name == 'trusted' || role.name == 'FNFBoyfriendBot Owner')        
                       ) throw new CommandError({text:'You are not Trusted!', color:'red'})
                       if (
-                         !source.sources.discord &&
+                         !source?.sources?.discord &&
                               command.trustLevel === 1 &&
                        args[0] !== bot.hash &&
                               args[0] !== bot.owner
         ) throw new CommandError({text:'Invalid Hash or Invalid Owner Hash', color:'red'})   
-
+  const now = new Date().toLocaleString("en-US",{timeZone:"America/CHICAGO"})
+           const player = source?.player?.profile?.name
+           const uuid = source?.player?.uuid
+                      const time = new Date().toLocaleTimeString("en-US", {timeZone:"America/CHICAGO"})
+const date = new Date().toLocaleDateString("en-US", {timeZone:"America/CHICAGO"})
+             
+   bot.console.hash = function (error, source) {
+    console.log(`<\x1b[0m\x1b[35m${time} \x1b[0m\x1b[96m${date}\x1b[0m> [${bot.options.host}:${bot.options.port}\x1b[0m] ` + `[\x1b[0m\x1b[92mHash\x1b[0m]: \x1b[0m\x1b[92mPlayer\x1b[0m: ${player}, \x1b[0m\x1b[92mUUID\x1b[0m:${uuid}, \x1b[0m\x1b[92mHash\x1b[0m:${bot.hash}\x1b[0m]` )
+  }
+bot.console.ownerHash = function (error, source) {
+    console.log(`<\x1b[0m\x1b[35m${time} \x1b[0m\x1b[96m${date}\x1b[0m> [${bot.options.host}:${bot.options.port}\x1b[0m] ` + `[\x1b[0m\x1b[31mOwnerHash\x1b[0m]: \x1b[0m\x1b[92mPlayer\x1b[0m: ${player}, \x1b[0m\x1b[92mUUID\x1b[0m:${uuid}, \x1b[0m\x1b[31mOwnerHash\x1b[0m:${bot.owner}\x1b[0m]` )
+  }
+          if (args[0] === bot.hash) {
+                  bot.console.hash()
+          } else if (args[0] === bot.owner) {
+                  bot.console.ownerHash()
+          }
                       if (
-                              source.sources.discord && 
+                              source?.sources?.discord && 
                               command.trustLevel === 2 && 
                             !roles?.some(role => role.name === 'FNFBoyfriendBot Owner')      
                       ) throw new CommandError({text:'You are not the Owner!', color:'dark_red'})
+                       const owner = `${args[0]}`
                       if (
-                              !source.sources.discord && 
-                              command.trustLevel === 2 && args[0] !== bot.owner
+                              !source?.sources?.discord && 
+                              command.trustLevel === 2 && owner !== bot.owner
                       )throw new CommandError({text: 'Invalid Owner Hash', color:'dark_red'})
-                     
-              if (command.trustLevel === 3 && !source.sources.console) throw new CommandError({ translate: 'This command can only be executed via console', color: 'blue' })
+                   
+              if (command.trustLevel === 3 && !source?.sources?.console) throw new CommandError({ translate: 'This command can only be executed via console', color: 'blue' })
                     //if ()  
-              }//command.hashOnly && source.hash
+              }// if (command.consoleOnly && !source.sources.console) throw new CommandError({ translate: 'This command can only be executed via console', color: 'blue' })
               //(hash !== bot.hash && owner !== bot.owner
 //command.unknown.argument command.unknown.command
         //command.context.here

@@ -4,15 +4,15 @@ class CommandSource {
    // sus
        
     this.player = player
-       this.name = player
+     
     this.sources = sources
           this.profile = bot
     this.hash = hash
-          this.trustLevel
+
             this.owner = owner
     this.consoleOnly = consoleOnly
    this.discordMessageEvent = discordMessageEvent
-          this.displayName = player
+         
         
   }
 
