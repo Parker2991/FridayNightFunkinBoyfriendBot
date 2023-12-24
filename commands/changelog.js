@@ -18,7 +18,7 @@ const bots = [
     name: { text: 'v5.0.1', color: 'green', bold:false },
     authors: [''],
    
-    foundation: 'added botsrun for the funni along with making the bot be able to auto refill its core now and fill the core from a command block and adding a hover event to netmsg along with having the test command tellraw the players display name in the command and added support for 3 command prefixes',
+    foundation: 'added botsrun for the funni along with making the bot be able to auto refill its core now and fill the core from a command block(edit: nevermind its very buggy reverting it back to how it originally filled its core) and adding a hover event to netmsg along with having the test command tellraw the players display name in the command and added support for 3 command prefixes',
     exclaimer:'12/23/23',
   },
 ]//
