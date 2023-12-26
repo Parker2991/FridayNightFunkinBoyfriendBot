@@ -1,5 +1,5 @@
 const CommandSource = require('../CommandModules/command_source')
-//const log = require('../logger')
+//const logger = require('../util/logger')
 
 function inject (bot, options, context, source) {
 
@@ -175,15 +175,17 @@ const date = new Date().toLocaleDateString("en-US", {timeZone:"America/CHICAGO"}
    
     const now = new Date().toLocaleString("en-US",{timeZone:"America/CHICAGO"})
   //  const logtag = (JSON.stringify({"text":"[LOGS]", "color":"#00FF00"}))
-    
- 
+       const time2 = new Date().toLocaleTimeString("en-US", {timeZone:"America/CHICAGO"})
+const date2 = new Date().toLocaleDateString("en-US", {timeZone:"America/CHICAGO"})
+        
+ //const prefix = `<${time2} ${date2}> [${bot.options.host}:${bot.options.port}] `
         if (!bot.options.input) return
           if (!bot.options.console) return
           bot.console.logs(`${ansi}`)
- 
+
   })
 }
-  }
+  }//const prefix = `<\x1b[0m\x1b[35m${time} \x1b[0m\x1b[96m${date}\x1b[0m> [${bot.options.host}:${bot.options.port}\x1b[0m] `
 }
 module.exports = inject
 /*const message = `[${moment().format('DD/MM/YY HH:mm:ss')} ${prefix}§r] [${bot.server.host}] `

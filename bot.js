@@ -6,7 +6,7 @@ const util = require('node:util')
 console.log(`Starting ${process.env["buildstring"]} .......`)
  console.log(`Foundation: ${process.env["FoundationBuildString"]}`)
 console.log('this may take a few moments....')
-
+require('events').EventEmitter.defaultMaxListeners = 20;
  function createBot(options = {}) {
   const bot = new EventEmitter()
 const rs = require('randomstring')
@@ -17,7 +17,7 @@ const rs = require('randomstring')
   options.hideErrors ??= false // HACK: Hide errors by default as a lazy fix to console being spammed with them
   options.console ??= true
 options.input ??= true
-
+//options.logger ??= true
          //  MainPrefix: "~",
             //  SecondaryPrefix:'%',
               //TertiaryPrefix:'@'
@@ -77,36 +77,53 @@ options.input ??= true
       bot.buildstring = process.env['buildstring']
       bot.fbs = process.env['FoundationBuildString']
     bot.version = bot.options.version
-      console.log(`Username: ${bot.username}`)
+            console.log(`Username: ${bot.options.username}`)
+      console.log(`Host: ${bot.options.host}:${bot.options.port}`)
+      console.log(`Minecraft java version: ${bot.options.version}`)
+     /* console.log(`Username: ${bot.username}`)
       console.log(`Host: ${bot.host}:${bot.port}`)
-      console.log(`Minecraft java version: ${bot.version}`)
+      console.log(`Minecraft java version: ${bot.version}`)*/
     })
-  //bot.visibility = false
+  //reason, fullReason
     client.on('end', reason => { bot.emit('end', reason)
-     
+ //console.log(util.inspect(reason))
+                               
     })
+        client.on('disconnect', reason => {
+                bot.emit('disconnect', reason)
+                //console.log(reason)
+        })
+          
+          client.on('kick_disconnect', reason => {
+                  bot.emit('kick_disconnect', reason)
+                  console.log(reason)
+          })
    client.on('keep_alive', ({ keepAliveId }) => {
     bot.emit('keep_alive', { keepAliveId })
+           
    })
+         
     client.on('error', error => bot.emit('error', error), )
    
+  //client.end(reason, fullReason)
+ 
+ })
+         /*
+          bot._client.on('kick_disconnect', (data) => {
+    const parsed = JSON.parse(data.reason)
+    bot.end(parsed, 'kick_disconnect')
   })
-  
+
+         */
 const buildstring = process.env['buildstring']
-bot.end = (reason = 'end', event) => {
-    bot.emit('end', reason, event)
-    bot.removeAllListeners()
-    bot._client.end()
-    bot._client.removeAllListeners()
-  }
 
   const client = options.client ?? mc.createClient(options)
   bot._client = client
   bot.emit('init_client', client)
   
   bot.bots = options.bots ?? [bot]
-bot.setMaxListeners(20)
-  bot._client.setMaxListeners(20)
+  //bot.setMaxListeners(Infinity)
+  //bot._client.setMaxListeners(Infinity)
 
   // Modules
   bot.loadModule = module => module(bot, options)

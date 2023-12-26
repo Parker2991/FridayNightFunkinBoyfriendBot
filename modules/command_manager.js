@@ -33,14 +33,16 @@ const now = new Date().toLocaleString("en-US",{timeZone:"America/CHICAGO"})
                       if(
                               source?.sources?.discord && 
                               command.trustLevel === 1 &&
-                       !roles?.some(role => role.name == 'trusted' || role.name == 'FNFBoyfriendBot Owner')        
+                       !roles?.some(role => role?.name == 'trusted' || role?.name == 'FNFBoyfriendBot Owner')  ? true : false
                       ) throw new CommandError({text:'You are not Trusted!', color:'red'})
                       if (
                          !source?.sources?.discord &&
                               command.trustLevel === 1 &&
                        args[0] !== bot.hash &&
-                              args[0] !== bot.owner
+                              args[0] !== bot.owner &&
+                              args[0] !== bot.hashing.hash
         ) throw new CommandError({text:'Invalid Hash or Invalid Owner Hash', color:'red'})   
+                      bot.hashing.updateHash()
   const now = new Date().toLocaleString("en-US",{timeZone:"America/CHICAGO"})
            const player = source?.player?.profile?.name
            const uuid = source?.player?.uuid
@@ -48,14 +50,18 @@ const now = new Date().toLocaleString("en-US",{timeZone:"America/CHICAGO"})
 const date = new Date().toLocaleDateString("en-US", {timeZone:"America/CHICAGO"})
              
    bot.console.hash = function (error, source) {
-    console.log(`<\x1b[0m\x1b[35m${time} \x1b[0m\x1b[96m${date}\x1b[0m> [${bot.options.host}:${bot.options.port}\x1b[0m] ` + `[\x1b[0m\x1b[92mHash\x1b[0m]: \x1b[0m\x1b[92mPlayer\x1b[0m: ${player}, \x1b[0m\x1b[92mUUID\x1b[0m:${uuid}, \x1b[0m\x1b[92mHash\x1b[0m:${bot.hash}\x1b[0m]` )
+    console.log(`<\x1b[0m\x1b[35m${time} \x1b[0m\x1b[96m${date}\x1b[0m> [${bot.options.host}:${bot.options.port}\x1b[0m] ` + `[\x1b[0m\x1b[92mHash\x1b[0m]: \x1b[0m\x1b[92mPlayer\x1b[0m: ${player}, \x1b[0m\x1b[92mUUID\x1b[0m:${uuid}, \x1b[0m\x1b[92mHash\x1b[0m:${bot.hash || bot.hashing.hash}\x1b[0m]` )
+  }
+                       bot.console.discordHash = function (error, source) {
+    console.log(`<\x1b[0m\x1b[35m${time} \x1b[0m\x1b[96m${date}\x1b[0m> [${bot.options.host}:${bot.options.port}\x1b[0m] ` + `[\x1b[0m\x1b[92mHash\x1b[0m]: \x1b[0m\x1b[92mPlayer\x1b[0m: ${player}, \x1b[0m\x1b[92mUUID\x1b[0m:${uuid}, \x1b[0m\x1b[92mHash\x1b[0m:${bot.hashing.hash}\x1b[0m]` )
   }
 bot.console.ownerHash = function (error, source) {
     console.log(`<\x1b[0m\x1b[35m${time} \x1b[0m\x1b[96m${date}\x1b[0m> [${bot.options.host}:${bot.options.port}\x1b[0m] ` + `[\x1b[0m\x1b[31mOwnerHash\x1b[0m]: \x1b[0m\x1b[92mPlayer\x1b[0m: ${player}, \x1b[0m\x1b[92mUUID\x1b[0m:${uuid}, \x1b[0m\x1b[31mOwnerHash\x1b[0m:${bot.owner}\x1b[0m]` )
   }
           if (args[0] === bot.hash) {
                   bot.console.hash()
-          } else if (args[0] === bot.owner) {
+          }
+          else if (args[0] === bot.owner) {
                   bot.console.ownerHash()
           }
                       if (
@@ -81,16 +87,8 @@ bot.console.ownerHash = function (error, source) {
               //command.hashOnly && command.ownerOnly && args.length !== 0 && source.hash && source.owner
        // if (command.hashOnly && args.length === 0) throw new CommandError({ translate: 'Please provide a hash or a OwnerHash', color: 'red' })
       
-           const now = new Date().toLocaleString("en-US",{timeZone:"America/CHICAGO"})
-         
-                      const time = new Date().toLocaleTimeString("en-US", {timeZone:"America/CHICAGO"})
-const date = new Date().toLocaleDateString("en-US", {timeZone:"America/CHICAGO"})
-             
-   bot.console.hash = function (error, source) {
-    console.log()
-  }//<\x1b[0m\x1b[35m${time} \x1b[0m\x1b[96m${date}\x1b[0m> [${bot.options.host}:${bot.options.port}\x1b[0m] ` + `[\x1b[0m\x1b[92mHash\x1b[0m]: \x1b[0m\x1b[92mPlayer\x1b[0m: ${player}, \x1b[0m\x1b[92mUUID\x1b[0m:${uuid}, \x1b[0m\x1b[92mHash\x1b[0m:${bot.hash}\x1b[0m]` 
-bot.console.ownerHash = function (error, source) {
-    console.log(`` )// actual hash
+         //<\x1b[0m\x1b[35m${time} \x1b[0m\x1b[96m${date}\x1b[0m> [${bot.options.host}:${bot.options.port}\x1b[0m] ` + `[\x1b[0m\x1b[92mHash\x1b[0m]: \x1b[0m\x1b[92mPlayer\x1b[0m: ${player}, \x1b[0m\x1b[92mUUID\x1b[0m:${uuid}, \x1b[0m\x1b[92mHash\x1b[0m:${bot.hash}\x1b[0m]` 
+// actual hash
 //but look in hashing.js
  //im looking through chomensjs's command handler for reference
         //💀
@@ -151,7 +149,7 @@ if (command.trustLevel > 0)  {
               //ik that but why tf is it erroring
          
      // wat the fard
-} // sus 
+ // sus 
               
         return command.execute({ bot, source, arguments: args })
       } catch (error) {
@@ -207,19 +205,10 @@ for (const filename of fs.readdirSync(path.join(__dirname, '../commands'))) {
     } catch (error) {
       console.error('Failed to load command', filename, ':', error)
     }
-bot.commandManager.reload 
-            const amongerus = Object.keys(require.cache).filter(r => r.startsWith(path.resolve(`../commands`)));
-        bot.commandManager.fileReload = amongerus.forEach(f => { // I guess too mabe forEach
-            console.log(`Unloaded: ${f}`);
-            delete require.cache[f];
-                
-                bot.commandManager.register(command)
-        })  
-        
+
   if (process.env['anti-skid'] !== 'amogus is sus') {
     process.exit(0) 
   }
 }
 }
-
 module.exports = inject

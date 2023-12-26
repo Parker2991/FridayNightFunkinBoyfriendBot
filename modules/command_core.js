@@ -79,7 +79,7 @@ async function inject (bot, options) {
         bot.on('packet.login', (data) =>{
                const timer = setInterval(() => {
              bot.core.refill()
-        }, 60000)
+        }, 180000)
                 bot.on('end', (bot) => {
                 clearInterval(timer)
                 })

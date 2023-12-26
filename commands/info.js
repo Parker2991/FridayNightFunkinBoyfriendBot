@@ -144,15 +144,15 @@ module.exports = {
                context.source.sendFeedback({ color: "gray", text: `OS platform: ${os.platform()}`}) 
                      context.source.sendFeedback({ color: "gray", text: `OS name: ${os.version()}`})
                     context.source.sendFeedback({ color: "gray", text: `CPU cores: ${os.cpus().length}`})
-                    /*if (os.platform() === 'win32')
-                            context.source.sendFeedback( { color: "gray", text: `CPU model: ${await getCpuModelName()}`})
-                    return*/
+                    /*const os = require('os') const cpus = os.cpus() for (const cpu of cpus){bot.tellraw(cpu.model)}*/
+                    //os.cpus()[0].model
+                    /*
                     if (os.platform() !== 'linux'){
                            source.sendFeedback({text:'cannot find the cpu model are you sure the bot is running on linux?', color:'red'})
                                                    }
                             else if (os.platform() === 'linux') {
-                                    source.sendFeedback({ color: "gray", text: `CPU model: ${await getCpuModelName()}`})
-                            }
+                      */              source.sendFeedback({ color: "gray", text: `CPU model: ${await os.cpus()[0].model}`})
+                           // }
                 /*translate: '\n %s \n %s \n %s \n %s \n %s \n %s \n %s',//lazy fix
             with: [
             { color: "gray", text: `Hostname: ${os.hostname()}`},

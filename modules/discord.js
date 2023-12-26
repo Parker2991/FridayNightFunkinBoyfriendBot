@@ -24,7 +24,10 @@ function inject (bot, options) {
   }
 
   client.on('ready', (context) => {
-    bot.discord.channel = client.channels.cache.get(options.discord.channelId)
+      //setMaxListeners(Infinity)
+  client.setMaxListeners(25)
+
+          bot.discord.channel = client.channels.cache.get(options.discord.channelId)
     bot.discord.channel.send(`\`\`\`\nStarting ${process.env["buildstring"]}......\n\`\`\``)
     bot.discord.channel.send(`\`\`\`\nFoundation: ${process.env["FoundationBuildString"]}\n\`\`\``)
  bot.discord.channel.send(`\`\`\`\nSuccessfully logged into discord as ${bot.discord.client.user.username}#${bot.discord.client.user.discriminator}\n\`\`\``)

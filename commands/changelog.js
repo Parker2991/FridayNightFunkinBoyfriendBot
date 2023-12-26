@@ -21,6 +21,13 @@ const bots = [
     foundation: 'added botsrun for the funni along with making the bot be able to auto refill its core now and fill the core from a command block(edit: nevermind its very buggy reverting it back to how it originally filled its core) and adding a hover event to netmsg along with having the test command tellraw the players display name in the command and added support for 3 command prefixes',
     exclaimer:'12/23/23',
   },
+        {//
+    name: { text: 'v5.0.2', color: 'green', bold:false },
+    authors: [''],
+   
+    foundation: '12/26/23',
+    exclaimer:'fixed the issue with the cpu checking in the info command added discord hashing back into the bot to work along side the keys made it check to see if the config file is in the directory and if not it will recreate the config from default.js',
+  },
 ]//
 //back
   
