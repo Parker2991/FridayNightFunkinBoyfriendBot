@@ -28,6 +28,13 @@ const bots = [
     foundation: '12/26/23',
     exclaimer:'fixed the issue with the cpu checking in the info command added discord hashing back into the bot to work along side the keys made it check to see if the config file is in the directory and if not it will recreate the config from default.js',
   },
+        {//
+    name: { text: 'v5.0.3', color: 'gray', bold:false },
+    authors: [''],
+   
+    foundation: '12/29/23',
+    exclaimer:'mabe the bot last update of 2023 cuz next year will be 2024 www but anyway expanded the disconnect messages for both console and discord but thats pretty much it',
+  },
 ]//
 //back
   

@@ -165,7 +165,7 @@ if (command.trustLevel > 0)  {
 if (error instanceof CommandError) source.sendError(error._message)
        //
        // else source.sendError({ text:String(error.stack), color:'red' })
-               else source.sendError({ translate: 'command.failed', color:'red', hoverEvent: { action: 'show_text', contents: String(error.stack) } })
+               else source.sendError({ translate: 'A Error has occured because the bot shot itself 🔫', color:'red', hoverEvent: { action: 'show_text', contents: String(error.stack) } })
         if (source.sources.discord) {
                       source.sendError(error)
               }     

@@ -173,14 +173,35 @@ function inject (bot, options) {
   }
         
   client.on('messageCreate', messageCreate)
-bot.on('error', (error, reason, data) => {
+
+        bot.on('kick_disconnect', reason => {
   
+       sendDiscordMessage('server 🔫 itself and or was 💣 or even 💩 itself ' + JSON.stringify(reason))
+        
+//sendDiscordMessage(reason)
+  
+  })
+                  bot.on('disconnect', reason => {
+  
+        sendDiscordMessage(JSON.stringify(reason))
+        
+//sendDiscordMessage(reason)
+  
+  })
+                            bot.on('end', reason => {
+  
+   sendDiscordMessage(JSON.stringify(reason))
+        
+//sendDiscordMessage(reason)
+  
+  })
+      bot.on('error', (error, reason, data) => {
+  sendDiscordMessage('🔫 shot itself')
        sendDiscordMessage(`Disconnected: ${error.stack}`)
         
 //sendDiscordMessage(reason)
   
   })
-      
  /*bot.on('end', (reason, event) => {
 sendDiscordMessage('event:' + event)
          sendDiscordMessage('Reason:' + util.inspect(reason))

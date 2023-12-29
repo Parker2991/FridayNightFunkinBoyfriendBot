@@ -14,7 +14,7 @@ function parseMessage (message, data, context, bot) {
   let sender
   
   const hoverEvent = senderComponent.hoverEvent
-       // console.log(hoverEvent)
+        //console.log(JSON.stringify(hoverEvent))
   if (hoverEvent?.action === 'show_entity') {
     const id = hoverEvent.contents.id
 //

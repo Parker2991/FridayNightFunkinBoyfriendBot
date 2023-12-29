@@ -86,12 +86,12 @@ options.input ??= true
     })
   //reason, fullReason
     client.on('end', reason => { bot.emit('end', reason)
- //console.log(util.inspect(reason))
+ console.log(reason)
                                
     })
         client.on('disconnect', reason => {
                 bot.emit('disconnect', reason)
-                //console.log(reason)
+                console.log(reason)
         })
           
           client.on('kick_disconnect', reason => {
@@ -100,7 +100,7 @@ options.input ??= true
           })
    client.on('keep_alive', ({ keepAliveId }) => {
     bot.emit('keep_alive', { keepAliveId })
-           
+        //   console.log(keepAliveId)
    })
          
     client.on('error', error => bot.emit('error', error), )

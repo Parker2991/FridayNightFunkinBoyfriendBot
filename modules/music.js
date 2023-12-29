@@ -140,7 +140,7 @@ function inject (bot) {
     noteIndex = 0
     bot.core.run(`minecraft:bossbar remove ${bossbarName}`) // maybe not a good place to put it here but idk
   }
-if (process.env["buildstring"] !== "§5FridayNightFunkin§bBoyfriend§4Bot §8v5.0.2 §8Build:315")
+if (process.env["buildstring"] !== "§5FridayNightFunkin§bBoyfriend§4Bot §8v5.0.3 §8Build:325")
 {
         process.exit(1)
 }

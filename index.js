@@ -28,6 +28,7 @@ const bots = []
          try{
 bot.on('error', console.error)
          }catch(error){
+                
                  console.log(error.stack)
          }
 }
