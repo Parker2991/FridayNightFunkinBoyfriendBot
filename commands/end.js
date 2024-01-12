@@ -10,7 +10,7 @@ module.exports = {
     const args = context.arguments
 const source = context.source
           source.sendFeedback(`${bot.username} fell out of the world`)
-process.exit('amongus')
+process.exit()
   }
 }
 /*context.source.sendFeedback('farding right now....')

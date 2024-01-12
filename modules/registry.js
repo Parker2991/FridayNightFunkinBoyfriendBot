@@ -1,6 +1,6 @@
 const createRegistry = require('prismarine-registry')
 
-function inject (bot) {
+function registry (bot) {
   bot.on('packet.login', packet => {
     bot.registry = createRegistry(bot._client.version)
     bot.registry.loadDimensionCodec(packet.dimensionCodec)
@@ -8,4 +8,4 @@ function inject (bot) {
   })
 }
 
-module.exports = inject
+module.exports = registry

@@ -3,63 +3,38 @@
   module.exports = {
     
     bots: [
-{
-   host: "localhost",
-  username:username(),
-      version:"1.20.1",
-      reconnectDelay: 6000,
-language:"lolus",
-        console:true,
+ {
+      host: "server ip here or comment this out and refer to the bot.js file",
+      version:"1.20.1",//version here
+        reconnectDelay: 6000,
+    username:username(),
+             console:true,
         input: true,
-      commands: {
-        MainPrefix: "set Main Prefix here",
-              SecondaryPrefix:'set Secondary prefix here',
-              TertiaryPrefix:'set Tertiary Prefix here'
-      },
       Core: {
-        customName:"core customName here",
+        customName:"core custom name here",
          core: true,
-  },
-      discord: {
-        channelId: "discord channelId here",
+              interval:180000
+    },
+     discord: {
+        channelId: "discord channel ip here",
         invite: "discord invite link here",
         commandPrefix: "discord command prefix here"
       },
-  skin: {
-    torso:{
-      jacket:true,
-      cape:true,
-    },
-    arms: {
-      leftSleeve:true,
-      rightSleeve:true,
-    },
-    legs:{
-      leftPants:true,
-      rightPants:true,
-    },
-    head:{
-      hat:true
-    },
-  },
-   selfcare: {
-     unmuted: true,
-     vanished: true,
-     prefix: true,
-     skin: true,
+         selfcare: {
+  vanished: true,
+  unmuted: true,
+  prefix: true,
   cspy: true,
-     op: true,
-     gmc: true,
-     username:true,
-     nickname: true,
-     god:true,
-     tptoggle: true,
-     interval:500,
-   }
-    }, 
-           
-   
-      
+  tptoggle:true,
+  skin:true,
+  gmc:true,
+  op:true,
+  nickname:true,
+  username:true,
+  god: true,
+  interval:500,
+}
+ },
   ]
 }
     

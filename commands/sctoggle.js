@@ -13,77 +13,80 @@ module.exports = {
           if (!args && !args[0] && !args[1] && !args[2]) return
     switch (args[1]) {
             case 'vanishon':
-                    bot.visibility.on()
+                    bot.options.selfcare.vanished = true
                     source.sendFeedback({text:'Vanish selfcare on', color:'green'})
                     break
                     case'vanishoff':
                   source.sendFeedback({text:'Vanish selfcare off', color:'red'})
-                     bot.visibility.off()
+                    bot.options.selfcare.vanished = false
+                    bot.command('vanish off')
                     
                     break
             case 'muteon':
                   source.sendFeedback({text:'Mute selfcare on', color:'green'})
-                    bot.unmuted.on()
+                     bot.options.selfcare.unmuted = true
                     break
             case 'muteoff':
 source.sendFeedback({text:'Mute selfcare off', color:'red'})
-                    bot.unmuted.off()
+                    bot.options.selfcare.unmuted = false
 break
             case 'tptoggleon':
-                    bot.tptoggle.on()
-                    source.sendFeedback({text:'Tptoggle on', color:'green'})
+                   bot.options.selfcare.tptoggle = false
+                    bot.command('tptoggle on')
+                    source.sendFeedback({text:'Tptoggle on', color:'red'})
             break 
             case 'tptoggleoff':
-                    bot.tptoggle.off()
-                    source.sendFeedback({text:'Tptoggle off', color: 'red'})
+                     bot.options.selfcare.tptoggle = true
+                    
+                    source.sendFeedback({text:'Tptoggle off', color: 'green'})
                     break
             case 'godon':
-                    bot.god.on()
+                   bot.options.selfcare.god = true
                     source.sendFeedback({text:'God selfcare on', color: 'green'})
                     break
             case 'godoff':
-                    bot.god.off()
+                    bot.options.selfcare.god= false
                     source.sendFeedback({text:'Tptoggle off', color: 'red'})
                     break
             case 'prefixon': 
-                    bot.prefix.on()
+                    bot.options.selfcare.prefix = true
                     source.sendFeedback({text: 'Prefix selfcare on', color: 'green'})
                     break
             case 'prefixoff':
-                    bot.prefix.off()
+                     bot.options.selfcare.prefix = false
                     source.sendFeedback({text:'Prefix selfcare off', color:'red'})
                     break
             case 'usernameoff': 
-                    bot.Username.off()
+               bot.options.selfcare.username = false
                     source.sendFeedback({text:'Username selfcare off', color: 'red'})
                  break
             case 'usernameon':
-                    bot.Username.on()
+                  bot.options.selfcare.username = true
                     source.sendFeedback({text:'Username selfcare on', color:'green'})
                     break
             case 'skinon':
-                    bot.skin.on()
+                    bot.options.selfcare.skin = true
                     source.sendFeedback({text:'Skin selfcare on', color:'green'})
                     break
             case 'skinoff':
-                    bot.skin.off() 
+                     bot.options.selfcare.skin = false 
                     source.sendFeedback({text:'Skin selfcare off', color:'red'})
                     break
             case 'cspyon':
-                    bot.cspy.on()
+                     bot.options.selfcare.cspy = true
                     source.sendFeedback({text:'Cspy selfcare on', color:'green'})
                     break
             case 'cspyoff':
-                    bot.cspy.off()
+                     bot.options.selfcare.cspy = false
                     source.sendFeedback({text:'Cspy selfcare off', color:'red'})
                     break
             case 'nicknameon': 
-                    bot.nickname.on()
+                     bot.options.selfcare.nickname= true
                     source.sendFeedback({text:'Nickname selfcare on', color:'green'})
                     break
             case 'nicknameoff':
-                    bot.nickname.off()
-                           source.sendFeedback({text:'Nickname selfcare off', color:'red'})
+                    bot.options.selfcare.nickname = false
+                            source.sendFeedback({text:'Nickname selfcare off', color:'red'})
                     break
                     
             default:

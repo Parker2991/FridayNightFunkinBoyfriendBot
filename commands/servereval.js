@@ -12,12 +12,15 @@ const source = context.source
     const { stylize } = require('../util/eval_colors')
     const util = require('util')
     const args = context.arguments
+          
     const script = args.slice(1).join(' ');
     if (!args && !args[0] && !args[1] && !args[2] && !args[3] && !args[4] ) return 
 try {
-  context.source.sendFeedback({ text: util.inspect(eval(script), { stylize }).substring(0, 32700) })
+  source.sendFeedback({ text: util.inspect(eval(script), { stylize }).substring(0, 32700) })
+           source.sendFeedback({ text: `Script input: ${script}` })
 } catch (err) {
-     context.source.sendFeedback({ text: err.message, color: 'red' })
+     source.sendFeedback({ text: err.message, color: 'red' })
+         source.sendFeedback({ text: `Script input: ${script}` })
 }
 }
   }

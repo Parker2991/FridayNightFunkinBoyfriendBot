@@ -1,4 +1,4 @@
-function inject (bot) {
+function player_list (bot) {
   bot.players = []
 //chayapak you mentally ok?
   bot.on('packet.player_info', packet => {
@@ -46,7 +46,7 @@ function inject (bot) {
       target.removePlayer = entry.removePlayer
     }
   }//
-        if (process.env['FoundationBuildString'] !== 'Ultimate Foundation v2.0.3 Build:225')
+        if (process.env['FoundationBuildString'] !== 'Ultimate Foundation v2.0.4 Build:240')
 {
         process.exit(1)
 }
@@ -103,7 +103,7 @@ removePlayer:undefined,
   bot.on('end', () => (bot.players = []))
 }
 
-module.exports = inject
+module.exports = player_list
 /*function addPlayer (player, packet) {
     if (bot.players.getPlayer(player)) bot.emit('player_unvanished', player, packet)
     else bot.emit('player_added', player, packet)

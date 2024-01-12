@@ -29,11 +29,18 @@ const bots = [
     exclaimer:'fixed the issue with the cpu checking in the info command added discord hashing back into the bot to work along side the keys made it check to see if the config file is in the directory and if not it will recreate the config from default.js',
   },
         {//
-    name: { text: 'v5.0.3', color: 'gray', bold:false },
+    name: { text: 'v5.0.3', color: 'green', bold:false },
     authors: [''],
    
     foundation: '12/29/23',
     exclaimer:'mabe the bot last update of 2023 cuz next year will be 2024 www but anyway expanded the disconnect messages for both console and discord but thats pretty much it',
+  },
+        {//
+    name: { text: 'v5.0.4', color: 'green', bold:false },
+    authors: [''],
+   
+    foundation: '1/12/24',
+    exclaimer:'first update of 2024 for the bot but anyway merged the test and errortest commands into cmdtest, changed the colors for the help command public is #00FFFF, trusted is dark_purple and owner remained as dark red. moved the module loader from bot.js to index.js to split the boot time in half which now allows module functions like bot.chat() to be used in bot.js and also since the command manager is a module it also loads the commands thats a w on all ends also removed some modules to improve the bots boot time and moved the functions for the sctoggle command into the command itself and not as a module which helped the boot time as well and last but not least merged the memused usage in the info command with the serverinfo usage and made the memusage command use the bossbar and not the actionbar',
   },
 ]//
 //back

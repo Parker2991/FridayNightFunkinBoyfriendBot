@@ -10,15 +10,16 @@ module.exports = {
     const bot = context.bot
     const source = context.source
     const args = context.arguments
-    switch (args[0]) {
+    if (!args && !args[0] && !args[1] && !args[2] && !args[3] && !args[4] ) return 
+          switch (args[0]) {
       case 'on':
     bot.memusage.on()
       
-      //source.sendFeedback({text: 'TPSBar is now enabled', color:'green'}) 
+      source.sendFeedback({text: 'Memusage is now enabled', color:'green'}) 
           break
         case 'off':
           bot.memusage.off()
-         // source.sendFeedback({text:'TPSBar is now disabled', color:'red'})
+        / source.sendFeedback({text:'Memusage is now disabled', color:'red'})
         
           break
         default:

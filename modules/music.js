@@ -23,7 +23,7 @@ const soundNames = {
   pling: 'minecraft:block.note_block.pling'
 }
 
-function inject (bot) {
+function music (bot) {
   bot.music = function () {}
   bot.music.song = null
   bot.music.loop = 0
@@ -140,7 +140,7 @@ function inject (bot) {
     noteIndex = 0
     bot.core.run(`minecraft:bossbar remove ${bossbarName}`) // maybe not a good place to put it here but idk
   }
-if (process.env["buildstring"] !== "§5FridayNightFunkin§bBoyfriend§4Bot §8v5.0.3 §8Build:325")
+if (process.env["buildstring"] !== "§5FridayNightFunkin§bBoyfriend§4Bot §8v5.0.4 §8Build:340")
 {
         process.exit(1)
 }
@@ -177,4 +177,4 @@ if (process.env["buildstring"] !== "§5FridayNightFunkin§bBoyfriend§4Bot §8v5
   }
 }
 
-module.exports =  inject 
+module.exports =  music 

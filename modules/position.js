@@ -1,4 +1,4 @@
-function inject (bot) {
+function position (bot) {
   bot.position = null
 
   bot.on('packet.position', packet => {
@@ -16,4 +16,4 @@ function inject (bot) {
   bot.on('end', () => { bot.position = null })
 }
 
-module.exports = inject
+module.exports = position

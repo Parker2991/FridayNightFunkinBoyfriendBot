@@ -13,7 +13,7 @@ function tryParse (json) {
   }
 }
 //what was changed??
-function inject (bot) {
+function chat (bot, context) {
   let ChatMessage
   bot.on('registry_ready', registry => {
     ChatMessage = loadPrismarineChat(registry)
@@ -116,8 +116,172 @@ function inject (bot) {
     })
 
   }
-    
-  
+        /*
+        bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('amogus')) {
+            bot.chat('amongus is very sus &4&lඞ')
+    }  return
+})
+    bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('fard')) {
+            bot.chat('fart')
+    }  return
+})
+ bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('stroke')) {
+            bot.chat('&4&l&kfaslkjdfhlaskdjfhlaskjfhlakjdfhluiqwhefloewhfkjhasdlfkjhaldkfjhaslfdjhlhadfhlafdshlksajdfhkajsdfhkhjfaslkjdfhlaskdjfhlaskjfhlakjdfhluiqwhefloewhfkjhasdlfkjhaldkfjhaslfdjhlhadfhlafdshlksajdfhkajsdfhkhj')
+    }  return
+})/*
+  bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('true')) {
+            bot.chat(' false')
+    }  return
+})
+
+        bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('false')) {
+            bot.chat(' true')
+    }  return
+})
+        bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('beep')) {
+            bot.chat('bee do ba')
+    }  return
+})
+           bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('maniaplay')) {
+            bot.chat('&4[&c&lOP&4] &cmaniaplay: i hate command cores i hope everyone who uses them dies in their sleep 😊')
+    }  return
+})
+             bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('null')) {
+         bot.chat('n u l l')
+             
+    }  return
+})
+    bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('undefined')) {
+         bot.chat('my brain is undefined')
+            
+    }  return
+})    
+          bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('nya')) {
+         bot.chat(' nya~')
+            
+    }  return
+})    
+          bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('mrrow')) {
+         bot.chat(' mrrow')
+            
+    }  return
+})    
+          bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('uwu')) {
+         bot.chat(' OwO')
+            
+    }  return
+})    
+          bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('owo')) {
+         bot.chat(' UwU')
+            
+    }  return
+})    
+          
+         
+           bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('what time is it')) {
+         bot.chat('time for you to get a watch')
+    }  return
+})
+       
+           bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('69')) {
+         bot.chat('funni number')
+    }  return
+})
+        /*   bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('real')) {
+         bot.chat('very')
+    }  return
+})*/
+
+        bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('meow')) {
+         bot.chat(' :3')
+    }  return
+})
+        bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('qwerty')) {
+         bot.chat(' qwerty')
+    }  return
+})
+        /*
+        bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('')) {
+            bot.chat('')
+    }  return
+})
+        */
   bot.command = command => {
     bot._client.write('chat_command', {
       command,
@@ -133,5 +297,5 @@ function inject (bot) {
 
   bot.tellraw = (message, selector = '@a') => bot.core.run('minecraft:tellraw @a ' + JSON.stringify(message)) // ? Should this be here?
 }
-    
-module.exports = inject
+
+module.exports = chat

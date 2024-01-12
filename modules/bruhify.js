@@ -1,6 +1,6 @@
 const convert = require('color-convert')
 
- function inject (bot) {
+ function bruhify (bot) {
     bot.bruhifyText = ''
     let startHue = 0
     const timer = setInterval(() => {
@@ -18,10 +18,10 @@ let tag = 'bruhify'
       bot.core.run(`minecraft:title @a actionbar ${JSON.stringify(component)}`)
      
       startHue = (startHue + increment) % 360
-    }, 50)
+    }, 100)
 
     bot.on('end', () => {
      // clearInterval(timer)
     })
   }
-module.exports = inject
+module.exports = bruhify

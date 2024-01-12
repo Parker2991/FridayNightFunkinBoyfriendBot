@@ -13,7 +13,7 @@ const bot = context.bot
 
     const prefix = {
        translate: '[%s] %s \u203a %s',
-     color:'gray',
+     color:'dark_gray',
         with: [
           { 
                   text: 'FNFBoyfriendBot Console', color:'#00FFFF'

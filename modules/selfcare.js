@@ -4,7 +4,7 @@ const util = require('util')
 const COMMANDSPY_ENABLED_MESSAGE = { text: 'Successfully enabled CommandSpy' }
 const COMMANDSPY_DISABLED_MESSAGE = { text: 'Successfully disabled CommandSpy' }
 //You now have the tag: &8[&bPrefix &4d~&8]
-function inject (bot) {
+function selfcare (bot) {
   let entityId
    let gameMode
   let permissionLevel = 2
@@ -108,7 +108,7 @@ let unmuted = false
       if (permissionLevel < 2 && bot.options.selfcare.op) bot.command('op @s[type=player]')
      
      if (!commandSpyEnabled && bot.options.selfcare.cspy) bot.command('commandspy:commandspy on')
-      else if (!vanished && bot.options.selfcare.vanished) bot.core.run(`essentials:vanish ${bot.username} enable`)
+   
    else if (unmuted && bot.options.selfcare.unmuted) bot.core.run(`essentials:mute ${bot.uuid}`)
      else if (!prefix && bot.options.selfcare.prefix) bot.command(`prefix &8[&bPrefix &4${bot.options.commands.MainPrefix}&8]`)
     else if (gameMode !== 1 && bot.options.selfcare.gmc) bot.command('gamemode creative @s[type=player]')
@@ -117,6 +117,7 @@ let unmuted = false
       else if (!nickname && bot.options.selfcare.nickname) bot.command(`nick off`)
       else if (!god && bot.options.selfcare.god) bot.command('god on')
       else if (!tptoggle && bot.options.selfcare.tptoggle) bot.command('tptoggle off')
+             else if (!vanished && bot.options.selfcare.vanished) bot.core.run(`essentials:vanish ${bot.username} enable`)
     }, bot.options.selfcare.interval)
   })
 
@@ -134,7 +135,7 @@ let unmuted = false
   })
 }
 
-module.exports = inject
+module.exports = selfcare
 /*const buildstring = process.env['buildstring']
   bot.on('login', async () => {
  console.log(`starting ${buildstring}`)

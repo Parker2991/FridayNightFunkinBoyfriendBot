@@ -1,4 +1,4 @@
-function inject (bot, options) {
+function command_loop_manager (bot, options) {
   bot.cloop = {
     list: [],
     
@@ -16,6 +16,7 @@ function inject (bot, options) {
       this.list = []
     }
   }
+      
 }
 
-module.exports = inject
+module.exports = command_loop_manager

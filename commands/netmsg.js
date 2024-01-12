@@ -37,7 +37,7 @@ module.exports = {
             {
               text: 'Boyfriend',
               bold: true,
-              color: 'aqua'
+              color: '#00FFFF'
             },
             {
               text: 'Bot',

@@ -9,7 +9,7 @@ const client = new Client({ intents: [Guilds, GuildMessages, MessageContent] })
 const util = require('util')
 client.login(process.env.discordtoken)
 
-function inject (bot, options) {
+function discord (bot, options) {
   if (!options.discord?.channelId) {
     bot.discord = { invite: options.discord?.invite }
     return
@@ -74,7 +74,7 @@ function inject (bot, options) {
       */
  //`\`\`\`\n \n\`\`\`
   function sendComponent (message) {
-    const lang = require(`../util/language/${bot.options.language}.json`)
+    const lang = require(`../util/language/lolus.json`)
  const ansi = bot.getMessageAsPrismarine(message).toAnsi(lang).replaceAll('```\u001b[9```' + '```\u001b[3```')// I have a function to fix ansi :shrug:
        
     /*
@@ -202,6 +202,15 @@ function inject (bot, options) {
 //sendDiscordMessage(reason)
   
   })
+        bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('purr')) {
+         bot.chat(' puuuuuuuuuurrrrrrrrrrrr~')
+            
+    }  return
+})     
  /*bot.on('end', (reason, event) => {
 sendDiscordMessage('event:' + event)
          sendDiscordMessage('Reason:' + util.inspect(reason))
@@ -244,4 +253,4 @@ function fixansi(message) {
 }
 }
 //
-module.exports = inject
+module.exports = discord

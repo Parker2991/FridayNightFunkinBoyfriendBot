@@ -1,5 +1,5 @@
 const nbt = require('prismarine-nbt');
-async function inject (bot, options) {
+async function command_core (bot, options) {
   bot.core = {   
     // what you think im doing? look at line 17
     area: {
@@ -15,7 +15,7 @@ async function inject (bot, options) {
 
       if (!pos) return
 
-   bot.command(`fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName: '{"text":"${bot.options.Core.customName}","color":"dark_red","clickEvent":{"action":"open_url","value":"${bot.options.Core.customName}"}}'} destroy`)
+   bot.command(`fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName: '{"text":"${bot.options.Core.customName}","color":"#00FFFF","clickEvent":{"action":"open_url","value":"https://chipmunk.land"}}'} destroy`)
   
     },
 
@@ -71,6 +71,16 @@ async function inject (bot, options) {
     },
          
   }
+        /*
+         bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith(':3')) {
+         bot.chat(' :3')
+    }  return
+})
+*/
   if (!bot.options.Core.core) return
   bot.on('move', () => {
     bot.core.move(bot.position)
@@ -82,7 +92,8 @@ async function inject (bot, options) {
         }, bot.options.Core.interval)
                 bot.on('end', (bot) => {
                 clearInterval(timer)
+                        
                 })
 })
 }
-module.exports = inject
+module.exports = command_core

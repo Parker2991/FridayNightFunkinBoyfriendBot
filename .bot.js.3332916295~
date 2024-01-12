@@ -61,19 +61,23 @@ function createBot(options = {}) {
     client.on("login", async function (data) {
       bot.uuid = client.uuid;
       bot.username = client.username;
+      bot.entityId = data.entityId;
+      bot.host = bot.options.host;
       bot.port = bot.options.port;
+      bot.buildstring = process.env["buildstring"];
+      bot.fbs = process.env["FoundationBuildString"];
       bot.version = bot.options.version;
       console.log(`Username: ${bot.options.username}`);
       console.log(`Host: ${bot.options.host}:${bot.options.port}`);
       console.log(`Minecraft java version: ${bot.options.version}`);
-           
+      /* console.log(`Username: ${bot.username}`)
+      console.log(`Host: ${bot.host}:${bot.port}`)
+      console.log(`Minecraft java version: ${bot.version}`)*/
     });
-
+    //reason, fullReason
     client.on("end", (reason) => {
       bot.emit("end", reason);
       console.log(reason);
-            bot.cloop.clear()
-            bot.memusage.off()
     });
     client.on("disconnect", (reason) => {
       bot.emit("disconnect", reason);
@@ -86,26 +90,58 @@ function createBot(options = {}) {
     });
     client.on("keep_alive", ({ keepAliveId }) => {
       bot.emit("keep_alive", { keepAliveId });
+      //   console.log(keepAliveId)
     });
 
     client.on("error", (error) => bot.emit("error", error));
-  });
 
-  
+    //client.end(reason, fullReason)
+  });
+  /*
+          bot._client.on('kick_disconnect', (data) => {
+    const parsed = JSON.parse(data.reason)
+    bot.end(parsed, 'kick_disconnect')
+  })
+
+         */
+  const buildstring = process.env["buildstring"];
+
   const client = options.client ?? mc.createClient(options);
   bot._client = client;
   bot.emit("init_client", client);
 
   bot.bots = options.bots ?? [bot];
+  //bot.setMaxListeners(Infinity)
+  //bot._client.setMaxListeners(Infinity)
 
+  // Modules
+  bot.loadModule = (module) => module(bot, options);
 
+  for (const filename of fs.readdirSync(path.join(__dirname, "modules"))) {
+    try {
+      const module = require(path.join(__dirname, "modules", filename));
+      bot.loadModule(module);
+      //console.log(filename.length);
+    } catch (error) {
+      console.error(
+        "\x1b[0m\x1b[91m[ERROR]: \x1b[0m\x1b[90mFailed to load module",
+        filename,
+        ":",
+        error,
+      );
+    }
+  }
 
-  
   return bot;
-}
+} //path.join(__dirname, 'modules', filename)
+//path.join(amonger + 'FridayNightFunkinBoyfriendBot') !== path.join(amonger)
+//fs.stat
 const amonger = "../";
 if (fs.existsSync("../FridayNightFunkinBoyfriendBot") == false) {
   process.exit(1);
 }
+//path.join('') != fs. existsSync('~/FridayNightFunkinBoyfriendBot/index.js')
+
+// ABot username function mabe mabe
 
 module.exports = createBot;

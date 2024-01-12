@@ -1,6 +1,6 @@
 const assert = require('assert')
 
-module.exports = inject
+module.exports = ClientSettings
 
 const chatToBits = {
   enabled: 0,
@@ -28,7 +28,7 @@ const controls = {
   sprint: false,
   sneak: false
 }
-function inject (bot, options) {
+function ClientSettings (bot, options) {
   function setSettings (settings) {
     extend(bot.settings, settings)
 
@@ -84,13 +84,13 @@ function inject (bot, options) {
       : options.difficulty,
     skinParts: options.skinParts == null
       ? {
-          showCape: bot.options.skin.torso.cape,
-          showJacket: bot.options.skin.torso.jacket,
-          showLeftSleeve: bot.options.skin.arms.leftSleeve,
-          showRightSleeve: bot.options.skin.arms.rightSleeve,
-          showLeftPants: bot.options.skin.legs.leftPants,
-          showRightPants: bot.options.skin.legs.rightPants,
-          showHat: bot.options.skin.head.hat
+          showCape: true,
+          showJacket: true,
+          showLeftSleeve: true,
+          showRightSleeve: true,
+          showLeftPants: true,
+          showRightPants: true,
+          showHat: true
         }
       : options.skinParts,
     mainHand: options.mainHand || 'left',

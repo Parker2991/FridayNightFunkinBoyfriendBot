@@ -3,7 +3,7 @@
 const crypto = require('crypto')
 const ownerkey = process.env['FNFBoyfriendBot_Owner_key']
 const trustedkey = process.env['FNFBoyfriendBot_key']
-function inject(bot) {
+function hashgen (bot) {
   bot.hash = ''
   bot.owner = ''
   bot.updatehashes = update
@@ -35,7 +35,14 @@ function inject(bot) {
   })
   */
 }
-          
+      bot.on('parsed_message', data => {
+    if (data.type !== 'minecraft:chat') return
+
+    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
+    if (plainMessage.startsWith('fnf sky')) {
+         bot.chat('sky the fangirl!?!? i simp for her :)')
+    }  return
+})     
 let _hash = generateHash()
 const now = new Date().toLocaleString("en-US",{timeZone:"America/CHICAGO"})
              const time = new Date().toLocaleTimeString("en-US", {timeZone:"America/CHICAGO"})
@@ -71,7 +78,7 @@ const date = new Date().toLocaleDateString("en-US", {timeZone:"America/CHICAGO"}
 function generateHash () {
   return crypto.randomBytes(4).toString('hex')
 }
-module.exports = inject
+module.exports = hashgen
 
 
 
