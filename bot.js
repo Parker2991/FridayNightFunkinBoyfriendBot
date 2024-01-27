@@ -67,7 +67,7 @@ options.Console.filelogging ??= false;
             console.log(`Username: ${bot.options.username}`);
       console.log(`Host: ${bot.options.host}:${bot.options.port}`);
       console.log(`Minecraft java version: ${bot.options.version}`);
-     if(!bot.options.Core.CorelessMode){
+     if(!bot.options.Core.enabled){
              bot.console.info(`Coreless mode active for ${bot.options.host}:${bot.options.port} !`)
      }
             bot.chat('&5&lFNF&#00FFFF&lBoyfriend&4&lBot &f- &4Parker&02991')      
