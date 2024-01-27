@@ -16,7 +16,7 @@ module.exports = {
   if (args[0] === undefined){
                      source.sendFeedback({translate:"Too few Arguments!", color:"red"})
    }
-          if (!bot.options.Core.CorelessMode){
+          if (bot.options.Core.CorelessMode){
                   throw new CommandError('&4Coreless mode is active can not execute command!')
           }else{
 if (message.startsWith('/')) {
