@@ -41,7 +41,7 @@ async function sleep(ms) {
       const definitions2 = await urban.define(args.join(' '))
       //const definitions2 = await urban.example(args.join(' '))
             //ChatMessage.fromNotch(await sleep(500) ?? player.displayName ?? player.profile.name ).toMotd().replaceAll('§', '&')
-            if(!bot.options.Core.CorelessMode){
+            if(bot.options.Core.CorelessMode){
                     const ChatMessage = require('prismarine-chat')(bot.options.version)
       for (const definition of definitions) {
       
@@ -75,7 +75,7 @@ bot.chat(ChatMessage.fromNotch(await sleep(500)
       //text: definition.word text: definition.definition
             
             } catch (e) {
-    if (!bot.options.Core.CorelessMode){
+    if (bot.options.Core.CorelessMode){
             const ChatMessage = require('prismarine-chat')(bot.options.version)
             bot.chat(ChatMessage.fromNotch([cmd,{ text: e.toString(), color: 'red' }]).toMotd().replaceAll('§', '&')) 
     }else {
