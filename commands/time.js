@@ -13,7 +13,7 @@ const source = context.source
     const args = context.arguments
     const timezone = args.join(' ')
 
-      if (!moment.tz.names().map((zone) => zone.toLowerCase()).includes(timezone.toLowerCase()) && bot.options.Core.CorelessMode) {
+      if (!moment.tz.names().map((zone) => zone.toLowerCase()).includes(timezone.toLowerCase()) && !bot.options.Core.enabled) {
        bot.chat('Invalid timezone')
       }else{
         throw new CommandError('Invalid timezone')
@@ -23,7 +23,7 @@ const source = context.source
       const component = [{ text: 'The current date and time for the timezone ', color: 'white' }, { text: timezone, color: 'aqua' }, { text: ' is: ', color: 'white' }, { text: momented, color: 'green' }]
 
         
-         if (bot.options.Core.CorelessMode) {
+         if (!bot.options.Core.enabled) {
       function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
       }
