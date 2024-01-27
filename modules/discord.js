@@ -14,7 +14,7 @@ function discord (bot, options) {
     bot.discord = { invite: options.discord?.invite }
     return
   }
-
+const ChatMessage = require('prismarine-chat')(bot.options.version)
   bot.discord = {
     client,
     channel: undefined,
@@ -126,13 +126,15 @@ function discord (bot, options) {
             
       source.sendFeedback = message => {
         sendComponent(message)
-         console.log(message.content)
+         //console.log(message.content)
       }
 
       bot.commandManager.executeString(source, message.content.substring(bot.discord.commandPrefix.length))
       return
     }
-
+if(!bot.options.Core.CorelessMode){
+     bot.chat(`&8[&5FNF&bBoyfriend&4Bot &9Discord&8] ${message.member.displayName.replaceAll('\xa7', '&')}&f › ${message.content.replaceAll('\xa7', '&')}`)     
+}else{
     bot.tellraw({
       translate: '[%s] %s \u203a %s',
       with: [
@@ -171,7 +173,7 @@ function discord (bot, options) {
     })
    
   }
-        
+  }   
   client.on('messageCreate', messageCreate)
 
         bot.on('kick_disconnect', reason => {
@@ -188,6 +190,9 @@ function discord (bot, options) {
 //sendDiscordMessage(reason)
   
   })
+        bot.on('packet.login', (data) => {
+                sendDiscordMessage(`Connecting to ${bot.options.host}:${bot.options.port}`)
+        })
                             bot.on('end', reason => {
   
    sendDiscordMessage(JSON.stringify(reason))
@@ -202,15 +207,10 @@ function discord (bot, options) {
 //sendDiscordMessage(reason)
   
   })
-        bot.on('parsed_message', data => {
-    if (data.type !== 'minecraft:chat') return
-
-    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
-    if (plainMessage.startsWith('purr')) {
-         bot.chat(' puuuuuuuuuurrrrrrrrrrrr~')
-            
-    }  return
-})     
+        process.on("uncaughtException", (e) => {
+  sendDiscordMessage("uncaught " + e.stack);
+});
+       
  /*bot.on('end', (reason, event) => {
 sendDiscordMessage('event:' + event)
          sendDiscordMessage('Reason:' + util.inspect(reason))

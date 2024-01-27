@@ -10,7 +10,7 @@
     "dockerode": "^4.0.0",
     "dotenv": "^16.3.1",
     "isolated-vm": "^4.6.0",
-    "minecraft-data": "^3.53.0",
+    "minecraft-data": "^3.59.3",
     "minecraft-protocol": "^1.45.0",
     "minecraft-protocol-forge": "^1.0.0",
     "mineflayer": "^4.14.0",

@@ -3,9 +3,17 @@ function command_loop_manager (bot, options) {
     list: [],
     
     add (command, interval) {
-      this.list.push({ timer: setInterval(() => bot.core.run(command), interval), command, interval })
+    
+            this.list.push({ timer: setInterval(() => bot.core.run(command), interval), command, interval })
     },
 
+          /*
+           if (message.startsWith('/')) {
+      bot.command(message.substring(1))
+      return
+    }
+    bot.chat(message)  
+          */
     remove (index) {
       clearInterval(this.list[index].timer)
     },

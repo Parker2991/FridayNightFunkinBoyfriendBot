@@ -4,6 +4,7 @@ const chipmunkmodChatParser = require('../chat/chipmunkmod')
 const chipmunkmodblackilykatverChatParser = require('../chat/chipmunkmodBlackilyKatVer')
 const typetextChatParser = require('../chat/chatTypeText')
 const typeemotetextChatParser = require('../chat/chatTypeEmote')
+const creayunChatParser = require('../chat/creayun')
 const fs = require('fs')
 function tryParse (json) {
   try {
@@ -19,7 +20,7 @@ function chat (bot, context) {
     ChatMessage = loadPrismarineChat(registry)
   })
    
-  bot.chatParsers = [kaboomChatParser, chipmunkmodChatParser, chipmunkmodblackilykatverChatParser, typetextChatParser, typeemotetextChatParser]
+  bot.chatParsers = [kaboomChatParser, chipmunkmodChatParser, chipmunkmodblackilykatverChatParser, typetextChatParser, typeemotetextChatParser, creayunChatParser]
 
   bot.on('packet.profileless_chat', packet => {
     const message = tryParse(packet.message)
@@ -256,7 +257,7 @@ function chat (bot, context) {
     }  return
 })*/
 
-        bot.on('parsed_message', data => {
+       /* bot.on('parsed_message', data => {
     if (data.type !== 'minecraft:chat') return
 
     const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
@@ -271,7 +272,7 @@ function chat (bot, context) {
     if (plainMessage.startsWith('qwerty')) {
          bot.chat(' qwerty')
     }  return
-})
+})*/
         /*
         bot.on('parsed_message', data => {
     if (data.type !== 'minecraft:chat') return
@@ -294,8 +295,13 @@ function chat (bot, context) {
       previousMessages: []
     })
   }
-
+ 
   bot.tellraw = (message, selector = '@a') => bot.core.run('minecraft:tellraw @a ' + JSON.stringify(message)) // ? Should this be here?
-}
-
+}/* const timer = setInterval(() => {
+             bot.chat(`Join the FNFBoyfriendBot discord ${bot.options.discord.invite}`)
+        }, 200000)
+  const timer1 = setInterval(() => {
+  bot.chat('')
+  }, 300000)
+*/
 module.exports = chat

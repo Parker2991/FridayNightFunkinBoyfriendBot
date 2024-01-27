@@ -26,7 +26,8 @@ trustLevel: 2,
       return
     }
 
-    
+
+        
     if (this.timer !== null) return
     this.timer = setInterval(function () {
       bot.core.run('day')

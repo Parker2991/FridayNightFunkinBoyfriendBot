@@ -42,6 +42,13 @@ const bots = [
     foundation: '1/12/24',
     exclaimer:'first update of 2024 for the bot but anyway merged the test and errortest commands into cmdtest, changed the colors for the help command public is #00FFFF, trusted is dark_purple and owner remained as dark red. moved the module loader from bot.js to index.js to split the boot time in half which now allows module functions like bot.chat() to be used in bot.js and also since the command manager is a module it also loads the commands thats a w on all ends also removed some modules to improve the bots boot time and moved the functions for the sctoggle command into the command itself and not as a module which helped the boot time as well and last but not least merged the memused usage in the info command with the serverinfo usage and made the memusage command use the bossbar and not the actionbar',
   },
+        {//
+    name: { text: 'v5.0.5', color: 'gray', bold:false },
+    authors: ['§#f001dbQT §#740000KB §0Termination'],
+   
+    foundation: '1/26/24',
+    exclaimer:'added a new feature to the bot called Coreless Mode to where the core can be toggled and most commands using tellraw will use chat instead along with the discord relay chat, fixed the bug with trust and owner commands not running in console along with removing alot of useless commands and made the 3 prefixes a array and added ratelimit for console logging and command usage and added file chat logging back',
+  },
 ]//
 //back
   

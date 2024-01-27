@@ -1,7 +1,7 @@
 const CommandError = require("../CommandModules/command_error");
 
 const path = require("path");
-const fs = require("fs/promises");
+const fs = require("fs");
 const packageJSON = require("../package.json");
 
 module.exports = {
@@ -22,16 +22,33 @@ module.exports = {
       color: "white",
       with: [{ color: "gold", text: "Info Cmd" }],
     };
-
+  function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
     const buildstring = process.env["buildstring"];
     const foundationbuildstring = process.env["FoundationBuildString"];
     const source = context.source;
-    switch (args[0]) {
+   const ChatMessage = require('prismarine-chat')(bot.options.version)
+          switch (args[0]) {
       case "version":
         const discordJSVersion = packageJSON.dependencies["discord.js"];
         const MinecraftProtocolVersion =
           packageJSON.dependencies["minecraft-protocol"];
-
+                    
+if(!bot.options.Core.CorelessMode){
+   bot.chat(ChatMessage.fromNotch(`${process.env["buildstring"]}`).toMotd().replaceAll('§', '&'))
+        await sleep(1000)
+        
+        bot.chat(`${process.env["FoundationBuildString"]}`)
+        await sleep(1000)
+        bot.chat('Bot Release: 11/22/2022')
+await sleep(1000)
+        bot.chat(`BotEngine: Node-Minecraft-Protocol @${MinecraftProtocolVersion}`)
+        await sleep(1000)
+        bot.chat(`Discord.js ${discordJSVersion}`)
+        await sleep(1000) 
+        bot.chat(`Node JS Version ${process.version}`)
+}else{
         context.source.sendFeedback({
           color: "gray",
           text: `${process.env["buildstring"]}`,
@@ -92,6 +109,7 @@ module.exports = {
           color: "gray",
           text: `Node js Version @${process.version}`,
         });
+}
         // context.source.sendFeedback({color: 'gray', text:`npm Version:@${npmVersion}`})
 
         break;
@@ -105,7 +123,10 @@ module.exports = {
         );
         break;
       case "discord":
-        source.sendFeedback({
+       if(!bot.options.Core.CorelessMode){
+               bot.chat(`${bot.options.discord.invite}`)
+       }else {
+                          source.sendFeedback({
           text: bot.options.discord.invite,
           color: "gray",
           translate: "",
@@ -123,11 +144,33 @@ module.exports = {
             value: `${bot.options.discord.invite}`,
           },
         });
-
+       }
         break;
       case "serverinfo":
         const os = require("os");
-        context.source.sendFeedback({
+       if(!bot.options.Core.CorelessMode){
+          bot.chat(`Hostname: ${os.hostname()}`)
+               await sleep(1000)
+               bot.chat(`Working Directory: ${path.join(__dirname, "..")}`)
+               await sleep(1000)
+               bot.chat(`OS architecture: ${os.arch()}`)
+               await sleep(1000)
+               bot.chat(`OS platform: ${os.platform()}`)
+               await sleep(1000)
+               bot.chat(`OS name ${os.version()}`)
+               await sleep(1000)
+               bot.chat(`Kernal Version: ${os.release()}`)
+               await sleep(1000)
+               bot.chat(`CPU cores ${os.cpus().length}`) 
+               await sleep(1000)
+               bot.chat(`CPU Model: ${os.cpus()[0].model}`)
+               await sleep(1000)
+               bot.chat(`Server Memory Usage ${Math.floor(
+            os.freemem() / 1048576)} MiB / ${Math.floor(os.totalmem() / 1048576)} MiB`)
+       }else {
+               
+       
+                          context.source.sendFeedback({
           color: "gray",
           text: `Hostname: ${os.hostname()}`,
         });
@@ -146,6 +189,10 @@ module.exports = {
         context.source.sendFeedback({
           color: "gray",
           text: `OS name: ${os.version()}`,
+        });
+                      context.source.sendFeedback({
+          color: "gray",
+          text: `Kernal Version: ${os.release()}`,
         });
         context.source.sendFeedback({
           color: "gray",
@@ -168,9 +215,66 @@ module.exports = {
             os.freemem() / 1048576,
           )} `,color:'gray'},{text: `MiB / ${Math.floor(os.totalmem() / 1048576)} MiB`, color:'gray'}],
         });
+       }
+
+                          /*
+`Server Memory Usage `, color:'gray'},{text:`${Math.floor(
+            os.freemem() / 1048576,
+          )} `,color:'gray'},{text: `MiB / ${Math.floor(os.totalmem() / 1048576)} MiB
+                          */
         break;
       case "logininfo":
-        source.sendFeedback({
+      if (!bot.options.Core.CorelessMode){
+             bot.chat(`Bot Username: ${bot.username}`) 
+              await sleep(1000)
+              bot.chat(`Bot uuid "${bot.uuid}"`)
+              await sleep(1000)
+              bot.chat(`Minecraft Java Version: ${bot.version}`)
+              await sleep(1000)
+              bot.chat(`Server: "${bot.options.host}:${bot.options.port}"`)
+              await sleep(1000)
+              bot.chat(`Prefixes: ${bot.options.commands.prefixes.join(', ')}`)
+              await sleep(1000)
+              bot.chat(`Discord Prefix: "${bot.options.discord.commandPrefix}"`)
+              await sleep(1000)
+              bot.chat(`Discord Username: "${bot.discord.client.user.username}#${bot.discord.client.user.discriminator}"`)
+              await sleep(1000)
+              bot.chat(`Discord Channel: ${bot.discord.channel.name}`)
+              await sleep(1000) 
+              bot.chat(`ConsoleServer:"${bot.console.consoleServer}"`)
+              await sleep(1000)
+              const amonger2 = bot.bots.map((eachBot) => eachBot.options.host + "\n");
+        const port2 = bot.bots.map((eachBot) => eachBot.options.port);
+
+        if (amonger2.length === 0) {
+          const list = [];
+          for (const host of bots) {
+            if (list.length !== 0) {
+              list.push(host.name);
+            }
+          }
+        }
+       bot.chat(`Servers in Config ${amonger2.length}`);
+
+
+
+              /*
+const amonger = bot.bots.map((eachBot) => eachBot.options.host + "\n");
+        const port = bot.bots.map((eachBot) => eachBot.options.port);
+
+        if (amonger.length === 0) {
+          const list = [];
+          for (const host of bots) {
+            if (list.length !== 0) {
+              list.push(host.name);
+            }
+          }
+        }
+        source.sendFeedback({ text: `Servers in Config ${amonger.length}` });
+
+                      */
+      }else{
+                          source.sendFeedback({
           text: `Bot Username: "${bot.username}"`,
           color: "gray",
         });
@@ -187,17 +291,10 @@ module.exports = {
         });
 
         source.sendFeedback({
-          text: `Main Prefix: "${bot.options.commands.MainPrefix}"`,
+          text: `Prefixes: ${bot.options.commands.prefixes.join(', ')}`,
           color: "gray",
         });
-        source.sendFeedback({
-          text: `Secondary Prefix: "${bot.options.commands.SecondaryPrefix}"`,
-          color: "gray",
-        });
-        source.sendFeedback({
-          text: `Tertiary Prefix: "${bot.options.commands.TertiaryPrefix}"`,
-          color: "gray",
-        });
+      
         source.sendFeedback({
           text: `Discord Prefix: "${bot.options.discord.commandPrefix}"`,
           color: "gray",
@@ -228,72 +325,59 @@ module.exports = {
           }
         }
         source.sendFeedback({ text: `Servers in Config ${amonger.length}` });
-        /*    if (query.length === 0) {
-      const list = []
 
-      for (const host of bots) {
-        if (list.length !== 0) list.push({ text: ', ', color: 'gray' })// list.push(info.name)
-        list.push(info.name)
-              
       }
-
-      context.source.sendFeedback([], false)
-      return
-    }*/
-        /*  
-               if (query.length === 0) {
-      const list = []
-
-      for (const info of bots) {
-        if (list.length !== 0) list.push({ text: ', ', color: 'gray' })// list.push(info.name)
-        list.push(info.name)
-              
-      }
-
-      context.source.sendFeedback(['Known bots (', bots.length, ') - ', ...list], false)
-      return
-    }
-
-               */
-
-        //real
-        /*
-                    const util = fs.readdir('./util')
-                    source.sendFeedback({text:`Util Files loaded: ${util.length}`, color:'gray'})
-  
-                     const modules = fs.readdir('./modules')
-                    source.sendFeedback({text:`Modules Files loaded: ${modules.length}`, color:'gray'})
-   const commands = fs.readdir('./commands')   
-           source.sendFeedback({text:`Commands Files loaded: ${commands.length}`, color:'gray'})
-                        const CommandModules = fs.readdir('./CommandModules')
-                                source.sendFeedback({text:`CommandModules Files loaded: ${CommandModules.length}`, color:'gray'})
-                  const chat = fs.readdir('./chat')
-                          source.sendFeedback({text:`Chat Files loaded: ${chat.length}`, color:'gray'})
-                    /*
-                     const  = '../'
-         fs.readdir(, (err, files) => {
-                             source.sendFeedback({text:` Files loaded: ${file.length}`, color:'gray'})
-         });
-         */
-
-        /*context.source.sendFeedback({
-          translate: '\n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s',
-            with: [
-            { color: "gray", text: `Bot Username: "${bot.username}"`},
-              { color: "gray", text: `Bot uuid: "${bot.uuid}"`, clickEvent: {action:"copy_to_clipboard", value: `${context.bot.uuid}`}},
-              { color: "gray", text: `Minecraft Java Version: "${bot.version}"`},
-               { color: "gray", text: `Server: "${bot.host}:${bot.port}"`},
-              { color: "gray", text: `Prefix: "${bot.options.commands.prefix}"`},
-                    { color: "gray", text: `Discord Prefix: "${bot.options.discord.commandPrefix}"`},
-              { color: "gray", text: `Discord Username: "${bot.discord.client.user.username}#${bot.discord.client.user.discriminator}"`},
-               { color: "gray", text: `ConsoleServer:"${bot.console.consoleServer}"`}
-          ]
-        });
-                    
-                  */
-        // clickevent: { action:"open_url", value: `${context.bot.discord.invite}`},
-
         break;
+            case "loaded":
+                          
+                       const util = "./util";
+                          const modules = "./modules";
+                        const commands = "./commands";
+                          const CommandModules = "./CommandModules";
+
+                          const chat = "./chat";
+                          if (!bot.options.Core.CorelessMode){
+fs.readdir(util, (err, files) => {
+  bot.chat(`Util files loaded: ${files.length}`);
+});
+                                  await sleep(1000)
+                             fs.readdir(modules, (err, files) => {
+  bot.chat(`Modules files loaded: ${files.length}`);
+});     
+                        await sleep(1000)
+                                   fs.readdir(commands, (err, files) => {
+bot.chat(`Command files loaded: ${files.length}`);
+});
+                  await sleep(1000)
+                                  fs.readdir(CommandModules, (err, files) => {
+ bot.chat(`Command Module files loaded: ${files.length}`);
+});
+                                  await sleep(1000)
+                                    fs.readdir(chat, (err, files) => {
+  bot.chat(`Chat files loaded: ${files.length}`);
+});
+                          }else {
+                    fs.readdir(util, (err, files) => {
+  source.sendFeedback({text:`Util files loaded: ${files.length}`});
+});
+                     
+                    fs.readdir(modules, (err, files) => {
+  source.sendFeedback({text:`Modules files loaded: ${files.length}`});
+});
+                    
+                    fs.readdir(commands, (err, files) => {
+  source.sendFeedback({text:`Command files loaded: ${files.length}`});
+});
+                      
+                    fs.readdir(CommandModules, (err, files) => {
+  source.sendFeedback({text:`Command Module files loaded: ${files.length}`});
+});
+                     
+                    fs.readdir(chat, (err, files) => {
+  source.sendFeedback({text:`Chat files loaded: ${files.length}`});
+});
+                          }
+                    break;
       case "test":
         // bot.tellraw('test')
         // const porta = bot.bots.map(eachBot => eachBot.options.port)
@@ -333,16 +417,32 @@ module.exports = {
         }
 
         var uptime = process.uptime();
-
+if(!bot.options.Core.CorelessMode){
+       bot.chat(`Bot Uptime: ${format(uptime)}`) 
+} else {
+                          
         source.sendFeedback({
           color: "gray",
           text: `Bot Uptime: ${format(uptime)}`,
         });
-
+}
         break;
       
       case "creators":
-        source.sendFeedback({
+        if(!bot.options.Core.CorelessMode){
+           bot.chat('Thank you all that helped!')
+                await sleep(1000)
+                bot.chat(`&4Parker&02991`)
+                await sleep(1000)
+                bot.chat('&2_ChipMC_')
+                await sleep(1000)
+                bot.chat('&echayapak')
+                await sleep(1000)
+                bot.chat('&d_yfd')
+                await sleep(1000)
+                bot.chat('&6Poopcorn (Poopbob???)')
+        }else{
+                          source.sendFeedback({
           color: "gray",
           text: "Thank you to all that helped!",
         });
@@ -448,50 +548,16 @@ module.exports = {
           },
         });
         source.sendFeedback({ text: "Poopcorn(Poopbob???)", color: "gold" });
-
-        /*
-                     text:bot.options.discord.invite,
-             color:'gray',
-             translate:"",
-             hoverEvent:{
-                     action:"show_text",
-                     value:[
-                             {
-                                     text:'click here to join!',
-                                     color:'gray',
-                                     
-                             }
-                     ]
-                     },clickEvent:{
-                              action:"open_url",value:`${bot.options.discord.invite}`
-             }
-     })
-     */
-        /*
-        context.source.sendFeedback({
-            translate: '\n %s \n %s%s \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s',
-              with: [
-                 { color: 'gray', text: 'Thank you to all that helped!' },
-          { color: 'dark_red', text: 'Parker' },
-           { color: 'black', text: '2991' },
-             
-               { color: 'dark_green', text: '_ChipMC_' },
-             
-               { color: 'yellow', text: 'chayapak' },
-    
-               { color: 'light_purple', text: '_yfd' },
-             { color: 'yellow', text: 'ChomeNS Discord Server: https://discord.gg/xdgCkUyaA4' },
-                { color: 'aqua', text: 'FNFBoyfriendBot Discord Server: https://discord.gg/GCKtG4erux' },
-              { color: 'green', text: '(sadly chip doesnt have a discord server) _ChipMC_s Website https://chipmunk.land' },
-                 { color: 'light_purple', text: '_yfds discord server: https://discord.gg/BKYKBxfDrs' },
-                 { color: 'yellow', text: 'chayapaks discord username: chayapak' },
-                 { color: 'green', text: '_ChipMC_s discord username: chipmunkmc' },
-               ]
-          });
-*/
+        }
+       
         break;
       default:
-        context.source.sendError([
+       if (!bot.options.Core.CorelessMode){
+               bot.chat('&4Invalid action')
+               await sleep(500) 
+               bot.chat('the usages are version, discord, serverinfo, logininfo, uptime, creators')
+       }
+                          context.source.sendError([
           cmd,
           { text: "Invalid action", color: "dark_red", bold: false },
         ]);

@@ -1,8 +1,9 @@
 const CommandSource = require("../CommandModules/command_source");
-//const logger = require('../util/logger')
-
+// idk if it's modules or utils though
+//modules is automatically loaded 
 function Console(bot, options, context, source) {
-  bot.console = {
+   let ratelimit = 0
+        bot.console = {
     readline: null,
     username: bot.username,
     consoleServer: "all",
@@ -36,12 +37,19 @@ function Console(bot, options, context, source) {
         // what does it have to be
 
         if (line.startsWith("")) {
-          return bot.commandManager.executeString(
+          if(!bot.options.Core.CorelessMode){
+           
+                return bot.commandManager.executeString(
+            bot.console.source,
+            "echo " + line.substring(0),       
+          )
+                        }else {
+                return bot.commandManager.executeString(
             bot.console.source,
             "console " + line.substring(0),
           );
         }
-
+        }
         //bot.commandManager.executeString(bot.console.source,  line)
       });
 
@@ -112,11 +120,11 @@ function Console(bot, options, context, source) {
         discord: false,
       });
       bot.console.source.sendFeedback = (message) => {
-       
-        const ansi = bot.getMessageAsPrismarine(message)?.toAnsi();
+      
+              const ansi = bot.getMessageAsPrismarine(message)?.toAnsi();
 
-        if (!bot.options.input) return;
-        if (!bot.options.console) return;
+        if (!bot.options.Console.input) return;
+        if (!bot.options.Console.enabled) return;
         bot.console.info(ansi);
       };
 
@@ -131,6 +139,7 @@ function Console(bot, options, context, source) {
         }
         return;
       });
+            
       bot.on("message", (message) => {
         function log(...args) {
           rl.output.write("\x1b[2K\r");
@@ -150,7 +159,7 @@ function Console(bot, options, context, source) {
         };
         const lang = require(`../util/language/lolus.json`);
         const ansi = bot.getMessageAsPrismarine(message)?.toAnsi(lang);
-        const string = bot.getMessageAsPrismarine(message)?.toString();
+        const string = bot.getMessageAsPrismarine(message)?.toString(lang);
 
         const now = new Date().toLocaleString("en-US", {
           timeZone: "America/CHICAGO",
@@ -163,11 +172,59 @@ function Console(bot, options, context, source) {
         });
 
      
-        if (!bot.options.input) return;
-        if (!bot.options.console) return;
-        bot.console.logs(`${ansi}`);
-      });
-    },
-  }; 
+       // if (!bot.options.Console.input) return;
+        if (!bot.options.Console.enabled) return;
+        
+        ratelimit++
+        setTimeout(() => {
+          ratelimit--
+        }, 1000)
+    if (ratelimit > 35) { // ,.     
+
+    bot.console.logs = function () {}
+    } else {
+ //bot.console.log(`${ansi}`);
+    //oh real
+
+              //can i change the variable name so its name isnt confusing?
+
+              bot.console.logs(`${ansi}`);
+             
+             // logger(`<${time} ${date}> [${bot.options.host}:${bot.options.port}] [LOGS]: ${string}`)
+              if (bot.console && bot.console.filelogger) { 
+                bot.console.filelogger(`<${time} ${date}> [${bot.options.host}:${bot.options.port}] [LOGS]: ${string}`)
+                      
+              }//nothing is logging to the file
+    /*
+    try{
+      
+        ratelimit++
+        setTimeout(() => {
+          ratelimit--
+        }, 1000)
+    if (ratelimit > 5) { // ,.     
+
+       source.sendFeedback({text:'You are using commands to fast!',color:'dark_red'})
+      // this isn't blocking running the command you know that right?
+    } else {
+      bot.commandManager.executeString(source, command);
+    }//oh real
+
+              //can i change the variable name so its name isnt confusing?
+}catch(e){
+        console.log(e.stack)
+
+
+        
+            //then where to move this?
+   
+    
+    };
+    */
+      };
+    })
+              }
+        }
 }
+
 module.exports = Console;

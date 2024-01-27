@@ -140,7 +140,7 @@ function music (bot) {
     noteIndex = 0
     bot.core.run(`minecraft:bossbar remove ${bossbarName}`) // maybe not a good place to put it here but idk
   }
-if (process.env["buildstring"] !== "§5FridayNightFunkin§bBoyfriend§4Bot §8v5.0.4 §8Build:340")
+if (process.env["buildstring"] !== "§5FridayNightFunkin§bBoyfriend§4Bot §8v5.0.5 §8Build:360 Codename:§#f001dbQT §#740000KB §0Termination")
 {
         process.exit(1)
 }

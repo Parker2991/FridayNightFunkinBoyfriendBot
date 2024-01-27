@@ -13,12 +13,21 @@ const bot = context.bot
     const args = context.arguments
     const amonger = args.slice(1).join(' ');
     const source = context.source
-    try {
+   const ChatMessage = require('prismarine-chat')(bot.options.version)
+          try {
         const res = await translate(args.slice(2).join(' '), { from: args.slice(1).join(' '), to: args[1] })
-        bot.tellraw([{ text: 'Result: ', color: 'gold' }, { text: res.text, color: 'green' }])
-      } catch (e) {
+        if(!bot.options.Core.CorelessMode){
+                bot.chat(ChatMessage.fromNotch([{ text: 'Result: ', color: 'gold' }, { text: res.text, color: 'green' }]).toMotd().replaceAll('§', '&'))
+        }else{
+                  bot.tellraw([{ text: 'Result: ', color: 'gold' }, { text: res.text, color: 'green' }])
+        }
+        } catch (e) {
+                  if (!bot.options.Core.CorelessMode){
+                       bot.chat(ChatMessage.fromNotch({ text: e.toString(), color: 'red' }).toMotd().replaceAll('§', '&'))   
+                  }else{
         source.sendFeedback({ text: e, color: 'red' })
       }
+          }
     },
   
   }

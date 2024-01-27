@@ -3,38 +3,48 @@
   module.exports = {
     
     bots: [
- {
-      host: "server ip here or comment this out and refer to the bot.js file",
-      version:"1.20.1",//version here
-        reconnectDelay: 6000,
-    username:username(),
-             console:true,
-        input: true,
+{
+   host: "serveriphere",
+  username:username(),
+      version:"1.20.2",
+      reconnectDelay: 6000,
+
+        Console:{
+          enabled: false,
+                filelogging:false,
+        },
+       
+       
+       commands: { 
+                     prefixes: 
+                             ["!", "!", "!"] // are those the prefixes?
+             },
       Core: {
-        customName:"core custom name here",
-         core: true,
+        customName:"corenamehere",
+         CorelessMode: false,
               interval:180000
-    },
-     discord: {
-        channelId: "discord channel ip here",
-        invite: "discord invite link here",
-        commandPrefix: "discord command prefix here"
+  },
+      discord: {
+        channelId: "discordchannelidhere",
+        invite: "discordinvitelinkhere",
+        commandPrefix: "!"
       },
-         selfcare: {
-  vanished: true,
-  unmuted: true,
-  prefix: true,
-  cspy: true,
-  tptoggle:true,
-  skin:true,
-  gmc:true,
-  op:true,
-  nickname:true,
-  username:true,
-  god: true,
+  selfcare: {
+  vanished: false,
+  unmuted: false,
+  prefix: false,
+  cspy: false,
+  tptoggle:false,
+  skin:false,
+  gmc:false,
+  op:false,
+  nickname:false,
+  username:false,
+  god: false,
   interval:500,
 }
- },
+    }, 
+      
   ]
 }
     

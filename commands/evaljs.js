@@ -14,6 +14,7 @@ trustLevel: 1,
     const source = context.source
     const args = context.arguments
     const util = require('util') 
+          const ChatMessage = require('prismarine-chat')(bot.options.version)
     const cmd = {
  translate: '[%s] ',
       bold: false,
@@ -69,18 +70,29 @@ try {
         timeout: 1000
       })
       nerd = result;
-      source.sendFeedback([cmd, { text: util.inspect(result, { stylize }) }]);
+     if(!bot.options.Core.CorelessMode){
+        bot.chat(ChatMessage.fromNotch([cmd, { text: util.inspect(result, { stylize }) }]).toMotd().replaceAll('§', '&'))     
+     }else{
+            source.sendFeedback([cmd, { text: util.inspect(result, { stylize }) }]);
+     }
     } catch (reason) {
       nerd = reason;
-      source.sendFeedback([cmd, { text: String(reason.stack), color: 'white'  }]);
+     if(!bot.options.Core.CorelessMode){
+             bot.chat(ChatMessage.fromNotch([cmd, { text: String(reason.stack), color: 'white'  }]).toMotd().replaceAll('§', '&'))
+     }else{
+            source.sendFeedback([cmd, { text: String(reason.stack), color: 'white'  }]);
       console.log(`AAA at ${reason}\n${reason.stack}`);
+    }
     }
   })();
 } catch (reason) {
-  source.sendFeedback([cmd, { text: String("UwU OwO ewwor" + reason.stack), color: 'white'  }]);
+if(!bot.options.Core.CorelessMode){
+        bot.chat(ChatMessage.fromNotch([cmd, { text: String("UwU OwO ewwor" + reason.stack), color: 'white'  }]).toMotd().replaceAll('§', '&'))
+}else{
+        source.sendFeedback([cmd, { text: String("UwU OwO ewwor" + reason.stack), color: 'white'  }]);
   console.log(`AAA at ${reason}\n${reason.stack}`);
 }
-      
+        }
         // credits to chatgpt because im lazy mabe mabe? idfk        again ty
         //
         break//
@@ -91,15 +103,21 @@ try {
     
       isolate = null
       isolate = new ivm.Isolate({ memoryLimit: 50 }) // 32 seems fine
+                        if(!bot.options.Core.CorelessMode){
+        bot.chat(ChatMessage.fromNotch([cmd, { text: 'Successfully reset the eval context', color: 'green' }]).toMotd().replaceAll('§', '&'))
+}else{
        source.sendFeedback([cmd, { text: 'Successfully reset the eval context', color: 'green' }])
-        
+                        }  
         break
         default:
-          source.sendFeedback([cmd, { text: 'Invalid option!', color: 'dark_red' }])
+        if(!bot.options.Core.CorelessMode){
+        bot.chat(ChatMessage.fromNotch([cmd, { text: 'Successfully reset the eval context', color: 'green' }]).toMotd().replaceAll('§', '&'))
+}else{
+                        source.sendFeedback([cmd, { text: 'Invalid option!', color: 'dark_red' }])
     }
   }
 }
-
+}
 
 /*
 this is typescript

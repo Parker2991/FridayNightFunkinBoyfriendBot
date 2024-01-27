@@ -249,7 +249,7 @@ const bots = [
     prefixes: [],
   },
 ];
-
+const CommandError = require('../CommandModules/command_error')
 module.exports = {
   name: "bots",
   description: ["shows a list of known bots"],
@@ -260,7 +260,9 @@ module.exports = {
     const bot = context.bot;
     if (query.length === 0) {
       const list = [];
-
+if(!bot.options.Core.CorelessMode){
+        throw new CommandError('Coreless mode is active can not execute command!')
+}else{
       for (const info of bots) {
         if (list.length !== 0) list.push({ text: ", ", color: "gray" }); // list.push(info.name)
         list.push(info.name);
@@ -272,7 +274,7 @@ module.exports = {
       );
       return;
     }
-
+    }
     for (const info of bots) {
       const plainName = String(
         context.bot.getMessageAsPrismarine(info.name),
@@ -302,5 +304,6 @@ module.exports = {
     }
     bot.tellraw([component]);
   },
-}; //it doing it just for the ones i added lol
+};
+//it doing it just for the ones i added lol
 // prob a replit moment, it probably thinks there are regexes in the strings

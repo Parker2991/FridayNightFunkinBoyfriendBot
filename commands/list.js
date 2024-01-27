@@ -5,7 +5,7 @@ module.exports = {
    description:['check the player list'],
       trustLevel: 0,
         aliases:['playerlist', 'plist', 'pl'],
-  execute (context) {
+ async execute (context) {
     const bot = context.bot
 const args = context.arguments
     const players = bot.players
@@ -31,11 +31,44 @@ throw new CommandError({translate:"Too many Arguments!", color:"red"})
     }
 
     component.pop()
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+         /*
+ for (const player of players) {
+      component.push({
+        translate: '%s \u203a %s [%s] %s',
+        with: [
+         
+          player.displayName ?? player.profile.name,
+          player.uuid,
+          {text: `Ping: ${player.latency}`, color:'green'},
+         player.gamemode
+        ]
+      })
 
+      component.push('\n')
+    }
+         */
+         if(source.sources.console){
+
+               bot.console.info(component)
+
+         }else
+                 if(!bot.options.Core.CorelessMode){
+
+        const ChatMessage = require('prismarine-chat')(bot.options.version)
+for (const player of players){
+
+        bot.chat(ChatMessage.fromNotch(await sleep(500) ?? player.displayName ?? player.profile.name ).toMotd().replaceAll('§', '&') + `\u203a ${player.uuid} Ping: [&a${player.latency}&f]`)
+}
+}else{
+          
     source.sendFeedback(component, false)
+          
   }
 }
-
+}
 
 
 

@@ -3,11 +3,8 @@ const path = require("path");
 const CommandError = require("../CommandModules/command_error.js");
 //check command_source
 //it would be both the command_source.js and command_manager.js files
-function command_manager(bot, options) {
+async function command_manager(bot, options) {
   bot.commandManager = {
-    MainPrefix: options.commands.MainPrefix ?? "default",
-    SecondaryPrefix: options.commands.SecondaryPrefix ?? "default",
-    TertiaryPrefix: options.commands.TertiaryPrefix ?? "default",
     commands: {},
     commandlist: [],
     //ohio
@@ -18,19 +15,27 @@ function command_manager(bot, options) {
         timeZone: "America/CHICAGO",
       });
       try {
-        if (!command || !command.execute)
-          throw new CommandError({
-            translate: `Unknown command %s. Type "${bot.options.commands.MainPrefix}help" for help or click on this for the command`,
+              if (!bot.options.Core.CorelessMode){
+         if (!command || !command.execute) {
+                throw new CommandError(`Unknown command ${commandName}. Type "${bot.options.commands.prefixes[0]}help" for help`)
+         }
+}else {
+        if (!command || !command.execute) // bot.options.command.prefixes[0]
+          throw new CommandError({ // sus
+            translate: `Unknown command %s. Type "${bot.options.commands.prefixes[0]}help" for help or click on this for the command`,
             with: [commandName],
-            clickEvent: bot.options.Core.customName
-              ? {
+            clickEvent: 'https://discord.gg'
+       
+              ? {//fr
+               // theme moment
                   action: "suggest_command",
-                  value: `${bot.options.commands.MainPrefix}help`,
+                  value: `${bot.options.commands.prefixes[0]}help`,
                 }
               : undefined,
           }); //ohio
-
-        if (command.trustLevel > 0) {
+              }
+         
+        if (command?.trustLevel > 0) {
           const event = source?.discordMessageEvent;
 
           const roles = event?.member?.roles?.cache;
@@ -52,15 +57,21 @@ function command_manager(bot, options) {
             });
           if (
             !source?.sources?.discord &&
+                  !source?.sources?.console &&
             command.trustLevel === 1 &&
             args[0] !== bot.hash &&
             args[0] !== bot.owner &&
             args[0] !== bot.hashing.hash
-          )
-            throw new CommandError({
+          ) if (!bot.options.Core.CorelessMode){
+         
+                  throw new CommandError('&4Invalid Hash or Invalid Owner Hash')
+                 // throw new CommandError('')
+          }else{
+                  throw new CommandError({
               text: "Invalid Hash or Invalid Owner Hash",
               color: "red",
             });
+          }
           bot.hashing.updateHash();
           const now = new Date().toLocaleString("en-US", {
             timeZone: "America/CHICAGO",
@@ -104,6 +115,7 @@ function command_manager(bot, options) {
             command.trustLevel === 2 &&
             !roles?.some((role) => role.name === "FNFBoyfriendBot Owner")
           )
+                  
             throw new CommandError({
               text: "You are not the Owner!",
               color: "dark_red",
@@ -111,45 +123,64 @@ function command_manager(bot, options) {
           const owner = `${args[0]}`;
           if (
             !source?.sources?.discord &&
+                  !source?.sources?.console &&
             command.trustLevel === 2 &&
             owner !== bot.owner
           )
+                  if (!bot.options.Core.CorelessMode){
+                
+                          throw new CommandError('&4Invalid Owner Hash')
+                  }else{
             throw new CommandError({
               text: "Invalid Owner Hash",
               color: "dark_red",
             });
-
+                  }
           if (command.trustLevel === 3 && !source?.sources?.console)
+                  if(!bot.options.Core.CorelessMode){
+                          throw new CommandError('&9This command can only be execute via console')
+                  }else{
             throw new CommandError({
               translate: "This command can only be executed via console",
               color: "blue",
             });
         }
-        return command.execute({ bot, source, arguments: args });
+        }
+        return command?.execute({ bot, source, arguments: args });
       } catch (error) {
         const now = new Date().toLocaleString("en-US", {
           timeZone: "America/CHICAGO",
         });
         bot.console.warn(error.stack); 
-        if (error instanceof CommandError) source.sendError(error._message);
-       
-        else
-          source.sendError({
+        
+              if (!bot.options.Core.CorelessMode){
+                if (error instanceof CommandError) 
+                      bot.chat(error._message)
+                      else bot.chat('a error has occured!')
+                }  else  {
+        if (error instanceof CommandError) 
+       source.sendError(error._message)
+        else source.sendError({
             translate: "An Error has occured because the bot shot itself 🔫",
             color: "red",
             hoverEvent: { action: "show_text", contents: String(error.stack) },
           });
+                }
+                        //
+         
+      
+       
         if (source.sources.discord) {
           source.sendError(error);
         }
       }
-    },
+  },
+     
   
     executeString(source, command) {
       const [commandName, ...args] = command.split(" ");
       return this.execute(source, commandName, args);
     },
-
     register(command) {
       this.commands[command.name] = command;
 

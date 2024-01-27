@@ -17,11 +17,44 @@ module.exports = {
           
           const args = context.arguments
     const bot = context.bot
-    
+     const ChatMessage = require('prismarine-chat')(bot.options.version)
           const source = context.source
-          const player = context.source.player.displayName
+          //const player = context.source.player.displayName
 //throw n
-    const component = {
+ 
+          
+          // context.source.player.displayName ?? context.source.player.profile.name,
+  /*
+       function tryParse (json) {
+  try {
+    return JSON.parse(json)
+  } catch (error) {
+    return { text: '' }
+  }
+}
+  *///obj
+     /*
+        const amogus2 = {text:`${JSON.stringify(context.source.player.displayName ?? context.source.player.profile.name)}`}
+          
+          bot.tellraw({text:'amogus ' + JSON.parse(context.source.player.displayName)}) 
+     */     //context.source.sendFeedback({text:`Hello, World!, Player: ${player}, uuid: ${uuid}, Argument: ${message}`})
+    if (!message[0]) {
+      
+            context.source.sendFeedback({text:'Message is empty', color:'red'}, false)
+            if(source.sources.console && !bot.options.Core.CorelessMode){
+                    
+            for (const eachBot of bot.bots) 
+            
+            eachBot.chat(`[${bot.options.host}:${bot.options.port}] ${ChatMessage.fromNotch(bot.options.username).toMotd().replaceAll('§', '&')} &f› ${message}`) 
+            }    
+    } else if (!bot.options.Core.CorelessMode && !source.sources.console) {
+   
+           
+            for (const eachBot of bot.bots) 
+            
+            eachBot.chat(`[${bot.options.host}:${bot.options.port}] ${ChatMessage.fromNotch(context.source.player.displayName ?? context.source.player.profile.name).toMotd().replaceAll('§', '&')} &f› ${message}`)//
+    }else if(source.sources.console){
+                    const component = {
        translate: '[%s] [%s] %s \u203a %s',
       with: [
         {
@@ -69,36 +102,84 @@ module.exports = {
               },
           
          
-context.source.player.displayName ?? context.source.player.profile.name,
+bot.username,
               
        //entry.displayName
              {text:message} 
       ]//command.split(' ')[0]
     }
           
+            
+                     for (const eachBot of bot.bots) 
+            eachBot.tellraw(component)
+            
+    }else if(bot.options.Core.CorelessMode && !source.sources.console){
+       
+                    const component = {
+       translate: '[%s] [%s] %s \u203a %s',
+      with: [
+        {
+          translate: '%s%s%s',
+          bold:false,
+          with: [
+            {
+              text: 'FNF',
+              bold: true,
+              color: 'dark_purple'
           
-          // context.source.player.displayName ?? context.source.player.profile.name,
-  /*
-       function tryParse (json) {
-  try {
-    return JSON.parse(json)
-  } catch (error) {
-    return { text: '' }
-  }
-}
-  *///obj
-     /*
-        const amogus2 = {text:`${JSON.stringify(context.source.player.displayName ?? context.source.player.profile.name)}`}
+            },
+            {
+              text: 'Boyfriend',
+              bold: true,
+              color: '#00FFFF'
+            },
+            {
+              text: 'Bot',
+              bold: true,
+              color: 'dark_red'
+            },
+          ],
+          clickEvent: bot.options.Core.customName ? { action: 'open_url', value:  bot.options.Core.customName } : undefined,
+          hoverEvent: { action: 'show_text', contents: `idfk what to put here` }
+        },
+              {
+                      text:`${bot.options.host}:${bot.options.port}`,
+                      bold:false,
+                      color:'white',
+                      translate:"",
+                      hoverEvent:{
+                              action:"show_text",
+                              value:[
+                                      {
+                                     text:`Server: ${bot.options.host}:${bot.options.port}`,
+                                              color:'white',       
+                                      }
+                              ],
+                              clickEvent:{
+                              action:"copy_to_clipboard",value:`${bot.options.host}:${bot.options.port}`}
+                      }
+              
+        
+              },
           
-          bot.tellraw({text:'amogus ' + JSON.parse(context.source.player.displayName)}) 
-     */     //context.source.sendFeedback({text:`Hello, World!, Player: ${player}, uuid: ${uuid}, Argument: ${message}`})
-    if (!message[0]) {
-      context.source.sendFeedback({text:'Message is empty', color:'red'}, false)
-    } else {
-    for (const eachBot of bot.bots) eachBot.tellraw(component)
-  }
+         
+context?.source?.player?.displayName ?? context?.source?.player?.profile?.name,
+              
+       //entry.displayName
+             {text:message} 
+      ]//command.split(' ')[0]
+    }
+          
+            
+                     for (const eachBot of bot.bots) 
+            eachBot.tellraw(component)
+           
+            //eachBot.chat(`[${bot.options.host}:${bot.options.port}] ${context?.source?.player?.profile?.name} › ${message}`)
+            
 }
 }
+}
+
 /*
  translate:"",
                       hoverEvent:{

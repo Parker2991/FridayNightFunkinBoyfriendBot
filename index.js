@@ -21,7 +21,8 @@ function load() {
     bots.push(bot);
     bot.bots = bots;
     bot.options.username;
-    bot.loadModule = (module) => module(bot, options);
+   
+          bot.loadModule = (module) => module(bot, options);
 
     for (const filename of fs.readdirSync(path.join(__dirname, "modules"))) {
       try {
@@ -89,6 +90,4 @@ async function checkConfig() {
 
 checkConfig();
 
-process.on("uncaughtException", (e) => {
-  console.log("uncaught " + e.stack);
-});
+

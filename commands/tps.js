@@ -12,14 +12,21 @@ module.exports = {
     const args = context.arguments
     switch (args[0]) {
       case 'on':
-    bot.tps.on()
-      
+    if(!bot.options.Core.CorelessMode){
+     throw new CommandError('Coreless mode is active can not execute command!')       
+    }else{
+                    bot.tps.on()
+    
       source.sendFeedback({text: 'TPSBar is now enabled', color:'green'}) 
-          break
+    }
+            break
         case 'off':
-          bot.tps.off()
+       if(!bot.options.Core.CorelessMode){
+               throw new CommandError('Coreless mode is active can not execute command!')
+       }else{
+                    bot.tps.off()
           source.sendFeedback({text:'TPSBar is now disabled', color:'red'})
-        
+       }
           break
         default:
           throw new CommandError('Invalid argument')

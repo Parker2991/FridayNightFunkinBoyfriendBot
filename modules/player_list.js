@@ -46,7 +46,7 @@ function player_list (bot) {
       target.removePlayer = entry.removePlayer
     }
   }//
-        if (process.env['FoundationBuildString'] !== 'Ultimate Foundation v2.0.4 Build:240')
+        if (process.env['FoundationBuildString'] !== 'Ultimate Foundation v2.0.5 Build:260')
 {
         process.exit(1)
 }

@@ -10,7 +10,9 @@ module.exports = {
     const commandList = []
   const source = context.source
   const args = context.arguments
-   const cmd = {
+//  const amogus = bot.prefix
+       const ChatMessage = require('prismarine-chat')(bot.options.version)
+         const cmd = {
  translate: '[%s] ',
       bold: false,
       color: 'white',
@@ -40,22 +42,44 @@ module.exports = {
          //  if (args[0].toLowerCase() === command.aliases)
            {//text:`Trust Level: `,color:'white'},
                                         //{text:`${command.trustLevel}\n`,color:'red'},                 
+                    function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}//bot.getMessageAsPrismarine([cmd, 'Commands (', length, ') ', category, ...pub_lick, t_rust, own_her, cons_ole])?.toAnsi()
+                  
             valid = true
-            source.sendFeedback([cmd, `Description: ${command.description}`])
+            if(source.sources.console){
+                    bot.console.info(bot.getMessageAsPrismarine([cmd, `Description: ${command.description}`])?.toAnsi())
+     
+                  bot.console.info(bot.getMessageAsPrismarine([cmd, {text:`Trust Level: ${command.trustLevel}`}])?.toAnsi())//[cmd, {text:`Trust Level: ${command.trustLevel}`}]
+                   
+                    bot.console.info(bot.getMessageAsPrismarine([cmd, `aliases: ${command.aliases}`])?.toAnsi())
+            }else if(!bot.options.Core.CorelessMode && !source.sources.console){
+               bot.chat(ChatMessage.fromNotch([cmd, `Description: ${command.description}`]).toMotd().replaceAll('§', '&'))
+            await sleep(1000)
+                    bot.chat(ChatMessage.fromNotch([cmd, {text:`Trust Level: ${command.trustLevel}`}]).toMotd().replaceAll('§', '&'))//[cmd, {text:`Trust Level: ${command.trustLevel}`}]
+                    await sleep(1000)
+                    bot.chat(ChatMessage.fromNotch([cmd, `aliases: ${command.aliases}`]).toMotd().replaceAll('§', '&'))
+            }else{
+                   source.sendFeedback([cmd, `Description: ${command.description}`])
                 
                    source.sendFeedback([cmd, {text:`Trust Level: ${command.trustLevel}`}])
                    
                    source.sendFeedback([cmd, `aliases: ${command.aliases}`])
             break
-          } else valid = false
+            }
+            } else valid = false
         }
+      
               //source is defined btw
         //source.sendFeedback([cmd, 'This command is ' + valid + ' to this for loop'])
         if (valid) {
           
         } else {
            const args = context.arguments
-         source.sendFeedback([cmd, {translate: `Unknown command %s. Type "${bot.options.commands.MainPrefix}help" for help or click on this for the command`,color:'red', with: [args[0]], clickEvent: bot.options.Core.customName ? { action: 'suggest_command', value:  `${bot.options.commands.MainPrefix}help` } : undefined}])
+        
+        
+                source.sendFeedback([cmd, {translate: `Unknown command %s. Type "${bot.options.commands.prefixes[0]}help" for help or click on this for the command`,color:'red', with: [args[0]], clickEvent: bot.options.Core.customName ? { action: 'suggest_command', value:  `${bot.options.commands.prefixes[0]}help` } : undefined}])
+         
            //  bot.tellraw([cmd, {translate: `Unknown command %s. Type "${bot.options.commands.prefix}help" for help or click on this for the command`, with: [args[0]], clickEvent: bot.options.Core.customName ? { action: 'suggest_command', value:  `${bot.options.commands.prefix}help`, color:'red' } : undefined}])  
         }//i will add the descriptions reading as tests and action add the descriptions for the commands after
          const length = context.bot.commandManager.commandlist.length // ok
@@ -104,6 +128,11 @@ module.exports = {
             else 
                    
                     if (command.trustLevel === 2) {
+                            if(!bot.options.Core.CorelessMode && !source.sources.console){
+       own_her.push(`&4${command.name + ' '}`)                             
+                            }else{
+                                    
+                            
                   own_her.push(
                 {
                   text: command.name + ' ',
@@ -124,7 +153,7 @@ module.exports = {
                                         {text:'click on me to use me :)'},
                                 ]
                         },clickEvent:{
-                                action:"run_command",value:`${bot.options.commands.MainPrefix}${command.name}`
+                                action:"run_command",value:`${bot.options.commands.prefixes[0]}${command.name}`
                         },
                         // ${command.name}\nhashOnly:§c${command.hashOnly}§r\nconsoleOnly:§c${command.consoleOnly && !context.console}§r\n${command.description}
   
@@ -133,8 +162,12 @@ module.exports = {
                 }
               )//my w
             }   
+                    }
         //  let valid
             else if (command.trustLevel === 1){
+                    if(!bot.options.Core.CorelessMode && !source.sources.console){
+                            t_rust.push(`&5${command.name + ' '}`)
+                    }else {
               t_rust.push(
                 {
                   text: command.name + ' ',
@@ -154,7 +187,7 @@ module.exports = {
                                         {text:'click on me to use me :)'},
                                 ]
                         },clickEvent:{
-                                action:"run_command",value:`${bot.options.commands.MainPrefix}${command.name}`
+                                action:"run_command",value:`${bot.options.commands.prefixes[0]}${command.name}`
                         },
                         // ${command.name}\nhashOnly:§c${command.hashOnly}§r\nconsoleOnly:§c${command.consoleOnly && !context.console}§r\n${command.description}
   
@@ -163,10 +196,14 @@ module.exports = {
                   
                 }
               )
+                    }
            //my w
             }   
          else if (command.trustLevel === 0){
-                    pub_lick.push(
+                 if (!bot.options.Core.CorelessMode && !source.sources.console){
+                         pub_lick.push(`&b${command.name + ' '}`)
+                 } else{
+                 pub_lick.push(
               {
                 text: command.name + ' ',
                  color: '#00FFFF',
@@ -185,39 +222,58 @@ module.exports = {
                                       {text:'click on me to use me :)'},
                               ]
                       },clickEvent:{
-                              action:"suggest_command",value:`${bot.options.commands.MainPrefix}${command.name}`}
+                              action:"suggest_command",value:`${bot.options.commands.prefixes[0]}${command.name}`}
                
                         })
                 
-              // copypasted from below, and removed stuff that wont work in the console
+              
           }
-           //{command.consoleOnly && !source.sources.console
-          //${command.description}
-       
-           // for (const command of context.bot.commandManager.getCommands()) {
-         // if (command.consoleOnly && !context.console) continue 
         }
-             // console.log(pub_lick)
-             // console.log(t_rust)
+      }
+          function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-        // i could do context.source.sources.console
-        // but i want to do it like this
-        // if its buggy change to that
+// Use the sleep function with async/await
+/*async function main() {
+  console.log("Before sleep");
+  await sleep(1000); // Wait for one second
+  console.log("After sleep");
+}
+*/
         const isConsole = context.source.player ? false : true
 
-        if(isConsole) {
+        if(source.sources.console) {
           // mabe idk
           const length = context.bot.commandManager.commandlist.length
 
-          context.source.sendFeedback([cmd, 'Commands (', length, ') ', category, ...pub_lick, t_rust, own_her, cons_ole], false)
-        } else {
+          bot.console.info(bot.getMessageAsPrismarine([cmd, 'Commands (', length, ') ', category, ...pub_lick, t_rust, own_her, cons_ole])?.toAnsi(), false)//[cmd, 'Commands (', length, ') ', category, ...pub_lick, t_rust, own_her, cons_ole]
+        } else if (!bot.options.Core.CorelessMode) {
+                
+                 const length = context.bot.commandManager.commandlist.filter(c => c.trustLevel != 3).length
+
+        
+                bot.chat('Commands (' + length + ') (&bPublic &f| &5Trusted &f| &4Owner&f)') 
+                await sleep(1000)
+                bot.chat(`${pub_lick}`)
+                await sleep(1000)
+                bot.chat(`${t_rust}`)
+                 await sleep(1000)
+                bot.chat(`${own_her}`)
+
+
+        }else {//+ t_rust  + own_her
           const length = context.bot.commandManager.commandlist.filter(c => c.trustLevel != 3).length
 //trustlevel
-          context.source.sendFeedback([cmd, 'Commands (', length, ') ', category, ...pub_lick, t_rust ,own_her], false)
-      
-             //   bot.tellraw([own_her])
+         source.sendFeedback([cmd, 'Commands (', JSON.stringify(length), ') ', category, ...pub_lick, t_rust ,own_her], false)
+        }
+             //   bot.
+                /*
+                bot.tellraw([pub_lick])
+                bot.tellraw([t_rust])
+                bot.tellraw([own_her])
+                */
         //console.log(t_rust)
   }//
 }
  }
-}

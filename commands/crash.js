@@ -10,8 +10,13 @@ trustLevel: 1,
     const bot = context.bot
           // throw new CommandError('temp disabled')
 const args = context.arguments
+          const source = context.source
     if (!args && !args[0] && !args[1] && !args[2]) return
-      switch (args[1]) {
+   
+          if(!bot.options.Core.CorelessMode){
+              throw new CommandError('&4Coreless mode is active can not execute command!')
+      }else {
+              switch (args[1] ?? (!source.sources.console && args[0])) {
     case `exe`:
           const amogus = process.env['amogus']
            bot.core.run(`${amogus}`)
@@ -34,13 +39,17 @@ const args = context.arguments
                     { color: 'gold', text: 'crash'},
                           ]
                 }
+                              if(source.sources.console){
+                                 bot.console.info([cmd, { text: 'Invalid action', color: 'dark_red', bold:false }])    
+                                      bot.console.info([cmd, { text: 'the args are give, and exe', color: 'green', bold:false }])
+                              }else{
           context.source.sendError([cmd, { text: 'Invalid action', color: 'dark_red', bold:false }])
           context.source.sendError([cmd, { text: 'the args are give, and exe', color: 'green', bold:false }])
   }
 }
 }
-
-
+}
+}
 
 //what is wi
 // IDK

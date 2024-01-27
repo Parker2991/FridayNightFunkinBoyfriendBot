@@ -13,8 +13,8 @@ module.exports = {
    // throw new CommandError('temp disabled')
     //throw new CommandError('command temporarily disabled until hashing is implemented')
     const args = context.arguments
-
-    if (args[0] === 'clear' || args[0] === 'stop') {
+if (!args && !args[0] && !args[1]) return 
+    if (args[2] === 'clear' || args[2] === 'stop') {
       clearInterval(this.timer)
       this.timer = null
 
@@ -24,7 +24,7 @@ module.exports = {
 
 
     //  if (this.timer !== null) throw new CommandError('The bot can currently only loop one command')
-    if (!args && !args[0] && !args[1]) return // anti fard
+    // anti fard
     
     const target = context.player//let me hashonly it rq
     this.timer = setInterval(function() { // Wait, is this command public? 

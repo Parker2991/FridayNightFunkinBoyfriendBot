@@ -41,10 +41,14 @@ module.exports = {
         { color: "green", text: `${message}` },
       ],
     };
-
+//if(!bot.options.Core.enabled){
+  //      throw new CommandError('&4Will not work because the core is not enabled please use the echo command')
+//}else{ 
     bot.tellraw([prefix]);
-  },
+}
+ // },
 };
+
 //[%s] %s › %s
 //was it showing like that before?
 // just do text bc too sus rn ig

@@ -81,7 +81,7 @@ async function command_core (bot, options) {
     }  return
 })
 */
-  if (!bot.options.Core.core) return
+  if (!bot.options.Core.CorelessMode) return
   bot.on('move', () => {
     bot.core.move(bot.position)
    //setTimeout(() => bot.core.run('say hi'), 100)

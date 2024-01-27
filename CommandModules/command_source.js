@@ -1,10 +1,9 @@
 class CommandSource {
-  constructor (player, sources, hash, owner, discordMessageEvent = null, consoleOnly, name, profile, bot) {//this worked just fine in v4.3.4
-   //does it get defined in discord thingy wherever dat is
-   // sus
-       
-    this.player = player
-     
+  constructor (player, sources, hash, owner, discordMessageEvent = null, consoleOnly, name, profile, bot, prefix = "~") {
+    this.player = player//kaboom on crack!
+   // idk fr // mabe
+   // /shrug
+     //am i good to restart it?
     this.sources = sources
           this.profile = bot
     this.hash = hash
@@ -12,14 +11,15 @@ class CommandSource {
             this.owner = owner
     this.consoleOnly = consoleOnly
    this.discordMessageEvent = discordMessageEvent
+   this.prefix = prefix
          
         
   }
 
   sendFeedback () {}
-
   sendError (message) {
     this.sendFeedback([{ text: '', color: 'red' }, message], false)
+           
   }
 }
 

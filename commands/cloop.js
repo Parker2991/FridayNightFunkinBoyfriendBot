@@ -1,4 +1,4 @@
-const CommandError = require('../CommandModules/command_error')
+ const CommandError = require('../CommandModules/command_error')
 module.exports = {
   name: 'cloop',
 //hashOnly: true, 
@@ -7,20 +7,26 @@ module.exports = {
       trustLevel: 1,
    description:['command loop commands, the args are add, remove, clear, and list'],
         aliases:['commandloop'],
-  execute (context, selector) {
+ execute (context, selector) {
     const args = context.arguments
     const bot = context.bot
     const source = context.source
      if (!args && !args[0] && !args[1] && !args[2] && !args[3]) return
        
           // throw new CommandError('temp disabled')
+           
+         
     switch (selector, args[1]) {
       case 'add':
-        if (parseInt(args[2]) === NaN) source.sendFeedback({ text: 'Invalid interval', color: 'red' }, false)
+       
+                    if (parseInt(args[2]) === NaN) source.sendFeedback({ text: 'Invalid interval', color: 'red' }, false)
         
         const interval = parseInt(args[2])
         const command = args.slice(3).join(' ')
-        
+         if(!bot.options.Core.CorelessMode){
+          throw new CommandError('Coreless mode is active can not execute command!')      
+           
+        } else{
         bot.cloop.add(command, interval)
 
         source.sendFeedback({
@@ -28,7 +34,8 @@ module.exports = {
           color:'green',
           with: [ command, interval ]
         })
-        
+        }
+                    
         break
       case 'remove':
         if (parseInt(args[2]) === NaN) source.sendFeedback({ text: 'Invalid index', color: 'red' }, false)
@@ -78,11 +85,12 @@ module.exports = {
           with: [ bot.cloop.list.length ]
         })
         component.push('\n')
-        component.push(listComponent)
+
+        
 
         source.sendFeedback(component, true)
 //console.log(`tellraw @a ${JSON.stringify(component)}`)
-        
+  
         break
       default:
         source.sendFeedback({ text: 'Invalid action', color: 'red' })
