@@ -52,7 +52,7 @@ function sleep(ms) {
          */
          if(source.sources.console){
 
-               bot.console.info(component)
+               bot.console.info((bot.getMessageAsPrismarine(component)?.toAnsi())
 
          }else
                  if(!bot.options.Core.CorelessMode){
