@@ -260,7 +260,7 @@ module.exports = {
     const bot = context.bot;
     if (query.length === 0) {
       const list = [];
-if(!bot.options.Core.CorelessMode){
+if(bot.options.Core.CorelessMode){
         throw new CommandError('Coreless mode is active can not execute command!')
 }else{
       for (const info of bots) {
