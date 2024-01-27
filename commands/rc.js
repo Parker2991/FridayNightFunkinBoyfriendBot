@@ -7,7 +7,7 @@ module.exports = {
   execute (context) {
      const bot = context.bot
 
-if (!bot.options.Core.CorelessMode){
+if (bot.options.Core.CorelessMode){
         throw new CommandError('&4Could not fill core because Coreless mode is active!')
 }else {
           
