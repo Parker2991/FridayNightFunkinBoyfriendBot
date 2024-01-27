@@ -23,7 +23,7 @@ module.exports = {
         
         const interval = parseInt(args[2])
         const command = args.slice(3).join(' ')
-         if(!bot.options.Core.CorelessMode){
+         if(bot.options.Core.CorelessMode){
           throw new CommandError('Coreless mode is active can not execute command!')      
            
         } else{
