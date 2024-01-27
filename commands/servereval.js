@@ -24,7 +24,7 @@ function sleep(ms) {
                 bot.console.info({ text: util.inspect(eval(args.slice(0).join(' ')), { stylize }).substring(0, 32700) })
                 bot.console.info({ text: `Script input: ${script}` })
         } else
-                  if(bot.options.Core.CorelessMode && !source.sources.console){
+                  if(!bot.options.Core.enabled && !source.sources.console){
          
                 bot.chat(ChatMessage.fromNotch(await sleep(500) ?? { text: util.inspect(eval( args.slice(1).join(' ')), { stylize }).substring(0, 32700) }).toMotd().replaceAll('§', '&'))
         }else {
@@ -34,7 +34,7 @@ function sleep(ms) {
            source.sendFeedback({ text: `Script input: ${script}` })
         }
         } catch (err) {
-     if(bot.options.Core.CorelessMode &&  !source.sources.console){
+     if(!bot.options.Core.enabled &&  !source.sources.console){
            bot.chat(`&4${err.message}`)  
      }else if(source.sources.console){
 bot.console.warn({ text: err.message, color: 'red' })
