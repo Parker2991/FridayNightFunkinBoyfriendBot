@@ -14,7 +14,7 @@ const source = context.source
     const x = between(-1_000_000, 1_000_000)
     const y = 100
     const z = between(-1_000_000, 1_000_000)
-if (bot.options.Core.CorelessMode){
+if (!bot.options.Core.enabled){
  throw new CommandError('Coreless mode is active can not execute command!')       
 }else{
           source.sendFeedback(`Randomly Teleported: ${sender.profile.name} to x:${x} y:${y} z:${z} `)
