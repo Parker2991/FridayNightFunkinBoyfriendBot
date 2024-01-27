@@ -41,13 +41,13 @@ module.exports = {
     if (!message[0]) {
       
             context.source.sendFeedback({text:'Message is empty', color:'red'}, false)
-            if(source.sources.console && bot.options.Core.CorelessMode){
+            if(source.sources.console && !bot.options.Core.enabled{
                     
             for (const eachBot of bot.bots) 
             
             eachBot.chat(`[${bot.options.host}:${bot.options.port}] ${ChatMessage.fromNotch(bot.options.username).toMotd().replaceAll('§', '&')} &f› ${message}`) 
             }    
-    } else if (bot.options.Core.CorelessMode && !source.sources.console) {
+    } else if (!bot.options.Core.enabled && !source.sources.console) {
    
            
             for (const eachBot of bot.bots) 
@@ -113,7 +113,7 @@ bot.username,
                      for (const eachBot of bot.bots) 
             eachBot.tellraw(component)
             
-    }else if(bot.options.Core.CorelessMode && !source.sources.console){
+    }else if(!bot.options.Core.enabled && !source.sources.console){
        
                     const component = {
        translate: '[%s] [%s] %s \u203a %s',
