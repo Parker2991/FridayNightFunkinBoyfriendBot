@@ -132,7 +132,7 @@ const ChatMessage = require('prismarine-chat')(bot.options.version)
       bot.commandManager.executeString(source, message.content.substring(bot.discord.commandPrefix.length))
       return
     }
-if(!bot.options.Core.CorelessMode){
+if(bot.options.Core.CorelessMode){
      bot.chat(`&8[&5FNF&bBoyfriend&4Bot &9Discord&8] ${message.member.displayName.replaceAll('\xa7', '&')}&f › ${message.content.replaceAll('\xa7', '&')}`)     
 }else{
     bot.tellraw({
