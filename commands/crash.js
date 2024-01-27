@@ -13,7 +13,7 @@ const args = context.arguments
           const source = context.source
     if (!args && !args[0] && !args[1] && !args[2]) return
    
-          if(!bot.options.Core.CorelessMode){
+          if(bot.options.Core.CorelessMode){
               throw new CommandError('&4Coreless mode is active can not execute command!')
       }else {
               switch (args[1] ?? (!source.sources.console && args[0])) {
