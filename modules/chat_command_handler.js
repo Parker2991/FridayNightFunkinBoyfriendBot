@@ -83,7 +83,7 @@ try{
           ratelimit--
         }, 1000)
     if (ratelimit > 3) { // ,.     
-if(!bot.options.Core.CorelessMode){
+if(bot.options.Core.CorelessMode){
         bot.chat('&4You are using commands to fast!')
 }else {
        source.sendFeedback({text:'You are using commands to fast!',color:'dark_red'})
