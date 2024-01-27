@@ -53,7 +53,7 @@ module.exports = {
                   bot.console.info(bot.getMessageAsPrismarine([cmd, {text:`Trust Level: ${command.trustLevel}`}])?.toAnsi())//[cmd, {text:`Trust Level: ${command.trustLevel}`}]
                    
                     bot.console.info(bot.getMessageAsPrismarine([cmd, `aliases: ${command.aliases}`])?.toAnsi())
-            }else if(bot.options.Core.CorelessMode && !source.sources.console){
+            }else if(!bot.options.Core.enabled && !source.sources.console){
                bot.chat(ChatMessage.fromNotch([cmd, `Description: ${command.description}`]).toMotd().replaceAll('§', '&'))
             await sleep(1000)
                     bot.chat(ChatMessage.fromNotch([cmd, {text:`Trust Level: ${command.trustLevel}`}]).toMotd().replaceAll('§', '&'))//[cmd, {text:`Trust Level: ${command.trustLevel}`}]
@@ -128,7 +128,7 @@ module.exports = {
             else 
                    
                     if (command.trustLevel === 2) {
-                            if(bot.options.Core.CorelessMode && !source.sources.console){
+                            if(!bot.options.Core.enabled && !source.sources.console){
        own_her.push(`&4${command.name + ' '}`)                             
                             }else{
                                     
@@ -165,7 +165,7 @@ module.exports = {
                     }
         //  let valid
             else if (command.trustLevel === 1){
-                    if(bot.options.Core.CorelessMode && !source.sources.console){
+                    if(!bot.options.Core.enabled && !source.sources.console){
                             t_rust.push(`&5${command.name + ' '}`)
                     }else {
               t_rust.push(
@@ -200,7 +200,7 @@ module.exports = {
            //my w
             }   
          else if (command.trustLevel === 0){
-                 if (bot.options.Core.CorelessMode && !source.sources.console){
+                 if (!bot.options.Core.enabled && !source.sources.console){
                          pub_lick.push(`&b${command.name + ' '}`)
                  } else{
                  pub_lick.push(
@@ -248,7 +248,7 @@ module.exports = {
           const length = context.bot.commandManager.commandlist.length
 
           bot.console.info(bot.getMessageAsPrismarine([cmd, 'Commands (', length, ') ', category, ...pub_lick, t_rust, own_her, cons_ole])?.toAnsi(), false)//[cmd, 'Commands (', length, ') ', category, ...pub_lick, t_rust, own_her, cons_ole]
-        } else if (bot.options.Core.CorelessMode) {
+        } else if (!bot.options.Core.enabled) {
                 
                  const length = context.bot.commandManager.commandlist.filter(c => c.trustLevel != 3).length
 
