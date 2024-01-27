@@ -55,7 +55,7 @@ function sleep(ms) {
                bot.console.info((bot.getMessageAsPrismarine(component)?.toAnsi())
 
          }else
-                 if(!bot.options.Core.CorelessMode){
+                 if(!bot.options.Core.enabled){
 
         const ChatMessage = require('prismarine-chat')(bot.options.version)
 for (const player of players){
