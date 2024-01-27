@@ -12,7 +12,7 @@ module.exports = {
     const args = context.arguments
     switch (args[0]) {
       case 'on':
-    if(bot.options.Core.CorelessMode){
+    if(!bot.options.Core.enabled){
      throw new CommandError('Coreless mode is active can not execute command!')       
     }else{
                     bot.tps.on()
@@ -21,7 +21,7 @@ module.exports = {
     }
             break
         case 'off':
-       if(bot.options.Core.CorelessMode){
+       if(!bot.options.Core.enabled){
                throw new CommandError('Coreless mode is active can not execute command!')
        }else{
                     bot.tps.off()
