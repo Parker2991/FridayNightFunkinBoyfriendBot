@@ -16,7 +16,7 @@ let tag = 'bruhify'
         component.push({ text: character, color: `#${color}` })
         hue = (hue + increment) % 360
       }
-                 if (bot.options.Core.CorelessMode){
+                 if (!bot.options.Core.enabled){
                          bot.chat(ChatMessage.fromNotch(component).toMotd().replaceAll('§', '&'))
                          startHue = (startHue + increment) % 360
                  }else{
