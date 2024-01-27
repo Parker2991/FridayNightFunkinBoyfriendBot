@@ -37,7 +37,7 @@ function Console(bot, options, context, source) {
         // what does it have to be
 
         if (line.startsWith("")) {
-          if(!bot.options.Core.CorelessMode){
+          if(bot.options.Core.CorelessMode){
            
                 return bot.commandManager.executeString(
             bot.console.source,
