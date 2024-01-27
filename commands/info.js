@@ -35,7 +35,7 @@ module.exports = {
         const MinecraftProtocolVersion =
           packageJSON.dependencies["minecraft-protocol"];
                     
-if(!bot.options.Core.CorelessMode){
+if(bot.options.Core.CorelessMode){
    bot.chat(ChatMessage.fromNotch(`${process.env["buildstring"]}`).toMotd().replaceAll('§', '&'))
         await sleep(1000)
         
@@ -123,7 +123,7 @@ await sleep(1000)
         );
         break;
       case "discord":
-       if(!bot.options.Core.CorelessMode){
+       if(bot.options.Core.CorelessMode){
                bot.chat(`${bot.options.discord.invite}`)
        }else {
                           source.sendFeedback({
@@ -148,7 +148,7 @@ await sleep(1000)
         break;
       case "serverinfo":
         const os = require("os");
-       if(!bot.options.Core.CorelessMode){
+       if(bot.options.Core.CorelessMode){
           bot.chat(`Hostname: ${os.hostname()}`)
                await sleep(1000)
                bot.chat(`Working Directory: ${path.join(__dirname, "..")}`)
@@ -224,7 +224,7 @@ await sleep(1000)
                           */
         break;
       case "logininfo":
-      if (!bot.options.Core.CorelessMode){
+      if (bot.options.Core.CorelessMode){
              bot.chat(`Bot Username: ${bot.username}`) 
               await sleep(1000)
               bot.chat(`Bot uuid "${bot.uuid}"`)
@@ -336,7 +336,7 @@ const amonger = bot.bots.map((eachBot) => eachBot.options.host + "\n");
                           const CommandModules = "./CommandModules";
 
                           const chat = "./chat";
-                          if (!bot.options.Core.CorelessMode){
+                          if (bot.options.Core.CorelessMode){
 fs.readdir(util, (err, files) => {
   bot.chat(`Util files loaded: ${files.length}`);
 });
@@ -417,7 +417,7 @@ bot.chat(`Command files loaded: ${files.length}`);
         }
 
         var uptime = process.uptime();
-if(!bot.options.Core.CorelessMode){
+if(bot.options.Core.CorelessMode){
        bot.chat(`Bot Uptime: ${format(uptime)}`) 
 } else {
                           
@@ -552,11 +552,11 @@ if(!bot.options.Core.CorelessMode){
        
         break;
       default:
-       if (!bot.options.Core.CorelessMode){
+       if (bot.options.Core.CorelessMode){
                bot.chat('&4Invalid action')
                await sleep(500) 
                bot.chat('the usages are version, discord, serverinfo, logininfo, uptime, creators')
-       }
+       }else{
                           context.source.sendError([
           cmd,
           { text: "Invalid action", color: "dark_red", bold: false },
@@ -569,6 +569,7 @@ if(!bot.options.Core.CorelessMode){
             bold: false,
           },
         ]);
+       }
     }
   },
 };
