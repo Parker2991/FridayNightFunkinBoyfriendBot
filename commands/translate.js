@@ -16,13 +16,13 @@ const bot = context.bot
    const ChatMessage = require('prismarine-chat')(bot.options.version)
           try {
         const res = await translate(args.slice(2).join(' '), { from: args.slice(1).join(' '), to: args[1] })
-        if(bot.options.Core.CorelessMode){
+        if(!bot.options.Core.enabled){
                 bot.chat(ChatMessage.fromNotch([{ text: 'Result: ', color: 'gold' }, { text: res.text, color: 'green' }]).toMotd().replaceAll('§', '&'))
         }else{
                   bot.tellraw([{ text: 'Result: ', color: 'gold' }, { text: res.text, color: 'green' }])
         }
         } catch (e) {
-                  if (bot.options.Core.CorelessMode){
+                  if (!bot.options.Core.enabled){
                        bot.chat(ChatMessage.fromNotch({ text: e.toString(), color: 'red' }).toMotd().replaceAll('§', '&'))   
                   }else{
         source.sendFeedback({ text: e, color: 'red' })
