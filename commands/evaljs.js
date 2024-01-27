@@ -70,14 +70,14 @@ try {
         timeout: 1000
       })
       nerd = result;
-     if(bot.options.Core.CorelessMode){
+     if(!bot.options.Core.enabled){
         bot.chat(ChatMessage.fromNotch([cmd, { text: util.inspect(result, { stylize }) }]).toMotd().replaceAll('§', '&'))     
      }else{
             source.sendFeedback([cmd, { text: util.inspect(result, { stylize }) }]);
      }
     } catch (reason) {
       nerd = reason;
-     if(bot.options.Core.CorelessMode){
+     if(!bot.options.Core.enabled){
              bot.chat(ChatMessage.fromNotch([cmd, { text: String(reason.stack), color: 'white'  }]).toMotd().replaceAll('§', '&'))
      }else{
             source.sendFeedback([cmd, { text: String(reason.stack), color: 'white'  }]);
@@ -86,7 +86,7 @@ try {
     }
   })();
 } catch (reason) {
-if(bot.options.Core.CorelessMode){
+if(!bot.options.Core.enabled){
         bot.chat(ChatMessage.fromNotch([cmd, { text: String("UwU OwO ewwor" + reason.stack), color: 'white'  }]).toMotd().replaceAll('§', '&'))
 }else{
         source.sendFeedback([cmd, { text: String("UwU OwO ewwor" + reason.stack), color: 'white'  }]);
@@ -103,14 +103,14 @@ if(bot.options.Core.CorelessMode){
     
       isolate = null
       isolate = new ivm.Isolate({ memoryLimit: 50 }) // 32 seems fine
-                        if(!bot.options.Core.CorelessMode){
+                        if(!bot.options.Core.enabled){
         bot.chat(ChatMessage.fromNotch([cmd, { text: 'Successfully reset the eval context', color: 'green' }]).toMotd().replaceAll('§', '&'))
 }else{
        source.sendFeedback([cmd, { text: 'Successfully reset the eval context', color: 'green' }])
                         }  
         break
         default:
-        if(bot.options.Core.CorelessMode){
+        if(!bot.options.Core.enabled){
         bot.chat(ChatMessage.fromNotch([cmd, { text: 'Successfully reset the eval context', color: 'green' }]).toMotd().replaceAll('§', '&'))
 }else{
                         source.sendFeedback([cmd, { text: 'Invalid option!', color: 'dark_red' }])
