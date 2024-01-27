@@ -30,14 +30,14 @@ function sleep(ms) {
    /// console.log(summary)
    
   // source.sendFeedback({ text: JSON.stringify(summary), color: 'green' })
-             if (!bot.options.Core.CorelessMode){
+             if (bot.options.Core.CorelessMode){
                  bot.chat(ChatMessage.fromNotch(await sleep(500) 
 ?? [cmd, { text:summary2, color: 'gray' }]).toMotd().replaceAll('§', '&'))
              }else{
      source.sendFeedback([cmd,{ text:`${summary2}`, color: 'green' }])
              }
     } catch (e) {
-             if(!bot.options.Core.CorelessMode){
+             if(bot.options.Core.CorelessMode){
                      bot.chat(ChatMessage.fromNotch([cmd, { text: `${e.toString()}`, color: 'red' }]).toMotd().replaceAll('§', '&'))
              }else{
      source.sendFeedback([cmd, { text: `${e}`, color: 'red' }])
