@@ -127,7 +127,7 @@ async function command_manager(bot, options) {
             command.trustLevel === 2 &&
             owner !== bot.owner
           )
-                  if (!bot.options.Core.CorelessMode){
+                  if (bot.options.Core.CorelessMode){
                 
                           throw new CommandError('&4Invalid Owner Hash')
                   }else{
@@ -137,7 +137,7 @@ async function command_manager(bot, options) {
             });
                   }
           if (command.trustLevel === 3 && !source?.sources?.console)
-                  if(!bot.options.Core.CorelessMode){
+                  if(bot.options.Core.CorelessMode){
                           throw new CommandError('&9This command can only be execute via console')
                   }else{
             throw new CommandError({
@@ -153,7 +153,7 @@ async function command_manager(bot, options) {
         });
         bot.console.warn(error.stack); 
         
-              if (!bot.options.Core.CorelessMode){
+              if (bot.options.Core.CorelessMode){
                 if (error instanceof CommandError) 
                       bot.chat(error._message)
                       else bot.chat('a error has occured!')
