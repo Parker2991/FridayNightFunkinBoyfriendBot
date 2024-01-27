@@ -61,7 +61,7 @@ context.source.player.displayName ?? context.source.player.profile.name,
 
                  //ChatMessage.fromNotch(`${process.env["buildstring"]}`).toMotd().replaceAll('§', '&')
                  
-                 if (!bot.options.Core.CorelessMode){
+                 if (bot.options.Core.CorelessMode){
                  const ChatMessage = require('prismarine-chat')(bot.options.version)
                          bot.chat(`Hello, World!, Player: ${ChatMessage.fromNotch(context.source.player.displayName ?? context.source.player.profile.name).toMotd().replaceAll('§', '&')}, uuid: ${context.source.player.uuid}, Argument: ${args.slice(1).join(' ')}`)       
                          
@@ -87,7 +87,7 @@ bot.tellraw([component])
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
                   default:
-                 if (!bot.options.Core.CorelessMode){
+                 if (bot.options.Core.CorelessMode){
                     bot.chat('&4Invalid action')     
                           sleep(500)
                          bot.chat('the usages are msg and error')
