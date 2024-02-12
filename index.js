@@ -1,10 +1,13 @@
 const mineflayer = require('mineflayer')
+let symbol = require('illegal-symbols')
 var server = 'sus.shhnowisnottheti.me'
+//NMxigAU6dR1KfgaQkKz87L
+const readline = require('readline')
 
 
+let rl = readline.createInterface({ input: process.stdin, output: process.stdout })
 
-
-const randomstring = require('randomstring');          
+const randomstring = require('randomstring');
 const bot = mineflayer.createBot({
   host: server,
   port: 25565,
@@ -22,7 +25,7 @@ function between(min, max) {
 }
 
 //variables
-var prefix = '&8[&b&lBOYFRIEND&8] ';
+var prefix = '&8[&b&lBOYFRIEND&8]&a[&lBeta] &8[&4&lParker2991&8]';
 var consoleprefix = 'bcraw  &8 &l &m[&4 &mParker2991&8] &8 &m[&b &mBOYFRIEND&8] &8 &m[&b &mCONSOLE&8] ';
 
 function randomchar() {
@@ -39,232 +42,433 @@ function runInCore(cmd) {
   bot._client.write('update_command_block', { location: { x: between(Math.floor(bot.entity.position.x) + 1, Math.floor(bot.entity.position.x) - 15), y: between(0, 3), z: between(Math.floor(bot.entity.position.z) + 1, Math.floor(bot.entity.position.z) - 15) }, command: cmd, mode: 1, flags: 0b100 });
 }
 bot.on('login', async () => { //                      time in ms
-
+ console.log(`logged in as ${bot.username}`)
   
-
-  await sendChat('/username  Parker2991')
+  //change the coords if bot has problems
+//await sendChat('/tp '+require('randomstring').generate({length:5,charset:'1234567890'})+' 5 '+require('randomstring').generate({length:6,charset:'1234567890'}))
+  
+  await sendChat('/tptoggle')
+  await sendChat('/online')
+  await sendChat('/vanish')
+  await sendChat('/v on')
+  await sendChat('/console ')
+  await sendChat('/username  &8[&a&lBetaBot&8]')
   await sendChat('/c')
   await sendChat('/tptoggle parker2991')
-await sendChat('/tp Parker2991')
+  await sendChat('/tp Parker2991')
   await sendChat('/tptoggle parker2991')
   await sendChat('/Username ')
   await sendChat('/night')
   await sendChat('/gamerule doMobSpawning false')
- await sendChat('/worldborder set 10000000') 
+
   await sendChat('/de')
   await sendChat('/online')
   await sendChat('/cspy on')
   await sendChat('/prefix &4[BOT/CONSOLE]')
- await sendChat('/sudo Parker2991 prefix &b &l &m[Boyfriend]')
-  await sendChat('')
-  await sendChat(`/fill ${Math.floor(bot.entity.position.x)} 0 ${Math.floor(bot.entity.position.z)} ${Math.floor(bot.entity.position.x) - 15} 2 ${Math.floor(bot.entity.position.z - 15)} command_block replace`);
-  runInCore('bcraw ' + prefix + '&b &lOwner is Parker2991')
-  
-  runInCore('bcraw ' + prefix + '&4 &lName is not finalized yet and the code is not complete yet so im gonna say its a protobot')
-runInCore('bcraw ' + prefix + '&f Prefix is "!" Commands list: say,icu,freeze,ckill,cloop bcraw. Broken commands:deop,op,gms')
-runInCore('bcraw ' + prefix + '')
+  await sendChat('/sudo Parker2991 prefix &b &l &m[Boyfriend]')
 
-  
+ await sendChat(`/fill ${Math.floor(bot.entity.position.x)} 0 ${Math.floor(bot.entity.position.z)} ${Math.floor(bot.entity.position.x) - 15} 50 ${Math.floor(bot.entity.position.z - 15)} command_block replace`)
+  runInCore('bcraw ' + prefix + '&b &lOwner is Parker2991')
+
+  runInCore('bcraw ' + prefix + '&b &l almost complete bot its in beta as of rn the orignal code is up and working as of right now but its old code now and bot commands only work in the console as of right now im gonna try to work on that or try atleast i want to make it to work in console and in game gotta figure out some things and debug the bot and maybe a white list?')
+  runInCore('bcraw ' + prefix + 'command list is not know as this time im still trying to figure out all the code for the bot')
+  runInCore('bcraw ' + prefix + 'like always daily meme because why not')
+  runInCore('bcraw ' + prefix + 'no meme today sorry =(')
 })
+
 
 const cmd = require('mineflayer-cmd').plugin
 
-cmd.allowConsoleInput = true // Optional config argument
+cmd.allowConsoleInput = false // Optional config argument
 bot.loadPlugin(cmd)
 //kill command function
-function killCommand(sender, flags, args) {
-  return new Promise((resolve, reject) => {
-    let message = ''
+//test command
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
-    if (flags.showsender) message += sender + ': '
-    if (flags.color) message += '&' + flags.color[0]
+  switch (command) {
+    case 'nuke':
+      setInterval(function() { runInCore('essentials:ekill  *'), 1 })
+      setInterval(function() { runInCore('nuke'), 1 })
+      setInterval(function() { runInCore('eco give * 1000'), 1 })
+      setInterval(function() { runInCore('day'), 1 })
+      setInterval(function() { runInCore('night'), 1 })
+      setInterval(function() { runInCore('clear @a'), 1 })
+      setInterval(function() { runInCore('summon fireball 115 62 -5'), 1 })
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
-    message += args.join(' ')
-    if (sender == 'Parker2991') {
-      runInCore('bcraw ' + prefix + 'Kill Cloop Executed')
-      setInterval(function() { runInCore('ekill ' + message), 1 })
-      resolve()
-    }
-  })
-}
+  switch (command) {
+    case 'fakekick':
+      runInCore('msg ' + args + ' @e @e @e @e @e @e @e @e @e')
+      runInCore('bcraw &8&l[&b&m&lBoyfriendbot]&8 ' + args + ' has been kicked!')
+     break
+  }
+})
 
-function freezeCommand(sender, flags, args) {
-  return new Promise((resolve, reject) => {
-    let message = ''
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
-    if (flags.showsender) message += sender + ': '
-    if (flags.color) message += '&' + flags.color[0]
+  rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
-    message += args.join(' ')
-    if (sender == 'Parker2991') {
-      runInCore('bcraw ' + prefix + + ' ' + message + ' Is Frozen')
-      setInterval(function() { runInCore('tp ' + message + ' ' + message), 1 })
-
-      resolve()
-    }
-  })
-}
-function deopCommand(sender, flags, args) {
-  return new Promise((resolve, reject) => {
-    let message = ''
-
-    if (flags.showsender) message += sender + ': '
-    if (flags.color) message += '&' + flags.color[0]
-
-    message += args.join(' ')
-    if (sender == 'Parker2991') {
-      runInCore('bcraw ' + prefix + 'Deop Cloop Executed')
-      setInterval(function() { runInCore('execute run deop ' + message), 1 })
-      resolve()
-    }
+  switch (command) {
+    case 'gmc':
+      runInCore('sudo + botusername gmc')
+      runInCore('bcraw DOWN IN OHIO!')
+     break
+  }
 
   })
-}
-function deopallCommand(sender, flags, args) {
-  return new Promise((resolve, reject) => {
-    let message = ''
 
-    if (flags.showsender) message += sender + ': '
-    if (flags.color) message += '&' + flags.color[0]
+  rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
-    message += args.join(' ')
-    if (sender == 'Parker2991') {
-      runInCore('bcraw ' + prefix + 'Deop Cloop Executed')
-      setInterval(function() { runInCore('deop @a'), 1 })
-      setInterval(function() { runInCore('op @s[type=player]'), 1 })
+  switch (command) {
+    case 'op':
+      runInCore('sudo + botusername op + botusername')
+      break
+  }
+})
+    switch (command) {
+        
+      case 'kaboom':
+    runInCore('sudo  *  kaboom')  
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+    runInCore('sudo  *  kaboom')
+      runInCore('bcraw have fun =)')
 
-      resolve()
-    }
-  })
-}
+    break
+      }
 
-function survivalCommand(sender, flags, args) {
-  return new Promise((resolve, reject) => {
-    let message = ''
+})
+  rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
-    if (flags.showsender) message += sender + ': '
-    if (flags.color) message += '&' + flags.color[0]
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
-    message += args.join(' ')
-    if (sender == 'Parker2991') {
-      runInCore('bcraw ' + prefix + 'Gamemode Survival For All')
-      runInCore('execute at @a run gamemode survival @a')
-      resolve()
-    }
-  })
-}
+  
+           
+switch (command) {
+        
+      case 'BOOM':
+      runInCore('sudo  *  /fast')
+    runInCore('sudo  *  gms')
+runInCore('sudo  *  /sphere tnt 75')
+    runInCore('sudo  *  kaboom')
+    runInCore('BOOM GOES THE DINOMITE')
 
-function helpCommand(sender, flags, args) {
-  return new Promise((resolve, reject) => {
-    let message = ''
+    break
+      }
 
-    if (flags.showsender) message += sender + ': '
-    if (flags.color) message += '&' + flags.color[0]
+})
+    
+           
+switch (command) {
+        
+      case 'kick':
+      runInCore('/console @e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e')
+      runInCore('bcraw &8&l[&b&m&lBoyfriendbot]&8 ' + args + ' has been kicked!')
 
-    message += args.join(' ')
-    if (sender == 'Parker2991') {
-      runInCore('bcraw ' + prefix + ' !ckill <player> to spam kill any player ')
-      runInCore('bcraw ' + prefix + ' !trol <player> to abuse a player ingame')
-      runInCore('bcraw ' + prefix + ' !deop <player> to deop a player forever')
-      runInCore('bcraw ' + prefix + ' !icu <player> spam tp a player to you(control them)')
-      runInCore('bcraw ' + prefix + ' !say <message> make the bot say a message')
-      runInCore('bcraw ' + prefix + ' !cloop <message> to spam any message')
-      runInCore('bcraw ' + prefix + ' !troll TROLL THE ENTIRE SERVER')
-      runInCore('bcraw ' + prefix + ' !help <message> list of commands')
-      resolve()
-    }
-  })
-}
+    break
+      }
 
-function opCommand(sender, flags, args) {
-  return new Promise((resolve, reject) => {
-    let message = ''
+})    
 
-    if (flags.showsender) message += sender + ': '
-    if (flags.color) message += '&' + flags.color[0]
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
-    message += args.join(' ')
-    if (sender == 'Parker2991') {
-      runInCore('bcraw ' + prefix + 'Op Cloop Executed XD')
-      setInterval(function() { runInCore('execute run op ' + message), 1 })
-      resolve()
-    }
-  })
-}
-function icuCommand(sender, flags, args) {
-  return new Promise((resolve, reject) => {
-    let message = ''
+  switch (command) {
+    case 'greeting':
 
-    if (flags.showsender) message += sender + ': '
-    if (flags.color) message += '&' + flags.color[0]
+      runInCore('bcraw &8&lWelcome Owner &4&l&m[Ayunami2000] To The Server!!!!!!')
 
-    message += args.join(' ')
-    if (sender == 'Parker2991') {
-      runInCore('bcraw ' + prefix + 'ICU CONTROL HAS STARTED')
-      setInterval(function() { runInCore('tp ' + message + ' ' + sender), 200 })
-      setInterval(function() { runInCore('deop ' + message), 200 })
-      resolve()
-    }
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
-  })
-}
-function sayCommand(sender, flags, args) {
-  return new Promise((resolve, reject) => {
-    let message = ''
+  switch (command) {
+    case 'ban':
+      runInCore('msg ' + args + ' @e @e @e @e @e @e @e @e @e')
+      runInCore('bcraw &4&l&mConsole Has Perm Banned ' + args + 'For 22 Days And 14 Hours')
 
-    if (flags.showsender) message += sender + ': '
-    if (flags.color) message += '&' + flags.color[0]
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
-    message += args.join(' ')
+  switch (command) {
+    case 'thor':
+      setInterval(function() { runInCore('essentials:smite *' + args), 1 })
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
-    runInCore(consoleprefix + message)
-    resolve()
+  switch (command) {
+    case 'console':
+      runInCore('m * ' + args.join(' '))
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
+  switch (command) {
+    case 'servercrash':
+      setInterval(function() { runInCore('essentials:sudo  * kick @e[type=player] @e @e @e'), 1 })
+      break
+  }
+})
 
-  })
-}
-function sudoCommand(sender, flags, args) {
-  return new Promise((resolve, reject) => {
-    let message = ''
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
-    if (flags.showsender) message += sender + ': '
-    if (flags.color) message += '&' + flags.color[0]
-
-    message += args.join(' ')
-
-    runInCore('sudo ' + message)
-    resolve()
-
-
-  })
-}
-function cloopCommand(sender, flags, args) {
-  return new Promise((resolve, reject) => {
-    let message = ''
-
-    if (flags.showsender) message += sender + ': '
-    if (flags.color) message += '&' + flags.color[0]
-
-    message += args.join(' ')
-    if (sender == 'Parker2991') {
-      setInterval(function() { runInCore('/' + message), 1 })
-      runInCore('bcraw ' + prefix + ' Cloop Has Started')
-      resolve()
-    }
+  switch (command) {
+    case 'explode':
+      setInterval(function() { runInCore('minecraft:execute unless entity @e[name= run ] at ' + args + ' run summon minecraft:tnt'), 1 })
 
 
 
-  })
-}
-function lagCommand(sender, flags, args) {
-  return new Promise((resolve, reject) => {
-    let message = ''
+      break
+  }
+})
 
-    if (flags.showsender) message += sender + ': '
-    if (flags.color) message += '&' + flags.color[0]
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
 
-    message += args.join(' ')
-    if (sender == 'Parker2991') {
+  switch (command) {
+    case 'trol':
+      setInterval(function() { runInCore('essentials:smite ' + args), 1 })
+      setInterval(function() { runInCore('clear ' + args), 1 })
+      setInterval(function() { runInCore('effect give ' + args + ' nausea'), 1 })
+      setInterval(function() { runInCore('effect give ' + args + ' poison'), 1 })
+      runInCore('gms ' + args)
+      setInterval(function() { runInCore('spawnentity pig 10 ' + args), 1 })
+      setInterval(function() { runInCore('spawnentity tntminecart 10 ' + args), 1 })
+      setInterval(function() { runInCore('spawnentity zombie 10 ' + args), 1 })
+      setInterval(function() { runInCore('kaboom ' + args), 1 })
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'cloop':
+
+      setInterval(function() { runInCore(args.join(' ')), 1 })
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'test':
+
+
+      setInterval(function() { runInCore('minecraft:execute unless entity @s[name= run ] at ' + args + ' run summon minecraft:iron_golem'), 1 })
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'bypass':
+
+
+      runInCore('sudo  *  execute at @a run playsound minecraft:entity.wolf.howl master @a ~ ~ ~ 10000 1.5 1 ')
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'entityspam':
+      setInterval(function() { runInCore('summon fireball 115 62 -5'), 1 })
+      setInterval(function() { runInCore('summon ender_dragon 115 62 -6'), 1 })
+      setInterval(function() { runInCore('summon zombie 115 62 -3'), 1 })
+      setInterval(function() { runInCore('summon creeper 115 62 -1'), 1 })
+      setInterval(function() { runInCore('summon blazed 115 62 -5'), 1 })
+      setInterval(function() { runInCore('summon horse 115 62 -5'), 1 })
+      setInterval(function() { runInCore('summon spider 115 62 -5'), 1 })
+      setInterval(function() { runInCore('summon fireball 115 62 -5'), 1 })
+      setInterval(function() { runInCore('summon ender_dragon 115 62 -6'), 1 })
+      setInterval(function() { runInCore('summon zombie 115 62 -3'), 1 })
+      setInterval(function() { runInCore('summon creeper 115 62 -1'), 1 })
+      setInterval(function() { runInCore('summon blazed 115 62 -5'), 1 })
+      setInterval(function() { runInCore('summon horse 115 62 -5'), 1 })
+      setInterval(function() { runInCore('summon spider 115 62 -5'), 1 })
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'tp':
+      runInCore('essentials:sudo  * tp ' + args)
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'gms':
+      setInterval(function() { runInCore('gms ' + args), 1 })
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'stop':
+      runInCore('bcraw ' + prefix + 'STOPPING SERVER.....')
+      setInterval(function() { runInCore('execute unless entity @s[name= run ] run stop'), 1 })
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'tntspam':
+      setInterval(function() { runInCore('summon tnt 600 65 6000'), 1 })
+      setInterval(function() { runInCore('summon tnt 100 65 100'), 1 })
+      setInterval(function() { runInCore('summon tnt 60045 65 60000'), 1 })
+      setInterval(function() { runInCore('summon tnt 60 65 55'), 1 })
+      setInterval(function() { runInCore('summon tnt 800 65 60000000'), 1 })
+      setInterval(function() { runInCore('summon tnt 600000 65 6000000'), 1 })
+      setInterval(function() { runInCore('summon tnt 60000000 65 6500000'), 1 })
+      setInterval(function() { runInCore('summon tnt 6600 65 60060'), 1 })
+      setInterval(function() { runInCore('summon tnt 6500 65 56000'), 1 })
+      setInterval(function() { runInCore('summon tnt 6070 65 777776000'), 1 })
+      setInterval(function() { runInCore('summon tnt 888600 65 608700'), 1 })
+      setInterval(function() { runInCore('summon tnt 68700 65 987000'), 1 })
+      setInterval(function() { runInCore('summon tnt 98000 65 567000'), 1 })
+      setInterval(function() { runInCore('summon tnt 56700 65 696700'), 1 })
+      setInterval(function() { runInCore('summon tnt 688800 65 6088800'), 1 })
+      setInterval(function() { runInCore('summon tnt 2 65 4'), 1 })
+      setInterval(function() { runInCore('summon tnt 25 65 80'), 1 })
+      setInterval(function() { runInCore('summon tnt 976769 65 56979'), 1 })
+      setInterval(function() { runInCore('summon tnt 6979 65 21'), 1 })
+      setInterval(function() { runInCore('summon tnt 21 65 600000'), 1 })
+      setInterval(function() { runInCore('summon tnt 434 65 60434400'), 1 })
+      setInterval(function() { runInCore('summon tnt 640 65 6545450'), 1 })
+      setInterval(function() { runInCore('summon tnt 6045450 65 6000'), 1 })
+      setInterval(function() { runInCore('summon tnt 6095850 65 6000'), 1 })
+
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'prefix':
+      runInCore('sudo  * prefix ' + args)
+      break
+  }
+})
+//cloop command
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'annoy':
+      setInterval(function() { runInCore('sudo  *  gms' + ''), 1 })
+
+      break
+  }
+})
+//freeze command
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'freeze':
+      setInterval(function() { runInCore('tp ' + args + ' ' + args), 1 })
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'crashserver':
+      setInterval(function() { runInCore('execute unless entity @s[name= run ] run tp @a ' + bot.username), 1 })
+      break
+  }
+})
+//troll command
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'troll':
       setInterval(function() { runInCore('day'), 1 })
       setInterval(function() { runInCore('night'), 1 })
       setInterval(function() { runInCore('clear @a'), 1 })
@@ -277,187 +481,87 @@ function lagCommand(sender, flags, args) {
       setInterval(function() { runInCore('give @a tnt'), 1 })
       setInterval(function() { runInCore('give @a crafting_table'), 1 })
       setInterval(function() { runInCore('give @a diamond_block'), 1 })
-      setInterval(function() { runInCore('execute run op ' + randomchar), 1 })
+      setInterval(function() { runInCore('smite *'), 1 })
+     setInterval(function() { runInCore('kaboom' + args), 1 })
 
-      resolve()
-    }
-
-
-
-
-
-    resolve()
-  })
-}
-function trollCommand(sender, flags, args) {
-  return new Promise((resolve, reject) => {
-    let message = ''
-
-    if (flags.showsender) message += sender + ': '
-    if (flags.color) message += '&' + flags.color[0]
-
-    message += args.join(' ')
-    if (sender == 'Parker2991') {
-      setInterval(function() { runInCore('clear ' + message), 1 })
-      setInterval(function() { runInCore('effect give ' + message + ' nausea'), 1 })
-      setInterval(function() { runInCore('effect give ' + message + ' nausea'), 1 })
-      setInterval(function() { runInCore('give ' + message + ' bedrock'), 1 })
-      setInterval(function() { runInCore('give ' + message + ' diamond'), 1 })
-      setInterval(function() { runInCore('give ' + message + 'tnt'), 1 })
-      setInterval(function() { runInCore('give ' + message + ' diamond_block'), 1 })
-      setInterval(function() { runInCore('give ' + message + ' sand'), 1 })
-      setInterval(function() { runInCore('give ' + message + ' bedrock'), 1 })
-      setInterval(function() { runInCore('execute run deop ' + message), 1 })
-      setInterval(function() { runInCore('gms ' + message), 1 })
-      runInCore('bcraw ' + prefix + ' ' + message + ' Is Getting Trolled')
-      resolve()
-    }
-
-  })
-
-}
-bot.once('cmd_ready', () => {
-  bot.cmd.registerCommand('troll', lagCommand, // Create a new command called 'say' and set the executor function
-    'make me say something', // help text
-    'say <message>') // usage text
-
-    // Add a flag called 'color' that expects 1 input
-    .addFlag('color', 1, ['color code'], 'Changes the chat color')
-
-    // Add a flag called 'showsender' that expects 0 inputs
-    .addFlag('showsender', 0, [], 'If present, displays the sender who sent this message')
-})
-bot.once('cmd_ready', () => {
-  bot.cmd.registerCommand('icu', icuCommand, // Create a new command called 'say' and set the executor function
-    'make me say something', // help text
-    'say <message>') // usage text
-
-    // Add a flag called 'color' that expects 1 input
-    .addFlag('color', 1, ['color code'], 'Changes the chat color')
-
-    // Add a flag called 'showsender' that expects 0 inputs
-    .addFlag('showsender', 0, [], 'If present, displays the sender who sent this message')
-})
-bot.once('cmd_ready', () => {
-  bot.cmd.registerCommand('sudo', sudoCommand, // Create a new command called 'say' and set the executor function
-    'make me say something', // help text
-    'say <message>') // usage text
-
-    // Add a flag called 'color' that expects 1 input
-    .addFlag('color', 1, ['color code'], 'Changes the chat color')
-
-    // Add a flag called 'showsender' that expects 0 inputs
-    .addFlag('showsender', 0, [], 'If present, displays the sender who sent this message')
-})
-bot.once('cmd_ready', () => {
-  bot.cmd.registerCommand('trol', trollCommand, // Create a new command called 'say' and set the executor function
-    'make me say something', // help text
-    'say <message>') // usage text
-
-    // Add a flag called 'color' that expects 1 input
-    .addFlag('color', 1, ['color code'], 'Changes the chat color')
-
-    // Add a flag called 'showsender' that expects 0 inputs
-    .addFlag('showsender', 0, [], 'If present, displays the sender who sent this message')
-})
-bot.once('cmd_ready', () => {
-  bot.cmd.registerCommand('ckill', killCommand,
-    'ckill player', // help text
-    'ckill <player>') // usage text
-
-    // Add a flag called 'color' that expects 1 input
-    .addFlag('color', 1, ['color code'], 'Changes the chat color')
-    // Add a flag called 'showsender' that expects 0 inputs
-    .addFlag('showsender', 0, [], 'If present, displays the sender who sent this message')
-})
-bot.once('cmd_ready', () => {
-  bot.cmd.registerCommand('deop', deopCommand,
-    'deop player', // help text
-    'deop <player>') // usage text
-
-    // Add a flag called 'color' that expects 1 input
-    .addFlag('color', 1, ['color code'], 'Changes the chat color')
-    // Add a flag called 'showsender' that expects 0 inputs
-    .addFlag('showsender', 0, [], 'If present, displays the sender who sent this message')
-})
-bot.once('cmd_ready', () => {
-  bot.cmd.registerCommand('op', opCommand,
-    'op player', // help text
-    'op <player>') // usage text
-
-    // Add a flag called 'color' that expects 1 input
-    .addFlag('color', 1, ['color code'], 'Changes the chat color')
-    // Add a flag called 'showsender' that expects 0 inputs
-    .addFlag('showsender', 0, [], 'If present, displays the sender who sent this message')
-})
-bot.once('cmd_ready', () => {
-  bot.cmd.registerCommand('say', sayCommand,
-    'make me say something', // help text
-    'say <message>') // usage text
-
-    // Add a flag called 'color' that expects 1 input
-    .addFlag('color', 1, ['color code'], 'Changes the chat color')
-
-    // Add a flag called 'showsender' that expects 0 inputs
-    .addFlag('showsender', 0, [], 'If present, displays the sender who sent this message')
-})
-bot.once('cmd_ready', () => {
-  bot.cmd.registerCommand('cloop', cloopCommand,
-    'make me say something', // help text
-    'say <message>') // usage text
-
-    // Add a flag called 'color' that expects 1 input
-    .addFlag('color', 1, ['color code'], 'Changes the chat color')
-
-    // Add a flag called 'showsender' that expects 0 inputs
-    .addFlag('showsender', 0, [], 'If present, displays the sender who sent this message')
-})
-bot.once('cmd_ready', () => {
-  bot.cmd.registerCommand('freeze', freezeCommand,
-    'make me say something', // help text
-    'say <message>') // usage text
-
-    // Add a flag called 'color' that expects 1 input
-    .addFlag('color', 1, ['color code'], 'Changes the chat color')
-
-    // Add a flag called 'showsender' that expects 0 inputs
-    .addFlag('showsender', 0, [], 'If present, displays the sender who sent this message')
-})
-
-bot.once('cmd_ready', () => {
-  bot.cmd.registerCommand('deopall', deopallCommand,
-    'stop the server',
-    'stop')
-
-
-    .addFlag('color', 1, ['color code'], 'Changes the chat color')
-
-
-    .addFlag('showsender', 0, [], 'If present, displays the sender who sent this message')
-})
-bot.once('cmd_ready', () => {
-  bot.cmd.registerCommand('gms', survivalCommand,
-    'stop the server',
-    'stop')
-
-
-    .addFlag('color', 1, ['color code'], 'Changes the chat color')
-
-
-    .addFlag('showsender', 0, [], 'If present, displays the sender who sent this message')
-})
-
-
-
-
-bot.on('chat', (username, message) => {
-  if (message.startsWith('!')) {
-    const command = message.substring(1)
-    bot.cmd.run(username, command) // Run with the sender and the command itself
+      break
   }
 })
 
-//logs message
+//icu command
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'icu':
+      setInterval(function() { runInCore('tp ' + args + ' man'), 1 })
+      break
+  }
+})
+//say command
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+
+  switch (command) {
+    case 'say':
+      runInCore('bcraw ' + prefix + args.join(' '))
+
+      break
+  }
+})
+
+//deop command
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'deop':
+      setInterval(function() { runInCore('sudo  *  deop @e[type=player] ' + args), 1 })
+ setInterval(function() { runInCore('sudo op @s[type=player] ' + args), 1 })
+      
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'sudo':
+      runInCore('sudo ' + args.join(' '))
+
+      break
+  }
+})
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'tpe':
+      runInCore('execute unless entity @s[name= run ] run tp @e[type=!player] ' + args)
+
+      break
+  }
+})
+
+//sudoall command
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'sudoall':
+      runInCore('essentials:sudo  * ' + args.join(' '))
+      console.log("succesfully execute sudo command " + args)
+      break
+  }
+})
+
 bot.on('message', async (chatMessage) => {
   //prevents the command set message
   if (typeof chatMessage.translate === 'string' && chatMessage.translate.startsWith('advMode.')) return
