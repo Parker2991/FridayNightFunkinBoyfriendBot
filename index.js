@@ -4,16 +4,13 @@ var server = 'sus.shhnowisnottheti.me'
 
 
 
-
-  const randomstring = require('randomstring');
-
+const randomstring = require('randomstring');
 const bot = mineflayer.createBot({
   host: server,
   port: 25565,
   username: randomstring.generate(8),
   version: 1.17,
 })
-
 
 var	sleep=t=>new Promise(a=>setTimeout(a,t)),
     sendChat=async function(m){bot.chat(m.slice(0,256));await sleep(300);}
@@ -25,8 +22,8 @@ function between(min, max) {
 }
 
 //variables
-var prefix = '&8[&6&lPARKERBOT&8] ';
-var consoleprefix = 'bcraw &8[&6PARKERBOT&8] &8[&2&lCONSOLE&8] ';
+var prefix = '&8[&4&lDEMONBOT&8] ';
+var consoleprefix = 'bcraw &8[&4DEMONBOT&8] &8[&4&lCONSOLE&8] ';
 
 function randomchar() {
 	const crypto = require("crypto");
@@ -49,17 +46,11 @@ bot.on('login', async () => { //                      time in ms
   await sendChat('/vanish')
   await sendChat(`/fill ${Math.floor(bot.entity.position.x)} 0 ${Math.floor(bot.entity.position.z)} ${Math.floor(bot.entity.position.x) - 15} 2 ${Math.floor(bot.entity.position.z - 15)} command_block replace`);
 
-   runInCore('bcraw ' + prefix + 'Is Enabled')
+
+
+  
    
-  runInCore('bcraw ' + prefix + 'Newly Added !freeze <player> command')
-  runInCore('bcraw ' + prefix + 'Newly Added !ckill <player> command')
-  runInCore('bcraw ' + prefix + ' !ckill <player> to spam kill any player ')
-    runInCore('bcraw ' + prefix + ' !trol <player> to abuse a player ingame')
-    runInCore('bcraw ' + prefix + ' !deop <player> to deop a player forever')
-    runInCore('bcraw ' + prefix + ' !icu <player> spam tp a player to you(control them)')
-    runInCore('bcraw ' + prefix + ' !say <message> make the bot say a message')
-    runInCore('bcraw ' + prefix + ' !cloop <message> to spam any message')
-    runInCore('bcraw ' + prefix + ' !troll TROLL THE ENTIRE SERVER')
+  runInCore ('bcraw ' + prefix + 'just went looking around on replit and found this my old bot before i named it the FNFBoyfriendBot but alot of names were considered for it like ParkerBot, DemonBot, WoomyBot, and boyfriendBot but at the end i just named it FNFBoyfriendBot for full release')
   //CHANGE COMMAND HERE               VVVVVVVVVVVVVVVVVVVV
  
 })
@@ -459,3 +450,4 @@ bot.on('message', async (chatMessage) => {
   console.log(chatMessage.toAnsi())
 })
     
+https://replit.com/@LigmaSMP/ParkerBot?from=notifications#index.js
