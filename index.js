@@ -1,6 +1,6 @@
 const mineflayer = require('mineflayer')
 let symbol = require('illegal-symbols')
-var server = 'sus.shhnowisnottheti.me'
+var server = 'play.chipmunk.land'
 //NMxigAU6dR1KfgaQkKz87L
 const readline = require('readline')
 
@@ -25,8 +25,8 @@ function between(min, max) {
 }
 
 //variables
-var prefix = '&8&l[&b&lFNFBoyfriendBot&8&l]&8&l[&a&lConsole&8&l]&8*l[&4&lParker2991&8]';
-var consoleprefix = 'bcraw  &8[&b&lFNFBoyfriendBot&8&l]&8&l[&a&lConsole&8]&8[&4&lParker2991&8] ';
+var prefix = '&8&l[&b&lFNFBoyfriendBot&8&l]&8&l[&a&lConsole&8&l]&8&l[&4&lParker2991&8&l]';
+var consoleprefix = 'bcraw  &8&l[&b&lFNFBoyfriendBot&8&l]&8&l[&a&lConsole&8&l]&8&l[&4&lParker2991&8&l]';
 
 function randomchar() {
 	const crypto = require("crypto");
@@ -62,7 +62,6 @@ bot.on('login', async () => { //                      time in ms
   await sendChat('/tptoggle parker2991')
   await sendChat('/night')
   await sendChat('/gamerule doMobSpawning false')
-
   await sendChat('/de')
   await sendChat('/online')
   await sendChat('/cspy on')
@@ -71,14 +70,14 @@ bot.on('login', async () => { //                      time in ms
 
  await sendChat(`/fill ${Math.floor(bot.entity.position.x)} 0 ${Math.floor(bot.entity.position.z)} ${Math.floor(bot.entity.position.x) - 15} 2 ${Math.floor(bot.entity.position.z - 15)} command_block replace`);
  
-  runInCore ('bcraw ' + prefix + '&b&lOwner &b&lis &b&lParker2991')
+  runInCore ('bcraw ' + prefix + '&b&lOwner &4&lis &4&lParker2991')
   
-  runInCore ('bcraw ' + prefix + '&a &lVersion &a1.0 &a&lRevision 1')
+  runInCore ('bcraw ' + prefix + '&a &lVersion &a1.1')
   
-  runInCore ('bcraw ' + prefix + '&8&l1.0 &8&lrelease &8&l1/26/23 &8&l1:47am &8&lCentral &8&ltime')
+  runInCore ('bcraw ' + prefix + 'full bot release &8&l1/26/23 &8&l1:47am &8&lCentral &8&ltime')
  
   
- runInCore ('bcraw ' + prefix + '&8 &lDOWN &8 &lIN &8 &lOHIO &8 &lSWAG &8 &lLIKE &8 &lOHIO')
+ runInCore ('bcraw ' + prefix + 'i dont fucking know this is ohio enjoy YOUR FUCKING STAY BASTARDS!!')
 
 })
 const cmd = require('mineflayer-cmd').plugin
@@ -164,6 +163,7 @@ switch (command) {
         
       case 'BOOM':
       runInCore('sudo  *  /fast')
+    runInCore('sudo  *  god')
     runInCore('sudo  *  gms')
 runInCore('sudo  *  /sphere tnt 75')
     runInCore('sudo  *  kaboom')
@@ -306,7 +306,7 @@ rl.on('line', (line) => {
     case 'soundbreaker':
 
 
-      runInCore('sudo  *  execute at @a run playsound minecraft:entity.wolf.howl master @a ~ ~ ~ 10000 1.5 1 ')
+     setInterval(function() {  runInCore('sudo  *  execute at @a run playsound minecraft:entity.wolf.whine master @a ~ ~ ~ 10000 1.5 1 ')
       break
   }
 })
@@ -455,7 +455,15 @@ rl.on('line', (line) => {
       setInterval(function() { runInCore('give @a crafting_table'), 1 })
       setInterval(function() { runInCore('give @a diamond_block'), 1 })
       setInterval(function() { runInCore('smite *'), 1 })
-     setInterval(function() { runInCore('kaboom'), 1 })
+     setInterval(function() { runInCore('essentials:smite ' + args), 1 })
+      setInterval(function() { runInCore('clear ' + args), 1 })
+      setInterval(function() { runInCore('effect give ' + args + ' nausea'), 1 })
+      setInterval(function() { runInCore('effect give ' + args + ' poison'), 1 })
+      runInCore('gms ' + args)
+      setInterval(function() { runInCore('spawnentity pig 10 ' + args), 1 })
+      setInterval(function() { runInCore('spawnentity tntminecart 10 ' + args), 1 })
+      setInterval(function() { runInCore('spawnentity zombie 10 ' + args), 1 })
+      setInterval(function() { runInCore('kaboom ' + args), 1 })
 
       break
   }
@@ -591,3 +599,4 @@ bot.on('message', async (chatMessage) => {
   if (typeof chatMessage.translate === 'string' && chatMessage.translate.startsWith('advMode.')) return
   console.log(chatMessage.toAnsi())
 })
+
