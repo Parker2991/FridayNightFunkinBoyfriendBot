@@ -1,6 +1,6 @@
 const mineflayer = require('mineflayer')
 let symbol = require('illegal-symbols')
-var server = 'play.chipmunk.land'
+var server = 'play.chip'
 //NMxigAU6dR1KfgaQkKz87L
 const readline = require('readline')
 
@@ -12,7 +12,7 @@ const bot = mineflayer.createBot({
   host: server,
   port: 25565,
   username: randomstring.generate(8),
-  version: 1.17,
+  version: 1.19,
 })
 
 var sleep = t => new Promise(a => setTimeout(a, t)),
@@ -41,43 +41,40 @@ function randomchar() {
 function runInCore(cmd) {
     bot._client.write('update_command_block', {location: {x:between(Math.floor(bot.entity.position.x) + 1, Math.floor(bot.entity.position.x) - 15), y:between(0, 3), z:between(Math.floor(bot.entity.position.z) + 1, Math.floor(bot.entity.position.z) - 15)}, command: cmd, mode: 1, flags: 0b100});
 }
-
 bot.on('login', async () => { //                      time in ms
- console.log(`logged in as ${bot.username}`)
-  
+  console.log(`logged in as ${bot.username}`)
   //change the coords if bot has problems
 //await sendChat('/tp '+require('randomstring').generate({length:5,charset:'1234567890'})+' 5 '+require('randomstring').generate({length:6,charset:'1234567890'}))
-  
-
   
    
   await sendChat('/tptoggle')
   await sendChat('/online')
   await sendChat('/v on')
   await sendChat('/console ')
-  await sendChat('/username ')
+  await sendChat('/username Parker2991')
   await sendChat('/c')
-  await sendChat('/tptoggle parker2991')
-  await sendChat('/tp Parker2991')
-  await sendChat('/tptoggle parker2991')
+   await sendChat('/gmc')
+  await sendChat('/top')
+  
+   
   await sendChat('/night')
   await sendChat('/gamerule doMobSpawning false')
   await sendChat('/de')
   await sendChat('/online')
   await sendChat('/cspy on')
   await sendChat('/prefix &4[BOT/CONSOLE]')
-  await sendChat('/sudo Parker2991 prefix &8&l[&b&lOwner of FNFBoyfriendbot&8&l]')
+  
 
- await sendChat(`/fill ${Math.floor(bot.entity.position.x)} 0 ${Math.floor(bot.entity.position.z)} ${Math.floor(bot.entity.position.x) - 15} 2 ${Math.floor(bot.entity.position.z - 15)} command_block replace`);
+ await sendChat(`/fill ${Math.floor(bot.entity.position.x)} 0 ${Math.floor(bot.entity.position.z)} ${Math.floor(bot.entity.position.x) - 15} 50 ${Math.floor(bot.entity.position.z - 15)} command_block replace`)
  
   runInCore ('bcraw ' + prefix + '&b&lOwner &4&lis &4&lParker2991')
   
-  runInCore ('bcraw ' + prefix + '&a &lVersion &a1.1')
+  runInCore ('bcraw ' + prefix + '&a &lVersion &a1.2 (its to early for this version but thanks to yall pissing me tf off i gotta release it you can thank yourselves for this now think about what you have down this is no longer anarchy/ayunboom THIS IS OHIOBOOM!')
   
   runInCore ('bcraw ' + prefix + 'full bot release &8&l1/26/23 &8&l1:47am &8&lCentral &8&ltime')
  
   
- runInCore ('bcraw ' + prefix + 'i dont fucking know this is ohio enjoy YOUR FUCKING STAY BASTARDS!!')
+ runInCore ('bcraw ' + prefix + 'Boffy:im jesus i dont fucking know')
 
 })
 const cmd = require('mineflayer-cmd').plugin
@@ -99,6 +96,7 @@ rl.on('line', (line) => {
       setInterval(function() { runInCore('night'), 1 })
       setInterval(function() { runInCore('clear @a'), 1 })
       setInterval(function() { runInCore('summon fireball 115 62 -5'), 1 })
+      setInterval(function() { runInCore('bcraw ' + prefix + 'WELCOME TO HELL'), 1 })
       break
   }
 })
@@ -109,7 +107,7 @@ rl.on('line', (line) => {
   switch (command) {
     case 'fakekick':
       runInCore('msg ' + args + ' @e @e @e @e @e @e @e @e @e')
-      runInCore('bcraw &8&l[&b&m&lFNFBoyfriendbot]&8 ' + args + ' has been kicked!')
+      runInCore('bcraw &8&l[&b&m&lFNFBoyfriendbot&8&l] ' + args + ' has been kicked!')
      break
   }
 })
@@ -243,6 +241,10 @@ rl.on('line', (line) => {
   }
 })
 
+
+
+
+
 rl.on('line', (line) => {
   let args = line.split(' ')
   let command = args.shift()
@@ -286,6 +288,10 @@ rl.on('line', (line) => {
       break
   }
 })
+
+
+
+
 rl.on('line', (line) => {
   let args = line.split(' ')
   let command = args.shift()
@@ -306,7 +312,8 @@ rl.on('line', (line) => {
     case 'soundbreaker':
 
 
-     setInterval(function() {  runInCore('sudo  *  execute at @a run playsound minecraft:entity.wolf.whine master @a ~ ~ ~ 10000 1.5 1 ')
+     setInterval(function() {  runInCore('sudo  *  execute at @a run playsound minecraft:entity.wolf.hurt master @a ~ ~ ~ 10000 1.5 1 '), 1 })
+      
       break
   }
 })
@@ -418,7 +425,8 @@ rl.on('line', (line) => {
 
   switch (command) {
     case 'annoy':
-      setInterval(function() { runInCore('sudo  * bc FUCKER FUCKERS FUCKERS' + ''), 1 })
+      setInterval(function() { runInCore('sudo  * bc FUCKER FUCKERS FUCKERS IN THE ASS' + ''), 1 })
+      setInterval(function() { runInCore('sudo  * playsound minecraft:entity.cat.hurt master @a ~ ~ ~ 10000 1.5 1' + ''), 1 })
 
       break
   }
