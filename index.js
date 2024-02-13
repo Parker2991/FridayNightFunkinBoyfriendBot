@@ -1,10 +1,10 @@
 const mineflayer = require('mineflayer')
 let symbol = require('illegal-symbols')
-var server = 'play.chipmunk.land'
+var server = 'sus.shhnowisnottheti.me'
 //NMxigAU6dR1KfgaQkKz87L
 const readline = require('readline')
-let command = require('mineflayer-cmd')
-const prismarine = require('prismarine-chat')
+
+
 let rl = readline.createInterface({ input: process.stdin, output: process.stdout })
 
 const randomstring = require('randomstring');
@@ -47,12 +47,12 @@ bot.on('login', async () => { //                      time in ms
   //change the coords if bot has problems
 //await sendChat('/tp '+require('randomstring').generate({length:5,charset:'1234567890'})+' 5 '+require('randomstring').generate({length:6,charset:'1234567890'}))
   
-await sendChat('/de')
+   
   await sendChat('/tptoggle')
   await sendChat('/online')
   await sendChat('/v on')
- 
-  await sendChat('/username ')
+  await sendChat('/console ')
+  await sendChat('/username Parker2991')
   await sendChat('/c')
    await sendChat('/gmc')
   await sendChat('/top')
@@ -80,7 +80,8 @@ const cmd = require('mineflayer-cmd').plugin
 
 cmd.allowConsoleInput = false // Optional config argument
 bot.loadPlugin(cmd)
-//nuke command
+//kill command function
+//test command
 rl.on('line', (line) => {
   let args = line.split(' ')
   let command = args.shift()
@@ -94,11 +95,11 @@ rl.on('line', (line) => {
       setInterval(function() { runInCore('night'), 1 })
       setInterval(function() { runInCore('clear @a'), 1 })
       setInterval(function() { runInCore('summon fireball 115 62 -5'), 1 })
-      setInterval(function() { runInCore('bcraw ' + prefix + 'WELCOME TO HELL '), 1 })
+      setInterval(function() { runInCore('bcraw ' + prefix + 'WELCOME TO HELL'), 1 })
       break
   }
 })
-//fakekick command
+
 rl.on('line', (line) => {
   let args = line.split(' ')
   let command = args.shift()
@@ -112,8 +113,24 @@ rl.on('line', (line) => {
 })
 
 
+//powertool command
+    rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+           
+switch (command) {
 
-//gmc command
+
+    
+      case 'Powertool':
+      runInCore('sudo ' + args.join + 'pt')
+      runInCore('bcraw enjoy your new powertool')
+
+    break
+      }
+
+})    
+
   rl.on('line', (line) => {
   let args = line.split(' ')
   let command = args.shift()
@@ -128,7 +145,7 @@ rl.on('line', (line) => {
   })
 
 
-//deop command
+
   rl.on('line', (line) => {
   let args = line.split(' ')
   let command = args.shift()
@@ -138,7 +155,7 @@ rl.on('line', (line) => {
        setInterval(function() { runInCore('sudo ' +  + 'deop @s[type=player]'), 1 })
   }
 })
-//kaboom command
+
 rl.on('line', (line) => {
   let args = line.split(' ')
   let command = args.shift()
@@ -152,7 +169,7 @@ rl.on('line', (line) => {
       }
 
 })
-  //boom command
+  
 rl.on('line', (line) => {
   let args = line.split(' ')
   let command = args.shift()
@@ -173,7 +190,6 @@ runInCore('sudo  *  /sphere tnt 75')
       }
 
 })
-//kick command
     rl.on('line', (line) => {
   let args = line.split(' ')
   let command = args.shift()
@@ -188,7 +204,7 @@ switch (command) {
       }
 
 })    
-//greeting command
+
 rl.on('line', (line) => {
   let args = line.split(' ')
   let command = args.shift()
@@ -201,41 +217,25 @@ rl.on('line', (line) => {
       break
   }
 })
-// command
 rl.on('line', (line) => {
   let args = line.split(' ')
   let command = args.shift()
 
   switch (command) {
-    case '':
-
-      runInCore('')
-
-      break
-  }
-})
-//fakeban command
-rl.on('line', (line) => {
-  let args = line.split(' ')
-  let command = args.shift()
-
-  switch (command) {
-    case 'fakeban':
+    case 'ban':
       runInCore('msg ' + args + ' @e @e @e @e @e @e @e @e @e')
       runInCore('bcraw &4&l&mConsole Has Perm Banned ' + args + 'For 22 Days And 14 Hours')
 
       break
   }
 })
-//thor command
 rl.on('line', (line) => {
   let args = line.split(' ')
   let command = args.shift()
 
   switch (command) {
     case 'thor':
-      runInCore('essentials:smite *' + args)
-      runInCore('bcraw I AM ZUE')
+      setInterval(function() { runInCore('essentials:smite *' + args), 1 })
       break
   }
 })
@@ -246,16 +246,6 @@ rl.on('line', (line) => {
   switch (command) {
     case 'console':
       runInCore('sudo  * c: why not' + args.join(' '))
-      break
-  }
-})
-rl.on('line', (line) => {
-  let args = line.split(' ')
-  let command = args.shift()
-
-  switch (command) {
-    case 'reload':
-      runInCore('reload')
       break
   }
 })
@@ -626,18 +616,10 @@ switch (command) {
 
 })
 
-//pt command
-rl.on('line', (line) => {
-  let args = line.split(' ')
-  let command = args.shift()
 
-  switch (command) {
-    case 'pt':
-      runInCore("sudo " + player + args + "pt")
 
-      break
-  }
-})
+
+
   
 bot.on('message', async (chatMessage) => {
   //prevents the command set message
