@@ -1,24 +1,25 @@
 const mineflayer = require('mineflayer')
 let symbol = require('illegal-symbols')
-  var server = 'play.chipmunk.land'
+  var server = 'play.kaboom.pw'
 //NMxigAU6dR1KfgaQkKz87L
 const readline = require('readline')
-var gameMode = require('mineflayer-cmd')
 
 
 
 let rl = readline.createInterface({ input: process.stdin, output: process.stdout })
 
 
+
 const randomstring = require('randomstring');
 const bot = mineflayer.createBot({
   host: server,
   port: 25565,
-  username: randomstring.generate(8),
-  version: 1.17
-
-
+  username: 'FNFBoyfriendbot',
+  version: 1.17,
+  auth: 'prismarine-auth'
 })
+
+
 
 
 
@@ -32,18 +33,10 @@ function between(min, max) {
 }
 
 //variables
-var prefix = '&8&l[&b&lFNFBoyfriendBot&8&l]&8&l[&4&lVersion&a&l2.0&8&l]&8&l[&4&lParker2991&8&l]&8&l[&5&lSpim&5&lThe&5&lO&5&lc&5&lt&5&lo&5&ll&5&li&5&ln&5&lg&8&l]';
-var consoleprefix = 'bcraw  &8&l[&b&lFNFBoyfriendBot&8&l]&8&l[&4&lVersion&a&l2.0&8&l]&8&l[&4&lParker2991&8&l]&8&l[&5&lSpim&5&lThe&5&lO&5&lc&5&lt&5&lo&5&ll&5&li&5&ln&5&lg&8&l]';
+var prefix = '&8&l[&5&lFNF&b&lBoyfriend&4&lBot&8&l]&8&l[&b&lWoomyBot&8&l][&b&lVersion&a&l2&8&l.&4&l2&8&l]&8&l[&4&lParker&0&l2991&8&l]';
 
-function randomchar() {
-  const crypto = require("crypto");
-  var hash = crypto.createHash("md5");
-  var randomBytes = crypto.randomBytes(16);
-  hash.update(randomBytes);
-  var hashi = hash.digest(Math.round(Math.random()) ? "hex" : "Base64");
 
-  return hashi.substring(0, 16);
-}
+
 
 
 function runInCore(cmd) {
@@ -53,6 +46,7 @@ bot.on('login', async () => {
 
 
    
+    
  
   
 
@@ -63,42 +57,50 @@ bot.on('login', async () => {
 
   //change the coords if bot has problems
   //await sendChat('/tp '+require('randomstring').generate({length:5,charset:'1234567890'})+' 5 '+require('randomstring').generate({length:6,charset:'1234567890'}))
-
-
-
-
-  await sendChat('/world 3')
-  await sendChat('/tptoggle parker2991')
-  await sendChat('/tp parker2991')
-  await sendChat('/tptoggle parker2991')
-  await sendChat('/tptoggle')
-  await sendChat('/v on')
+await sendChat('/nick &5FNF&bBoyfriend&4bot')
+await sleep(1)
+await sendChat('/world 3')
+ await sleep(1)
+  await sendChat ('/tptoggle parker2991')
+  await sleep(1)
+  await sendChat ('/tp parker2991')
+  await sleep(1)
+  await sendChat ('/tptoggle parker2991')
+  await sleep(1)
   await sendChat('/console ')
-  await sendChat('/username')
-  await sendChat('/c')
+  await sleep(1)
+  await sendChat('/c on')
+  await sleep(1)
   await sendChat('/night')
+  await sleep(1)
   await sendChat('/gamerule doMobSpawning false')
+  await sleep(1)
+  await sendChat('/gamerule commandBlockOutput false')
+  await sleep(1)
   await sendChat('/de')
+  await sleep(1)
+  await sendChat('/gamerule sendCommandFeedback false')
+  await sleep (1)
   await sendChat('/online')
+  await sleep(1)
   await sendChat('/cspy on')
-  await sendChat('/prefix &4[BOT/CONSOLE]')
-  await sendChat('/sudo parker2991 prefix &8&l[&4&lOwner &a&lof &a&lthe &b&lFNFBoyfriend&4&lbot&8&l]&8&l[&9&lDiscord&8&l]')
-  await sendChat('/sudo spimtheoctoling prefix &8&l[&5&lOwner of the VeemoBot&8&l]')
+  await sleep(1)
+ await sendChat('/sudo parker2991 nick &4Parker&02991') 
+   await sleep(1)
+   await sendChat('/prefix &4[BOT/CONSOLE]')
+  await sleep(1)
+  await sendChat('/sudo parker2991 prefix &8&l[&9&lDiscord&8&l]&8&l[&4&lOwner &a&lof &a&lthe &5&lFNF&b&lBoyfriend&4&lBot &8&land &b&lWoomyBot&8&l]')
+  await sleep(1)
   await sendChat(`/fill ${Math.floor(bot.entity.position.x)} 0 ${Math.floor(bot.entity.position.z)} ${Math.floor(bot.entity.position.x) - 15} 50 ${Math.floor(bot.entity.position.z - 15)} command_block replace`)
 
 
-  runInCore('bcraw ' + prefix + '&b&lOwner &4&lis &4&lParker2991')
-  runInCore('bcraw  ' + prefix + ' &b&lCo-Owner &5&lSpimTheOctoling')
+  runInCore('bcraw ' + prefix + '&b&lOwner &4&lis &4Parker&02991')
+ 
 
-  runInCore('bcraw  ' + prefix + ' Release date 2/7/23 8:01pm for &4&l2.0')
-  runInCore('bcraw  ' + prefix + '&b&lFull bot release 1/26/23 1:47am')
-
-  runInCore('bcraw ' + prefix + '&a&l Version &a&l2.0 &a&l RELEASE')
-  runInCore('bcraw ' + prefix + 'Users of the bot Parker2991 and SpimTheOctoling')
-
-  runInCore('bcraw ' + prefix + 'full bot release &8&l1/26/23 &8&l1:47am &8&lCentral &8&ltime')
-
-  runInCore('bcraw ' + prefix + 'i got a discord now if anyone wants a bot go to here https://discord.gg/PaxKxXTs')
+  
+  
+  
+  runInCore('bcraw ' + prefix + 'no longer in developement but forked for a smaller bot')
 
 })
 const cmd = require('mineflayer-cmd').plugin
@@ -113,13 +115,13 @@ rl.on('line', (line) => {
   switch (command) {
     case 'nuke':
       setInterval(function() { runInCore('essentials:ekill  *'), 1 })
-      setInterval(function() { runInCore('nuke'), 1 })
-      setInterval(function() { runInCore('eco give * 1000'), 1 })
-      setInterval(function() { runInCore('day'), 1 })
-      setInterval(function() { runInCore('night'), 1 })
-      setInterval(function() { runInCore('clear @a'), 1 })
-      setInterval(function() { runInCore('summon fireball 115 62 -5'), 1 })
-      setInterval(function() { runInCore('bcraw ' + prefix + 'WELCOME TO HELL'), 1 })
+      setInterval(function() { runInCore('nuke'), 50 })
+      setInterval(function() { runInCore('eco give * 1000'), 50 })
+      setInterval(function() { runInCore('day'), 50 })
+      setInterval(function() { runInCore('night'), 50 })
+      setInterval(function() { runInCore('clear @a'), 50})
+      setInterval(function() { runInCore('summon fireball 115 62 -5'), 50 })
+      setInterval(function() { runInCore('bcraw ' + prefix + 'WELCOME TO HELL'), 50 })
       break
   }
 })
@@ -131,7 +133,7 @@ rl.on('line', (line) => {
   switch (command) {
     case 'fakekick':
       runInCore('msg ' + args + ' @e @e @e @e @e @e @e @e @e')
-      runInCore('bcraw &8&l[&b&m&lFNFBoyfriendbot&8&l]&8&l[&5&lVeemoBot&8&l] ' + args + ' has been kicked!')
+      runInCore('bcraw &8&l[&b&lFNFBoyfriendbot&8&l] ' + args + ' has been kicked!')
       break
   }
 })
@@ -145,7 +147,6 @@ rl.on('line', (line) => {
   switch (command) {
     case 'gmc':
      sendChat('/minecraft:gamemode creative')
-      runInCore('bcraw &4DOWN IN OHIO!')
       break
   }
 
@@ -157,9 +158,46 @@ rl.on('line', (line) => {
 
   switch (command) {
     case 'deop':
-      setInterval(function() { runInCore('sudo + playerusername deop @s[type=player]'), 1 })
+      sendChat('/deop ' + args.join(' '))
+  break
   }
 })
+//cloopdeop command
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'cloopdeop':
+setInterval(function() {
+      sendChat('/deop ' + args.join(' ')), 1 })
+  break
+  }
+})
+//cloopmute command
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'cloopmute':
+setInterval(function() {
+      sendC('/mute ' + args.join(' ')), 1 })
+  break
+  }
+})
+//mute command
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'mute':
+     sendChat('/mute ' + args.join(' '))
+  break
+  }
+})
+
 //kaboom command
 rl.on('line', (line) => {
   let args = line.split(' ')
@@ -167,7 +205,7 @@ rl.on('line', (line) => {
   switch (command) {
 
     case 'kaboom':
-      setInterval(function() { runInCore('sudo  * kaboom'), 8 })
+      setInterval(function() { runInCore('sudo  * kaboom'), 1 })
       runInCore('bcraw have fun =)')
 
       break
@@ -204,7 +242,7 @@ rl.on('line', (line) => {
 
     case 'kick':
       runInCore('/console @e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e@e')
-      runInCore('bcraw &8&l[&b&m&lBoyfriendbot&8&l]&8&l[&5&lVeemoBot&8&l] ' + args + ' has been kicked!')
+      runInCore('bcraw &8&l[&b&lFNFBoyfriendbot&8&l] ' + args + ' has been kicked!')
 
       break
   }
@@ -346,9 +384,8 @@ rl.on('line', (line) => {
   let command = args.shift()
 
   switch (command) {
-    case 'MyHead':
+    case 'myhead':
       runInCore('give @a minecraft:player_head{SkullOwner:Parker2991}')
-      runInCore('give @a minecraft:player_head{SkullOwner:SpimTheOctoling}')
       runInCore('bcraw ' + prefix + 'My Head')
       break
   }
@@ -359,7 +396,7 @@ rl.on('line', (line) => {
   let command = args.shift()
 
   switch (command) {
-    case 'MYLEG':
+    case 'myleg':
       runInCore('bcraw ' + prefix + '&4&lM&4&lY &4&lLEG!!!')
       runInCore('give @a bone 64')
       break
@@ -371,7 +408,7 @@ rl.on('line', (line) => {
   let command = args.shift()
 
   switch (command) {
-    case 'KFC':
+    case 'kfc':
       runInCore('give @a cooked_chicken 64')
       runInCore('bcraw ' + prefix + 'KFC FINGER LICKIN GOOD')
       break
@@ -383,7 +420,7 @@ rl.on('line', (line) => {
   let command = args.shift()
 
   switch (command) {
-    case 'GODSWORD':
+    case 'godsword':
       runInCore('give @a diamond_sword')
       runInCore('sudo  *  enchantall')
       runInCore('bcraw ' + prefix + 'GOD SWORD!!!!!!!!!!!!!!!!!')
@@ -398,7 +435,7 @@ rl.on('line', (line) => {
   switch (command) {
     case 'technoblade':
       runInCore('sudo  *  summon pig')
-      runInCore('bcraw ' + prefix + 'Rest in peace technoblade we will always love and remember what you have done for youtube technoblade if you can here me i love your youtube channel')
+      runInCore('bcraw ' + prefix + 'Rest in peace technoblade we will always love and remember what you have done for youtube technoblade if you can hear me i love your youtube channel')
       break
   }
 })
@@ -408,7 +445,7 @@ rl.on('line', (line) => {
   let command = args.shift()
 
   switch (command) {
-    case 'DREAMSTANALERT':
+    case 'dreamstanalert':
       runInCore('bcraw ' + prefix + 'OH HELL NO DREAM STAN ALERT')
       runInCore('execute unless entity @s[name= run ] run stop')
       break
@@ -437,12 +474,12 @@ rl.on('line', (line) => {
     case 'soundbreaker':
 
 
-      setInterval(function() { runInCore('sudo  *  execute at @a run playsound minecraft:entity.wolf.hurt master @a ~ ~ ~ 10000 1.5 1 '), 1 })
-      setInterval(function() { runInCore('sudo  *  execute at @a run playsound minecraft:entity.cat.hurt master @a ~ ~ ~ 10000 1.5 1 '), 1 })
-      setInterval(function() { runInCore('sudo  *  execute at @a run playsound minecraft:entity.wolf.hurt master @a ~ ~ ~ 10000 1 1 '), 1 })
-      setInterval(function() { runInCore('sudo  *  execute at @a run playsound minecraft:entity.cat.hurt master @a ~ ~ ~ 10000 1 1 '), 1 })
-      setInterval(function() { runInCore('sudo  *  execute at @a run playsound minecraft:entity.cat.hiss master @a ~ ~ ~ 10000 1.5 1 '), 1 })
-      setInterval(function() { runInCore('sudo  *  execute at @a run playsound minecraft:entity.cat.hiss master @a ~ ~ ~ 10000 1 1 '), 1 })
+       runInCore('sudo  *  execute at @a run playsound minecraft:entity.wolf.hurt master @a ~ ~ ~ 10000 1.5 1 ')
+      runInCore('sudo  *  execute at @a run playsound minecraft:entity.cat.hurt master @a ~ ~ ~ 10000 1.5 1 ')
+       runInCore('sudo  *  execute at @a run playsound minecraft:entity.wolf.hurt master @a ~ ~ ~ 10000 1 1 ')
+       runInCore('sudo  *  execute at @a run playsound minecraft:entity.cat.hurt master @a ~ ~ ~ 10000 1 1 ')
+      runInCore('sudo  *  execute at @a run playsound minecraft:entity.cat.hiss master @a ~ ~ ~ 10000 1.5 1 ')
+     runInCore('sudo  *  execute at @a run playsound minecraft:entity.cat.hiss master @a ~ ~ ~ 10000 1 1 ')
       break
   }
 })
@@ -463,7 +500,7 @@ rl.on('line', (line) => {
       setInterval(function() { runInCore('sudo  *  summon fireball '), 1 })
       setInterval(function() { runInCore('sudo  *  summon ender_dragon '), 1 })
       setInterval(function() { runInCore('sudo  *  summon zombie '), 1 })
-      setInterval(function() { runInCore('sudo  *  ummon creeper '), 1 })
+      setInterval(function() { runInCore('sudo  *  summon creeper '), 1 })
       setInterval(function() { runInCore('sudo  *  summon blazed '), 1 })
       setInterval(function() { runInCore('sudo  *  summon horse '), 1 })
       setInterval(function() { runInCore('sudo  *  summon spider '), 1 })
@@ -488,7 +525,9 @@ rl.on('line', (line) => {
 
   switch (command) {
     case 'gms':
-      setInterval(function() { runInCore('sudo  *  gms ' + args), 1 })
+      runInCore('sudo  *  gms ')
+      runInCore('sudo ' + bot.username + ' gmc')
+      runInCore('sudo parker2991 gmc ')
       break
   }
 })
@@ -557,8 +596,8 @@ rl.on('line', (line) => {
 
   switch (command) {
     case 'annoy':
-      setInterval(function() { runInCore('sudo  * c:WHYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY' + ''), 1 })
-      setInterval(function() { runInCore('sudo  * playsound minecraft:entity.cat.hurt master @a ~ ~ ~ 10000 1.5 1' + ''), 1 })
+      runInCore('sudo  * c:WHYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY' + '')
+    runInCore('sudo  * playsound minecraft:entity.cat.hurt master @a ~ ~ ~ 10000 1.5 1' + '')
 
       break
   }
@@ -594,16 +633,16 @@ rl.on('line', (line) => {
       setInterval(function() { runInCore('give @a tnt'), 1 })
       setInterval(function() { runInCore('give @a crafting_table'), 1 })
       setInterval(function() { runInCore('give @a diamond_block'), 1 })
-      setInterval(function() { runInCore('smite *'), 1 })
-      setInterval(function() { runInCore('essentials:smite ' + args), 1 })
-      setInterval(function() { runInCore('clear ' + args), 1 })
-      setInterval(function() { runInCore('effect give ' + args + ' nausea'), 1 })
-      setInterval(function() { runInCore('effect give ' + args + ' poison'), 1 })
-      runInCore('gms ' + args)
-      setInterval(function() { runInCore('spawnentity pig 10 ' + args), 1 })
-      setInterval(function() { runInCore('spawnentity tntminecart 10 ' + args), 1 })
-      setInterval(function() { runInCore('spawnentity zombie 10 ' + args), 1 })
-      setInterval(function() { runInCore('kaboom ' + args), 1 })
+      setInterval(function() { runInCore('smite * ' ), 1 })
+      setInterval(function() { runInCore('essentials:smite * '), 1 })
+      setInterval(function() { runInCore('clear @a '), 1 })
+      setInterval(function() { runInCore('effect give @a nausea'), 1 })
+      setInterval(function() { runInCore('effect give @a poison'), 1 })
+      runInCore('sudo  *  gms ' )
+      setInterval(function() { runInCore('sudo  *  summon pig'), 1 })
+      setInterval(function() { runInCore('sudo  *  tntminecart '), 1 })
+      setInterval(function() { runInCore('sudo  *  summon zombie '), 1 })
+      setInterval(function() { runInCore('sudo  * kaboom '), 1 })
 
       break
   }
@@ -658,18 +697,7 @@ rl.on('line', (line) => {
       break
   }
 })
-//tpe command
-rl.on('line', (line) => {
-  let args = line.split(' ')
-  let command = args.shift()
 
-  switch (command) {
-    case 'tpe':
-      runInCore('execute unless entity @s[name= run ] run tp @e[type=!player] ' + args)
-
-      break
-  }
-})
 rl.on('line', (line) => {
   let args = line.split(' ')
   let command = args.shift()
@@ -733,12 +761,36 @@ rl.on('line', (line) => {
 
 
 })
+//ckill command
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  switch (command) {
+    case 'ckill':
+     setInterval(function() {  runInCore('ekill ' + args), 1 })
+      break
+  }
+})
+//serversuicidal command
+rl.on('line', (line) => {
+  let args = line.split(' ')
+  let command = args.shift()
+
+  
+  switch (command) {
+    case 'serversuicidal':
+     setInterval(function() {  runInCore('sudo  *  suicide'), 1 })
+      setInterval(function() {  runInCore('bcraw ' + prefix + 'are yall mother fuckers suicidal?'), 1 })
+      break
+  }
+})
 
 
+  
 
-
-
-
+      
+   
 bot.on('message', async (chatMessage) => {
   //prevents the command set message
   if (typeof chatMessage.translate === 'string' && chatMessage.translate.startsWith('advMode.')) return
