@@ -1,0 +1,82 @@
+{
+  "harp": {
+    "id": 0,
+    "name": "harp",
+    "offset": 54
+  },
+  "basedrum": {
+    "id": 1,
+    "name": "basedrum",
+    "offset": 0
+  },
+  "snare": {
+    "id": 2,
+    "name": "snare",
+    "offset": 0
+  },
+  "hat": {
+    "id": 3,
+    "name": "hat",
+    "offset": 0
+  },
+  "bass": {
+    "id": 4,
+    "name": "bass",
+    "offset": 30
+  },
+  "flute": {
+    "id": 5,
+    "name": "flute",
+    "offset": 66
+  },
+  "bell": {
+    "id": 6,
+    "name": "bell",
+    "offset": 78
+  },
+  "guitar": {
+    "id": 7,
+    "name": "guitar",
+    "offset": 42
+  },
+  "chime": {
+    "id": 8,
+    "name": "chime",
+    "offset": 78
+  },
+  "xylophone": {
+    "id": 9,
+    "name": "xylophone",
+    "offset": 78
+  },
+  "iron_xylophone": {
+    "id": 10,
+    "name": "iron_xylophone",
+    "offset": 54
+  },
+  "cow_bell": {
+    "id": 11,
+    "name": "cow_bell",
+    "offset": 66
+  },
+  "didgeridoo": {
+    "id": 12,
+    "name": "didgeridoo",
+    "offset": 30
+  },
+  "bit": {
+    "id": 13,
+    "name": "bit",
+    "offset": 54
+  },
+  "banjo": {
+    "id": 14,
+    "name": "banjo",
+    "offset": 54
+  },
+  "pling": {
+    "id": 15,
+    "name": "pling",
+    "offset": 54
+  }
+}
