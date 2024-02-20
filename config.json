@@ -1,0 +1,121 @@
+
+{
+  "bots": [
+{
+      "host": "",
+
+      "version":"1.20.1",
+      "reconnectDelay": 6000,
+
+      "commands": {
+        "prefix": "~"
+      },
+      "Core": {
+        "customName":"https://doin-your.mom"
+  },
+      "discord": {
+        "channelId": "1106441703046529084",
+        "invite": "https://discord.gg/GCKtG4erux",
+        "commandPrefix": "~"
+      }
+    }, 
+
+     {
+      "host": "24.69.170.247",
+      "version":"1.20.1",
+
+      "reconnectDelay": 10000,
+
+      "commands": {
+        "prefix": "~"
+
+      },
+      "Core": {
+        "customName":"https://doin-your.mom"
+  },
+        
+      "discord": {
+        "channelId": "1155826836954157136",
+        "invite": "https://discord.gg/GCKtG4erux",
+        "commandPrefix": "~"
+      }
+      }, 
+
+   {
+      "host": "mcslot.eu",
+      "version":"1.20.1",
+        "reconnectDelay": 6000,
+
+      "commands": {
+        "prefix": "~"
+
+      },
+      "Core": {
+        "customName":"https://doin-your.mom"
+  },
+         
+     "discord": {
+        "channelId": "1106393124110086174",
+        "invite": "https://discord.gg/GCKtG4erux",
+        "commandPrefix": "~"
+      }
+   },
+    {
+      "host": "mc.opengamesllc.com",
+      "version":"1.20.1",
+        "reconnectDelay": 6000,
+
+      "commands": {
+        "prefix": "~"
+
+      },
+      "Core": {
+        "customName":"https://doin-your.mom"
+    },
+
+     "discord": {
+        "channelId": "1167253115557400726",
+        "invite": "https://discord.gg/GCKtG4erux",
+        "commandPrefix": "~"
+      }
+    },
+    {
+      "host": "168.100.232.7",
+      "version":"1.20.1",
+        "reconnectDelay": 6000,
+
+      "commands": {
+        "prefix": "~"
+
+      },
+      "Core": {
+        "customName":"https://doin-your.mom"
+    },
+
+     "discord": {
+        "channelId": "1170167933687836732",
+        "invite": "https://discord.gg/GCKtG4erux",
+        "commandPrefix": "~"
+      }
+    },
+    {
+      "host": "xd.tplinkdns.com",
+      "version":"1.20.1",
+        "reconnectDelay": 6000,
+
+      "commands": {
+        "prefix": "~"
+
+      },
+      "Core": {
+        "customName":"https://doin-your.mom"
+    },
+
+     "discord": {
+        "channelId": "1170401078811037757",
+        "invite": "https://discord.gg/GCKtG4erux",
+        "commandPrefix": "~"
+      }
+    }
+  ]
+}
