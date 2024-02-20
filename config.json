@@ -1,0 +1,77 @@
+
+{
+  "bots": [
+{
+      "host": "kaboom.pw",
+  
+      "version":"1.20.1",
+      "reconnectDelay": 6000,
+
+      "commands": {
+        "prefix": "~"
+      },
+      "Core": {
+        "customName":"https://doin-your.mom"
+  },
+         "CustomChat": {
+           
+           "text":"FNFBoyfriendBot",
+           "color":"#00FFFF"
+       },
+      "discord": {
+        "channelId": "1106441703046529084",
+        "invite": "https://discord.gg/GCKtG4erux",
+        "commandPrefix": "~"
+      }
+    }, 
+ 
+     {
+      "host": "24.69.170.247",
+      "version":"1.20.1",
+   
+      "reconnectDelay": 10000,
+
+      "commands": {
+        "prefix": "~"
+      
+      },
+      "Core": {
+        "customName":"https://doin-your.mom"
+  },
+         "CustomChat": {
+           
+           "text":"FNFBoyfriendBot",
+           "color":"#00FFFF"
+       },
+      "discord": {
+        "channelId": "1155826836954157136",
+        "invite": "https://discord.gg/GCKtG4erux",
+        "commandPrefix": "~"
+      }
+      }, 
+ 
+   {
+      "host": "kaboom.fusselig.xyz",
+      "version":"1.20.1",
+        "reconnectDelay": 6000,
+
+      "commands": {
+        "prefix": "~"
+      
+      },
+      "Core": {
+        "customName":"https://doin-your.mom"
+  },
+         "CustomChat": {
+           
+           "text":"FNFBoyfriendBot",
+           "color":"#00FFFF"
+       },
+     "discord": {
+        "channelId": "1106393124110086174",
+        "invite": "https://discord.gg/GCKtG4erux",
+        "commandPrefix": "~"
+      }
+   }
+  ]
+}
