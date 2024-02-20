@@ -1,0 +1,24 @@
+
+{
+  "bots": [
+{
+      "host": "localhost",
+
+      "version":"1.20.1",
+      "reconnectDelay": 6000,
+
+      "commands": {
+        "prefix": "default~"
+      },
+      "Core": {
+        "customName":"CoreCustomNameHere"
+  },
+       
+      "discord": {
+        "channelId": "discordchannelidhere",
+        "invite": "discordlinkhere",
+        "commandPrefix": "default~"
+      }
+    }
+  ]
+}

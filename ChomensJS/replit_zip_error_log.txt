@@ -1,0 +1,1 @@
+{"error":".zip archives do not support non-regular files","level":"error","msg":"unable to write file .cache/replit/modules/nodejs-18:v9-20230908-bb1b9fd","time":"2023-09-17T03:59:55Z"}
