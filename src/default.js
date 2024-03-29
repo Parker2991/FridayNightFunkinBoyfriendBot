@@ -1,35 +1,65 @@
-
 {
   module.exports = {
-    
+    Commands:{
+prefixes:['!'] 
+//since the prefix array doesnt have a set number more prefixes can be set
+},
+Core:{
+
+JSON:``,//needs to be a valid json
+area:{
+start:{ x: 0, y: 0, z: 0 },
+end:{ x: 15, y: 0, z: 15 },
+}
+},
+
+tellrawTag:{
+fnftellraw:{text:"FNF",color:"dark_purple"},
+boyfriendtellraw:{text:"Boyfriend",color:"#00FFFF"},
+bottellraw:{text:"Bot",color:"dark_red"},
+},
+helpTheme:{
+pub_lickColor:"#00FFFF",
+t_rustedColor:"dark_purple",
+own_herColor:"dark_red",
+},
+Discord: {
+enabled:false,
+ invite: "https://discord.gg/GCKtG4erux",
+   commandPrefix: "!",
+presence:{
+ name:'', //set status text here
+  type:4,
+   status:'dnd',//status here
+}
+},    
+console:{
+filelogging:false,
+prefix:'c.',
+},
     bots: [
 {
-   host: "serveriphere",
+   host: "localhost",
   username:username(),
       version:"1.20.2",
-      reconnectDelay: 6000,
-endcredits:false,
-        Console:{
-          enabled: false,
-                filelogging:false,
-prefix:'c.',
-        },
+serverName:'localhost',
+   reconnectDelay: 6000,
+   endcredits:false,
+   Console:{ 
+  enabled:false,     
+  ratelimit:10,
+},
        
-       
-       commands: { 
-                     prefixes: 
-                             ["!", "!", "!"] // are those the prefixes?
-             },
-      Core: {
-        customName:"corenamehere",
-        enabled: false,
-              interval:180000
-  },
+     Core: {
+     enabled: true,
+      interval:180000
+         },
       discord: {
-        channelId: "discordchannelidhere",
-        invite: "discordinvitelinkhere",
-        commandPrefix: "!"
-      },
+        channelId: "",//discord channel id here
+},
+matrix:{
+roomId:'',//matrix room id here
+},
   selfcare: {
   vanished: false,
   unmuted: false,
