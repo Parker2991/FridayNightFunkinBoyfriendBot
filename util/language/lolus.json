@@ -2192,7 +2192,7 @@
     "command.exception": "cud not parse command: %s",
     "command.expected.separator": "Expectd whitespace 2 end wan argument, but findz trailin data",
     "command.failed": "An unexpectd errur occurd tryin 2 do dis cmd",
-    "command.unknown.argument": "Incorrect argument 4 command",
+    "command.unknown.argument": "Incowwect awgument 4 comand",
     "command.unknown.command": "cant find teh commnd :( luk under 2 c y",
     "commands.advancement.advancementNotFound": "No atfancemend wuz found bai de naem '%s'",
     "commands.advancement.criterionNotFound": "De atfancemend '%1$s' dooz not contain de criterion '%2$s'",
