@@ -1,10 +1,17 @@
-const CommandError = require('./CommandModules/command_error.js')
+const CommandError = require('./CommandModules/command_error.js');
 const util = require("util");
-const createBot = require("./bot.js");
-// TODO: Load a default config
-const fs = require("fs");
+const path = require('path');
+const fs = require('fs');
+if (!fs.existsSync('config.js')) {
+ console.log('Config not found creating config from default.js');
+  fs.copyFileSync(
+   path.join(__dirname, 'default.js'),
+   path.join(__dirname, 'config.js'),
+);
+};
+const config = require(`../config.js`);
+const createBot = require('./bot.js'); 
 const fileExist = require("./util/file-exists");
-const path = require("path");
 const readline = require("readline");
 
 const rl = readline.createInterface({
@@ -12,21 +19,22 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-function load() {
+
   //const config = require('./config.js')
  
 
-
+function load() {
   require("dotenv").config();
   const bots = [];
-  const core = config.Core
+  const core = config.Core;
   const commands = config.Commands;
   const Console = config.console; 
-  const tellrawtag = config.tellrawTag
-  const helptheme = config.helpTheme
-  const discord = config.Discord
-  const matrix = config.matrix
-  for (const options of config.bots) {
+  const tellrawtag = config.tellrawTag;
+//  const helptheme = config.helpTheme;
+  const discord = config.Discord;
+  const matrix = config.matrix;
+  const validation = config.validation;
+for (const options of config.bots) {
     const bot = createBot(options);
     bots.push(bot);
     bot.bots = bots;
@@ -35,11 +43,10 @@ function load() {
     bot.Console = Console;
     bot.Discord = discord;
     bot.tellrawTag = tellrawtag;
-    bot.helpTheme = helptheme;
-    bot.matrix = matrix 
-
+//    bot.helpTheme = helptheme;
+    bot.matrix = matrix;
+    bot.validation = validation;
     bot.options.username;
-   
     bot.loadModule = (module) => module(bot, options);
   
     for (const filename of fs.readdirSync(path.join(__dirname, "modules"))) {
@@ -54,14 +61,16 @@ function load() {
           error,
        );
       }
-
 }
+
   
     bot.console.useReadlineInterface(rl);
 
  
     try {
-      bot.on("error", console.error);
+      bot.on("error", error => {
+bot?.console?.warn(error.toString())
+});
     } catch (error) {
       console.log(error.stack);
     }
@@ -70,22 +79,7 @@ function load() {
 }
 
 process.on("uncaughtException", (e) => {
-console.log(e.stack)
+//console.log(e.stack)
 });
 
-async function checkConfig() {
-  if (!(await fileExist(path.join(__dirname, "config.js")))) {
-    console.error("Config not found! Creating a new Config from ");
-    await fs.copyFileSync(
-      path.join(__dirname, "default.js"),
-      path.join(__dirname, "config.js"),
-    );
-  }
-  
-
-  config = require("./config.js");
-
-  load();
-}
-
-checkConfig();
+load()

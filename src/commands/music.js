@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 const CommandError = require('../CommandModules/command_error')
 const fs = require('fs/promises')
 const { EmbedBuilder } = require('discord.js')
@@ -11,15 +10,11 @@ const os = require('os')
 
 let SONGS_PATH
 
-if (os.hostname() === ':3') {
-  SONGS_PATH = path.join(__dirname, '..', '..', 'nginx-html', 'midis')
-} else {
-  SONGS_PATH = path.join(__dirname, '..', 'midis')
-}
+
+  SONGS_PATH = path.join(__dirname, '../../', 'midis')
 
 let song
-
-async function play (bot, values, discord, channeldc, selector, config) {
+async function play (bot, values, selector, config) {
   try {
     const filepath = values.join(' ')
 
@@ -36,7 +31,7 @@ async function play (bot, values, discord, channeldc, selector, config) {
         )
       )
 
-      // this part took a bunch of time to figure out, but still chomens moment!1!
+     
       const lowerCaseFile = pathSplitted.pop().toLowerCase()
       const file = songs.filter((song) => song.toLowerCase().includes(lowerCaseFile))[0]
 
@@ -50,7 +45,7 @@ async function play (bot, values, discord, channeldc, selector, config) {
     song = await bot.music.load(await fs.readFile(absolutePath), path.basename(absolutePath))
 
     
-      bot.tellraw([{ text: 'Added ', color: 'white' }, { text: song.name, color: 'gold' }, { text: ' to the song queue', color: 'white' }])
+      bot.sendFeedback([{ text: 'Added ', color: 'dark_gray' }, { text: song.name, color: '#00FFFF' }, { text: ' to the song queue', color: 'dark_gray' }])
    
 
     bot.music.queue.push(song)
@@ -58,16 +53,16 @@ async function play (bot, values, discord, channeldc, selector, config) {
   } catch (e) {
     bot.console.error(e.stack)
     
-      bot.tellraw({ text: 'SyntaxError: Invalid file', color: 'red' })
+      bot.sendFeedback({ text: 'SyntaxError: Invalid file', color: 'red' })
     }
   }
 
 
-async function playUrl (bot, values, discord, channeldc, selector, config) {
+async function playUrl (bot, values, selector, config) {
   let response
   try {
     const url = values.join(' ')
-    response = await axios.get('https://localhost:8080', {
+    response = await axios.get('http://localhost:8080', {
       params: {
         uri: url
       },
@@ -75,7 +70,7 @@ async function playUrl (bot, values, discord, channeldc, selector, config) {
     })
 
     song = await bot.music.load(response.data, getFilenameFromUrl(url))
-      bot.tellraw([{ text: 'Added ', color: 'white' }, { text: song.name, color: 'gold' }, { text: ' to the song queue', color: 'white' }])
+      bot.sendFeedback([{ text: 'Added ', color: 'dark_gray' }, { text: song.name, color: '#00FFFF' }, { text: ' to the song queue', color: 'dark_gray' }])
     
 
     bot.music.queue.push(song)
@@ -83,7 +78,7 @@ async function playUrl (bot, values, discord, channeldc, selector, config) {
   } catch (_err) {
     const e = _err.toString().includes('Bad MIDI file.  Expected \'MHdr\', got: ') ? response.data.toString() : _err
     
-      bot.tellraw({ text: e, color: 'red' })
+      bot.sendFeedback({ text: e, color: 'red' })
     }
   }
 
@@ -111,7 +106,7 @@ async function list (bot, discord, channeldc, prefix, selector, args, config) {
       const isFile = (await fs.lstat(path.join(absolutePath, value))).isFile()
       message.push({
         text: value + ' ',
-        color: (!((primary = !primary)) ? 'gold' : 'yellow'),
+        color: (!((primary = !primary)) ? 'aqua' : 'blue'),
         clickEvent: {
           action: 'suggest_command',
           value: `${prefix}music ${isFile ? 'play' : 'list'} ${path.join(args.slice(1).join(' '), value)}`
@@ -119,23 +114,22 @@ async function list (bot, discord, channeldc, prefix, selector, args, config) {
         hoverEvent: {
           action: 'show_text',
           contents: [
-            { text: 'Name: ', color: 'white' },
-            { text: value, color: 'gold' },
+            { text: 'Name: ', color: 'dark_gray' },
+            { text: value, color: '#00FFFF' },
             '\n',
             { text: 'Click here to suggest the command!', color: 'green' }
           ]
         }
       })
     };
-
-    bot.tellraw(message)
+    bot.sendFeedback([{ text: 'Songs ', color: 'dark_gray' },{ text: '(', color:'dark_blue' },{text: `${Object.keys(listed).length}`, color: 'gold' },{ text: ')', color: 'dark_blue' }]) 
+    bot.sendFeedback(message)
   } catch (e) {
     
-      bot.tellraw({ text: e.toString(), color: 'red' })
-    }
+      bot.sendFeedback({ text: e.toString(), color: 'red' })
+  }
   
 };
-
 module.exports = {
   name: 'music',
   description: 'Plays music',
@@ -153,8 +147,7 @@ module.exports = {
   execute (context, selector, config) {
 const args = context.arguments
 const bot = context.bot
-const prefix = bot.options.commands.prefixes[0]
-if (!bot.options.Core.enabled) throw new CommandError({text:':3'})
+const prefix = bot.Commands.prefixes[0]
 if (!args && !args[0] && !args[1] && !args[2] && !args[3]) return
     switch (args[0]) {
       case 'play':
@@ -167,24 +160,35 @@ if (!args && !args[0] && !args[1] && !args[2] && !args[3]) return
         }
         break
       case 'stop':
-        bot.tellraw({ text: 'Cleared the song queue' })
+        bot.sendFeedback({ text: 'Cleared the song queue', color: 'dark_gray' })
         bot.music.stop()
         break
       case 'skip':
         try {
-          bot.tellraw([{ text: 'Skipping ' }, { text: bot.music.song.name, color: 'gold' }])
+          bot.sendFeedback([{ text: 'Skipping ', color: 'dark_gray' }, { text: bot.music.song.name, color: '#00FFFF' }])
           bot.music.skip()
         } catch (e) {
           throw new CommandError('No music is currently playing!')
+        }
+        break
+      case 'volume':
+        if (isNaN(args.slice(1))) {
+        throw new CommandError('Argument is not a number')
+        } else if(args.slice(1) >= 6) {
+        throw new CommandError('Too high!')
+        } else {
+        bot.music.volume = args.slice(1)
+        bot.sendFeedback([{ text: 'Setting music volume to ', color: 'dark_gray'},{ text: `${bot.music.volume}`, color: 'gold'}])
         }
         break
       case 'loop':
         switch (args[1]) {
           case 'off':
             bot.music.loop = 0
-            bot.tellraw([
+            bot.sendFeedback([
               {
-                text: 'Looping is now '
+                text: 'Looping is now ',
+                color: 'dark_gray',
               },
               {
                 text: 'disabled',
@@ -194,20 +198,22 @@ if (!args && !args[0] && !args[1] && !args[2] && !args[3]) return
             break
           case 'current':
             bot.music.loop = 1
-            bot.tellraw([
+            bot.sendFeedback([
               {
-                text: 'Now Looping '
+                text: 'Now Looping ',
+                color: 'dark_gray'
               },
               {
                 text: song.name,
-                color: 'gold'
+                color: '#00FFFF'
               }
             ])
             break
           case 'all':
             bot.music.loop = 2
-            bot.tellraw({
-              text: 'Now looping every song'
+            bot.sendFeedback({
+              text: 'Now looping every song',
+            
             })
             break
           default:
@@ -218,27 +224,28 @@ if (!args && !args[0] && !args[1] && !args[2] && !args[3]) return
         list(bot, false, null, prefix, selector, args, config)
         break
       case 'nowplaying':
-        bot.tellraw([
+        bot.sendFeedback([
           {
-            text: 'Now playing '
+            text: 'Now playing ',
+            color: 'dark_gray',
           },
           {
             text: bot.music.song.name,
-            color: 'gold'
+            color: '#00FFFF'
           }
         ])
         break
       case 'queue':
         const queueWithName = []
         for (const song of bot.music.queue) queueWithName.push(song.name)
-        bot.tellraw([
+        bot.sendFeedback([
           {
             text: 'Queue: ',
-            color: 'green'
+            color: 'dark_gray'
           },
           {
             text: queueWithName.join(', '),
-            color: 'aqua'
+            color: '#00FFFF'
           }
         ])
         break
@@ -246,4 +253,4 @@ if (!args && !args[0] && !args[1] && !args[2] && !args[3]) return
         throw new CommandError('Invalid argument')
     }
   }
-}  
+}

@@ -56,17 +56,17 @@ bot.chat(ChatMessage.fromNotch(await sleep(2300)
                       
                 for (const definition of definitions) {
       
-              source.sendFeedback([cmd, example, { text: definition.example.replaceAll("\r", ""), color: 'gray' }, { text: ' - ', color: 'white' }])
-        source.sendFeedback([cmd, definition5,{ text: definition.definition.replaceAll("\r", ""), color: 'gray' } ])
+              bot.sendFeedback([cmd, example, { text: definition.example.replaceAll("\r", ""), color: 'gray' }, { text: ' - ', color: 'white' }])
+        bot.sendFeedback([cmd, definition5,{ text: definition.definition.replaceAll("\r", ""), color: 'gray' } ])
       }
       
             
 
        urban.define(args.join(' ')).then((results) => {
-        source.sendFeedback([cmd,{text:`Definition: ${results[0].word}`, color:'dark_gray'}])
-        source.sendFeedback([cmd,{text:`Author: ${results[0].author}`, color:'dark_gray'}])
+        bot.sendFeedback([cmd,{text:`Definition: ${results[0].word}`, color:'dark_gray'}])
+        bot.sendFeedback([cmd,{text:`Author: ${results[0].author}`, color:'dark_gray'}])
         //source.sendFeedback(results[0].thumbs_down)
-        source.sendFeedback([cmd,{text:`👍  ${results[0].thumbs_up}  | 👎  ${results[0].thumbs_down}`, color:'gray'}])
+        bot.sendFeedback([cmd,{text:`👍  ${results[0].thumbs_up}  | 👎  ${results[0].thumbs_down}`, color:'gray'}])
 
 
         //source.sendFeedback(results[0].written_on)
@@ -91,7 +91,7 @@ bot.chat(ChatMessage.fromNotch(await sleep(2300)
             const ChatMessage = require('prismarine-chat')(bot.options.version)
             bot.chat(ChatMessage.fromNotch([cmd,{ text: e.toString(), color: 'red' }]).toMotd().replaceAll('§', '&')) 
     }else {
-            source.sendFeedback([cmd,{ text: e.toString(), color: 'red' }])
+            bot.sendFeedback([cmd,{ text: e.toString(), color: 'red' }])
     }
     }
   }

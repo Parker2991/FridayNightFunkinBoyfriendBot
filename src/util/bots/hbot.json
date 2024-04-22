@@ -1,0 +1,10 @@
+
+{
+    "name": { "text": "HBot", "color": "aqua", "bold": "false" },
+    "authors": ["hhhzzzsss"],
+    "exclaimer": "HBOT HARRYBUTT LMAOOOOOOOOOOOOOOOOO",
+    "foundation": "java/mcprotocollib",
+    "prefixes": ["#"],
+    "maintained":"false"
+}
+

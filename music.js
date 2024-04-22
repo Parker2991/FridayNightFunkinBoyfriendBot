@@ -1,10 +1,10 @@
 const path = require('path')
 const fs = require('fs')
 const { Midi } = require('@tonejs/midi')
-const { convertMidi } = require('../util/music/midi_converter')
-const convertNBS = require('../util/music/nbs_converter')
-const parseTXTSong = require('../util/music/txt_song_parser')
-const midiproxy = require('../util/music/midi-proxy')
+const { convertMidi } = require('../util/midi_converter')
+const convertNBS = require('../util/nbs_converter')
+const parseTXTSong = require('../util/txt_song_parser')
+const midiproxy = require('../util/midi-proxy')
 midiproxy()
 const soundNames = {
   harp: 'minecraft:block.note_block.harp',
@@ -30,7 +30,6 @@ async function inject (bot) {
   bot.music.song = null
   bot.music.loop = 0
   bot.music.queue = []
-  bot.music.volume = 0.1
   let time = 0
   let startTime = 0
   let noteIndex = 0
@@ -54,47 +53,44 @@ const midisFolder = path.join(__dirname, '../../midis'); // idfk
   const bossbarName = 'music' // maybe make this in the config?
 
   const selector = '@a[tag=!nomusic]'
-// setTimeout
+
   const interval = setInterval(async () => {
     if (!bot.music.queue.length) return
     bot.music.song = bot.music.queue[0]
     time = Date.now() - startTime
 
     // bot.core.run('minecraft:title @a[tag=!nomusic] actionbar ' + JSON.stringify(toComponent()))
-    await bot.chatDelay(1)
+    await bot.chatDelay(150)
     bot.core.run(`minecraft:bossbar add ${bossbarName} ""`) // is setting the name to "" as a placeholder a good idea?
-    await bot.chatDelay(1)
+    await bot.chatDelay(150)
     bot.core.run(`minecraft:bossbar set ${bossbarName} players ${selector}`)
-    await bot.chatDelay(1)
-    bot.core.run(`minecraft:bossbar set ${bossbarName} name ${JSON.stringify(bot.getMessageAsPrismarine(bossbarComponent()).toMotd())}`)
-    await bot.chatDelay(1)
-    bot.core.run(`minecraft:bossbar set ${bossbarName} color aqua`) // should i use purple lol
-    await bot.chatDelay(1)
+    await bot.chatDelay(150)
+    bot.core.run(`minecraft:bossbar set ${bossbarName} name ${JSON.stringify(bot.getMessageAsPrismarine(toComponent()).toMotd())}`)
+    await bot.chatDelay(150)
+    bot.core.run(`minecraft:bossbar set ${bossbarName} color yellow`) // should i use purple lol
+    await bot.chatDelay(150)
     bot.core.run(`minecraft:bossbar set ${bossbarName} visible true`)
-    await bot.chatDelay(1)
+    await bot.chatDelay(150)
     bot.core.run(`minecraft:bossbar set ${bossbarName} value ${Math.floor(time)}`)
-    await bot.chatDelay(1)
+    await bot.chatDelay(150)
     bot.core.run(`minecraft:bossbar set ${bossbarName} max ${bot.music.song.length}`)
-    
-    await bot.chatDelay(1)
-    bot.core.run(`title @a actionbar ${JSON.stringify(bot.getMessageAsPrismarine(actionbarComponent()).toMotd())}`)
-   // await bot.chatDelay(500)
+    await bot.chatDelay(150)
+    bot.core.run(`title @a actionbar ${JSON.stringify(bot.getMessageAsPrismarine(toComponent()).toMotd())}`)
+    await bot.chatDelay(150)
   
     while (bot.music.song?.notes[noteIndex]?.time <= time) {
       const note = bot.music.song.notes[noteIndex]
-     const floatingPitch = 2 ** ((note.pitch - 12) / 12.0)
-  //  bot.core.run(`minecraft:execute as ${selector} at @s run playsound ${soundNames[note.instrument]} record @s ~ ~ ~ ${note.volume} ${floatingPitch}`)
-bot.core.run(`minecraft:execute as ${selector} at @s run playsound ${soundNames[note.instrument]} record @s ~ ~ ~ ${bot.music.volume} ${floatingPitch}`)
-
+      const floatingPitch = 2 ** ((note.pitch - 12) / 12.0)
+      bot.core.run(`minecraft:execute as ${selector} at @s run playsound ${soundNames[note.instrument]} record @s ~ ~ ~ ${note.volume} ${floatingPitch}`)
       noteIndex++
       if (noteIndex >= bot.music.song.notes.length) {
-        bot.sendFeedback([
+        bot.tellraw([
           {
             text: 'Finished playing '
           },
           {
             text: bot.music.song.name,
-            color: '#00FFFF'
+            color: 'gold'
           }
         ])
 
@@ -121,17 +117,13 @@ bot.core.run(`minecraft:execute as ${selector} at @s run playsound ${soundNames[
         }
       }
     }
-  },150)
+  }, 100)
 
   bot.on('end', () => {
-//  clearInterval(interval)
- bot.music.stop()
- // interval = undefined
-   })
-   bot.on('packet.login', (packet) => {
-   //interval
- // bot.music.stop()
+//    clearInterval(interval)
+  bot.music.stop()
   })
+
   bot.music.load = async function (buffer, fallbackName = '[unknown]') {
     let song
     switch (path.extname(fallbackName)) {
@@ -170,7 +162,7 @@ bot.core.run(`minecraft:execute as ${selector} at @s run playsound ${soundNames[
     time = 0
     startTime = Date.now()
     noteIndex = 0
-    bot.core.run(`minecraft:bossbar remove ${bossbarName}`) 
+    bot.core.run(`minecraft:bossbar remove ${bossbarName}`) // maybe not a good place to put it here but idk
   }
 
   function formatTime (time) {
@@ -179,34 +171,10 @@ bot.core.run(`minecraft:execute as ${selector} at @s run playsound ${soundNames[
     return `${Math.floor(seconds / 60)}:${(seconds % 60).toString().padStart(2, '0')}`
   }
 
-  function actionbarComponent () {
+  function toComponent () {
     const component = [
-      { text: ' | ', color: 'dark_gray' },
-      { text: bot.music.song.name, color: 'blue' },
-      { text: ' | ', color: 'dark_gray' },
-      { text: formatTime(time), color: 'gray' },
-      { text: ' / ', color: 'dark_gray' },
-      { text: formatTime(bot.music.song.length), color: 'gray' },
-      { text: ' | ', color: 'dark_gray' },
-      { text: noteIndex, color: 'gray' },
-      { text: ' / ', color: 'dark_gray' },
-      { text: bot.music.song.notes.length, color: 'gray' }
-    ]
-
-    if (bot.music.loop === 1) {
-      component.push({ text: ' | ', color: 'dark_gray' })
-      component.push({ text: 'Looping Current', color: 'green' })
-    }
-    if (bot.music.loop === 2) {
-      component.push({ text: ' | ', color: 'dark_gray' })
-      component.push({ text: 'Looping All', color: 'green' })
-    }
-
-    return component
-  }
- function bossbarComponent () {
-    const component = [
-      { text: bot.music.song.name, color: 'blue' },
+      
+      { text: bot.music.song.name, color: 'green' },
       { text: ' | ', color: 'dark_gray' },
       { text: formatTime(time), color: 'gray' },
       { text: ' / ', color: 'dark_gray' },

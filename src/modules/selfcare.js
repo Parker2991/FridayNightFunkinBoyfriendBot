@@ -1,4 +1,3 @@
-
 const util = require('util')
 
 const COMMANDSPY_ENABLED_MESSAGE = { text: 'Successfully enabled CommandSpy' }
@@ -6,9 +5,9 @@ const COMMANDSPY_DISABLED_MESSAGE = { text: 'Successfully disabled CommandSpy' }
 //You now have the tag: &8[&bPrefix &4d~&8]
 function selfcare (bot) {
   let entityId
-   let gameMode
+  let gameMode
   let permissionLevel = 2
-let unmuted = false
+  let unmuted = false
   let commandSpyEnabled = false
   let vanished = false
   let prefix = false
@@ -17,58 +16,56 @@ let unmuted = false
   let nickname = false
   let god = false
   let tptoggle = false
-let jail = false
+  let jail = false
 /* if (data.toString().startsWith('You have been muted')) muted = true
     if (data.toString() === 'You have been unmuted.') muted = false
 */
   //bot.on('message', (data) => {
   bot.on('message', (message, data) => {
     // Successfully removed your skin
-    const stringmessage = bot.getMessageAsPrismarine(message)?.toString()
+    stringmessage = bot.getMessageAsPrismarine(message)?.toString()
+    if (bot.options.isCreayun) {
+    if (stringmessage === `Your prefix has been set to: [Prefix: ~]` || stringmessage === 'Something went wrong while saving the prefix. Please check console.' || stringmessage === 'Unknown command. Type /help for help' || stringmessage === '[SuffEx] Your prefix has been set to: [Prefix: ~]') {
+      prefix = true
+      return
+    } else if (stringmessage.startsWith("Your prefix has been set to: ") || stringmessage === '[SuffEx] Your prefix has been set to: ' || stringmessage === '[SuffEx] Your prefix has been reset' || stringmessage === "Your prefix has been reset.") prefix = false
+    } if (bot.options.isKaboom) { //Your prefix has been reset.
     if (stringmessage.startsWith('You have been muted')) unmuted = true
-    else if (stringmessage === "You have been unmuted.") unmuted = false
+    else if (stringmessage.startsWith('You have been unmuted')) unmuted = false
     else if (util.isDeepStrictEqual(message, COMMANDSPY_ENABLED_MESSAGE)) commandSpyEnabled = true
     else if (util.isDeepStrictEqual(message, COMMANDSPY_DISABLED_MESSAGE)) commandSpyEnabled = false
-    else if (stringmessage === `You now have the tag: &8[&bPrefix: &4${bot.Commands.prefixes[0]}&8]`) {
+    else if (stringmessage === `You now have the tag: &8[&bPrefix: &4${bot.Commands.prefixes[0]}&8]` || stringmessage === 'Something went wrong while saving the prefix. Please check console.') {
       prefix = true
       return
     }
     else if (stringmessage.startsWith("You now have the tag: ") || stringmessage === "You no longer have a tag") prefix = false
       
- else if (stringmessage === `Successfully set your skin to ${bot.options.selfcare.skin.player}'s`) {
+    else if (stringmessage === `Successfully set your skin to ${bot.options.selfcare.skin.player}'s`) {
       skin = true
       return
     }
-//Successfully set your skin to Parker2991's
-   //Successfully removed your skin
-else if (stringmessage === 'You have been released!') jail = true
-else if (stringmessage === 'Jails/Unjails a player, TPs them to the jail specified.') jail = true
-else if(stringmessage === `You have been jailed!`){
-jail = false
-return
-}
-     else if (stringmessage.startsWith("Successfully set your skin to ") || stringmessage === "Successfully removed your skin") skin = false
+    else if (stringmessage === 'You have been released!') jail = true
+    else if (stringmessage === 'Jails/Unjails a player, TPs them to the jail specified.') jail = true
+    else if(stringmessage === `You have been jailed!`){
+    jail = false
+    return
+    }
+    else if (stringmessage.startsWith("Successfully set your skin to ") || stringmessage === "Successfully removed your skin") skin = false
    
-     else if (stringmessage === `Successfully set your username to "${bot.username}"`) {
+    else if (stringmessage === `Successfully set your username to "${bot.username}"`) {
       username = true
       return
     }//"Successfully set your username to "${bot.username}"""
     else if (stringmessage.startsWith("Successfully set your username to ")) username = false
     else if (stringmessage === `You already have the username "${bot.username}"`) username = true
-//That name is already in use. 
-    //Error: Nicknames must be alphanumeric. 
-    //You no longer have a nickname. 
-    //Your nickname is now sus.
      else if (stringmessage === `You no longer have a nickname.`) {
     nickname = true
       return
-    }//"Successfully set your username to "${bot.username}"""
+    }
     else if (stringmessage.startsWith("Your nickname is now ")) nickname = false
    // else if (stringmessage === `Error: Nicknames must be alphanumeric.`) nickname = false
     else if (stringmessage === `You no longer have a nickname.`) nickname = false
     //else if (stringmessage === `That name is already in use.`) nickname = false
-//God mode enabled. 
-    //God mode disabled.
     else if (stringmessage === `God mode enabled.`) {
       god = true
         return
@@ -85,7 +82,7 @@ vanished = false
 return
 }
 else if (stringmessage === `Vanish for ${bot.options.username}: enabled`) vanished = true
-
+}
     /*
 else if (message?.text !== '' || !Array.isArray(message.extra) || message.extra.length < 2 || !message.extra[0]?.text?.startsWith('Vanish for') || message.extra[0].color !== 'gold') return
 

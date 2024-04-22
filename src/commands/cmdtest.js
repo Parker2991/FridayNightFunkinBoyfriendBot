@@ -79,7 +79,7 @@ bot.tellraw([component])
     const uuid = context.source.player.uuid
     const message = context.arguments.join(' ') // WHY SECTION SIGNS!!
     
-    context.source.sendFeedback(`Hello, World!, Player: ${player}, uuid: ${uuid}, Argument: ${message}`, false)
+    bot.sendFeedback(`Hello, World!, Player: ${player}, uuid: ${uuid}, Argument: ${message}`, false)
                  */
                  break
                  case 'error': 
@@ -96,8 +96,8 @@ bot.tellraw([component])
                           sleep(500)
                          bot.chat('the usages are msg and error')
                  }else{
-        context.source.sendError([{ text: 'Invalid action', color: 'dark_red', bold:false }])
-        context.source.sendError([{ text: 'the usages are msg and error', color: 'gray', bold:false }])
+        bot.sendError([{ text: 'Invalid action', color: 'dark_red', bold:false }])
+        bot.sendError([{ text: 'the usages are msg and error', color: 'gray', bold:false }])
  }
  }   
 }

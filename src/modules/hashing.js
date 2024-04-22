@@ -1,4 +1,3 @@
-
 // * Not real hashing
 const crypto = require('crypto')
 const ownerkey = process.env['FNFBoyfriendBot_Owner_key']
@@ -11,16 +10,16 @@ function hashgen (bot) {
   let hash
   let owner
   let interval = setInterval(() => {
-    hash = crypto.createHash('sha256').update(Math.floor(Date.now() / 10000) + trustedkey).digest('hex').substring(0, 16)
-    owner = crypto.createHash('sha256').update(Math.floor(Date.now() / 10000) + ownerkey).digest('hex').substring(0, 16)
+    hash = crypto.createHash('sha256').update(Math.floor(Date.now() / 10000) + bot.validation.keys.trustedKey).digest('hex').substring(0, 16)
+    owner = crypto.createHash('sha256').update(Math.floor(Date.now() / 10000) + bot.validation.keys.ownerKey).digest('hex').substring(0, 16)
     bot.hash = hash
     bot.owner = owner
   
   }, 2000)
          
   function update() {
-    hash = crypto.createHash('sha256').update(Math.floor(Date.now() / 10000) + trustedkey).digest('hex').substring(0, 16)
-    owner = crypto.createHash('sha256').update(Math.floor(Date.now() / 10000) + ownerkey).digest('hex').substring(0, 16)
+    hash = crypto.createHash('sha256').update(Math.floor(Date.now() / 10000) + bot.validation.keys.trusted).digest('hex').substring(0, 16)
+    owner = crypto.createHash('sha256').update(Math.floor(Date.now() / 10000) + bot.validation.keys.owner).digest('hex').substring(0, 16)
     bot.hash = hash
     bot.owner = owner
   
@@ -71,7 +70,7 @@ const date = new Date().toLocaleDateString("en-US", {timeZone:"America/CHICAGO"}
  
   bot?.discord?.client?.on('ready', () => {
  //bot.discord.client?.setMaxListeners(25)
-          bot.hashing.discordChannel = bot?.discord?.client?.channels?.cache?.get('1188677777336057987')
+          bot.hashing.discordChannel = bot?.discord?.client?.channels?.cache?.get(`${bot.validation.discord.channel}`)
     //bot.hashing.discordChannel?.send()
           bot?.hashing?.discordChannel?.send('```ansi\nTime: ' + time + ' ' + date + ' ' + '```' + '```ansi\n Hash for server ' + `${bot.options.host}:${bot.options.port}: ` + bot.hashing.hash + '\n```')
   })// + bot.hashing.hash

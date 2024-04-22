@@ -1,4 +1,5 @@
- const CommandError = require('../CommandModules/command_error')
+const CommandError = require('../CommandModules/command_error')
+const {EmbedBuilder} = require('discord.js')
 module.exports = {
   name: 'cloop',
       trustLevel: 1,
@@ -11,53 +12,53 @@ usage:[
 "list",
 ],
  execute (context, selector) {
-    const args = context.arguments
+  const args = context.arguments
     const bot = context.bot
     const source = context.source
-     if (!args && !args[0] && !args[1] && !args[2] && !args[3]) return
-       
-          // throw new CommandError('temp disabled')
-           
-         
-    switch (selector, args[1]) {
+if (!args && !args[0] && !args[1] && !args[2] && !args[3]) return
+ switch (args[1]) {
       case 'add':
-       
-                    if (parseInt(args[2]) === NaN) source.sendFeedback({ text: 'Invalid interval', color: 'red' }, false)
+        if (parseInt(args[1]) === NaN) source.sendFeedback({ text: 'Invalid interval', color: 'red' })
         
         const interval = parseInt(args[2])
         const command = args.slice(3).join(' ')
-       
+        
         bot.cloop.add(command, interval)
 
-        source.sendFeedback({
+      bot.sendFeedback({
           translate: 'Added \'%s\' with interval %s to the cloops',
-          color:'gray',
           with: [ command, interval ]
         })
         
-                    
         break
       case 'remove':
-        if (bot.cloop.list[args[2]].id === undefined) source.sendFeedback({ text: 'Invalid index', color: 'red' }, false)
+//const aaa = args[2]
+var id  
+//      if (bot.cloop.list[args[2]].id === undefined) new CommandError({text:'Invalid index'})
+try{
 
-        const index = (args[2])
+       const index = (args[2])
 
         bot.cloop.remove(index)
 
-        source.sendFeedback({
+        bot.sendFeedback({
           translate: 'Removed cloop %s',
-         color: 'gray',
           with: [ index ]
         })
-        
+} catch(e) {
+if (e.toString() === "TypeError: Cannot read properties of undefined (reading 'id')"){
+bot.sendError({text:'Invalid Index'})
+}
+}        
+
         break
       case 'clear':
         bot.cloop.clear()
 
-        source.sendFeedback({ text: 'Cleared all cloops', color:'gray' }, false)
+       bot.sendFeedback({ text: 'Cleared all cloops' })
         
         break
-        case 'list':
+      case 'list':
         const component = []
 
         const listComponent = []
@@ -65,9 +66,91 @@ usage:[
         for (const cloop of bot.cloop.list) {
           listComponent.push({
             translate: '%s \u203a %s (%s)',
-           color: 'gray',
             with: [
-              i,
+              `id ${i}`,
+              cloop.command,
+              cloop.interval
+            ]
+          })
+          listComponent.push('\n')
+
+          i++
+        }
+
+        listComponent.pop()
+
+        component.push({
+          translate: "Cloops (%s):",
+          with: [ JSON.stringify(bot.cloop.list.length) ]
+        })
+        component.push('\n')
+        component.push(listComponent)
+if(bot.cloop.list.length === 0){
+bot.sendFeedback({ translate: "Cloops (%s):", with: [ JSON.stringify(bot.cloop.list.length) ] })
+}else{
+        bot.sendFeedback(component)
+    }
+        break
+      default:
+        bot.sendFeedback({ text: 'Invalid action', color: 'red' })
+break
+   }    
+},
+discordExecute(context) {
+const args = context.arguments
+const bot = context.bot
+switch(args[0]) {
+case 'add':
+	const interval = parseInt(args[1])
+        const command = args.slice(2).join(' ')
+       
+        bot.cloop.add(command, interval)
+var Embed = new EmbedBuilder()
+          .setColor('#00FFFF')
+          .setTitle(`${this.name} Command`)
+  .setDescription(`Added ${command} with the interval ${interval} to the cloops`)
+    bot?.discord?.Message?.reply({ embeds: [Embed] })
+break
+case 'remove':
+
+
+   
+       try {
+
+    var index = (args[1])
+bot.cloop.remove(index)
+var Embed = new EmbedBuilder()
+          .setColor('#00FFFF')
+          .setTitle(`${this.name} Command`)
+  .setDescription(`removed cloop ${index}`)
+    bot?.discord?.Message?.reply({ embeds: [Embed] })
+
+
+} catch(e) {
+if (e.toString() === "TypeError: Cannot read properties of undefined (reading 'id')"){
+throw new CommandError({text:'Invalid Index'})
+}
+}        
+break
+case 'clear':
+bot.cloop.clear()
+var Embed = new EmbedBuilder()
+          .setColor('#00FFFF')
+          .setTitle(`${this.name} Command`)
+  .setDescription(`cleared cloops`)
+    bot?.discord?.Message?.reply({ embeds: [Embed] })
+break
+case 'list':
+
+     const component = []
+
+        const listComponent = []
+        let i = 0
+        for (const cloop of bot.cloop.list) {
+          listComponent.push({
+            translate: '%s \u203a %s (%s)',
+            with: [
+              `id ${i}`,
               cloop.command,
               cloop.interval
             ]
@@ -81,21 +164,23 @@ usage:[
 
         component.push({
           translate: 'Cloops (%s):',
-          color:'gray',
           with: [ bot.cloop.list.length ]
         })
         component.push('\n')
-component.push(listComponent)
+        component.push(listComponent)
+
+     var Embed = new EmbedBuilder()
+          .setColor(`#00FFFF`)
+          .setTitle(`${this.name} Command`)
+  .setDescription(bot.getMessageAsPrismarine(component)?.toString())
+    bot?.discord?.Message?.reply({ embeds: [Embed] })
+
         
 
-        source.sendFeedback(component,true)
-//console.log(`tellraw @a ${JSON.stringify(component)}`)
-  
-        break
-      default:
-        source.sendFeedback({ text: 'Invalid action', color: 'red' })
-
-        break
-    }
-  }
+break
+default:	
+throw new CommandError('Invalid argument')
+break
 }
+}
+    }

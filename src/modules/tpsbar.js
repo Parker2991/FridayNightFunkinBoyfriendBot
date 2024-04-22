@@ -29,7 +29,7 @@ async function tpsbar(bot, config) {
     };
     bot.core.run(`minecraft:bossbar add ${bossbarName} ""`);
     bot.core.run(`minecraft:bossbar set ${bossbarName} players @a`);
-    bot.core.run(`minecraft:bossbar set ${bossbarName} color yellow`);
+    bot.core.run(`minecraft:bossbar set ${bossbarName} color blue`);
     bot.core.run(`minecraft:bossbar set ${bossbarName} visible true`);
     bot.core.run(`minecraft:bossbar set ${bossbarName} style progress`);
     bot.core.run(
@@ -59,7 +59,7 @@ async function tpsbar(bot, config) {
     else return value;
   }
 
-  bot.on("login", (data) => {
+  bot.on("packet.login", (data) => {
      nextIndex = 0
     timeGameJoined = timeLastTimeUpdate = Date.now()
 });

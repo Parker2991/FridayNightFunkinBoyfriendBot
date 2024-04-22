@@ -15,13 +15,13 @@ usage:["on","off"],
       case 'on': 
 bot.tps.on()
     
-      source.sendFeedback({text: 'TPSBar is now enabled', color:'green'}) 
+      bot.sendFeedback({text: 'TPSBar is now enabled', color:'green'}) 
     
             break
         case 'off':
       
                     bot.tps.off()
-          source.sendFeedback({text:'TPSBar is now disabled', color:'red'})
+          bot.sendFeedback({text:'TPSBar is now disabled', color:'red'})
        
           break
         default:

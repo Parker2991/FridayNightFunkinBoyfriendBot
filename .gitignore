@@ -1,4 +1,6 @@
-src/node_modules
-src/config.js
-src/.env
+node_modules
+logs
+midis
+config.js
+.env
 amog

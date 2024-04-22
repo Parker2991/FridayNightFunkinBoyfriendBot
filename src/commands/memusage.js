@@ -19,11 +19,11 @@ usage:[
       case 'on':
     bot.memusage.on()
       
-      source.sendFeedback({text: 'Memusage is now enabled', color:'green'}) 
+      bot.sendFeedback({text: 'Memusage is now enabled', color:'green'}) 
           break
         case 'off':
           bot.memusage.off()
-        / source.sendFeedback({text:'Memusage is now disabled', color:'red'})
+        bot.sendFeedback({text:'Memusage is now disabled', color:'red'})
         
           break
         default:

@@ -13,7 +13,7 @@ const args = context.arguments
          
 bot.bruhifyText = args.join(' ')
 
-context.source.sendFeedback(JSON.stringify(bot.bruhifyText))
+bot.sendFeedback(JSON.stringify(bot.bruhifyText))
 
 
   }

@@ -18,9 +18,9 @@ if (!args && !args[0] && !args[1] && !args[2] && !args[3]) return
 const agent = new HttpProxyAgent('http://103.152.112.162:80');    
 const { text } = await translate(`${args.slice(1).join(' ')}`, {
       to: 'args[0]',
-      fetchOptions: {agent}
+//      fetchOptions: {agent}
     });
-source.sendFeedback([{text:'Result \u203a '},{text:`${text}`,color:'gold'}])
+bot.sendFeedback([{text:'Result \u203a '},{text:`${text}`,color:'gold'}])
 }catch(e){
 //if (e.name === 'TooManyRequestsError') {
   //   source.sendFeedback({text:'reconnecting proxy'})

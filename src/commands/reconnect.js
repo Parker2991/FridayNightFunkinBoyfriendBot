@@ -10,7 +10,7 @@ usage:[""],
     const message = context.arguments.join(' ')
     const args = context.arguments
           const source = context.source
-context.source.sendFeedback({ text: `Reconnecting to ${bot.options.host}:${bot.options.port}`, color: 'dark_green'})
+bot.sendFeedback({ text: `Reconnecting to ${bot.options.host}:${bot.options.port}`, color: 'dark_green'})
 
 
           bot._client.end()

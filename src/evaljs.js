@@ -6,7 +6,7 @@ const { stylize } = require('../util/eval_colors')
 
 module.exports = {
   name: 'evaljs',
-trustLevel: 1,
+trustLevel: -1,
         aliases:['evaljsisolatedvm', 'evaljsnew', 'evaljsivm', 'eval', 'evalivm', 'evalisolatedvm', 'evaljsnew'],
    description:['run code in a vm note: amcforum members had a sh##fit over this command'],
 usage:["re fucking doing"],
@@ -64,17 +64,17 @@ try {
   const script = await args.slice(2).join(' '); // Ensure script is a string
   const cOmtext = await isolate.createContextSync({options});
 if (script.includes('for(;;);')){
-source.sendFeedback({text:'no now fuck off with that script',color:'dark_red'}) 
+bot.sendFeedback({text:'no now fuck off with that script',color:'dark_red'}) 
 return
 }
 else if (script.includes('Array') || script.includes('\u0041rray') || script.includes('\u0065val') || script.includes('.repeat') || script.includes('concat')){
-source.sendFeedback({text:'no now fuck off with that script',color:'dark_red'})
+bot.sendFeedback({text:'no now fuck off with that script',color:'dark_red'})
 return
 } else if(script.includes('eval')){
 source.sendFeedback({text:'no',color:'dark_red'})
 return
 }else if(script.includes('.fill')){
-source.sendFeedback({text:'screw off',color:'dark_red'})
+bot.sendFeedback({text:'screw off',color:'dark_red'})
 return
 }  
   (async () => {
@@ -87,14 +87,14 @@ return
         bot.chat(ChatMessage.fromNotch([cmd, { text: util.inspect(result, { stylize }) }]).toMotd().replaceAll('§', '&'))     
      }else{
 
-            source.sendFeedback([cmd, { text: util.inspect(result, { stylize }) }]);
+          bot.sendFeedback([cmd, { text: util.inspect(result, { stylize }) }]);
      }
     } catch (reason) {
       nerd = reason;
      if(!bot.options.Core.enabled){
              bot.chat(ChatMessage.fromNotch([cmd, { text: String(reason.stack), color: 'white'  }]).toMotd().replaceAll('§', '&'))
      }else{
-            source.sendFeedback([cmd, { text: String(reason.stack), color: 'white'  }]);
+            bot.sendFeedback([cmd, { text: String(reason.stack), color: 'white'  }]);
       console.log(`AAA at ${reason}\n${reason.stack}`);
     }
     }
@@ -120,14 +120,14 @@ if(!bot.options.Core.enabled){
                         if(!bot.options.Core.enabled){
         bot.chat(ChatMessage.fromNotch([cmd, { text: 'Successfully reset the eval context', color: 'green' }]).toMotd().replaceAll('§', '&'))
 }else{
-       source.sendFeedback([cmd, { text: 'Successfully reset the eval context', color: 'green' }])
+      bot.sendFeedback([cmd, { text: 'Successfully reset the eval context', color: 'green' }])
                         }  
         break
         default:
         if(!bot.options.Core.enabled){
         bot.chat(ChatMessage.fromNotch([cmd, { text: 'Successfully reset the eval context', color: 'green' }]).toMotd().replaceAll('§', '&'))
 }else{
-                        source.sendFeedback([cmd, { text: 'Invalid option!', color: 'dark_red' }])
+                       bot.sendFeedback([cmd, { text: 'Invalid option!', color: 'dark_red' }])
     }
   }
 }

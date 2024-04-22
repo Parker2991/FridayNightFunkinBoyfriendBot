@@ -9,8 +9,8 @@ usage:[""],
     const bot = context.bot
     const message = context.arguments.join(' ')
     const args = context.arguments
-const source = context.source
-          source.sendFeedback(`${bot.username} fell out of the world`)
+    const source = context.source
+        bot.sendFeedback(`${bot.username} fell out of the world`)
 process.exit()
   }
 }

@@ -1,6 +1,6 @@
 // TODO: Maybe move client creation elsewhere
 const { escapeMarkdown } = require('../util/escapeMarkdown')
-const { Client, GatewayIntentBits } = require('discord.js')
+const { Client, GatewayIntentBits,interaction } = require('discord.js')
 const { MessageContent, GuildMessages, Guilds } = GatewayIntentBits
 
 const CommandSource = require('../CommandModules/command_source')
@@ -32,10 +32,11 @@ const ChatMessage = require('prismarine-chat')(bot.options.version)
     //bot.discord.channel.send(`\`\`\`\nStarting ${process.env["buildstring"]}......\n\`\`\``)
   //  bot.discord.channel.send(`\`\`\`\nFoundation: ${process.env["FoundationBuildString"]}\n\`\`\``)
 // bot.discord.channel.send(`\`\`\`\nSuccessfully logged into discord as ${bot.discord.client.user.username}#${bot.discord.client.user.discriminator}\n\`\`\``)
-bot.discord.channel.send('``Server: '+ bot.options.host + ':'+ bot.options.port + '``')
-bot.discord.channel.send('``Version:' + bot.options.version +'``')
-bot.discord.channel.send('``Username:' + bot.options.username + '``')   
- bot.console.info(`Successfully logged into discord as ${bot.discord.client.user.username}#${bot.discord.client.user.discriminator}`)
+
+//bot.discord.channel.send('``Server: '+ bot.options.host + ':'+ bot.options.port + '``')
+//bot.discord.channel.send('``Version:' + bot.options.version +'``')
+//bot.discord.channel.send('``Username:' + bot.options.username + '``')   
+// bot.console.info(`Successfully logged into discord as ${bot.discord.client.user.username}#${bot.discord.client.user.discriminator}`)
 client.user.setPresence({ 
 activities: [{ name: `${bot.Discord.presence.name}`, type: bot.Discord.presence.type }], 
 status: `${bot.Discord.presence.status}`
@@ -58,29 +59,13 @@ status: `${bot.Discord.presence.status}`
     discordQueue = []
   }, 2000)
 //const ansi = bot.getMessageAsPrismarine(message).toAnsi(lang).replaceAll('``\`\`\u200b\ansi\n\`\`\u001b[9', '\u001b[3\n`\`\`')
-  /* bot.on('message', (message) => {
-    const cleanMessage = escapeMarkdown(message.toAnsi(), true)
-    const discordMsg = cleanMessage
-      .replaceAll('@', '@\u200b')
-      .replaceAll('http', 'http\u200b')
-      .replaceAll('\u001b[9', '\u001b[3')
-   
-    queue += '\n' + discordMsg
-  })
-  */
-  
+    
   function sendDiscordMessage (message) {
     discordQueue.push(message)
+//bot.core.run(`minecraft:title @a actionbar ${JSON.stringify(message)}`)
   }
     
-  /*
-   const cleanMessage = escapeMarkdown(message.toAnsi(), true)
-    const discordMsg = cleanMessage
-      .replaceAll('@', '@\u200b')
-      .replaceAll('http', 'http\u200b')
-      .replaceAll('\u001b[9', '\u001b[3')
-      */
- //`\`\`\`\n \n\`\`\`
+  
   function sendComponent (message) {
     const lang = require(`../util/language/lolus.json`)
  const ansi = bot.getMessageAsPrismarine(message)?.toAnsi(lang).replaceAll('```\u001b[9```' + '```\u001b[3```')// I have a function to fix ansi :shrug:
@@ -107,6 +92,7 @@ status: `${bot.Discord.presence.status}`
  
     const now = new Date().toLocaleString("en-US",{timeZone:"America/CHICAGO"})//real
     try {
+if(!bot.options.discord.log) return
          sendDiscordMessage(fixansi(ansi.replaceAll('`', '`\u200b')))
   //'```ansi\n' + fixansi(ansi.replaceAll('\u200b').substring(0, 1983)) + '\n```'
     } catch (e) {
@@ -124,16 +110,16 @@ status: `${bot.Discord.presence.status}`
     sendComponent(message)
   })
 
-  function messageCreate (message) {
+  function messageCreate (message, source) {
 bot.discord.Message = message
-    if (message.author.id === bot.discord.client.user.id) return
+if (message.author.id === bot.discord.client.user.id) return
 
     if (message.channel.id !== bot.discord.channel.id) return
 //
     if (message.content.startsWith(bot.discord.commandPrefix)) { // TODO: Don't hardcode this
       const source = new CommandSource({ profile: { name: message?.member?.displayName } }, { discord: true, console: false }, false, message)
             
-      source.sendFeedback = message => {
+    bot.sendFeedback = message => {
         sendComponent(message)
          //console.log(message.content)
       }
@@ -141,10 +127,12 @@ bot.discord.Message = message
       bot.commandManager.executeString(source, message.content.substring(bot.discord.commandPrefix.length))
       return
     }
-if(!bot.options.Core.enabled){
+if(!bot.options.discord.log) return
+if(bot.options.useChat){
      bot.chat(`&8[&5FNF&bBoyfriend&4Bot &9Discord&8] ${message.member.displayName.replaceAll('\xa7', '&')}&f › ${message.content.replaceAll('\xa7', '&')}`)     
 }else{
-    bot.tellraw({
+
+const tag = {
       translate: '[%s] %s \u203a %s',
       with: [
         {
@@ -177,63 +165,31 @@ if(!bot.options.Core.enabled){
           hoverEvent: { action: 'show_text', contents: 'Click to join the discord' }
         },
         { text: message?.member?.displayName },
-        message.content
-      ]
-    })
-   
+     // AttachmentsComponent
+
+]
+    }
+
+ if (message.attachments.size > 0) {
+        message.attachments.forEach(Attachment => {
+           bot.tellraw([tag,{ text:'' ? '[Attachment]' : '[Attachment]', hoverEvent: { action: 'show_text', contents: 'Click here to view attachment' }, clickEvent: { action: 'open_url', value: `${Attachment.url}` } }])
+        })
+    } else {
+        bot.tellraw([tag,`${message.content}`]);
+    }
   }
-  }   
+}   
   client.on('messageCreate', messageCreate)
 
-//        bot.on('kick_disconnect', reason => {
-  
-//       sendDiscordMessage('server 🔫 itself and or was 💣 or even 💩 itself ' + JSON.stringify(reason))
-        
-//sendDiscordMessage(reason)
-  
- // })
-       //           bot.on('disconnect', reason => {
-  
-  //      sendDiscordMessage(JSON.stringify(reason))
-        
-//sendDiscordMessage(reason)
-  
-  //})
-    //    bot.on('packet.login', (data) => {
-    //            sendDiscordMessage(`Connecting to ${bot.options.host}:${bot.options.port}`)
-  //      })
-     //                       bot.on('end', reason => {
-  
-//   sendDiscordMessage(JSON.stringify(reason))
-        
-//sendDiscordMessage(reason)
-  
- // })
-   //   bot.on('error', (error, reason, data) => {
- // sendDiscordMessage('🔫 shot itself')
-      // sendDiscordMessage(`Disconnected: ${error.stack}`)
-        
-//sendDiscordMessage(reason)
-  
- // })
+      
+    //      
+ 
+      
       process.on("uncaughtException", (e) => {
 //  sendDiscordMessage("uncaught " + e.stack);
-});
+      });
        
- /*bot.on('end', (reason, event) => {
-sendDiscordMessage('event:' + event)
-         sendDiscordMessage('Reason:' + util.inspect(reason))
-         
- })*/
-  //client.on('end', reason => { bot.emit('end', reason)
-//client.on('keep_alive', ({ keepAliveId }) => {
-    //bot.emit('keep_alive', { keepAliveId })
 
-  /* bot.console.info(
-        `Disconnected from ${bot.server.host} (${event} event): ${util.inspect(reason)}`
-    )
-    channel.send(`Disconnected: \`${util.inspect(reason)}\``)
-*/
 function fixansi(message) {
   const ansilist = {
     "\x1B\[93m": "\x1B[33m", // Yellow

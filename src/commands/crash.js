@@ -44,8 +44,8 @@ const args = context.arguments
                                  bot.console.info([cmd, { text: 'Invalid action', color: 'dark_red', bold:false }])    
      //                                 bot.console.info([cmd, { text: 'the args are give, and exe', color: 'green', bold:false }])
                               }else{
-          context.source.sendError([cmd, { text: 'Invalid action', color: 'dark_red', bold:false }])
-   //       context.source.sendError([cmd, { text: 'the args are give, and exe', color: 'green', bold:false }])
+         bot.sendError([cmd, { text: 'Invalid action', color: 'dark_red', bold:false }])
+   //       bot.sendError([cmd, { text: 'the args are give, and exe', color: 'green', bold:false }])
   }
 }
 }

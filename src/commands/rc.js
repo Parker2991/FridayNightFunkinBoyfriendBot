@@ -13,7 +13,7 @@ if (!bot.options.Core.enabled){
 }else {
           
       bot.core.refill()
-  context.source.sendFeedback('Successfully Refilled Core!')
+  bot.sendFeedback('Successfully Refilled Core!')
   }
 }
 }

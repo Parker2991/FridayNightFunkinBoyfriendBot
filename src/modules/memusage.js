@@ -32,9 +32,9 @@ function memusage(bot, options) {
       color: "gray",
       bold: false,
       with: [{ text: `Memory used ${Math.floor(
-        process.memoryUsage().heapUsed / 1000 / 1000,
+        process.memoryUsage().heapUsed / 1048576,
       )} MiB / ${Math.floor(
-        process.memoryUsage().heapTotal / 1000 / 1000,
+        process.memoryUsage().heapTotal / 1048576,
       )} MiB`, color: "green" }],
     };
           //process.cpuUsage
@@ -47,7 +47,8 @@ function memusage(bot, options) {
      // `minecraft:bossbar set ${bossbarName} name ${JSON.stringify(component)}`,
    // );
    // bot.core.run(`minecraft:bossbar set ${bossbarName} max 20`);
-bot.tellraw(component)  
+//bot.tellraw(component)  
+bot.core.run(`minecraft:title @a actionbar ${component}`)
 }, 100); //process.memoryUsage().heapUsed /1024 / 1024
 }
 module.exports = memusage;

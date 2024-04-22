@@ -11,14 +11,16 @@ usage:["<command/message>"],
    // const client = context.client
           const args = context.arguments
           const source = context.source
-    const message = context.arguments.join(' ')
+          const message = context.arguments.join(' ')
+  
+          // const command = `${prefix}${args.shift()} ${hash} ${args.join(' ')}`
             // if (args.length === 0){
 //source.sendFeedback({translate:"Too few Arguments!", color:"red"})
 if (message.startsWith('/')) {
       bot.core.run(message.substring(1))
       return
     }
-    bot.core.run(message)  
+    bot.core.run(`${args.join(' ')}`)  
   
    
           }

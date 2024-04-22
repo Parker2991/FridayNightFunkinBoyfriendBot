@@ -22,7 +22,7 @@ function inject (bot) {
     ChatMessage = loadPrismarineChat(registry)
   })
    
-  bot.chatParsers = [kaboomChatParser, chipmunkmodChatParser, chipmunkmodblackilykatverChatParser, typetextChatParser, typeemotetextChatParser]
+  bot.chatParsers = [kaboomChatParser, chipmunkmodChatParser, chipmunkmodblackilykatverChatParser, typetextChatParser, typeemotetextChatParser, creayunChatParser]
 
   bot.on('packet.profileless_chat', packet => {
     const message = tryParse(packet.message)
@@ -117,9 +117,8 @@ function inject (bot) {
     bitset[2] = (acc >> 16) & 0xFF
       
     bot._client.write('chat_message', {
-      message,
-      timestamp: BigInt(Date.now()),
-      
+      message: message.substring(0, 256),
+      timestamp: BigInt(Date.now()),      
       salt: 0n,
       offset: 0,
       acknowledged: bitset
@@ -131,7 +130,7 @@ function inject (bot) {
   
   bot.command = command => {
     bot._client.write('chat_command', {
-      command,
+      command: command.substring(0, 256),
       timestamp: BigInt(Date.now()),
       salt: 0n,
       argumentSignatures: [],

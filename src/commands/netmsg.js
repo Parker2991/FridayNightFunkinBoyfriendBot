@@ -43,7 +43,7 @@ module.exports = {
       ]//command.split(' ')[0]
     }//string.replace()
     if (!message[0]) {
-      context.source.sendFeedback({text:'Message is empty', color:'red'}, false)
+     bot.sendFeedback({text:'Message is empty', color:'red'}, false)
     } else {
     for (const eachBot of bot.bots) 
 if(!bot.options.Core.enabled){

@@ -19,16 +19,16 @@ function chat_command_handler(bot) {
       lifes sus
         */
       const source = new CommandSource(data.sender,{ discord: false, console: false,matrix:false },); 
-      source.sendFeedback = (message) => {
+      bot.sendFeedback = (message) => {
         const prefix = {
-          translate: "%s%s%s \u203a ",
+          translate: "%s%s%s ",
           bold: false,
           color: "dark_gray",
           with: [
             {
               color: "dark_purple",
               text: "FNF",
-              bold: true,
+              bold: false,
               hoverEvent: {
                 action: "show_text",
                 value: `${process.env["buildstring"]}\n${process.env["FoundationBuildString"]}`,
@@ -38,9 +38,9 @@ function chat_command_handler(bot) {
                 : undefined,
             },
             {
-              color: "#00FFFF",
+              color: "#2FE0E0",
               text: "Boyfriend",
-              bold: true,
+              bold: false,
               clickEvent: bot.options.discord.invite
                 ? { action: "open_url", value: bot.options.discord.invite }
                 : undefined,
@@ -50,9 +50,9 @@ function chat_command_handler(bot) {
               },
             },
             {
-              color: "dark_red",
+              color: "#D90003",
               text: "Bot",
-              bold: true,
+              bold: false,
               clickEvent: bot.options.discord.invite
                 ? { action: "open_url", value: "https://code.chipmunk.land" }
                 : undefined,
@@ -64,10 +64,17 @@ function chat_command_handler(bot) {
 
             { color: "green", text: command.split(" ")[0] },
           ],
-        };
+  };
+      if (bot.options.useChat) {
+      bot.tellraw([message]);
+      } else {  
+      bot.tellraw(["", prefix, message]);
+      }
 
-        bot.tellraw(["", prefix, message]);
-      };
+};
+bot.sendError = (message) => {
+ bot.sendFeedback([{ text: '', color: `red` }, message], false)
+}
 try{
       
         ratelimit++
@@ -75,24 +82,15 @@ try{
           ratelimit--
         }, 1000)
     if (ratelimit > 3) { // ,.     
-if(!bot.options.Core.enabled){
-        bot.chat('&4You are using commands to fast!')
-}else {
-       source.sendFeedback({text:'You are using commands to fast!',color:'dark_red'})
+       bot.sendFeedback({text:'You are using commands to fast!',color:'dark_red'})
       // this isn't blocking running the command you know that right?
-}
     } else {
       bot.commandManager.executeString(source, command);
     }//oh real
 
               //can i change the variable name so its name isnt confusing?
-}catch(e){
+    }catch(e){
         console.log(e.stack)
-
-
-        
-            //then where to move this?
-   
     
     };
   });

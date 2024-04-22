@@ -26,7 +26,7 @@ usage:["list"],
             color: (!((primary = !primary)) ? 'gold' : 'yellow'),
             clickEvent: {
               action: 'suggest_command',
-              value: `${context.bot.options.commands.prefixes[0]}cowsay ${value} `
+              value: `${bot.Commands.prefixes[0]}cowsay ${value} `
             }
           })
         }

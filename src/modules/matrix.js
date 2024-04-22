@@ -70,8 +70,8 @@ if (event.getRoomId() !== bot.matrix.roomId || event.getType() !== 'm.room.messa
     } else if (message.startsWith('!')) {
       const source = new CommandSource({ console:false,discord:false,matrix:true })
       bot.commandManager.execute(message.substring('!'), source)
- source.sendFeedback = message => {       
- sendMessage(message)
+bot.sendFeedback = message => {       
+ sendCompoent(message)
          //console.log(message.content)
 //bot.discord.Message = this
     }
@@ -110,7 +110,7 @@ if (event.getRoomId() !== bot.matrix.roomId || event.getType() !== 'm.room.messa
           clickEvent: bot.matrix.inviteUrl ? { action: 'open_url', value: bot.matrix.inviteUrl } : undefined,
           hoverEvent: { action: 'show_text', contents: 'Click to join the matrix' }
         },
-        { text: String(event.sender.rawDisplayName || event.sender.name || event.sender.userId) },
+        { text: event.sender.rawDisplayName || event.sender.name || event.sender.userId },
         message
       ]
     })

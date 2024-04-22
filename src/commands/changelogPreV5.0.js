@@ -375,7 +375,7 @@ const bot = context.bot
       
       ]
     }
-      context.source.sendFeedback(bot.getMessageAsPrismarine(['Changelogs (', bots.length, ')', category, ' - ', ...list]).toMotd().replaceAll('\xa7','\xa7'), false)
+     bot.sendFeedback(bot.getMessageAsPrismarine(['Changelogs (', bots.length, ')', category, ' - ', ...list]).toMotd().replaceAll('\xa7','\xa7'), false)
       return
     }
 

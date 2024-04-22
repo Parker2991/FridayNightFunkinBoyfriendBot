@@ -1,11 +1,28 @@
 // TODO: Maybe add more authors
-const bots = [
+/*const bots = [
   {
     name: { text: "HBot", color: "aqua", bold: false },
     authors: ["hhhzzzsss"],
     exclaimer: "HBOT HARRYBUTT LMAOOOOOOOOOOOOOOOOO",
     foundation: "java/mcprotocollib",
     prefixes: ["#"],
+    maintained:'false', 
+  },
+ {
+    name: { text: "SC09", color: "gray", bold: false },
+    authors: ["spyingcreeper09"],
+    exclaimer: "i approve :3",
+    foundation: "NodeJS/node-minecraft-protocol",
+    prefixes: ["@"],
+    maintained:'true',
+  },
+{
+    name: { text: "FBot", color: "gold", bold: false },
+    authors: ["aaa"],
+    exclaimer: "frog :3",
+    foundation: "NodeJS/Node-minecraft-protocol",
+    prefixes: ["+"],
+    maintained:'true?',  
   },
   {
     name: { text: "64Bot", color: "gold", bold: false },
@@ -13,6 +30,7 @@ const bots = [
     exclaimer: "NINTENDO 64?!?!??!?! 69Bot when??????",
     foundation: "NodeJS/Mineflayer",
     prefixes: ["w="],
+    maintained:'false',
   },
   {
     name: { text: "Nebulabot", color: "dark_purple", bold: false },
@@ -20,6 +38,7 @@ const bots = [
     exclaimer: "the void",
     foundation: "NodeJS/Node-minecraft-protocol",
     prefixes: ["["],
+    maintained:'false',
   },
   {
     name: [
@@ -30,6 +49,8 @@ const bots = [
     exclaimer: "prismarine :3",
     foundation: "NodeJS/Node-minecraft-protocol",
     prefixes: ["["],
+    maintained:'true',
+    
   },
   {
     name: { text: "SharpBot", color: "aqua", bold: false },
@@ -38,6 +59,7 @@ const bots = [
       "sharp as in the tv? idfk im out of jokes also the first c# bot on the list??",
     foundation: "C#/MineSharp",
     prefixes: ["s="],
+    maintained:'false',
   },
 
   {
@@ -46,6 +68,7 @@ const bots = [
     exclaimer: "stop mooning/mooing me ",
     foundation: "NodeJS/Mineflayer",
     prefixes: ["m="],
+    maintained:'false',
   },
   {
     name: { text: "TableBot", color: "yellow", bold: false },
@@ -53,6 +76,7 @@ const bots = [
     exclaimer: "TABLE CLOTH BOT?!?! ",
     foundation: "NodeJS/Node-minecraft-protocol",
     prefixes: ["t!"],
+    maintained:'false?',
   },
   {
     name: [
@@ -63,18 +87,21 @@ const bots = [
     exclaimer: "",
     foundation: "Java/Custom",
     prefixes: ["!"],
+    maintained:'false?',
   },
   {
     name: { text: "SBot Java", color: "white", bold: false }, // TODO: Gradient
     authors: ["evkc"],
     foundation: "Java/MCProtocolLib",
     prefixes: [":"],
+    maintained:'true',
   },
   {
     name: { text: "SBot Rust", color: "white", bold: false }, // TODO: Gradient
     authors: ["evkc"],
     foundation: "Rust",
     prefixes: ["re:"],
+    maintained:':shrug:',
   },
   {
     name: { text: "Z-Boy-Bot", color: "dark_purple", bold: false }, // TODO: Gradient
@@ -82,6 +109,7 @@ const bots = [
     authors: ["Romnci"],
     foundation: "NodeJS/mineflayer or Java/mcprotocollib idfk",
     prefixes: ["Z]"],
+    maintained:'false',
   },
   {
     name: { text: "ABot", color: "gold", bold: true }, // TODO: Gradient
@@ -89,6 +117,7 @@ const bots = [
     authors: [{ text: "_yfd", color: "light_purple" }],
     foundation: "NodeJS/Node-Minecraft-Protocol",
     prefixes: ["<"],
+    maintained:'false',
   },
   {
     name: { text: "ABot-V2", color: "gold", bold: true }, // TODO: Gradient
@@ -96,6 +125,7 @@ const bots = [
     authors: [{ text: "_yfd", color: "light_purple" }],
     foundation: "NodeJS/Node-Minecraft-Protocol",
     prefixes: ["<"],
+    maintained:'false',
   },
   {
     name: { text: "FardBot", color: "light_purple", bold: false },
@@ -103,6 +133,7 @@ const bots = [
     exclaimer: "bot is dead lol",
     foundation: "NodeJS/Mineflayer",
     prefixes: ["<"],
+    maintained:'false',
   },
 
   {
@@ -113,17 +144,20 @@ const bots = [
 
     foundation: "Java/MCProtocolLib",
     prefixes: ["'", "/'"],
+    maintained:'false',
   },
   {
     name: { text: "ChipmunkBot NodeJS", color: "green", bold: false },
     authors: ["_ChipMC_"],
     foundation: "NodeJS/Node-Minecraft-Protocol",
-  },
+    maintained:'true', 
+},
   {
     name: { text: "TestBot", color: "aqua", bold: false },
     authors: ["Blackilykat"],
     foundation: "Java/MCProtocolLib",
     prefixes: ["-"],
+    maintained:'false',
   },
   {
     name: { text: "UBot", color: "grey", bold: false },
@@ -132,6 +166,7 @@ const bots = [
 
     foundation: "NodeJS/node-minecraft-protocol",
     prefixes: ['"'],
+    maintained:'false',
   },
   {
     name: { text: "ChomeNS Bot Java", color: "yellow", bold: false },
@@ -139,6 +174,7 @@ const bots = [
     exclaimer: "wow its my bot !! ! 4374621q43567%^&#%67868-- chayapak",
     foundation: "Java/MCProtocolLib",
     prefixes: ["*", "cbot ", "/cbot "],
+    maintained:'false',
   },
   {
     name: { text: "ChomeNS Bot NodeJS", color: "yellow", bold: false },
@@ -146,6 +182,7 @@ const bots = [
 
     foundation: "NodeJS/Node-Minecraft-Protocol",
     prefixes: ["*", "cbot", "/cbot"],
+    maintained:'false',
   },
   {
     name: { text: "RecycleBot", color: "dark_green", bold: false },
@@ -153,6 +190,7 @@ const bots = [
     exclaimer: "nice bot",
     language: "NodeJS/node-minecraft-protocol",
     prefixes: ["="],
+    maintained:'true',
   },
   {
     name: { text: "neobot", color: "blue", bold: false },
@@ -160,6 +198,7 @@ const bots = [
            authors: ["mirkokral"],
     foundation: "java/MCProtocolLib",
     prefixes: ["_"],
+    maintained:'false',
   },
   {
     name: { text: "ManBot", color: "dark_green", bold: false },
@@ -168,6 +207,7 @@ const bots = [
     authors: ["Man/LogintimedOut"],
     foundation: "NodeJS/mineflayer",
     prefixes: ["(Note:I dont remember!!)"],
+    maintained:'false',
   },
   {
     name: [
@@ -178,16 +218,18 @@ const bots = [
     authors: ["IuCC"],
     foundation: "NodeJS/node-minecraft-protocol",
     prefixes: ["["],
+    maintained:'false',
   },
   {
     name: [
       { text: "Blurry", color: "dark_purple", bold: false },
       { text: "Bot", color: "red" },
     ],
-    exclaimer: "",
+    exclaimer: "§4§kfuck you",
     authors: ["SirLennox"],
-    foundation: "Java/custom",
+    foundation: "???",
     prefixes: [","],
+    maintained:'false',
   },
   {
     name: [{ text: "SnifferBot", color: "gold", bold: false }],
@@ -195,6 +237,7 @@ const bots = [
     authors: ["popbob"],
     foundation: "NodeJS/Node-minecraft-protocol",
     prefixes: [">"],
+    maintained:'false',
   },
   {
     name: [{ text: "XBot", color: "dark_purple", bold: false }],
@@ -202,6 +245,7 @@ const bots = [
     authors: ["popbob"],
     foundation: "ts-Node/Node-minecraft-protocol",
     prefixes: ["$"],
+    maintained:':shrug:',
   },
   {
     name: [
@@ -212,6 +256,7 @@ const bots = [
     authors: ["ginlang , G6_, ArrayBuffer, and i guess more??"],
     foundation: "NodeJS/node-minecraft-protocol",
     prefixes: ["^"],
+    maintained:'false',
   },
 
   {
@@ -231,6 +276,7 @@ const bots = [
     exclaimer: "FNFBoyfriendBot NMP Rewrite",
     foundation: "NodeJS/node-minecraft-protocol",
     prefixes: ["~ % &"],
+    maintained:'true',
   },
   {
     name: [
@@ -247,9 +293,13 @@ const bots = [
       "1037 LINES OF CODE WTFARD!??! also this version is in console commands only",
     foundation: "NodeJS/mineflayer",
     prefixes: [],
+    maintained:'false',
   },
 ];
+*/
 const CommandError = require('../CommandModules/command_error')
+const fs = require('fs')
+const path = require('path')
 module.exports = {
   name: "bots",
   description: ["shows a list of known bots"],
@@ -257,24 +307,47 @@ module.exports = {
   trustLevel: 0,
  usage:[""],
   execute(context) {
-    const query = context.arguments.join(" ").toLowerCase();
+
+//const bots = fs.readdirSync(path.join(__dirname,'../util/bots')).forEach(file => require(`../util/bots/${file}`))
+//const bots = require(fs.readdirSync(path.join(__dirname,'../util/bots')).forEach(file => (file)))
+//const bots = require(['../util/bots'].forEach(file => file))
+  const query = context.arguments.join(" ").toLowerCase();
     const bot = context.bot;
+const botsFiles = path.join(__dirname, '../util/bots'); 
+ //list = []; 
+//for (const file of fs.readdirSync('./util/bots')) { 
+//bots.push(require(path.join(__dirname, '../util/bots', file)))
+//};
+ //name = Object.values(bots.map(name => name))
+//auth = Object.values(bots).map(sus => sus.authors)
+ //exclaimer = Object.values(bots).map(sus => sus.exclaimer)
+ //prefixes = Object.values(bots).map(sus => sus.prefixes)
+ //foundation = Object.values(bots).map(sus => sus.foundation)
+ //prefix = Object.values(bots).map(sus => sus.prefixes)
+// maintained = Object.values(bots).map(sus => sus.maintained)
+//amongus = Object.values(bots).map(sus => sus)
     if (query.length === 0) {
-      const list = [];
+   const list = [];
 if(!bot.options.Core.enabled){
         throw new CommandError('Coreless mode is active can not execute command!')
 }else{
-      for (const info of bots) {
-        if (list.length !== 0) list.push({ text: ", ", color: "gray" }); // list.push(info.name)
+//for (const file of fs.readdirSync('./util/bots')) {
+//bots.push(require(path.join(__dirname, '../util/bots', file)))
+//};
+//bots = fs.readdirSync('./util/bots')
+for (const file of fs.readdirSync('./util/bots')) {
+list.push(require(path.join(__dirname,'../util/bots',file)))
+}  
+    for (const info of bots) {
+        if (bots.length !== 0) list.push({ text: ", ", color: "gray" }); // list.push(info.name)
         list.push(info.name);
       }
-
-      context.source.sendFeedback(
-        bot.getMessageAsPrismarine(["Known bots (", bots.length, ") - ", ...list]).toMotd().replaceAll('\xa7','\xa7'),
-        false,
-      );
+bot.tellraw(bots.name)
+console.log(Object.values(bots).map(name => name))
+//const ping = Object.values(bot.players).map(player =>player.latency)
+      bot.sendFeedback(bot.getMessageAsPrismarine(["Known bots (", bots.length, ") - ", ...list])?.toMotd().replaceAll('\xa7','\xa7'),false);
       return;
-    }
+}
     }
     for (const info of bots) {
       const plainName = String(
@@ -286,8 +359,17 @@ if(!bot.options.Core.enabled){
 
   sendBotInfo(info, bot) {
     const component = [""];
-    component.push("Name: ", info.name);
-    if (info.exclaimer) component.push("\n", "Exclaimer: ", info.exclaimer);
+    //component.push("Name: ", amongus.name);
+//const name = Object.values(bots.map(name => name.name))  
+//const auth = Object.values(bots).map(sus => sus.authors)  
+//const exclaimer = Object.values(bots).map(sus => sus.exclaimer)
+//const prefixes = Object.values(bots).map(sus => sus.prefixes)
+//const foundation = Object.values(bots).map(sus => sus.foundation)
+//const prefix = Object.values(bots).map(sus => sus.prefixes)
+//const maintained = Object.values(bots).map(sus => sus.maintained)
+  component.push("Name: ", Object.values(bots).map(name => name.name));
+console.log(name)
+if (info.exclaimer) component.push("\n", "Exclaimer: ", info.exclaimer);
     if (info.authors && info.authors.length !== 0) {
       component.push("\n", "Authors: ");
       for (const author of info.authors) {
@@ -303,6 +385,8 @@ if(!bot.options.Core.enabled){
       }
       component.pop();
     }
+    if(info.maintained) component.push("\n","Maintained: ",info.maintained)
+    
     bot.tellraw([component]);
   },
 };

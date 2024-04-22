@@ -56,6 +56,20 @@ const bots = [
     foundation: '2/15/24',
     exclaimer:'added music finally fixed coreless mode made a seperate function for discord in the command manager and idk what all',
   },
+{//
+    name: { text: 'v5.0.7a', color: 'gold', bold:false },
+    authors: ['Ski'],
+
+    foundation: '3/29/24',
+    exclaimer:'rewrote alot of shiiiiiiit :3 and added matrix support',
+  },
+  {//
+    name: { text: 'v5.0.7b', color: 'gold', bold:false },
+    authors: ['Ski'],
+
+    foundation: '4/22/24',
+    exclaimer:'a lot of clean up adding shit and more',
+  },
 ]//
 //back
   
@@ -102,7 +116,7 @@ const bot = context.bot
       
       ]
     }
-      context.source.sendFeedback(bot.getMessageAsPrismarine(['Changelogs (', bots.length, ')', category, ' - ', ...list]).toMotd().replaceAll('\u00a7','\u00a7'), false)
+      bot.sendFeedback(bot.getMessageAsPrismarine(['Changelogs (', bots.length, ')', category, ' - ', ...list]).toMotd().replaceAll('\u00a7','\u00a7'), false)
       return
     }
 

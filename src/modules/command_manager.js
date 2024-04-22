@@ -13,47 +13,32 @@ const {EmbedBuilder } = require('discord.js')
   const player = source?.player?.profile?.name;
           const uuid = source?.player?.uuid;
       try {
-if(source.sources.console && !source.sources.discord){
+if(source.sources.console && !source?.sources?.discord){
  if (!command || !command.execute) {
-bot.console.warn({text:`Unknown Command ${commandName}. type "${bot.options.Console.prefix}help" for help`,color:'dark_red'})
+bot.console.warn({text:`Unknown Command ${commandName}. type "${bot.Console.prefix}help" for help`,color:'dark_red'})
 }
-}else if(source.sources.discord && !source.sources.console) {
+}else if (source?.sources?.discord && !source.sources.console) {
   if (!command || !command.execute) {
- const Embed = new EmbedBuilder()
-          .setColor('#FF0000')
+        const Embed = new EmbedBuilder()
+          .setColor(`${bot.Commands.colors.discord.error}`)
           .setTitle('Unknown Command')
-          .setDescription(`Unknown Command ${commandName}. type "${bot.discord.commandPrefix}help" for help`)
-        bot.discord.channel.send({ embeds: [Embed] })
+          .setDescription(`Unknown Command ${commandName}. type "${bot.Discord.commandPrefix}help" for help`)
+        bot.discord.Message.reply({ embeds: [Embed] })
      }
-}else if(!source.sources.discord && !source.sources.console) {
-    if (!bot.options.Core.enabled){
-         if (!command || !command.execute) {
-                throw new CommandError(`Unknown command ${commandName}. Type "${bot.Commands.prefixes[0]}help" for help`)
-}
-}else{
+}else if(!source?.sources?.discord && !source.sources.console) {
+
         if (!command || !command.execute) { // bot.options.command.prefixes[0]
-          throw new CommandError({ // sus
-            translate: `Unknown command %s. Type "${bot.Commands.prefixes[0]}help" for help or click on this for the command`,
-/*
-with: [commandName],
-            clickEvent: 'https://discord.gg'
-       
-              ? {/
-*/
-            with: [commandName],
-clickEvent:'https://discord.gg'
-               ? {
-                  action: "suggest_command",
-                  value: `${bot.Commands.prefixes[0]}help`,
-                }
-              : undefined,
-          }); //ohio
+           throw new CommandError(bot.getMessageAsPrismarine([{ // sus
+             translate: `command.unknown.command`},{text:'\n'},{text:`${commandName} `},{translate:"command.context.here"}])?.toMotd(require('../util/language/lolus.json')));
               }
 }
-}         
+         
 const event = bot?.discord?.Message
 
           const roles = event?.member?.roles?.cache
+if (command?.trustLevel === -1) {
+throw new CommandError('this command has been disabled!')
+}
         if (command?.trustLevel > 0) {
          
 
@@ -63,104 +48,102 @@ const hash = `${args[0]}`
 if(args.length === 0 && bot.hash && bot.owner && bot.hashing.hash) throw new CommandError([{text:'Please provide an ',color:'gray'},{text:'Trusted ',color:'dark_purple'},{text:'hash or an ',color:'gray'},{text:'Owner ',color:'dark_red'},{text:'hash',color:'gray'}])
 if (hash !== bot.hash && hash !== bot.owner && hash !== bot.hashing.hash) throw new CommandError([{text:'Invalid ',color:'gray'},{text:'Trusted ',color:'dark_purple'},{text:'hash or Invalid ',color:'gray'},{text:'Owner ',color:'dark_red'},{text:'hash',color:'gray'}])
 
-} else if (command.trustLevel === 1 && source.sources.discord && !source.sources.console) {
+} else if (command.trustLevel === 1 && source?.sources?.discord && !source.sources.console) {
   
 
-          const hasRole = roles?.some(role => role.name === 'trusted' || role.name === 'FNFBoyfriendBot Owner')
+          const hasRole = roles?.some(role => role.name === `${bot.validation.discord.roles.trusted}` || role.name === `${bot.validation.discord.roles.owner}`)
 
           if (!hasRole) throw new CommandError({ translate: 'You are not trusted!' })
         }
           bot?.hashing?.updateHash();
         
-          bot.console.hash = function (error, source) {
-            console.log(
-              `<\x1b[0m\x1b[35m${time} \x1b[0m\x1b[96m${date}\x1b[0m> [${bot.options.host}:${bot.options.port}\x1b[0m] ` +
-                `[\x1b[0m\x1b[92mHash\x1b[0m]: \x1b[0m\x1b[92mPlayer\x1b[0m: ${player}, \x1b[0m\x1b[92mUUID\x1b[0m:${uuid}, \x1b[0m\x1b[92mHash\x1b[0m:${
-                  bot.hash || bot.hashing.hash
-                }\x1b[0m]`,
-            );
-          };
-          bot.console.discordHash = function (error, source) {
-            console.log(
-              `<\x1b[0m\x1b[35m${time} \x1b[0m\x1b[96m${date}\x1b[0m> [${bot.options.host}:${bot.options.port}\x1b[0m] ` +
-                `[\x1b[0m\x1b[92mHash\x1b[0m]: \x1b[0m\x1b[92mPlayer\x1b[0m: ${player}, \x1b[0m\x1b[92mUUID\x1b[0m:${uuid}, \x1b[0m\x1b[92mHash\x1b[0m:${bot.hashing.hash}\x1b[0m]`,
-            );
-          };
-          bot.console.ownerHash = function (error, source) {
-            console.log(
-              `<\x1b[0m\x1b[35m${time} \x1b[0m\x1b[96m${date}\x1b[0m> [${bot.options.host}:${bot.options.port}\x1b[0m] ` +
-                `[\x1b[0m\x1b[31mOwnerHash\x1b[0m]: \x1b[0m\x1b[92mPlayer\x1b[0m: ${player}, \x1b[0m\x1b[92mUUID\x1b[0m:${uuid}, \x1b[0m\x1b[31mOwnerHash\x1b[0m:${bot.owner}\x1b[0m]`,
-            );
-          };
-          if (args[0] === bot.hash) {
-            bot.console.hash();
+           if (args[0] === bot.hash) {
+            bot.console.info({ text: `Player ${player} UUID: ${uuid} Hash:${bot.hash}`, color: 'white' })
           } else if (args[0] === bot.owner) {
-            bot.console.ownerHash();
-         }
+            bot.console.info({ text: `Player ${player} UUID: ${uuid} Hash:${bot.owner}`, color: 'white' })
+          }
 if(command?.trustLevel === 2 && !source?.sources?.discord && !source?.sources?.console){
 const owner = `${args[0]}`
 
 if(args.length === 0 && bot.owner) throw new CommandError([{text:'Please provide a ',color:'red',color:'gray'},{text:'Owner ',color:'dark_red'},{text:'hash',color:'gray'}])
-if(owner === bot.hash && owner === bot.hashing.hash) throw new CommandError([{text:"THATS A ",color:'gray'},{text:'TRUSTED ',color:'dark_purple'},{text:'HASH AFAIK',color:'gray'}])
+if(owner === bot.hash || owner === bot.hashing.hash) throw new CommandError([{text:"THATS A ",color:'gray'},{text:'TRUSTED ',color:'dark_purple'},{text:'HASH AFAIK',color:'gray'}])
 if (owner !== bot.owner) throw new CommandError([{text:"Invalid ",color:'gray'},{text:'Owner ',color:'dark_red'},{text:'Hash',color:'gray'}])
 
-} else if (command.trustLevel === 2 && source.sources.discord && !source.sources.console) {
+} else if (command?.trustLevel === 2 && source?.sources?.discord && !source?.sources?.console) {
   //        const events = source.discordMessageEvent
 
 //          const roless = events?.member?.roles?.cache
 
-          const hasRole = roles?.some(role => role.name === 'FNFBoyfriendBot Owner')
+          const hasRole = roles?.some(role => role.name === `${bot.validation.discord.roles.owner}`)
 
-          if (!hasRole) throw new CommandError({ translate: 'You are the Owner!' })
+          if (!hasRole) throw new CommandError({ translate: 'You are not the Owner!' })
         } 
           if (command.trustLevel === 3 && !source?.sources?.console)
      
             throw new CommandError({translate: "This command can only be executed via console",color: "blue",});
         }
-        
+if(source?.sources?.discord && !source?.sources?.matrix && !source.sources.console){
+if (!command?.discordExecute && command) {
+bot.discord.Message.reply('This command is not supported in discord!')
+}else{
+return command?.discordExecute({bot, source,arguments: args})
+}
+}else{        
         return command?.execute({ bot, source, arguments: args });
-      } catch (error) {
-        const now = new Date().toLocaleString("en-US", {
-          timeZone: "America/CHICAGO",
-        });
-        bot.console.warn(error.stack); 
-         if (!bot.options.Core.enabled){
-                if (error instanceof CommandError) 
-                      bot.chat(bot.getMessageAsPrismarine(error._message)?.toMotd().replaceAll('§','&'))
-else bot.chat(bot.getMessageAsPrismarine('an error has occured please check console')?.toMotd().replaceAll('§','&'))
-                }  else if(!source.sources.discord && !source.sources.console) {
-        if (error instanceof CommandError) 
-       source.sendError(error._message)
-        else source.sendError({
-            translate: "An Error has occured because the bot shot itself 🔫",
-            color: "red",
-            hoverEvent: { action: "show_text", contents: String(error.stack) },
-          });
-                }
-                        //
-         
-      
-       
-else if (source.sources.discord && !source.sources.console) {
-
+      }
+} catch (error) {
+/* if (source.sources.discord) {
+     //if (error instanceof CommandError) 
         const Embed = new EmbedBuilder()
-          .setColor('#FF0000')
-          .setTitle('Uh oh i went to get the 🥛 give me :cancer: years to come back with it')
-          .setDescription(`\`\`\`${error}\`\`\``)
-        bot.discord.channel.send({ embeds: [Embed] })
-      }
-      }
-  },
-      
+       if (error instanceof CommandError)
+         Embed
+          .setColor(`${bot.Commands.colors.discord.error}`)
+          .setTitle(`${command?.name} Command`)
+          .setDescription(`\`\`\`${error._message}\`\`\``)
+        bot?.discord?.Message?.reply({ embeds: [Embed] })
+    } else {
+     if (error instanceof CommandError)
+     bot.sendError(error._message)
+        else bot.sendError({
+            translate: "An Error has occured because the bot shot itself 🔫",
+            color: `${bot.Commands.colors.error}`,
+            hoverEvent: { action: "show_text", contents: String(error.stack) },
 
+      });
+      console.warn(error.stack)
+   }*/
+   if (!source.sources.discord && !source.sources.console) {
+     if (error instanceof CommandError)
+     bot.sendError(error._message)
+        else bot.sendError({
+            translate: "An Error has occured because the bot shot itself 🔫",
+            color: `${bot.Commands.colors.error}`,
+            hoverEvent: { action: "show_text", contents: String(error.stack) },
+
+      });
+      bot.console.warn(error.stack)
+   } else if (source.source.discord && !source.sources.console) {
+        const Embed = new EmbedBuilder()
+          .setColor(`${bot.Commands.colors.discord.error}`)
+          .setTitle(`${command.name} Command`)
+          .setDescription(`\`\`\`${error._message}\`\`\``)
+        bot.discord.Message.reply({ embeds: [Embed] }) 
+   }
+  }
+},
     executeString(source, command) {
       const [commandName, ...args] = command.split(" ");
 
-return this.execute(source, commandName, args)
+      return this.execute(source, commandName, args)
 
     },
-
-
+   discordExecute(source, command) { 
+     const [commandName, ...args] = command.split(" ");
+     
+    if (source?.sources?.discord && !source?.sources?.matrix && !source?.sources?.console) {
+      return this.discordExecute(source, commandName, args)
+     }
+   },
     register(command) {
       this.commands[command.name] = command;
 
@@ -168,6 +151,7 @@ return this.execute(source, commandName, args)
         command.aliases.map((a) => (this.commands[a] = command));
       }
     },
+   
     getCommand(name) {
       return this.commands[name];
     },

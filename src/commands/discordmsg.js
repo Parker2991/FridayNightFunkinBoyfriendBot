@@ -15,11 +15,11 @@ usage:["message"],
 
      // throw new CommandError('u202e detected')
    if (!args[0]) {
-      context.source.sendFeedback({text:'Message is empty', color:'red'}, false)
+      bot.sendFeedback({text:'Message is empty', color:'red'}, false)
     } else {
       bot.discord.channel.send(args.join(' '))
       console.log(args[0])
-      context.source.sendFeedback({ text: `Recieved: ${args.join(' ')}`, color:'green'})
+      bot.sendFeedback({ text: `Recieved: ${args.join(' ')}`, color:'green'})
       
     //}
     
@@ -30,11 +30,11 @@ usage:["message"],
 //bot.discord.channel.send(args.join(' '))
 /*
 if(!args[0]) 
-  context.source.sendFeedback('message is empty') 
+  bot.sendFeedback('message is empty') 
 
  else if (args[0]) 
     bot.discord.channel.send(args[0]) 
 console.log(args[0])
-context.source.sendFeedback(`Recieved: ${args[0]}`)
+bot.sendFeedback(`Recieved: ${args[0]}`)
       return;
       */

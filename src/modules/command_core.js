@@ -3,8 +3,8 @@ async function command_core (bot, options) {
   bot.core = {   
     // what you think im doing? look at line 17
     area: {
-      start: bot.Core.area.start ?? { x: 0, y: 0, z: 0 },
-      end: bot.Core.area.end ?? { x: 15, y: 0, z: 15 }
+      start: /*bot.Core.area.start, ??*/ { x: 0, y: 0, z: 0 },
+      end: /*bot.Core.area.end, ??*/ { x: 15, y: 0, z: 15 }
     },
     position: null,
     currentBlockRelative: { x: 0, y: 0, z: 0 },
@@ -62,16 +62,16 @@ async function command_core (bot, options) {
     run (command) {
       const location = bot.core.currentBlock()
       if (!location) return
-if (!bot.options.Core.enabled) {
-bot.command(command.substring(0,255))
-}else{
+      if (bot.options.useChat) {
+         bot.command(command)
+      }else{
       bot._client.write('update_command_block', { command: command.substring(0, 32767), location, mode: 1, flags: 0b100 })
 
       bot.core.incrementCurrentBlock()
 
       // added .substring(0, 32767) so it won't kick the bot if the command is too long.
-    }
-      },  
+      }
+    },  
   }
         /*
          bot.on('parsed_message', data => {
@@ -83,7 +83,7 @@ bot.command(command.substring(0,255))
     }  return
 })
 */
-  if (!bot.options.Core.enabled) return
+  if (bot.options.useChat) return
   bot.on('move', () => {
     bot.core.move(bot.position)
    //setTimeout(() => bot.core.run('say hi'), 100)

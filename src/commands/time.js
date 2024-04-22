@@ -21,6 +21,6 @@ const source = context.source
       const momented = moment().tz(timezone).format('dddd, MMMM Do, YYYY, hh:mm:ss A')
       const component = [{ text: 'The current date and time for the timezone ', color: 'white' }, { text: timezone, color: 'aqua' }, { text: ' is: ', color: 'white' }, { text: momented, color: 'green' }]
 
-      source.sendFeedback(component)
+      bot.sendFeedback(component)
     }
   }

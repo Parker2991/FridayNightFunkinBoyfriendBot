@@ -14,12 +14,12 @@ const args = context.arguments
 switch (args[1]) {
 case 'vanish':
 if (args[2] === 'false' || args[2] === 'off'){
-source.sendFeedback([{text:'Vanish is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
+bot.sendFeedback([{text:'Vanish is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
 bot.options.selfcare.vanished = false
 bot.command('essentials:vanish off')
 return
 }else if (args[2] === 'true' || args[2] === 'on'){
-source.sendFeedback([{text:'Vanish is ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
+bot.sendFeedback([{text:'Vanish is ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
 bot.options.selfcare.vanished = true
 bot.command('essentials:vanish on')
 return
@@ -30,12 +30,12 @@ return
 break 
 case 'mute':
 if (args[2] === 'false' || args[2] === 'off'){
-source.sendFeedback([{text:'Mute selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
+bot.sendFeedback([{text:'Mute selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
 bot.options.selfcare.unmuted = false
 return
 }
 if (args[2] === 'true' || args[2] === 'on'){
-source.sendFeedback([{text:'Mute selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
+bot.sendFeedback([{text:'Mute selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
 bot.options.selfcare.unmuted = true
 
 return
@@ -46,12 +46,12 @@ return
 break
 case 'prefix':
 if (args[2] === 'false' || args[2] === 'off'){
-source.sendFeedback([{text:'Prefix selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
+bot.sendFeedback([{text:'Prefix selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
 bot.options.selfcare.prefix = false
 return
 }
 if (args[2] === 'true' || args[2] === 'on'){
-source.sendFeedback([{text:'Prefix selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
+bot.sendFeedback([{text:'Prefix selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
 bot.options.selfcare.prefix = true
 return
 }
@@ -63,12 +63,12 @@ return
 break
 case 'cspy':
 if (args[2] === 'false' || args[2] === 'off'){
-source.sendFeedback([{text:'cspy selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
+bot.sendFeedback([{text:'cspy selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
 bot.options.selfcare.cspy = false
 return
 }
 if (args[2] === 'true' || args[2] === 'on'){
-source.sendFeedback([{text:'cspy selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
+bot.sendFeedback([{text:'cspy selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
 bot.options.selfcare.cspy = true
 return
 }
@@ -79,12 +79,12 @@ return
 break
 case 'tptoggle':
 if (args[2] === 'false' || args[2] === 'off'){
-source.sendFeedback([{text:'Tptoggle selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
+bot.sendFeedback([{text:'Tptoggle selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
 bot.options.selfcare.tptoggle = false
 return
 }
 if (args[2] === 'true' || args[2] === 'on'){
-source.sendFeedback([{text:'Tptoggle selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
+bot.sendFeedback([{text:'Tptoggle selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
 bot.options.selfcare.tptoggle = true
 return
 }
@@ -96,12 +96,12 @@ return
 break
 case 'skin':
 if (args[2] === 'false' || args[2] === 'off'){
-source.sendFeedback([{text:'Skin selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
+bot.sendFeedback([{text:'Skin selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
 bot.options.selfcare.skin.enabled = false
 return
 }
 if (args[2] === 'true' || args[2] === 'on'){
-source.sendFeedback([{text:'Skin selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
+bot.sendFeedback([{text:'Skin selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
 bot.options.selfcare.skin.enabled = true
 return
 }
@@ -113,12 +113,12 @@ return
 break
 case 'gmc':
 if (args[2] === 'false' || args[2] === 'off'){
-source.sendFeedback([{text:'gmc selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
+bot.sendFeedback([{text:'gmc selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
 bot.options.selfcare.gmc = false
 return
 }
 if (args[2] === 'true' || args[2] === 'on'){
-source.sendFeedback([{text:'gmc selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
+bot.sendFeedback([{text:'gmc selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
 bot.options.selfcare.gmc = true
 return
 }
@@ -130,12 +130,12 @@ return
 break
 case 'op':
 if (args[2] === 'false' || args[2] === 'off'){
-source.sendFeedback([{text:'op selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
+bot.sendFeedback([{text:'op selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
 bot.options.selfcare.op = false
 return
 }
 if (args[2] === 'true' || args[2] === 'on'){
-source.sendFeedback([{text:'op selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
+bot.sendFeedback([{text:'op selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
 bot.options.selfcare.op = true
 return
 }
@@ -147,12 +147,12 @@ return
 break
 case 'nickname':
 if (args[2] === 'false' || args[2] === 'off'){
-source.sendFeedback([{text:'nickname selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
+bot.sendFeedback([{text:'nickname selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
 bot.options.selfcare.nickname = false
 return
 }
 if (args[2] === 'true' || args[2] === 'on'){
-source.sendFeedback([{text:'nickname selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
+bot.sendFeedback([{text:'nickname selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
 bot.options.selfcare.nickname = true
 return
 }
@@ -164,12 +164,12 @@ return
 break
 case 'username':
 if (args[2] === 'false' || args[2] === 'off'){
-source.sendFeedback([{text:'username selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
+bot.sendFeedback([{text:'username selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
 bot.options.selfcare.username = false
 return
 }
 if (args[2] === 'true' || args[2] === 'on'){
-source.sendFeedback([{text:'username selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
+bot.sendFeedback([{text:'username selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
 bot.options.selfcare.username = true
 return
 }
@@ -181,12 +181,12 @@ return
 break
 case 'god':
 if (args[2] === 'false' || args[2] === 'off'){
-source.sendFeedback([{text:'god selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
+bot.sendFeedback([{text:'god selfcare is ',color:'dark_gray'},{text:'Disabled',color:'dark_red'}])
 bot.options.selfcare.god = false
 return
 }
 if (args[2] === 'true' || args[2] === 'on'){
-source.sendFeedback([{text:'god selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
+bot.sendFeedback([{text:'god selfcare is now ',color:'dark_gray'},{text:'Enabled',color:'dark_green'}])
 bot.options.selfcare.god = true
 return
 }
@@ -197,8 +197,8 @@ return
 }
 break
 default: 
-source.sendFeedback({text:'Invalid argument!',color:'dark_red'})
-source.sendFeedback({text:'vanish mute prefix cspy skin sctoggle gmc op nickname username god',color:'dark_green'})
+bot.sendFeedback({text:'Invalid argument!',color:'dark_red'})
+bot.sendFeedback({text:'vanish mute prefix cspy skin sctoggle gmc op nickname username god',color:'dark_green'})
 }
 }
 }

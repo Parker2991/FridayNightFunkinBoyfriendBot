@@ -19,7 +19,7 @@ const bot = context.bot
 
 	} catch (error) {
 if(error.toString() === "pageError: TypeError: Cannot read properties of undefined (reading 'pages')"){
-source.sendFeedback({text:'Definition not found!',color:'dark_red'})
+bot.sendFeedback({text:'Definition not found!',color:'dark_red'})
 }
 //		source.sendFeedback(error.toString());
 	}

@@ -1,4 +1,4 @@
-function inject (bot) {
+function playerlist (bot) {
   bot.players = []
 //chayapak you mentally ok?
   bot.on('packet.player_info', packet => {
@@ -25,37 +25,13 @@ function inject (bot) {
     }
   })
   
-  function removePlayer (player, packet) {
-    const fullPlayer = bot.players.getPlayer(player)
-    //const players = tabCompletePlayerList.list
 
-    if (fullPlayer && players.some((name) => name === fullPlayer.name)) {
-      bot.emit('player_vanished', player)
-    } else {
-          bot.on('packet.player_remove', ({ players }) => {
-            for (const player of players) {
-              bot.players = bot.players.filter(entry => entry.uuid !== player)
-
-            }
-          
-          bot.players = bot.players.filter(entry => entry.uuid !== player)
-        })
-     
-      bot.players.removePlayer(player)
-       if (!target) return
-      target.removePlayer = entry.removePlayer
-    }
-  }
-//        if (process.env["FoundationBuildString"] !== 'Ultimate Foundation v2.0.6 Build:270')
-//{
-  //      process.exit(1)
-//}
   function addPlayer (entry) {
     bot.players = bot.players.filter(_entry => _entry.uuid !== entry.uuid)
     bot.players.push({
       uuid: entry.uuid,
       profile: { name: entry.player.name, properties: entry.player.properties },
-removePlayer:undefined,
+
       chatSession: undefined,
       gamemode: undefined,
       listed: undefined,
@@ -103,11 +79,4 @@ removePlayer:undefined,
   bot.on('end', () => (bot.players = []))
 }
 
-module.exports = inject
-/*function addPlayer (player, packet) {
-    if (bot.players.getPlayer(player)) bot.emit('player_unvanished', player, packet)
-    else bot.emit('player_added', player, packet)
-
-    bot.players.addPlayer(player)
-  }
-  */
+module.exports = playerlist

@@ -1,5 +1,5 @@
 const CommandError = require('../CommandModules/command_error')
-
+const { EmbedBuilder } = require('discord.js')
 module.exports = {
   name: 'list',
    description:['check the player list'],
@@ -16,26 +16,20 @@ const source = context.source
    if (args.length !== 0){
 throw new CommandError({translate:"Too many Arguments!", color:"red"})
    }
-/*
-if (amonger2.length === 0) {
-          const list = [];
-          for (const host of bots) {
-            if (list.length !== 0) {
-              list.push(host.name);
-            }
-          }
-        }
-*/
+
 
     for (const player of players) {
       component.push({
-        translate: `%s \u203a %s [%s] %s`,
+        translate: `%s \u203a %s [%s %s %s %s %s]`,
         with: [
          
           player.displayName ?? player.profile.name,
           player.uuid,
-          {text: `Ping: ${player.latency}`, color:'green'},
-         player.gamemode
+           {text:`Ping:`,color:'dark_green'},
+           {text:`${player.latency}`,color:'gold'},
+           {text:'/',color:'dark_gray'},
+           {text:`Gamemode:`, color:'dark_purple'},
+           {text:`${player.gamemode}`,color:'gold'},
         ]
       })
 
@@ -49,13 +43,15 @@ function sleep(ms) {
          /*
  for (const player of players) {
       component.push({
-        translate: '%s \u203a %s [%s] %s',
+        translate: '%s \u203a %s [%s %s %s]',
         with: [
          
           player.displayName ?? player.profile.name,
           player.uuid,
-          {text: `Ping: ${player.latency}`, color:'green'},
-         player.gamemode
+          {text: `Ping: ${player.latency}`,color:'dark_green'},
+          {text:'/',color:'dark_gray'},
+          {text:`Gamemode: ${player.gamemode}`, color:'dark_purple'},
+         
         ]
       })
 
@@ -78,10 +74,61 @@ for (const player of players){
  
 //const players = bot.players          
         
-source.sendFeedback({text:`Players: (${JSON.stringify(bot.players.length)})`})
-    source.sendFeedback(component, false)
+bot.tellraw([{text:`Players: `,color:'dark_gray',},{text:'(',color:'blue'},{text:`${JSON.stringify(bot.players.length)}`,color:'gold'},{text:')',color:'blue'}])
+    bot.tellraw(component)
   
 }     
+},
+discordExecute(context) {
+const bot = context.bot
+const players = bot.players
+/*
+const Embed = new EmbedBuilder()
+                  .setColor('#00FFFF')
+                  .setTitle('help Command')
+                  .setDescription(`help \u203a ${command.name}`)
+                  .addFields( 
+                  { name: '', value:`` },
+                  )
+ bot?.discord?.Message?.reply({embeds: [Embed]}) 
+ bot?.discord?.Message.react('♋')
+ for (const player of players) {
+      component.push({
+        translate: '%s \u203a %s [%s %s %s]',
+        with: [
+         
+          player.displayName ?? player.profile.name,
+          player.uuid,
+          {text: `Ping: ${player.latency}`,color:'dark_green'},
+          {text:'/',color:'dark_gray'},
+          {text:`Gamemode: ${player.gamemode}`, color:'dark_purple'},
+         
+        ]
+      })
+
+*/
+    const component = []
+for (const player of players) {
+      component.push({
+        translate: '%s \u203a %s [%s %s %s]',
+        with: [
+         
+          player.displayName ?? player.profile.name,
+          player.uuid,
+          {text: `Ping: ${player.latency}`,color:'dark_green'},
+          {text:'/',color:'dark_gray'},
+          {text:`Gamemode: ${player.gamemode}`, color:'dark_purple'},
+         
+        ]
+      })
+
+      component.push('\n')
+    }
+const Embed = new EmbedBuilder()
+                  .setColor('#00FFFF')
+                  .setTitle(`${this.name} Command`)
+                  .setDescription(`${bot.getMessageAsPrismarine(`Players: (` + bot.players.length + ')')?.toString()}` + `${bot.getMessageAsPrismarine('\n')?.toString()}` + `${bot.getMessageAsPrismarine(component)?.toString()}`)
+              bot.discord.Message.reply({embeds: [Embed]})
 
 }
 }

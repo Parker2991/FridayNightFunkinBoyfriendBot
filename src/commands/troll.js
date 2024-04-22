@@ -23,7 +23,7 @@ return
       clearInterval(this.timer)
       this.timer = undefined
 
-      context.source.sendFeedback('Cloop Stopped', false)
+      bot.sendFeedback('Cloop Stopped', false)
       return
     }
 }
