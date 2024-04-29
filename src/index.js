@@ -2,26 +2,35 @@ const CommandError = require('./CommandModules/command_error.js');
 const util = require("util");
 const path = require('path');
 const fs = require('fs');
-if (!fs.existsSync('config.js')) {
+const parseYaml = require('js-yaml')
+/* if (!fs.existsSync('config.js')) {
  console.log('Config not found creating config from default.js');
   fs.copyFileSync(
-   path.join(__dirname, 'default.js'),
+   path.join(__dirname, 'default.yml'),
    path.join(__dirname, 'config.js'),
 );
+}; */
+if (!fs.existsSync('config.yml')) {
+ console.log('Config not found creating config from default.yml');
+  fs.copyFileSync(
+   path.join(__dirname, 'default.yml'),
+   path.join(__dirname, 'config.yml'),
+);
 };
-const config = require(`../config.js`);
-const createBot = require('./bot.js'); 
-const fileExist = require("./util/file-exists");
+// const config = require(`../config.js`);
+try {
+  config = parseYaml.load(fs.readFileSync('config.yml', 'utf8'));
+  console.log(config)
+} catch (e) {
+  console.log(e.toString())
+}
+const { createBot } = require('./bot.js'); 
 const readline = require("readline");
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
-
-
-  //const config = require('./config.js')
- 
 
 function load() {
   require("dotenv").config();
