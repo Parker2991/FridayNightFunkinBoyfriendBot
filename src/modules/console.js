@@ -1,6 +1,5 @@
 const CommandSource = require("../CommandModules/command_source");
 const prismarine = require('prismarine-chat')('1.20.2')
-const moment = require('moment-timezone');
 //const time = moment().tz('america/chicago').format('hh:mm:ss a');
 //const date = moment().tz('america/chicago').format('MM/DD/YY')
 function Console(bot, options, context, source) {
@@ -62,17 +61,17 @@ function Console(bot, options, context, source) {
       }
 
       bot.console.warn = function (error) {
-log(prismarine.fromNotch([{text:'<',color:'dark_gray'},{text:`${moment().tz('america/chicago').format('hh:mm:ss a')} `,color:'dark_purple'},{text:`${moment().tz('america/chicago').format('MM/DD/YY')}`,color:'#00FFFF'},{text:' WARN',color:'yellow'},{text:'>',color:'dark_gray'},{text:' [',color:'dark_gray'},{text:`${bot.options.serverName}`,color:'dark_gray'},{text:'] ',color:'dark_gray'}])?.toAnsi() + prismarine.fromNotch(error)?.toAnsi());
+	log(prismarine.fromNotch([{text:'<',color:'dark_gray'},{text:`${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} `,color:'dark_purple'},{text:`${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })}`,color:'#00FFFF'},{text:' WARN',color:'yellow'},{text:'>',color:'dark_gray'},{text:' [',color:'dark_gray'},{text:`${bot.options.serverName}`,color:'dark_gray'},{text:'] ',color:'dark_gray'}])?.toAnsi() + prismarine.fromNotch(error)?.toAnsi());
       };
       bot.console.error = function (error) {
-        log(prismarine.fromNotch([{text:'<',color:'dark_gray'},{text:`${moment().tz('america/chicago').format('hh:mm:ss a')} `,color:'dark_purple'},{text:`${moment().tz('america/chicago').format('MM/DD/YY')}`,color:'#00FFFF'},{text:' ERROR',color:'dark_red'},{text:'>',color:'dark_gray'},{text:' [',color:'dark_gray'},{text:`${bot.options.serverName}`,color:'dark_gray'},{text:'] ',color:'dark_gray'}])?.toAnsi() + prismarine.fromNotch(error)?.toAnsi());
+        log(prismarine.fromNotch([{text:'<',color:'dark_gray'},{text: `${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} `,color:'dark_purple'},{text:`${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })}`,color:'#00FFFF'},{text:' ERROR',color:'dark_red'},{text:'>',color:'dark_gray'},{text:' [',color:'dark_gray'},{text:`${bot.options.serverName}`,color:'dark_gray'},{text:'] ',color:'dark_gray'}])?.toAnsi() + prismarine.fromNotch(error)?.toAnsi());
       };
 
       bot.console.info = function (message) {
-        log(prismarine.fromNotch([{text:'<',color:'dark_gray'},{text:`${moment().tz('america/chicago').format('hh:mm:ss a')} `,color:'dark_purple'},{text:`${moment().tz('america/chicago').format('MM/DD/YY')}`,color:'#00FFFF'},{text:' INFO',color:'green'},{text:'>',color:'dark_gray'},{text:' [',color:'dark_gray'},{text:`${bot.options.serverName}`,color:'dark_gray'},{text:'] ',color:'dark_gray'}])?.toAnsi() + prismarine.fromNotch(message)?.toAnsi());
+        log(prismarine.fromNotch([{text:'<',color:'dark_gray'},{text:`${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} `,color:'dark_purple'},{text:`${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`,color:'#00FFFF'},{text:' INFO',color:'green'},{text:'>',color:'dark_gray'},{text:' [',color:'dark_gray'},{text:`${bot.options.serverName}`,color:'dark_gray'},{text:'] ',color:'dark_gray'}])?.toAnsi() + prismarine.fromNotch(message)?.toAnsi());
       };
       bot.console.log = function (message, ansi) {
-        log(prismarine.fromNotch([{text:'<',color:'dark_gray'},{text:`${ moment().tz('america/chicago').format('hh:mm:ss a')} `,color:'dark_purple'},{text:`${moment().tz('america/chicago').format('MM/DD/YY')}`,color:'#00FFFF'},{text:' LOGS',color:'gold'},{text:'>',color:'dark_gray'},{text:' [',color:'dark_gray'},{text:`${bot.options.serverName}`,color:'dark_gray'},{text:'] ',color:'dark_gray'}])?.toAnsi() + message);
+        log(prismarine.fromNotch([{text:'<',color:'dark_gray'},{text:`${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO"})} `,color:'dark_purple'},{text:`${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO"})}`,color:'#00FFFF'},{text:' LOGS',color:'gold'},{text:'>',color:'dark_gray'},{text:' [',color:'dark_gray'},{text:`${bot.options.serverName}`,color:'dark_gray'},{text:'] ',color:'dark_gray'}])?.toAnsi() + message);
       };
      
       
@@ -118,7 +117,7 @@ log(prismarine.fromNotch([{text:'<',color:'dark_gray'},{text:`${moment().tz('ame
         const plainMessage = bot
           .getMessageAsPrismarine(data.contents)
           ?.toString();
-        if (plainMessage.includes("frog")) {
+        if (plainMessage.includes("frog") || plainMessage.includes("🐸")) {
           bot.chat("frok :3");
         }
         return;
@@ -135,7 +134,7 @@ log(prismarine.fromNotch([{text:'<',color:'dark_gray'},{text:`${moment().tz('ame
 
         
         const lang = require(`../util/language/lolus.json`);
-        const ansi = bot.getMessageAsPrismarine(message)?.toAnsi(lang);
+        const ansi = bot.getMessageAsPrismarine(message)?.toAnsi(bot.registry.language);
         const string = bot.getMessageAsPrismarine(message)?.toString(lang);
 
        // if (!bot.options.Console.input) return;
@@ -158,8 +157,8 @@ bot._client.end("Anti spam :3")
               bot.console.log(`${ansi}`);
              
              // logger(`<${time} ${date}> [${bot.options.host}:${bot.options.port}] [LOGS]: ${string}`)
-              if (bot.console && bot.Console.filelogging) { 
-                bot.console.filelogger(`${prismarine.fromNotch([{text:'<',color:'dark_gray'},{text:`${moment().tz('america/chicago').format('hh:mm:ss a')} `,color:'dark_purple'},{text:`${moment().tz('america/chicago').format('MM/DD/YY')}`,color:'#00FFFF'},{text:' LOGS',color:'gold'},{text:'>',color:'dark_gray'},{text:' [',color:'dark_gray'},{text:`${bot.options.serverName}`,color:'dark_gray'},{text:'] ',color:'dark_gray'}])?.toString()} ${string}`)
+              if (bot.Console.filelogging) { 
+                bot.console.filelogger(`${prismarine.fromNotch([{text:'<',color:'dark_gray'},{text:`${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} `,color:'dark_purple'},{text:`${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO"})}`,color:'#00FFFF'},{text:' LOGS',color:'gold'},{text:'>',color:'dark_gray'},{text:' [',color:'dark_gray'},{text:`${bot.options.serverName}`,color:'dark_gray'},{text:'] ',color:'dark_gray'}])?.toString()} ${string}`)
                       
               }//nothing is logging to the file
     

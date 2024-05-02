@@ -1,16 +1,16 @@
 const styles = {
-  bigint: '\xa76',
-  boolean: '\xa76',
-  date: '\xa75',
-  module: '\xa7n',
-  name: undefined,//undefined
-  null: '\xa7l',
-  number: '\xa76',
-  regexp: '\xa74',
-  special: '\xa73',
-  string: '\xa72',
-  symbol: '\xa72',
-  undefined: '\xa78'
+  bigint: '\xa76', // gold
+  boolean: '\xa76', // gold 
+  date: '\xa75', // dark_purple
+  module: '\xa7n', // underline
+  name: undefined, //undefined
+  null: '\xa73', // bold
+  number: '\xa76', // gold
+  regexp: '\xa74', // dark_red
+  special: '\xa73', // blue
+  string: '\xa72', // green
+  symbol: '\xa72', // green
+  undefined: '\xa78' // dark_gray
 }
 
 function stylize (str, styleType) {

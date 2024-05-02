@@ -10,11 +10,18 @@ module.exports = {
    const args = context.arguments;
    const source = context.source;
 if (!args && !args[0] && !args[1] && !args[2] && !args[3]) return
-  bot.Commands.help.pub_lickColor = args[0] 
-  bot.Commands.help.t_rustedColor = args[1]
-  bot.Comands.help.own_herColor = args[2]
-  bot.sendFeedback({text:`Set Help theme colors to ${bot.helpTheme.pub_lickColor} ${bot.helpTheme.t_rustedColor} ${bot.helpTheme.own_herColor}`})    
+ if (args[0] === undefined || args[1] === undefined || args[2] === undefined) {
+  bot.Commands.colors.help.pub_lickColor = '#00FFFF'
+  bot.Commands.colors.help.t_rustedColor = 'dark_purple'
+  bot.Commands.colors.help.own_herColor = 'dark_red'
+  bot.sendFeedback(`Reseting theme colors,.,.,..`)
+  } else {
+  bot.Commands.colors.help.pub_lickColor = args[0] 
+  bot.Commands.colors.help.t_rustedColor = args[1]
+  bot.Commands.colors.help.own_herColor = args[2]
+  bot.sendFeedback({text:`Set Help theme colors to ${bot.Commands.colors.help.pub_lickColor} ${bot.Commands.colors.help.t_rustedColor} ${bot.Commands.colors.help.own_herColor}`})    
   }
+ }
 }
 /*
 helpTheme:{

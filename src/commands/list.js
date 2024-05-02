@@ -17,7 +17,9 @@ const source = context.source
 throw new CommandError({translate:"Too many Arguments!", color:"red"})
    }
 
-
+   if (bot.options.isCreayun) {
+     bot.chat('&4Cannot execute command because isCreayun is active in the config!')
+   } else {
     for (const player of players) {
       component.push({
         translate: `%s \u203a %s [%s %s %s %s %s]`,
@@ -78,6 +80,7 @@ bot.tellraw([{text:`Players: `,color:'dark_gray',},{text:'(',color:'blue'},{text
     bot.tellraw(component)
   
 }     
+}
 },
 discordExecute(context) {
 const bot = context.bot
@@ -134,3 +137,4 @@ const Embed = new EmbedBuilder()
 }
 //what is wi
 // IDK
+

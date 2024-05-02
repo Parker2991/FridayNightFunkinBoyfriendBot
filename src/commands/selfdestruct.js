@@ -16,7 +16,7 @@ usage:[""],
 
     //ima just connect to your server to work on the bot ig
     // idk
-
+    const bot = context.bot
     const args = context.arguments
 
     if (args[1] === 'clear' || args[1] === 'stop') {
@@ -28,7 +28,9 @@ usage:[""],
     }
 
 
-        
+    if (bot.options.isCreayun || bot.options.useChat) {
+      throw new CommandError(`Cannot execute command because isCreayun or useChat is enabled!`)
+    } else {
     if (this.timer !== null) return
     this.timer = setInterval(function () {
       bot.core.run('day')
@@ -60,5 +62,6 @@ usage:[""],
 bot.on('end',(data) =>{
 clearInterval(this.timer)
 })  
+}
 }
 }

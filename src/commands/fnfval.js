@@ -12,7 +12,7 @@ module.exports = {
     
     const args = context.arguments
 
-    const key = process.env['FNFBoyfriendBot_Owner_key']
+    const key = bot.validation.keys.ownerKey
 //al
     const time = Math.floor(Date.now() / 11000)
     
@@ -34,7 +34,12 @@ module.exports = {
         clickevent: { action:"open_url", value: "https://doin-your.mom"}
       }
 
-    context.bot.tellraw(customchat)
+//    context.bot.tellraw(customchat)
+     if (bot.options.useChat ?? bot.options.isCreayun) {
+       bot.chat(command)
+     } else {
+       bot.tellraw(customchat)
+     }
   }
 }
 //const interval = setInterval(() => {

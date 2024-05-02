@@ -11,22 +11,12 @@ function memusage(bot, options) {
     },
     off() {
       enabled = false;
-     bot.core.run(`minecraft:bossbar remove ${bossbarName}`);
     },
-  };//
+  };
  
 
   const interval = setInterval(() => {
     if (!enabled) return;
-
-   /* const component = {
-      text: `Mem used ${Math.floor(
-        process.memoryUsage().heapUsed / 1000 / 1000,
-      )} MiB / ${Math.floor(
-        process.memoryUsage().heapTotal / 1000 / 1000,
-      )} MiB. `,
-      color: "dark_gray",
-    };*/
            const component = {
       translate: `%s`,
       color: "gray",
@@ -37,18 +27,7 @@ function memusage(bot, options) {
         process.memoryUsage().heapTotal / 1048576,
       )} MiB`, color: "green" }],
     };
-          //process.cpuUsage
-//    bot.core.run(`minecraft:bossbar add ${bossbarName} ""`);
-  //  bot.core.run(`minecraft:bossbar set ${bossbarName} players @a`);
-   // bot.core.run(`minecraft:bossbar set ${bossbarName} color yellow`);
-   // bot.core.run(`minecraft:bossbar set ${bossbarName} visible true`);
-   // bot.core.run(`minecraft:bossbar set ${bossbarName} style progress`);
-   // bot.core.run(
-     // `minecraft:bossbar set ${bossbarName} name ${JSON.stringify(component)}`,
-   // );
-   // bot.core.run(`minecraft:bossbar set ${bossbarName} max 20`);
-//bot.tellraw(component)  
-bot.core.run(`minecraft:title @a actionbar ${component}`)
-}, 100); //process.memoryUsage().heapUsed /1024 / 1024
+    bot.core.run(`minecraft:title @a actionbar ${JSON.stringify(component)}`)
+    }, 100); //process.memoryUsage().heapUsed /1024 / 1024
 }
 module.exports = memusage;

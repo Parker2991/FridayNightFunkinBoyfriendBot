@@ -13,8 +13,8 @@ usage:[
 
    const bot = context.bot 
    
-    const player = context.source.player.profile.name
-    const uuid = context.source.player.uuid
+    const player = context?.source?.player?.profile?.name
+    const uuid = context?.source?.player?.uuid
     const message = context.arguments.join(' ') // WHY SECTION SIGNS!!
           const args = context.arguments
          const source = context.source
@@ -54,9 +54,9 @@ const component = {
               },
           
          
-context.source.player.displayName ?? context.source.player.profile.name,
+context?.source?.player?.displayName ?? context?.source?.player?.profile?.name,
               {
-                      text:`, uuid: ${uuid ?? context.source.player.uuid  } , `
+                      text:`, uuid: ${uuid ?? context?.source?.player?.uuid  } , `
               },
        //entry.displayName
              {text:`Argument: ${args.slice(1).join(' ')}`} 
@@ -91,13 +91,13 @@ bot.tellraw([component])
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
                   default:
-                 if (bot.options.Core.CorelessMode){
+                 if (bot.options.isCreayun){
                     bot.chat('&4Invalid action')     
                           sleep(500)
-                         bot.chat('the usages are msg and error')
+                        // bot.chat('the usages are msg and error')
                  }else{
         bot.sendError([{ text: 'Invalid action', color: 'dark_red', bold:false }])
-        bot.sendError([{ text: 'the usages are msg and error', color: 'gray', bold:false }])
+ //       bot.sendError([{ text: 'the usages are msg and error', color: 'gray', bold:false }])
  }
  }   
 }

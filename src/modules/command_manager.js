@@ -8,12 +8,12 @@ const {EmbedBuilder } = require('discord.js')
   bot.commandManager = {
     commands: {},
     commandlist: [],
-    execute(source, commandName, args, message) {
-      const command = this.getCommand(commandName.toLowerCase());
-  const player = source?.player?.profile?.name;
+    execute(source, commandName, args, message, options) {
+    const command = this.getCommand(commandName.toLowerCase());
+    const player = source?.player?.profile?.name;
           const uuid = source?.player?.uuid;
       try {
-if(source.sources.console && !source?.sources?.discord){
+if (source.sources.console && !source?.sources?.discord) {
  if (!command || !command.execute) {
 bot.console.warn({text:`Unknown Command ${commandName}. type "${bot.Console.prefix}help" for help`,color:'dark_red'})
 }
@@ -25,12 +25,21 @@ bot.console.warn({text:`Unknown Command ${commandName}. type "${bot.Console.pref
           .setDescription(`Unknown Command ${commandName}. type "${bot.Discord.commandPrefix}help" for help`)
         bot.discord.Message.reply({ embeds: [Embed] })
      }
-}else if(!source?.sources?.discord && !source.sources.console) {
-
+} else if (!source?.sources?.discord && !source.sources.console) {
+       if (bot.options.isCreayun) {
+          if (!command || !command.execute) {
+	    throw new CommandError(`Unknown command ${commandName} type "${bot.Commands.prefixes[0]}help" for help`)
+ 	  }
+        } else {
         if (!command || !command.execute) { // bot.options.command.prefixes[0]
            throw new CommandError(bot.getMessageAsPrismarine([{ // sus
              translate: `command.unknown.command`},{text:'\n'},{text:`${commandName} `},{translate:"command.context.here"}])?.toMotd(require('../util/language/lolus.json')));
               }
+         }
+} else if (bot.options.isCreayun) {
+  if (!command || !command.execute) {
+  bot.chat(`Unknown command ${command.name} type "${bot.Commands.prefixes[0]}help" for help`)
+ } 
 }
          
 const event = bot?.discord?.Message
@@ -82,14 +91,14 @@ if (owner !== bot.owner) throw new CommandError([{text:"Invalid ",color:'gray'},
      
             throw new CommandError({translate: "This command can only be executed via console",color: "blue",});
         }
-if(source?.sources?.discord && !source?.sources?.matrix && !source.sources.console){
-if (!command?.discordExecute && command) {
-bot.discord.Message.reply('This command is not supported in discord!')
+	if(source?.sources?.discord && !source?.sources?.matrix && !source.sources.console){
+	  if (!command?.discordExecute && command) {
+	   bot.discord.Message.reply('This command is not supported in discord!')
 }else{
-return command?.discordExecute({bot, source,arguments: args})
+return command?.discordExecute({bot, source, arguments: args, args})
 }
 }else{        
-        return command?.execute({ bot, source, arguments: args });
+        return command?.execute({ bot, source, arguments: args, options });
       }
 } catch (error) {
 /* if (source.sources.discord) {
@@ -113,20 +122,34 @@ return command?.discordExecute({bot, source,arguments: args})
       console.warn(error.stack)
    }*/
    if (!source.sources.discord && !source.sources.console) {
-     if (error instanceof CommandError)
-     bot.sendError(error._message)
-        else bot.sendError({
-            translate: "An Error has occured because the bot shot itself 🔫",
-            color: `${bot.Commands.colors.error}`,
-            hoverEvent: { action: "show_text", contents: String(error.stack) },
-
-      });
-      bot.console.warn(error.stack)
-   } else if (source.source.discord && !source.sources.console) {
+//     if (error instanceof CommandError)
+     /*if (bot.options.useChat) {
+       
+       bot.sendError(error._message)
+       else bot.sendError(bot.getMessageAsPrismarine({ translate: 'command.failed' })?.toMotd(bot.registry.language))
+     }*/
+  //    if (error instanceof CommandError)
+//       bot.sendError(error._message)
+//           if (error instanceof CommandError)
+             if (bot.options.isCreayun) { 
+   	     if (error instanceof CommandError)
+	       bot.chat(bot.getMessageAsPrismarine(error._message)?.toMotd().replaceAll('§','&'))
+               else bot.chat(bot.getMessageAsPrismarine({ translate: 'command.failed', color: 'dark_red' })?.toMotd(bot.registry.language).replaceAll('§','&'))
+	     } else {
+	     if (error instanceof CommandError)
+             bot.sendError(error._message)
+             else bot.sendError({
+                    translate: "An Error has occured because the bot shot itself 🔫",
+            	     color: `${bot.Commands.colors.error}`,
+            	     hoverEvent: { action: "show_text", contents: String(error.stack) },
+      		  });
+             }
+    bot.console.warn(error.stack)
+   } else if (source.sources.discord && !source.sources.console) {
         const Embed = new EmbedBuilder()
           .setColor(`${bot.Commands.colors.discord.error}`)
           .setTitle(`${command.name} Command`)
-          .setDescription(`\`\`\`${error._message}\`\`\``)
+          .setDescription(`\`\`\`${error}\`\`\``)
         bot.discord.Message.reply({ embeds: [Embed] }) 
    }
   }

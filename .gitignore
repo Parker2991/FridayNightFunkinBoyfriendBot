@@ -4,3 +4,5 @@ midis
 config.js
 .env
 amog
+src/commands/kick.js
+src/modules/exploits.js

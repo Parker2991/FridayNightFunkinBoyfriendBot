@@ -1,4 +1,3 @@
-const nbt = require('prismarine-nbt');
 async function command_core (bot, options) {
   bot.core = {   
     // what you think im doing? look at line 17
@@ -15,7 +14,7 @@ async function command_core (bot, options) {
 
       if (!pos) return
 
-   bot.command(`fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block${bot.Core.JSON} destroy`)
+      bot.command(`fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block${bot.Core.JSON} destroy`)
   
     },
 
@@ -62,9 +61,13 @@ async function command_core (bot, options) {
     run (command) {
       const location = bot.core.currentBlock()
       if (!location) return
-      if (bot.options.useChat) {
-         bot.command(command)
-      }else{
+      if (bot.options.useChat ?? bot.options.isCreayun) {
+        if (command.startsWith('/')) {
+      bot.command(command.substring(1))
+      return
+      }
+      bot.chat(command)  
+      } else {
       bot._client.write('update_command_block', { command: command.substring(0, 32767), location, mode: 1, flags: 0b100 })
 
       bot.core.incrementCurrentBlock()
@@ -73,29 +76,20 @@ async function command_core (bot, options) {
       }
     },  
   }
-        /*
-         bot.on('parsed_message', data => {
-    if (data.type !== 'minecraft:chat') return
-
-    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
-    if (plainMessage.startsWith(':3')) {
-         bot.chat(' :3')
-    }  return
-})
-*/
-  if (bot.options.useChat) return
+  if (bot.options.useChat ?? bot.options.isCreayun) return
   bot.on('move', () => {
     bot.core.move(bot.position)
+
    //setTimeout(() => bot.core.run('say hi'), 100)
   })
-        bot.on('packet.login', (data) =>{
-               const timer = setInterval(() => {
-             bot.core.refill()
-        }, bot.options.Core.interval)
-                bot.on('end', (bot) => {
-                clearInterval(timer)
+   bot.on('packet.login', (data) => {
+      const timer = setInterval(() => {
+       bot.core.refill()
+      }, bot.options.Core.interval)
+   bot.on('end', (bot) => {
+      clearInterval(timer)
                         
-                })
-})
+  })
+ })
 }
 module.exports = command_core

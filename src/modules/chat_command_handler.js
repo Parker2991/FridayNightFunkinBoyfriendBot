@@ -81,7 +81,7 @@ try{
         setTimeout(() => {
           ratelimit--
         }, 1000)
-    if (ratelimit > 3) { // ,.     
+    if (ratelimit > 1) { // ,.     
        bot.sendFeedback({text:'You are using commands to fast!',color:'dark_red'})
       // this isn't blocking running the command you know that right?
     } else {

@@ -21,7 +21,11 @@ module.exports = {
      bot.sendFeedback({ text: `Script input: ${script}` })
      }
     } catch (err) {
+      if (bot.options.isCreayun) {
+        bot.chat(`&4${err.message}`)
+      } else {
      bot.sendFeedback({ text: err.message, color: 'red' })
+      }
     }
    }
  }

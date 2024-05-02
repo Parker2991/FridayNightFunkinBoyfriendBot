@@ -13,46 +13,44 @@ module.exports = {
     
 //throw new CommandError('ohio')
     const component = {
-       translate: '[%s] [%s] %s \u203a %s',
-      with: [
-        {
-          translate: '%s%s%s',
-          bold:false,
-          with: [
-            {
-              text: 'FNF',
-              bold: true,
-              color: 'dark_purple'
-            },
-            {
-              text: 'Boyfriend',
-              bold: true,
-              color: 'aqua'
-            },
-            {
-              text: 'Bot',
-              bold: true,
-              color: 'dark_red'
-            },
-          ],
-        },
-              bot.options.serverName,
+       translate: '%s [%s] %s \u203a %s',
+       color: 'dark_gray',
+       with: [
+	 {
+           translate: '%s%s%s',
+             with: [
+               {
+	         text: 'FNF',
+	         color: 'dark_purple'
+	       },
+	       {
+	         text: 'Boyfriend',
+                 color: 'aqua'
+               },
+               {
+                 text: 'Bot',
+                 color: 'dark_red'
+                }
+	      
+           ]
+	},
+             bot.options.serverName,
               
-        context.source.player.displayName ?? context.source.player.profile.name,
-     message
-      ]//command.split(' ')[0]
-    }//string.replace()
+        context?.source?.player?.displayName ?? context?.source?.player?.profile?.name,
+        message
+      ]
+    }
     if (!message[0]) {
      bot.sendFeedback({text:'Message is empty', color:'red'}, false)
     } else {
     for (const eachBot of bot.bots) 
-if(!bot.options.Core.enabled){
-eachBot.chat(`[${bot.options.serverName}] ${bot.getMessageAsPrismarine(context.source.player.displayName ?? context.source.player.profile.name)?.toMotd().replaceAll('§','&')} \u203a ${message}`)
-}else{
-eachBot.tellraw(component)
+    if (bot.options.isCreayun) {
+      eachBot.chat(`[${bot.options.serverName}] ${bot.getMessageAsPrismarine(context?.source?.player?.displayName ?? context?.source?.player?.profile?.name)?.toMotd().replaceAll('§','&')} \u203a ${message}`)
+    } else {
+       eachBot?.tellraw(component)
+    }
   }
-}
-}
+ }
 }
 /*
  bot.options.host + ':' + bot.options.port,

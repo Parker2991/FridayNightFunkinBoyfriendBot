@@ -14,8 +14,8 @@ function inject (bot, options) {
 //client:options.matrix.client ?? matrix.createClient({baseUrl: "https://matrix.chipmunk.land:", accessToken: process.env["matrixtoken"], userId:'@fnfboyfriendbot:chipmunk.land'}), 
   client,
     roomId: options.matrix.roomId,
-    commandPrefix: options.matrix.commandPrefix || undefined,
-    inviteUrl: String(options.matrix.inviteUrl) || undefined
+    commandPrefix: bot.matrix.commandPrefix || undefined,
+    inviteUrl: String(bot.matrix.invite) || undefined
   }
 
   const startTime = Date.now()

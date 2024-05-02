@@ -181,6 +181,6 @@ break
 default:	
 throw new CommandError('Invalid argument')
 break
-}
-}
-    }
+   }
+  }
+ }

@@ -10,46 +10,35 @@ const util = require('util')
 client.login(process.env.discordtoken)
 
 function discord (bot, options) {
-if(!bot.Discord.enabled) return
+if(!bot.discord.enabled) return
   if (!options.discord?.channelId) {
-    bot.discord = { invite: options.discord?.invite }
+    bot.discord = { invite: bot.discord?.invite }
     return
   }
 const ChatMessage = require('prismarine-chat')(bot.options.version)
   bot.discord = {
     client,
     channel: undefined,
-    invite: bot.Discord.invite || undefined,
-    commandPrefix: bot.Discord.commandPrefix
-    
+    invite: bot.discord.invite || undefined,
+    commandPrefix: bot.discord.commandPrefix,
+    presence: bot.discord.presence,
   }
+//
 
-  client.on('ready', (context) => {
-      //setMaxListeners(Infinity)
-//  client.setMaxListeners(25)
-
-          bot.discord.channel = client.channels.cache.get(options.discord.channelId)
-    //bot.discord.channel.send(`\`\`\`\nStarting ${process.env["buildstring"]}......\n\`\`\``)
-  //  bot.discord.channel.send(`\`\`\`\nFoundation: ${process.env["FoundationBuildString"]}\n\`\`\``)
-// bot.discord.channel.send(`\`\`\`\nSuccessfully logged into discord as ${bot.discord.client.user.username}#${bot.discord.client.user.discriminator}\n\`\`\``)
-
-//bot.discord.channel.send('``Server: '+ bot.options.host + ':'+ bot.options.port + '``')
-//bot.discord.channel.send('``Version:' + bot.options.version +'``')
-//bot.discord.channel.send('``Username:' + bot.options.username + '``')   
-// bot.console.info(`Successfully logged into discord as ${bot.discord.client.user.username}#${bot.discord.client.user.discriminator}`)
+client.on('ready', (context) => {
+       bot.discord.channel = client.channels.cache.get(options.discord.channelId)
 client.user.setPresence({ 
-activities: [{ name: `${bot.Discord.presence.name}`, type: bot.Discord.presence.type }], 
-status: `${bot.Discord.presence.status}`
+activities: [{ name: `${bot.discord.presence.name}`, type: bot.discord.presence.type }], 
+status: `${bot.discord.presence.status}`
 }); 
-  })
-
-  // I feel like this is a modified version of ChomeNS Bot's discord plugin (the js one ofc) lol - chayapak
+})
+// I feel like this is a modified version of ChomeNS Bot's discord plugin (the js one ofc) lol - chayapak
 
   let discordQueue = []
   setInterval(() => {
     if (discordQueue.length === 0) return
     try {
-      bot?.discord?.channel?.send(`\`\`\`ansi\n${discordQueue.join('\n').substring(0, 1984)}\n\`\`\``)
+      bot.discord.channel.send(`\`\`\`ansi\n${discordQueue.join('\n').substring(0, 1984)}\n\`\`\``)
     } catch (error) {
       //ansi real 
       bot.console.error(error.stack)
@@ -114,7 +103,7 @@ if(!bot.options.discord.log) return
 bot.discord.Message = message
 if (message.author.id === bot.discord.client.user.id) return
 
-    if (message.channel.id !== bot.discord.channel.id) return
+if (message.channel.id !== bot.discord.channel.id) return
 //
     if (message.content.startsWith(bot.discord.commandPrefix)) { // TODO: Don't hardcode this
       const source = new CommandSource({ profile: { name: message?.member?.displayName } }, { discord: true, console: false }, false, message)

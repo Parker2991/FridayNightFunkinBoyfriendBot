@@ -17,92 +17,139 @@ function selfcare (bot) {
   let god = false
   let tptoggle = false
   let jail = false
+  let creayunJoin = false
 /* if (data.toString().startsWith('You have been muted')) muted = true
     if (data.toString() === 'You have been unmuted.') muted = false
 */
+/* tptoggle creayun
+Teleportation enabled.
+Teleportation disabled.
+*/
+/* creayun vanish
+You are now completely invisible to normal users, and hidden from in-game commands.
+You are once again visible.
+You do not have access to that command.
+*/
+//Welcome to survivayun!  Welcome to ayunami2000's boxes server!
   //bot.on('message', (data) => {
   bot.on('message', (message, data) => {
     // Successfully removed your skin
     stringmessage = bot.getMessageAsPrismarine(message)?.toString()
     if (bot.options.isCreayun) {
-    if (stringmessage === `Your prefix has been set to: [Prefix: ~]` || stringmessage === 'Something went wrong while saving the prefix. Please check console.' || stringmessage === 'Unknown command. Type /help for help' || stringmessage === '[SuffEx] Your prefix has been set to: [Prefix: ~]') {
+
+    if (stringmessage === 'Welcome to creayun!' || stringmessage === 'Already connecting to this server!') {
+    creayunJoin = true
+    return
+    }
+
+    else if (stringmessage.startsWith('Welcome ') || stringmessage === "Welcome to ayunami's boxes server") creayunJoin = false
+
+    else if (stringmessage.startsWith('Welcome ') || stringmessage === 'Welcome to survivayun!') creayunJoin = false
+
+    if (stringmessage === `Your prefix has been set to: [Prefix: ~]` || stringmessage === 'Something went wrong while saving the prefix. Please check console.' || stringmessage === 'Unknown command. Type /help for help' || stringmessage === '[SuffEx] Your prefix has been set to: [Prefix: ~]' || stringmessage === 'Unknown command. Type /help for help.') {
       prefix = true
       return
-    } else if (stringmessage.startsWith("Your prefix has been set to: ") || stringmessage === '[SuffEx] Your prefix has been set to: ' || stringmessage === '[SuffEx] Your prefix has been reset' || stringmessage === "Your prefix has been reset.") prefix = false
+    } 
+    
+    else if (stringmessage.startsWith("Your prefix has been set to: ") || stringmessage.startsWith('[SuffEx] Your prefix has been set to: ') || stringmessage === '[SuffEx] Your prefix has been reset' || stringmessage === "Your prefix has been reset.") prefix = false
+
+    else if (stringmessage === 'You no longer have a nickname.' || stringmessage === '[SuffEx] Your nick has been reset!') {
+      nickname = true
+      return
+    }
+
+    else if (stringmessage.startsWith("Your nick has been set to: ") || stringmessage.startsWith("[SuffEx] Your nick has been set to: ")) nickname = false  
+   
+    else if (stringmessage === "You are now completely invisible to normal users, and hidden from in-game commands." || stringmessage === "You do not have access to that command." || stringmessage === "Unknown command. Type /help for help.") {
+       vanished = true
+       return
+    }
+
+    else if (stringmessage === "You are once again visible.") vanished = false
+
+    else if (stringmessage === "Teleportation enabled.") {
+      tptoggle = false
+      return
+    }
+
+    else if (stringmessage === "Teleportation disabled.") tptoggle = true
+
     } if (bot.options.isKaboom) { //Your prefix has been reset.
+
     if (stringmessage.startsWith('You have been muted')) unmuted = true
+
     else if (stringmessage.startsWith('You have been unmuted')) unmuted = false
+
     else if (util.isDeepStrictEqual(message, COMMANDSPY_ENABLED_MESSAGE)) commandSpyEnabled = true
+
     else if (util.isDeepStrictEqual(message, COMMANDSPY_DISABLED_MESSAGE)) commandSpyEnabled = false
+
     else if (stringmessage === `You now have the tag: &8[&bPrefix: &4${bot.Commands.prefixes[0]}&8]` || stringmessage === 'Something went wrong while saving the prefix. Please check console.') {
       prefix = true
       return
     }
+
     else if (stringmessage.startsWith("You now have the tag: ") || stringmessage === "You no longer have a tag") prefix = false
       
-    else if (stringmessage === `Successfully set your skin to ${bot.options.selfcare.skin.player}'s`) {
+    else if (stringmessage === `Successfully set your skin to Parker2991's` || stringmessage === "A player with that username doesn't exist") {
       skin = true
       return
     }
-    else if (stringmessage === 'You have been released!') jail = true
-    else if (stringmessage === 'Jails/Unjails a player, TPs them to the jail specified.') jail = true
-    else if(stringmessage === `You have been jailed!`){
-    jail = false
-    return
-    }
+
     else if (stringmessage.startsWith("Successfully set your skin to ") || stringmessage === "Successfully removed your skin") skin = false
-   
+
+    else if (stringmessage === 'You have been released!') jail = true
+
+    else if (stringmessage === 'Jails/Unjails a player, TPs them to the jail specified.') jail = true
+  
+    else if(stringmessage === `You have been jailed!`){
+      jail = false
+      return
+    }
+
     else if (stringmessage === `Successfully set your username to "${bot.username}"`) {
       username = true
       return
-    }//"Successfully set your username to "${bot.username}"""
+    }
+
     else if (stringmessage.startsWith("Successfully set your username to ")) username = false
+
     else if (stringmessage === `You already have the username "${bot.username}"`) username = true
-     else if (stringmessage === `You no longer have a nickname.`) {
-    nickname = true
+
+    else if (stringmessage === `You no longer have a nickname.`) {
+      nickname = true
       return
     }
+
     else if (stringmessage.startsWith("Your nickname is now ")) nickname = false
-   // else if (stringmessage === `Error: Nicknames must be alphanumeric.`) nickname = false
+
     else if (stringmessage === `You no longer have a nickname.`) nickname = false
-    //else if (stringmessage === `That name is already in use.`) nickname = false
+
     else if (stringmessage === `God mode enabled.`) {
       god = true
-        return
-      }
-      else if (stringmessage === 'God mode disabled.') god = false
-    else if (stringmessage === `Teleportation enabled.`) {
+      return
+    }
+
+    else if (stringmessage === 'God mode disabled.') god = false
+      else if (stringmessage === `Teleportation enabled.`) {
       tptoggle = false
         return
       }
       else if (stringmessage === 'Teleportation disabled.') tptoggle = true
 
-else if(stringmessage === `Vanish for ${bot.options.username}: disabled`) {
-vanished = false
-return
-}
-else if (stringmessage === `Vanish for ${bot.options.username}: enabled`) vanished = true
-}
-    /*
-else if (message?.text !== '' || !Array.isArray(message.extra) || message.extra.length < 2 || !message.extra[0]?.text?.startsWith('Vanish for') || message.extra[0].color !== 'gold') return
-
-    const suffix = message.extra[message.extra.length - 1]
-
-    if (suffix?.color !== 'gold') return
-//data.toString().startsWith
-    if (suffix.text?.endsWith(': enabled')) vanished = true
-    else if (suffix.text?.endsWith(': disabled')) vanished = false // Bruh what is this ohio code
-//
-
-  */
+      else if(stringmessage === `Vanish for ${bot.options.username}: disabled`) {
+	vanished = false
+	return
+      }
+      else if (stringmessage === `Vanish for ${bot.options.username}: enabled`) vanished = true
+      }
   })
 
   bot.on('packet.entity_status', packet => {
     if (packet.entityId !== entityId || packet.entityStatus < 24 || packet.entityStatus > 28) return
     permissionLevel = packet.entityStatus - 24 
-  })//
-  //TO-DO create a array for nick, prefix, and mabe username in selfcare so that when it joins or has the nick/prefix changed it will change it back to the set nick and prefix in selfcare 
- 
+  })
+
   bot.on('packet.game_state_change', packet => {
     if (packet.reason !== 3) return // Reason 3 = Change Game Mode
 
@@ -115,26 +162,49 @@ else if (message?.text !== '' || !Array.isArray(message.extra) || message.extra.
     gameMode = packet.gameMode
     
     timer = setInterval(() => {
-   if (permissionLevel < 2 && bot.options.selfcare.op) bot.command('op @s[type=player]')
-   else if (!commandSpyEnabled && bot.options.selfcare.cspy) bot.command('commandspy:commandspy on')
-   else if (unmuted && bot.options.selfcare.unmuted) bot.core.run(`essentials:mute ${bot.uuid}`)  
-   else if (!prefix && bot.options.selfcare.prefix) bot.command(`prefix &8[&bPrefix: &4${bot.Commands.prefixes[0]}&8]`)
-   else if (gameMode !== 1 && bot.options.selfcare.gmc) bot.command('gamemode creative @s[type=player]')
-   else if (!skin && bot.options.selfcare.skin.enabled) bot.command(`skin ${bot.options.selfcare.skin.player}`)
-   else if (!username && bot.options.selfcare.username) bot.command(`username ${bot.username}`)
-   else if (!nickname && bot.options.selfcare.nickname) bot.core.run(`nick ${bot.options.username} off`)
-   else if (!god && bot.options.selfcare.god) bot.core.run(`god ${bot.username} on`)
-   else if (!tptoggle && bot.options.selfcare.tptoggle) bot.core.run(`tptoggle ${bot.options.username} off`)
-   else if (!vanished && bot.options.selfcare.vanished) bot.core.run(`essentials:vanish ${bot.username} enable`)
-//else if (!jail) bot.command(`unjail ${bot.username}`)  
+   if (bot.options.isCreayun) {
+    if (!creayunJoin) bot.command(`server creative`)
+    else if (!prefix && bot.options.selfcare.prefix) bot.command(`prefix &8[&bPrefix: &4${bot.Commands.prefixes[0]}&8]`)
+
+    else if (!nickname && bot.options.selfcare.nickname) bot.command(`nick off`)
+
+    else if (!vanished && bot.options.selfcare.vanished) bot.command(`v on`)
+
+    else if (!tptoggle && bot.options.selfcare.tptoggle) bot.command(`tptoggle off`)
+
+    } else if (bot.options.isKaboom) {
+
+    if (permissionLevel < 2 && bot.options.selfcare.op) bot.command('op @s[type=player]')
+
+    else if (!commandSpyEnabled && bot.options.selfcare.cspy) bot.command('commandspy:commandspy on')
+
+    else if (unmuted && bot.options.selfcare.unmuted) bot.core.run(`/essentials:mute ${bot.uuid}`)  
+
+    else if (!prefix && bot.options.selfcare.prefix) bot.command(`prefix &8[&bPrefix: &4${bot.Commands.prefixes[0]}&8]`)
+
+    else if (gameMode !== 1 && bot.options.selfcare.gmc) bot.command('gamemode creative @s[type=player]')
+
+    else if (!skin && bot.options.selfcare.skin) bot.command(`skin Parker2991`)
+
+    else if (!username && bot.options.selfcare.username) bot.command(`username ${bot.username}`)
+
+    else if (!nickname && bot.options.selfcare.nickname) bot.core.run(`/nick ${bot.options.username} off`)
+
+    else if (!god && bot.options.selfcare.god) bot.core.run(`/god ${bot.username} on`)
+
+    else if (!tptoggle && bot.options.selfcare.tptoggle) bot.core.run(`/tptoggle ${bot.options.username} off`)
+
+    else if (!vanished && bot.options.selfcare.vanished) bot.core.run(`/essentials:vanish ${bot.username} enable`)
+//else if (!jail) bot.command(`unjail ${bot.username}`)
+   }  
  }, bot.options.selfcare.interval)
-  })
+})
 
   bot.on('end', () => {
     if (timer) clearInterval(timer)
     prefix = false
     muted = false
-   commandSpyEnabled = false
+    commandSpyEnabled = false
     vanished = false
     skin = false
     username = false

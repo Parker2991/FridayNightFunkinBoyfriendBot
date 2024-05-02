@@ -70,6 +70,13 @@ const bots = [
     foundation: '4/22/24',
     exclaimer:'a lot of clean up adding shit and more',
   },
+  {//
+    name: { text: 'v5.0.7c', color: 'gold', bold:false },
+    authors: ['Ski'],
+
+    foundation: '5/1/24',
+    exclaimer:'added discord execute, redone the website command, added attachments for discord',
+  },
 ]//
 //back
   

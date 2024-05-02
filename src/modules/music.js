@@ -5,7 +5,7 @@ const { convertMidi } = require('../util/music/midi_converter')
 const convertNBS = require('../util/music/nbs_converter')
 const parseTXTSong = require('../util/music/txt_song_parser')
 const midiproxy = require('../util/music/midi-proxy')
-midiproxy()
+//midiproxy()
 const soundNames = {
   harp: 'minecraft:block.note_block.harp',
   basedrum: 'minecraft:block.note_block.basedrum',
@@ -163,6 +163,7 @@ bot.core.run(`minecraft:execute as ${selector} at @s run playsound ${soundNames[
     bot.music.song = null
     bot.music.loop = 0
     bot.music.queue = []
+    bot.core.run('bossbar remove minecraft:music')
     resetTime()
   }
 

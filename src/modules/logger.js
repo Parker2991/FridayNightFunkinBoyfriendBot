@@ -19,10 +19,11 @@ function consolefilelogger(bot, options, message) {
       fs.mkdirSync(logFolder);
     }
   } catch (e) {
-    console.warn(`Unable to create log folder: ${e}`);
+    console.error(`Unable to create log folder: ${e}`);
   }
 
   function compressFile(input, output) {
+    if (!bot.Console.filelogging) return
     const plainOutput = output.slice(0, -3);
 
     fs.renameSync(input, plainOutput);
@@ -54,7 +55,7 @@ function consolefilelogger(bot, options, message) {
     // }
   }
 
-  console.log(
+  console?.info(
     `File logging: ${bot.Console.filelogging ? "enabled" : "disabled"}`
   );
   if (!bot.Console.filelogging) return; // instead of using bot why not just use options cause you already defined it

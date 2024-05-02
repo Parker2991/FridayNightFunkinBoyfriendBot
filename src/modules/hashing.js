@@ -33,15 +33,7 @@ function hashgen (bot) {
     if (interval) clearInterval(interval)
   })
   */
-}
-      bot.on('parsed_message', data => {
-    if (data.type !== 'minecraft:chat') return
-
-    const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString()
-    if (plainMessage.startsWith('fnf sky')) {
-         bot.chat('sky the fangirl!?!? i simp for her :)')
-    }  return
-})     
+}     
 let _hash = generateHash()
 const now = new Date().toLocaleString("en-US",{timeZone:"America/CHICAGO"})
              const time = new Date().toLocaleTimeString("en-US", {timeZone:"America/CHICAGO"})

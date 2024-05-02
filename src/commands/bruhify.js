@@ -10,11 +10,13 @@ usage:["smexy text here"],
   const bot = context.bot
 const args = context.arguments
     const message = context.arguments.join(' ')
-         
+if (bot.options.isCreayun) {
+throw new CommandError('isCreayun is active!')
+} else {
 bot.bruhifyText = args.join(' ')
 
 bot.sendFeedback(JSON.stringify(bot.bruhifyText))
-
+}
 
   }
 }

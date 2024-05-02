@@ -4,20 +4,20 @@ let timer = null
 
 module.exports = {
   name: 'troll',
-trustLevel:1,
-usage:[""],
+  trustLevel:1,
+  usage:[""],
   execute (context) {
     const bot = context.bot
-const source = context.source
+    const source = context.source
     const args = context.arguments
-if(source.sources.console){
-if (args[0] === 'clear'||args[0] === 'stop'){
-clearInterval(this.timer)
-this.time= undefined
-bot.console.info('Cloop stopped')
-return
-}
-}else if(!source.sources.console){
+    if (source.sources.console) {
+      if (args[0] === 'clear'||args[0] === 'stop') {
+        clearInterval(this.timer)
+        this.time= undefined
+        bot.console.info('Cloop stopped')
+        return
+      }
+     } else if (!source.sources.console) {
 
     if (args[1] === 'clear' || args[1] === 'stop') {
       clearInterval(this.timer)
@@ -27,7 +27,9 @@ return
       return
     }
 }
-    
+    if (bot.options.isCreayun || bot.options.useChat) {
+      throw new CommandError(`Cannot execute command because isCreayun or useChat is enabled!`)
+    } else {
     if (this.timer !== null) 
     this.timer = setInterval(function () {
       bot.core.run('day')
@@ -55,5 +57,6 @@ return
 bot.on('end', (data)=>{
 clearInterval(this.timer)
 })  
+}
 }
 }

@@ -11,9 +11,12 @@ usage:["on","off"],
     const bot = context.bot
     const source = context.source
     const args = context.arguments
+    if (bot.options.isCreayun) {
+      throw new CommandError('Cannot execute command because isCreayun is active!')
+    } else {
     switch (args[0]) {
       case 'on': 
-bot.tps.on()
+       bot.tps.on()
     
       bot.sendFeedback({text: 'TPSBar is now enabled', color:'green'}) 
     
@@ -27,10 +30,10 @@ bot.tps.on()
         default:
           throw new CommandError('Invalid argument')
       }
-    },
+    }
 
   }
-
+}
 //[%s] %s › %s
 //was it showing like that before?
 // just do text bc too sus rn ig

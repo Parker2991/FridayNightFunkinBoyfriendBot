@@ -1,98 +1,59 @@
-const urban = require('urban-dictionary')
-
+const CommandError = require('../CommandModules/command_error')
+const ud = require('../util/urban')
 module.exports = {
   name: 'urban',
   description:['urban dictionary'],
-        aliases:['urbandictionary'],
-trustLevel: 0,
-usage:["re fucking doing"],
+  aliases:['urbandictionary'],
+  trustLevel: 0,
+  usage:[
+    "all <definition>",
+    "single <definition>",
+  ],
   async execute (context) {
     const source = context.source
     const args = context.arguments
-          const bot =  context.bot
- const cmd = {
- translate: '[%s] ',
-      bold: false,
-      color: 'white',
-      with: [
-        { color: 'dark_red', text: 'Urban Cmd'},
-              ]
-    }
-    const example = {
-     translate: '%s - ',
-          bold: false,
-          color: 'white',
-          with: [
-            { color: 'dark_gray', text: 'Example text'},
-                  ]
-        }
-    const definition5 = {
-       translate: '%s - ',
-            bold: false,
-            color: 'white',
-            with: [
-              { color: 'dark_gray', text: 'Definition text'},
-                    ]
+    const bot = context.bot
+    const cmdPrefix = [
+      { text: '[', color: 'dark_gray' },
+      { text: 'Urban', color: '#B72A00' },
+      { text: '] ', color: 'dark_gray'}
+    ]    
+/*      for (const def of definitions) {
+        bot.tellraw([cmdPrefix, { text: def.example.replaceAll('\r',''), color: 'dark_gray' }]) 
+        bot.tellraw([cmdPrefix, { text: def.definition.replaceAll("\r", ""), color: 'dark_gray' }]) 
+      }*/
+    switch(args[0]) {
+      case 'all':
+          try {     
+          let definitions = await ud.define(args.slice(1).join(' '))
+          for (const def of definitions) {
+            bot.tellraw([cmdPrefix, { text: def.example.replaceAll('\r',''), color: 'dark_gray' }])
+            bot.tellraw([cmdPrefix, { text: def.definition.replaceAll("\r", ""), color: 'dark_gray' }])
           }
-async function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-    try {
-      const definitions = await urban.define(args.join(' '))
-      const definitions2 = await urban.define(args.join(' '))
-      //const definitions2 = await urban.example(args.join(' '))
-            //ChatMessage.fromNotch(await sleep(500) ?? player.displayName ?? player.profile.name ).toMotd().replaceAll('§', '&')
-            if(!bot.options.Core.enabled){
-                    const ChatMessage = require('prismarine-chat')(bot.options.version)
-      for (const definition of definitions) {
-      
-              
-bot.chat(ChatMessage.fromNotch(await sleep(2300) 
-?? [cmd, example, { text: definition.example.replaceAll("\r", ""), color: 'gray' }, { text: ' - ', color: 'white' }]).toMotd().replaceAll('§', '&')) 
-    await sleep(500) 
-              bot.chat(ChatMessage.fromNotch(await sleep(2300) ?? [cmd, definition5,{ text: definition.definition.replaceAll("\r", ""), color: 'gray' } ]).toMotd().replaceAll('§', '&')) 
-      }//oh
-              }else{//??
-                      
-                for (const definition of definitions) {
-      
-              bot.sendFeedback([cmd, example, { text: definition.example.replaceAll("\r", ""), color: 'gray' }, { text: ' - ', color: 'white' }])
-        bot.sendFeedback([cmd, definition5,{ text: definition.definition.replaceAll("\r", ""), color: 'gray' } ])
-      }
-      
-            
-
-       urban.define(args.join(' ')).then((results) => {
-        bot.sendFeedback([cmd,{text:`Definition: ${results[0].word}`, color:'dark_gray'}])
-        bot.sendFeedback([cmd,{text:`Author: ${results[0].author}`, color:'dark_gray'}])
+          bot.tellraw([cmdPrefix,{text:`Definition: ${definitions[0].word}`, color:'dark_gray'}])
+          bot.tellraw([cmdPrefix,{text:`Author: ${definitions[0].author}`, color:'dark_gray'}])
         //source.sendFeedback(results[0].thumbs_down)
-        bot.sendFeedback([cmd,{text:`👍  ${results[0].thumbs_up}  | 👎  ${results[0].thumbs_down}`, color:'gray'}])
+          bot.tellraw([cmdPrefix,{text:`👍  ${definitions[0].thumbs_up}  | 👎  ${definitions[0].thumbs_down}`, color:'gray'}])
+          } catch (e) {
+            bot.sendError(`${e.toString()}`)
+          }
+          break
+       case 'single':
+          ud.define(args.slice(1).join(' '), (error, results) => {
+            if (error) {
+               bot.tellraw([cmdPrefix,`${error.message}`])
+               return
+            }
+            bot.tellraw('define (callback)')
 
-
-        //source.sendFeedback(results[0].written_on)
-
-//thumbs_down
-        
-        
-        //source.sendFeedback(results[0].data)
-      }).catch((error) => {
-        console.error(error.message)
-      })
-        //source.sendFeedback(results[0].data)
-     }
-       //  source.sendFeedback([cmd, { text: definitions2.replaceAll("\r", ""), color: 'white' }, { text: ' - ', color: 'white' }, { text: definition.definition.replaceAll("\r", ""), color: 'white' }])
-      //console.log(urban.define.definition.example(args.join(' ')))
-
-      
-      //text: definition.word text: definition.definition
-            
-            } catch (e) {
-    if (!bot.options.Core.enabled){
-            const ChatMessage = require('prismarine-chat')(bot.options.version)
-            bot.chat(ChatMessage.fromNotch([cmd,{ text: e.toString(), color: 'red' }]).toMotd().replaceAll('§', '&')) 
-    }else {
-            bot.sendFeedback([cmd,{ text: e.toString(), color: 'red' }])
-    }
+            Object.entries(results[0]).forEach(([key, prop]) => {
+              bot.tellraw([cmdPrefix,`${key}: ${prop}`])
+            })
+          })
+          break
+      default: 
+      bot.sendError('invalid argument')
     }
   }
 }
+
