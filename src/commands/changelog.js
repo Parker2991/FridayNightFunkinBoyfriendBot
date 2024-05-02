@@ -75,7 +75,7 @@ const bots = [
     authors: ['Ski'],
 
     foundation: '5/1/24',
-    exclaimer:'added discord execute, redone the website command, added attachments for discord',
+    exclaimer:'added discord execute, redone the website command, added attachments for discord ported the urban package to the bot added ping',
   },
 ]//
 //back
