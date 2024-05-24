@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "@vitalets/google-translate-api": "^9.2.0",
+    "color-convert": "^2.0.1",
+    "cowsay": "^1.6.0",
+    "cowsay2": "^2.0.4",
+    "discord.js": "^14.15.2",
+    "dockerode": "^4.0.2",
+    "dotenv": "^16.4.5",
+    "final-stream": "^2.0.4",
+    "isolated-vm": "^4.7.2",
+    "js-yaml": "^4.1.0",
+    "minecraft-protocol": "^1.47.0",
+    "moment-timezone": "^0.5.45",
+    "prettier": "^3.2.5",
+    "prismarine-chat": "^1.10.1",
+    "prismarine-registry": "^1.7.0",
+    "wikipedia": "^2.1.2"
+  }
+}
