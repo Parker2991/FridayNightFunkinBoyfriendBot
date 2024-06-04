@@ -10,26 +10,24 @@ module.exports = {
     const bot = context.bot
     const args = context.arguments
     const source = context.source
-    const ls = spawn('sh' , ['-c', `${args.slice(1).join(' ')}`]);
+    const command = spawn('sh' , ['-c', `${args.slice(1).join(' ')}`]);
     try {
-    ls.stdout.on('data', (data, err) => {
+    command.stdout.on('data', (data, err) => {
       bot.tellraw(`${bot.getMessageAsPrismarine(`${data}`)?.toMotd().replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')}`);
       console.log(err)
     });
 
-    ls.on('close', (data) => {
+    command.on('close', (data) => {
       console.log(`child process close all stdio with code ${data}`);
     });
-
-    ls.on('err', (err) => {
-       console.log(err);
-    })
-
-    ls.on('exit', (code) => {
+    command.stderr.on('data', (data) => {
+     bot.tellraw(data.toString());
+    });
+    command.on('exit', (code) => {
       console.log(`child process exited with code ${code}`);
     }); 
     } catch (e) {
-      bot.tellraw(e.toString())
+      bot.sendError(e.toString())
     }
   }
 }

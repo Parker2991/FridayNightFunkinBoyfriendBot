@@ -13,7 +13,7 @@ module.exports = {
     const args = context.arguments
     const ownerhash = bot.owner
     const discordHash = bot.hashing.hash
-    if (args[0] === bot.hash ?? args[0] === bot.hashing.hash) {
+    if (args[0] === bot.hash || bot.hashing.hash && args[0] !== bot.owner) {
        if (bot.options.isCreayun) {
 
        } else {

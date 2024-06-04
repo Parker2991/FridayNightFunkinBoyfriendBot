@@ -65,32 +65,32 @@ switch(args.join(' ').toLowerCase()) {
   bot.chat(`Discord ${bot.discord.invite}`)
   await bot.chatDelay(1500)
   } else {
-  bot.sendFeedback({ text: 'Discord Invite', color: "dark_gray", translate: "", hoverEvent: { action: "show_text", value: [ { text: "click here to join!", color: "gray", }, ], }, clickEvent: { action: "open_url", value: `${bot.discord.invite}`, }, });   
+  bot.sendFeedback({ text: 'Discord Invite', color: "gray", translate: "", hoverEvent: { action: "show_text", value: [ { text: "click here to join!", color: "gray", }, ], }, clickEvent: { action: "open_url", value: `${bot.discord.invite}`, }, });   
   }
  break
  case 'server':
   if (bot.options.useChat && !bot.options.isCreayun) {
-   bot.sendFeedback({ color: "dark_gray", text: `Hostname \u203a ${os.hostname()}`, })
+   bot.sendFeedback({ color: "gray", text: `Hostname \u203a ${os.hostname()}`, })
    await bot.chatDelay(100)
-   bot.sendFeedback({ color: "dark_gray", text: `Working Directory \u203a ${process.mainModule.path}`, });
+   bot.sendFeedback({ color: "gray", text: `Working Directory \u203a ${process.mainModule.path}`, });
    await bot.chatDelay(100)
-   bot.sendFeedback({ color: "dark_gray", text: `${os.arch()}`})
+   bot.sendFeedback({ color: "gray", text: `${os.arch()}`})
    await bot.chatDelay(100)
-   bot.sendFeedback({ color: "dark_gray", text:`OS \u203a ${os.platform()}`})
+   bot.sendFeedback({ color: "gray", text:`OS \u203a ${os.platform()}`})
    await bot.chatDelay(100)
-   bot.sendFeedback({ color: "dark_gray", text: `OS Version/distro \u203a ${os.version()}`, });
+   bot.sendFeedback({ color: "gray", text: `OS Version/distro \u203a ${os.version()}`, });
    await bot.chatDelay(100)
-   bot.sendFeedback({ color: "dark_gray", text: `Kernal Version \u203a ${os.release()}`, });
+   bot.sendFeedback({ color: "gray", text: `Kernal Version \u203a ${os.release()}`, });
    await bot.chatDelay(100)
-   bot.sendFeedback({ color: "dark_gray", text: `cores \u203a ${os.cpus().length}`, });
+   bot.sendFeedback({ color: "gray", text: `cores \u203a ${os.cpus().length}`, });
    await bot.chatDelay(100)
-   bot.sendFeedback({ color: "dark_gray", text: `CPU \u203a ${os.cpus()[0].model}`, });
+   bot.sendFeedback({ color: "gray", text: `CPU \u203a ${os.cpus()[0].model}`, });
    await bot.chatDelay(100)
-   bot.sendFeedback([{text:`Server Free memory `, color:'dark_gray'},{text:`${Math.floor( os.freemem() / 1048576, )} `,color:'dark_gray'},{text: `MiB / ${Math.floor(os.totalmem() / 1048576)} MiB`, color:'dark_gray'}]);
+   bot.sendFeedback([{text:`Server Free memory `, color:'gray'},{text:`${Math.floor( os.freemem() / 1048576, )} `,color:'gray'},{text: `MiB / ${Math.floor(os.totalmem() / 1048576)} MiB`, color:'gray'}]);
    await bot.chatDelay(100)
-   bot.sendFeedback({text:`Device uptime \u203a ${format(os.uptime())}`,color:'dark_gray'})
+   bot.sendFeedback({text:`Device uptime \u203a ${format(os.uptime())}`,color:'gray'})
    await bot.chatDelay(100)
-   bot.sendFeedback({text:`Node version \u203a ${process.version}`,color:'dark_gray'})
+   bot.sendFeedback({text:`Node version \u203a ${process.version}`,color:'gray'})
   } else if (bot.options.isCreayun) {
     bot.chat(`Host \u203a ${os.hostname()}`)
     await bot.chatDelay(1500)
@@ -114,17 +114,17 @@ switch(args.join(' ').toLowerCase()) {
     await bot.chatDelay(1500)
     bot.chat(`Node version \u203a ${process.version}`)
   } else {
-  bot.sendFeedback({ color: "dark_gray", text: `Hostname \u203a ${os.hostname()}`, });
-  bot.sendFeedback({ color: "dark_gray", text: `Working Directory \u203a ${process.mainModule.path}`, });
-  bot.sendFeedback({ color: "dark_gray", text: `${os.arch()}`})
-  bot.sendFeedback({ color: "dark_gray", text:`OS \u203a ${os.platform()}`})
-  bot.sendFeedback({ color: "dark_gray", text: `OS Version/distro \u203a ${os.version()}`, });
-  bot.sendFeedback({ color: "dark_gray", text: `Kernal Version \u203a ${os.release()}`, });
-  bot.sendFeedback({ color: "dark_gray", text: `cores \u203a ${os.cpus().length}`, });
-  bot.sendFeedback({ color: "dark_gray", text: `CPU \u203a ${os.cpus()[0].model}`, });
-  bot.sendFeedback([{text:`Server Free memory `, color:'dark_gray'},{text:`${Math.floor( os.freemem() / 1048576, )} `,color:'dark_gray'},{text: `MiB / ${Math.floor(os.totalmem() / 1048576)} MiB`, color:'dark_gray'}]);
-  bot.sendFeedback({text:`Device uptime \u203a ${format(os.uptime())}`,color:'dark_gray'})
-  bot.sendFeedback({text:`Node version \u203a ${process.version}`,color:'dark_gray'})
+  bot.sendFeedback({ color: "gray", text: `Hostname \u203a ${os.hostname()}`, });
+  bot.sendFeedback({ color: "gray", text: `Working Directory \u203a ${process.mainModule.path}`, });
+  bot.sendFeedback({ color: "gray", text: `${os.arch()}`})
+  bot.sendFeedback({ color: "gray", text:`OS \u203a ${os.platform()}`})
+  bot.sendFeedback({ color: "gray", text: `OS Version/distro \u203a ${os.version()}`, });
+  bot.sendFeedback({ color: "gray", text: `Kernal Version \u203a ${os.release()}`, });
+  bot.sendFeedback({ color: "gray", text: `cores \u203a ${os.cpus().length}`, });
+  bot.sendFeedback({ color: "gray", text: `CPU \u203a ${os.cpus()[0].model}`, });
+  bot.sendFeedback([{text:`Server Free memory `, color:'gray'},{text:`${Math.floor( os.freemem() / 1048576, )} `,color:'gray'},{text: `MiB / ${Math.floor(os.totalmem() / 1048576)} MiB`, color:'gray'}]);
+  bot.sendFeedback({text:`Device uptime \u203a ${format(os.uptime())}`,color:'gray'})
+  bot.sendFeedback({text:`Node version \u203a ${process.version}`,color:'gray'})
   }
  break
  case 'loaded':
@@ -143,17 +143,17 @@ switch(args.join(' ').toLowerCase()) {
   
   
  // lazy file count :shrug:
-//  source.sendFeedback([{text:'Package Count \u203a ',color:'dark_gray'},{text:`${Object.keys(packageJSON.dependencies).length}`,color:'gold'}])
+//  source.sendFeedback([{text:'Package Count \u203a ',color:'gray'},{text:`${Object.keys(packageJSON.dependencies).length}`,color:'gold'}])
   if (bot.options.useChat && !bot.options.isCreayun) {
-  bot.sendFeedback([{text:'Package Count \u203a ', color:'dark_gray'},{text:`${Object.keys(packageJSON.dependencies).length}`,color:'gold'}]) 
+  bot.sendFeedback([{text:'Package Count \u203a ', color:'gray'},{text:`${Object.keys(packageJSON.dependencies).length}`,color:'gold'}]) 
   } else if (bot.options.isCreayun) {
     bot.chat(`Package Count \u203a ${Object.keys(packageJSON.dependencies).length}`)
     await bot.chatDelay(1500)
     bot.chat(`File Could \u203a (${FileCount})`)
   } else { 
-//  bot.sendFeedback([{text:'Packages \u203a ',color:'dark_gray'},{text:`${Object.entries(packageJSON.dependencies).map((key, value) => key + ' ' + value).join(' ')}`}])  
-  bot.sendFeedback([{text:'Package Count \u203a ', color:'dark_gray'},{text:`${Object.keys(packageJSON.dependencies).length}`,color:'gold'}]) 
-  bot.sendFeedback([{text:'File count ',color:'dark_gray'},{text:'(',color:'dark_blue'},{text:`${FileCount}`,color:'gold'},{text:')',color:'dark_blue'}])
+//  bot.sendFeedback([{text:'Packages \u203a ',color:'gray'},{text:`${Object.entries(packageJSON.dependencies).map((key, value) => key + ' ' + value).join(' ')}`}])  
+  bot.sendFeedback([{text:'Package Count \u203a ', color:'gray'},{text:`${Object.keys(packageJSON.dependencies).length}`,color:'gold'}]) 
+  bot.sendFeedback([{text:'File count ',color:'gray'},{text:'(',color:'dark_blue'},{text:`${FileCount}`,color:'gold'},{text:')',color:'dark_blue'}])
   }
 break 
 case 'time':
@@ -165,62 +165,62 @@ if (bot.options.isCreayun) {
 break
 case 'login':
 if (bot.options.useChat) {
- bot.sendFeedback({text:`Minecraft Username \u203a ${bot.options.username}`,color:'dark_gray'})
+ bot.sendFeedback({text:`Minecraft Username \u203a ${bot.options.username}`,color:'gray'})
  await bot.chatDelay(150)
- bot.sendFeedback({text: `uuid \u203a ${bot.uuid}`,color:'dark_gray'})
+ bot.sendFeedback({text: `uuid \u203a ${bot.uuid}`,color:'gray'})
  await bot.chatDelay(150)
 /*if(bot.discord === undefined){
 bot.sendFeedback({text:'Currently not logged into discord',color:'dark_red'})
 await bot.chatDelay(150)
 }else{ 
-bot.sendFeedback({text:`Discord Username \u203a ${bot.discord.client.user.username + '#' + bot.discord.client.user.discriminator}`,color:'dark_gray'})
+bot.sendFeedback({text:`Discord Username \u203a ${bot.discord.client.user.username + '#' + bot.discord.client.user.discriminator}`,color:'gray'})
 await bot.chatDelay(150)
 } */
 await bot.chatDelay(150)
  await bot.chatDelay(150)
- bot.sendFeedback({text:`Server \u203a ${bot.options.serverName}`,color:'dark_gray'})
+ bot.sendFeedback({text:`Server \u203a ${bot.options.serverName}`,color:'gray'})
  await bot.chatDelay(150)
- bot.sendFeedback({text:`Server IP \u203a ${bot.options.host + ':' + bot.options.port}`,color:'dark_gray'})
+ bot.sendFeedback({text:`Server IP \u203a ${bot.options.host + ':' + bot.options.port}`,color:'gray'})
  await bot.chatDelay(150)
- source.sendFeedback({text:`Version \u203a ${bot.options.version}`,color:'dark_gray'})
+ source.sendFeedback({text:`Version \u203a ${bot.options.version}`,color:'gray'})
 } else {
-  bot.sendFeedback({text:`Minecraft Username \u203a ${bot.options.username}`,color:'dark_gray'})
-  bot.sendFeedback({text: `uuid \u203a ${bot.uuid}`,color:'dark_gray'})
- bot.sendFeedback({text:`Server \u203a ${bot.options.serverName}`,color:'dark_gray'})
- bot.sendFeedback({text:`Server IP \u203a ${bot.options.host + ':' + bot.options.port}`,color:'dark_gray'})
- bot.sendFeedback({text:`Version \u203a ${bot.options.version}`,color:'dark_gray'})
- bot.sendFeedback({text:`Discord channel \u203a ${bot.discord.channel.name}`,color:'dark_gray'})
- bot.sendFeedback({text:`Discord Username \u203a ${bot.discord.client.user.username + '#' + bot.discord.client.user.discriminator}`,color:'dark_gray'})
+  bot.sendFeedback({text:`Minecraft Username \u203a ${bot.options.username}`,color:'gray'})
+  bot.sendFeedback({text: `uuid \u203a ${bot.uuid}`,color:'gray'})
+ bot.sendFeedback({text:`Server \u203a ${bot.options.serverName}`,color:'gray'})
+ bot.sendFeedback({text:`Server IP \u203a ${bot.options.host + ':' + bot.options.port}`,color:'gray'})
+ bot.sendFeedback({text:`Version \u203a ${bot.options.version}`,color:'gray'})
+ bot.sendFeedback({text:`Discord channel \u203a ${bot.discord.channel.name}`,color:'gray'})
+ bot.sendFeedback({text:`Discord Username \u203a ${bot.discord.client.user.username + '#' + bot.discord.client.user.discriminator}`,color:'gray'})
  }
 break
 case 'config':
  if (bot.options.useChat) {
- bot.sendFeedback({text:`Prefixes \u203a ${bot.Commands.prefixes}`,color:'dark_gray'})
+ bot.sendFeedback({text:`Prefixes \u203a ${bot.Commands.prefixes}`,color:'gray'})
  await bot.chatDelay(100)
- bot.sendFeedback([{text:`Core enabled? `,color:'dark_gray'},{text:`${bot.options.Core.enabled}`,color:'gold'}])
+ bot.sendFeedback([{text:`Core enabled? `,color:'gray'},{text:`${bot.options.Core.enabled}`,color:'gold'}])
  await bot.chatDelay(100)
- //bot.sendFeedback([{text:'Discord enabled? ',color:'dark_gray'},{text:`${bot.Discord.enabled}`,color:'gold'}])
+ //bot.sendFeedback([{text:'Discord enabled? ',color:'gray'},{text:`${bot.Discord.enabled}`,color:'gold'}])
  await bot.chatDelay(100)
- bot.sendFeedback([{text:'Console logging enabled? ',color:'dark_gray'},{text:`${bot.options.Console.enabled}`,color:'gold'}])
+ bot.sendFeedback([{text:'Console logging enabled? ',color:'gray'},{text:`${bot.options.Console.enabled}`,color:'gold'}])
  await bot.chatDelay(100)
- bot.sendFeedback([{text:'Chat filelogging enabled? ',color:'dark_gray'},{text:`${bot.Console.filelogging}`,color:'gold'}])
+ bot.sendFeedback([{text:'Chat filelogging enabled? ',color:'gray'},{text:`${bot.Console.filelogging}`,color:'gold'}])
  await bot.chatDelay(100)
- bot.sendFeedback([{text:'Multiconnect Server count \u203a ',color:'dark_gray'},{text:`${Object.keys(bot.bots).length}`,color:'gold'}])
+ bot.sendFeedback([{text:'Multiconnect Server count \u203a ',color:'gray'},{text:`${Object.keys(bot.bots).length}`,color:'gold'}])
  } else {
- bot.sendFeedback({text:`Prefixes \u203a ${bot.Commands.prefixes}`,color:'dark_gray'})
- bot.sendFeedback([{text:`Core enabled? `,color:'dark_gray'},{text:`${bot.options.Core.enabled}`,color:'gold'}])
-// bot.sendFeedback([{text:'Discord enabled? ',color:'dark_gray'},{text:`${bot.Discord.enabled}`,color:'gold'}])
- bot.sendFeedback([{text:'Console logging enabled? ',color:'dark_gray'},{text:`${bot.options.Console.enabled}`,color:'gold'}])
- bot.sendFeedback([{text:'Chat filelogging enabled? ',color:'dark_gray'},{text:`${bot.Console.filelogging}`,color:'gold'}])
- bot.sendFeedback([{text:'Multiconnect Server count \u203a ',color:'dark_gray'},{text:`${Object.keys(bot.bots).length}`,color:'gold'}])
- bot.sendFeedback([{text:'Discord enabled? ',color:'dark_gray'},{text:`${bot.Discord.enabled}`,color:'gold'}])
+ bot.sendFeedback({text:`Prefixes \u203a ${bot.Commands.prefixes}`,color:'gray'})
+ bot.sendFeedback([{text:`Core enabled? `,color:'gray'},{text:`${bot.options.Core.enabled}`,color:'gold'}])
+// bot.sendFeedback([{text:'Discord enabled? ',color:'gray'},{text:`${bot.Discord.enabled}`,color:'gold'}])
+ bot.sendFeedback([{text:'Console logging enabled? ',color:'gray'},{text:`${bot.options.Console.enabled}`,color:'gold'}])
+ bot.sendFeedback([{text:'Chat filelogging enabled? ',color:'gray'},{text:`${bot.Console.filelogging}`,color:'gold'}])
+ bot.sendFeedback([{text:'Multiconnect Server count \u203a ',color:'gray'},{text:`${Object.keys(bot.bots).length}`,color:'gold'}])
+ bot.sendFeedback([{text:'Discord enabled? ',color:'gray'},{text:`${bot.Discord.enabled}`,color:'gold'}])
  }
 break
 case 'uptime':
  if (bot.options.isCreayun) {
    bot.chat(`${format(process.uptime())}`)
  } else {
- bot.sendFeedback([{text:`${format(process.uptime())}`,color:'dark_gray'}])
+ bot.sendFeedback([{text:`${format(process.uptime())}`,color:'gray'}])
  }
 break
 case 'contributors':

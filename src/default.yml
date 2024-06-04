@@ -14,10 +14,13 @@ Commands:
       error: "#FF0000"
       embed: "#000000"
     help: 
-      pub_lickColor: "#00FFFF"
-      t_rustedColor: "dark_purple"
-      own_herColor: "dark_red"
+      pub_lickColor: "#2b7589"
+      t_rustedColor: "#219696"
+      own_herColor: "#2081c3"
     error: "#FF0000"
+
+savage: 
+  password: "password here"
 
 # core
 Core: 
@@ -131,4 +134,3 @@ bots:
       god: true
       icu: false
       interval: 1000
-

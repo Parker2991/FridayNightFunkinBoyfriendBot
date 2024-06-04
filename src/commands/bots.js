@@ -8,6 +8,20 @@ const bots = [
     prefixes: ["#"],
   },
   {
+    name: { text: "CddehhBot", color: "red", bold: false },
+    authors: ["CaydennO1","spyingcreeper09"],
+    exclaimer: "WHAT IS THIS GOOFY AAAH FUCKING BOT",
+    foundation: "nodejs/mineflayer",
+    prefixes: [","],
+  },
+  {
+    name: { text: "TurtleBot", color: "green", bold: false },
+    authors: ["TurtleKid"],
+    exclaimer: "nmp when?",
+    foundation: "nodejs/mineflayer",
+    prefixes: ["\\"],
+  },
+  {
     name: { text: "NothingBot", color: "dark_red", bold: false },
     authors: ["Yaode_owo"],
     exclaimer: "uwu",
@@ -157,7 +171,7 @@ const bots = [
   {
     name: { text: "ChomeNS Bot Java", color: "yellow", bold: false },
     authors: ["chayapak"],
-    exclaimer: "wow its my bot !! ! 4374621q43567%^&#%67868-- chayapak",
+    exclaimer: "wow its my bot !! ! 4374621q43567%^&#%67868-- chayapak \n rip ChomeNS bot i wonder what chayapak is currently doing -- Parker2991",
     foundation: "Java/MCProtocolLib",
     prefixes: ["*", "cbot ", "/cbot "],
   },

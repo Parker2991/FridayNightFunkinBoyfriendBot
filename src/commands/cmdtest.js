@@ -20,59 +20,25 @@ module.exports = {
     switch (args[0]) {
       case "message":
       case 'msg':
-const component = {
-       translate: '[%s] %s %s %s %s %s',
-      with: [
-        {
-          translate: '%s%s%s',
-          bold:false,
-          with: [
-            {
-              text: 'FNF',
-              bold: true,
-              color: 'dark_purple'
-          
-            },
-            {
-              text: 'Boyfriend',
-              bold: true,
-              color: 'aqua'
-            },
-            {
-              text: 'Bot',
-              bold: true,
-              color: 'dark_red'
-            },
-          ],
-          clickEvent: bot.options.Core.customName ? { action: 'open_url', value:  bot.options.Core.customName } : undefined,
-          hoverEvent: { action: 'show_text', contents: `idfk what to put here` }
-        },
-              {
-                text:'Hello, World!,'
-              },{
-                text:'Player:'      
-              },
-          
-         
-context?.source?.player?.displayName ?? context?.source?.player?.profile?.name,
-              {
-                      text:`, uuid: ${uuid ?? context?.source?.player?.uuid  } , `
-              },
-       //entry.displayName
-             {text:`Argument: ${args.slice(1).join(' ')}`} 
-      ]//command.split(' ')[0]
-    }//context.source.player.displayName ?? context.source.player.profile.name
-
-                 //ChatMessage.fromNotch(`${process.env["buildstring"]}`).toMotd().replaceAll('§', '&')
-                 
-                 if (bot.options.isCreayun || bot.options.useChat) {
-                         bot.chat(`Hello, World!, Player: ${bot.getMessageAsPrismarine(context.source.player.displayName ?? context.source.player.profile.name).toMotd().replaceAll('§', '&')}, uuid: ${context.source.player.uuid}, Argument: ${args.slice(1).join(' ')}`)       
-                         
+                 if (bot.options.isCreayun || bot.options.useChat || bot.options.isSavage) {
+                         bot.chat(`Hello, World!, Player: ${bot.getMessageAsPrismarine(context.source.player.displayName ?? context.source.player.profile.name).toMotd().replaceAll('§', '&')}, uuid: ${context.source.player.uuid}, Argument: ${args.slice(1).join(' ')}`)                      
                  } else {
-                   bot.tellraw([component])
+                   bot.tellraw([
+                               {
+                                text: `Hello, World!, Player: ${bot.getMessageAsPrismarine(context.source.player.displayName ?? context.source.player.profile.name)?.toMotd()}§r`,
+                                color: 'gray',
+                                bold: false
+                               },
+                               {
+                                text: ` Args: ${args.slice(1).join(' ')}`,
+                                color: 'gray',
+                                bold: false,
+                               }
+                   ])
                  }
                  break
                  case 'error': 
+                 case 'err':
                      throw new Error(args.slice(1).join(' '))
                  break
                   default:

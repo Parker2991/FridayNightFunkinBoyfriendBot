@@ -11,9 +11,9 @@ module.exports = {
    const source = context.source;
 if (!args && !args[0] && !args[1] && !args[2] && !args[3]) return
  if (args[0] === undefined || args[1] === undefined || args[2] === undefined) {
-  bot.Commands.colors.help.pub_lickColor = '#00FFFF'
-  bot.Commands.colors.help.t_rustedColor = 'dark_purple'
-  bot.Commands.colors.help.own_herColor = 'dark_red'
+  bot.Commands.colors.help.pub_lickColor = 'white'
+  bot.Commands.colors.help.t_rustedColor = 'white'
+  bot.Commands.colors.help.own_herColor = 'white'
   bot.sendFeedback(`Reseting theme colors,.,.,..`)
   } else {
   bot.Commands.colors.help.pub_lickColor = args[0] 

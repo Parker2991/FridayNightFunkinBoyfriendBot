@@ -3,7 +3,7 @@ const util = require("util");
 const path = require('path');
 const fs = require('fs');
 const parseYaml = require('js-yaml');
-
+const { loadModules } = require('./util/loadModules')
 if (!fs.existsSync(path.join(__dirname, '../config.yml'))) {
  console.log('Config not found creating config from default.yml');
   fs.copyFileSync(
@@ -12,28 +12,18 @@ if (!fs.existsSync(path.join(__dirname, '../config.yml'))) {
 );
 };
 const createBot = require('./bot.js'); 
-const fileExist = require("./util/file-exists");
 const readline = require("readline");
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
 try {
   config = parseYaml.load(fs.readFileSync('config.yml', 'utf8'));
-//  console.log(config)
 } catch (e) {
   console.log(e.toString())
 }
-function load() {
 require("dotenv").config();
 const bots = [];
 const core = config.Core;
 const commands = config.Commands;
 const Console = config.console; 
 const discord = config.Discord;
-const matrix = config.matrix;
 const validation = config.validation;
 const savage = config.savage;
 for (const options of config.bots) {
@@ -44,31 +34,24 @@ for (const options of config.bots) {
     bot.Commands = commands;
     bot.Console = Console;
     bot.discord = discord;
-    bot.matrix = matrix;
     bot.validation = validation;
     bot.savage = savage;
-    bot.options.username;
-    bot.loadModule = (module) => module(bot, options);
-  for (const filename of fs.readdirSync(path.join(__dirname, "modules"))) {
-      try {
-         const module = require(path.join(__dirname, 'modules', filename))  
-         bot.loadModule(module);
-      } catch (error) {
-        console.error("Failed to load module",filename,":",error);
-      }
-  }
-  bot.console.useReadlineInterface(rl); 
-  try {
-     bot.on("error", error => {
-       bot.console?.warn(error.toString())
-     });
-  } catch (error) {
-//    console.log(error.stack);
-  }
+    bot.options.username; 
+//    createBot(options, bot.core, bot.commands, bot.Console, bot.discord, bot.validation, bot.savage)
+//    bot.loadModule = (module) => module(bot, options);
+    loadModules(bot, options);
+/*for (const filename of fs.readdirSync(path.join(__dirname, "modules"))) {
+    try {
+       const module = require(path.join(__dirname, 'modules', filename))  
+       bot.loadModule(module);
+    } catch (error) {
+      console.error("Failed to load module",filename,":",error);
+    }
+  }*/
 }
-}
+//bot.console.useReadlineInterface(rl); 
 process.on("uncaughtException", (e) => {
   console?.warn(e.stack)
 });
 
-load()
+

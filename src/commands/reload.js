@@ -13,8 +13,9 @@ module.exports = {
     try {
      
      // bot.sendFeedback({text:'Reloading crap'});
-      for (const eachBot of bot.bots)
-        eachBot.reload()
+      for (const eachBot of bot.bots) {
+        eachBot.commandReload()
+      }
     } catch(e) {
       bot.sendFeedback(e.stack)
     }
@@ -33,8 +34,9 @@ discordExecute(context) {
                   .setTitle(`${this.name} Command`)
                   .setDescription(`reloading crap`)
      bot.discord.Message.reply({ embeds: [Embed] })
-     for (const eachBot of bot.bots)
-       eachBot.reload()
+     for (const eachBot of bot.bots) {
+       eachBot.commandReload()
+     }
    } catch(e) {
      throw new CommandError(e.stack)
    }

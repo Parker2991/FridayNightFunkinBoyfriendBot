@@ -35,8 +35,13 @@ function savage (message, data) {
 }
 
 function isSeparatorAt (children, start) {
-  return (children[start]?.text === '»' || children[start]?.text === '\xa71»') && children[start + 1]?.text  === ' ' 
+  return (children[start]?.text === '»' || children[start]?.text === '\xa79»\xa7r') && children[start + 1]?.text  === ' ' 
 }
-
-module.exports = savage
+// [prefix]&r [name] [suffix] &9»&r
+// {DISPLAYNAME} &9»&r {MESSAGE}
+/*
+ {"extra":[{"text":"e e"},{"text":" "},{"color":"dark_red","text":"Parker"},{"color":"black","text":"2991"},{"text":" "},
+{"color":"blue","text":"»"},{"text":" "},{"color":"white","text":"duping fucking rank"}],"text":""}
+*/
+module.exports = savage;
 

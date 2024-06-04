@@ -2,7 +2,7 @@ const CommandError = require('../CommandModules/command_error');
 module.exports = {
   name: 'echo',
   description:['make me say something in chat'],
-  aliases:['chatsay'],
+  aliases:['chatsay', 'say', 'botsay'],
   trustLevel: 0,
   usage:[
     "<command/message>",

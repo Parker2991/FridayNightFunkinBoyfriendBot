@@ -3,7 +3,7 @@ const fs = require('fs');
 const CommandError = require('../CommandModules/command_error')
 const { EmbedBuilder } = require('discord.js')
 function reload (bot,options,context) {
-  bot.reload = function () {
+  bot.commandReload = function () {
     for (const filename of fs.readdirSync(path.join(__dirname, "../commands"))) {
       try {
 // const command = require(path.join(__dirname, "../commands", filename));

@@ -6,36 +6,15 @@ module.exports = {
   aliases:['networkmessage'],
   usage:["<message>"],
   execute (context) {
-     
     const message = context.arguments.join(' ')
     const args = context.arguments
     const bot = context.bot
     const source = context.source
-//throw new CommandError('ohio')
     const component = {
-       translate: '%s [%s] %s \u203a %s',
-       color: 'dark_gray',
+       translate: '[%s] %s \u203a %s',
+       color: 'gray',
        with: [
-	 {
-           translate: '%s%s%s',
-             with: [
-               {
-	         text: 'FNF',
-	         color: 'dark_purple'
-	       },
-	       {
-	         text: 'Boyfriend',
-                 color: 'aqua'
-               },
-               {
-                 text: 'Bot',
-                 color: 'dark_red'
-                }
-	      
-           ]
-	},
-             bot.options.serverName,
-              
+             context.bot.options.serverName,   
         context?.source?.player?.displayName ?? context?.source?.player?.profile?.name,
         message
       ]

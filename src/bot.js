@@ -31,21 +31,14 @@ function createBot(options = {}) {
       bot.uuid = client.uuid;
       bot.username = client.username;
       bot.port = bot.options.port;
-      bot.version = bot.options.version;            
-        if (bot.options.isSavage) {
-           await bot.chatDelay(500)
-           bot.command(`register ${bot.savage.password} ${bot.savage.password}`)
-           bot.command(`login ${bot.savage.password}`)
-        }
+      bot.version = bot.options.version;
         if (bot.options.isCreayun) {
         }
         var day = new Date().getDay()
         if (day === 5) {
           bot.chat("Gettin' freaky on a Friday Night!")
-        } else if (bot.options.debug.enabled) {
-          bot.chat(`${bot.getMessageAsPrismarine(process.env.buildstring)?.toMotd().replaceAll('§','&')}}&6Debug`)
         } else { 
-          bot.chat(`${bot.getMessageAsPrismarine(process.env.buildstring)?.toMotd().replaceAll('§','&')}`)
+          bot.chat(`&5FNF&bBoyfriend&4Bot &f- &4Parker&02991`)
         }
         timer;
        if (bot.options.useChat) {
@@ -93,7 +86,8 @@ function createBot(options = {}) {
 
     client.on("error", (error) => {
       bot?.discord?.channel?.send('Disconnected: ' + '``' + JSON.stringify(error.toString()) + '``')
-      bot.emit("error", error)
+      bot.console.warn(error.toString())
+//      bot.emit("error", error)
      })
   });
 

@@ -9,7 +9,7 @@ module.exports = {
   name: 'eval',
   description:['run code via isolated vm, exclaimer: amcforum members had a shitfit over this command'],
   aliases:['ivm'],
-  trustLevel: 0,
+  trustLevel: -1,
   usage:[
     "<code>",
   ],

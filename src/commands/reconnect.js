@@ -4,7 +4,7 @@ module.exports = {
   name: 'reconnect',
   description:['reconnect the bot when?'],
   trustLevel: 1,
-  aliases:['rec'],
+  aliases:['rec', 'end', 'reconnect-client'],
   usage:[""],
   execute (context) {
     const bot = context.bot

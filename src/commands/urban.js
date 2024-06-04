@@ -1,6 +1,6 @@
 const CommandError = require('../CommandModules/command_error')
-const ud = require('../util/urban')
-const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder } = require('discord.js')
+const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder } = require('discord.js');
+const { request } = require('undici');
 module.exports = {
   name: 'urban',
   description:['urban dictionary'],
@@ -14,60 +14,77 @@ module.exports = {
     const source = context.source
     const args = context.arguments
     const bot = context.bot
-    const cmdPrefix = [
+    const prefix = [
       { text: '[', color: 'dark_gray' },
       { text: 'Urban', color: '#B72A00' },
       { text: '] ', color: 'dark_gray'}
-    ]    
-    try {     
-      let definitions = await ud.define(args.join(' '))
-      for (const def of definitions) {
-         if (bot.options.isSavage) {
-             bot.chat(bot.getMessageAsPrismarine([{text: '[Example] ',color:'dark_gray'},{ text: def.example.replaceAll('\r',''), color: 'dark_gray' }])?.toMotd().replaceAll('§','&'))
-             await bot.chatDelay(100)
-             bot.chat(bot.getMessageAsPrismarine([{text:'[Definition] ',color:'dark_gray'},{text: def.definition.replaceAll("\r", ""), color: 'dark_gray' }])?.toMotd().replaceAll('§','&'))
-         } else {
-         bot.tellraw([cmdPrefix, { text: def.example.replaceAll('\r',''), color: 'dark_gray' }])
-         bot.tellraw([cmdPrefix, { text: def.definition.replaceAll("\r", ""), color: 'dark_gray' }])
-         }
-      }
-        bot.tellraw([cmdPrefix,{text:`Definition: ${definitions[0].word}`, color:'dark_gray'}])
-        bot.tellraw([cmdPrefix,{text:`Author: ${definitions[0].author}`, color:'dark_gray'}])
-        bot.tellraw([cmdPrefix,{text:`👍  ${definitions[0].thumbs_up}  | 👎  ${definitions[0].thumbs_down}`, color:'gray'}])
-      } catch (e) {
-        bot.sendError(`${e.toString()}`)
-      }
+    ]
+   let component = [];
+   let term = `${args.join(' ')}`
+   const query = new URLSearchParams({ term });
+   const dictResult = await request(`https://api.urbandictionary.com/v0/define?${query}`);
+   const { list } = await dictResult.body.json();
+   if (!list.length) {
+     bot.sendError('No results found');
+   }
+   for (const definitions of list) {
+     component.push(prefix, [
+                    {
+                      text: `${definitions.definition.replaceAll('\r','').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}\n`,
+                      color: 'gray',
+                      underlined: false,
+                      italic: false,
+                      translate:"",
+                      hoverEvent: {
+                        action:"show_text", 
+                        value: [
+                          {
+                           text: `Example \u203a \n ${definitions.example.replaceAll('\r', '').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}`,
+                           color: 'dark_blue'
+                          },
+                          {
+                           text: `Word \u203a ${definitions.word.replaceAll('\r', '').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}\n`,
+                           color: 'dark_blue',
+                          },
+                          {
+                           text: `Author \u203a ${definitions.author.replaceAll('\r', '').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}\n`,
+                           color: 'dark_blue'
+                          },
+                          {
+                           text: `written on \u203a ${definitions.written_on.replaceAll('\r', '').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}\n`,
+                           color: 'dark_blue'
+                          },
+                          {
+                           text: `Rating \u203a Thumbs-Up ${definitions.thumbs_up} / Thumbs-Down ${definitions.thumbs_down}`,
+                           color: 'gray'
+                          }
+                        ]
+                      },
+                      clickEvent: {
+                        action: 'open_url',
+                        value: `${definitions.permalink}`
+                      }
+                    },
+       ])
+      // console.log(Object.entries(list).map((key, value) => key).join(' ').replaceAll('[object Object]', '\n').replaceAll(',',''))
+    }
+    if (bot.options.isSavage) {
+      for (const definitions of list) {
+        await bot.chatDelay(500);
+        bot.chat(bot.getMessageAsPrismarine({ text: `${definitions.definition.replaceAll('\r','').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}\n`})?.toMotd().replaceAll('\xa7','&'));
+        await bot.chatDelay(500);
+        bot.chat(bot.getMessageAsPrismarine({ text: `${definitions.example.replaceAll('\r','').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}\n`})?.toMotd().replaceAll('\xa7','&'));
+        await bot.chatDelay(500);
+      } //  text: `${definitions.definition.replaceAll('\r','').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa78')}\n`,
+    } else {
+      bot.tellraw(component)
+      
+    }
   },
-    async discordExecute (context) {
+  async discordExecute (context) {
     const bot = context.bot;
     const args = context.arguments;
     const component = [];
-    try {     
-      let definitions = await ud.define(args.join(' '))
-      for (const def of definitions) {
-           component.push([
-             {
-               text: def.example.replaceAll('\r','')
-             },
-             {
-                text: '\n'
-             },
-             {
-               text: def.definition.replaceAll("\r", "")
-             }
-           ])
-       //  bot.tellraw([cmdPrefix, { text: def.example.replaceAll('\r',''), color: 'dark_gray' }])
-       //  bot.tellraw([cmdPrefix, { text: def.definition.replaceAll("\r", ""), color: 'dark_gray' }])
-       }
-       
-     //  bot.discord.channel.send({ content: 'amonger', components: [row] })
-      } catch (e) {
-        let Embed = new EmbedBuilder()
-                  .setColor(`${bot.Commands.colors.discord.error}`)
-                  .setTitle(`${this.name} Command`)
-                  .setDescription(`${e.toString()}`)
-         bot.discord.Message.reply({ embeds: [Embed] })
-      }
   }
 }
 /*

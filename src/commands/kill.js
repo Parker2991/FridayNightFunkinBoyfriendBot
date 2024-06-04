@@ -1,9 +1,9 @@
 const CommandError = require('../CommandModules/command_error')
 module.exports = {
-  name: 'end',
-  description:['end the bots process'],
-  trustLevel: 1,
-  aliases:['kys','kill','suicide'],
+  name: 'kill',
+  description:['kills the bots process'],
+  trustLevel: 2,
+  aliases:['stop','kill','suicide'],
   usage:[""],
   async execute (context) {
     const bot = context.bot

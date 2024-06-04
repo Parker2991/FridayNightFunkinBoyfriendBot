@@ -39,40 +39,34 @@ module.exports = {
        
 const command = bot.commandManager.commandlist[commands]  
 
-          if (args[0].toLowerCase() === command.name)
-        
-
-         
-           {
-                    function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}//bot.getMessageAsPrismarine([cmd, 'Commands (', length, ') ', category, ...pub_lick, t_rust, own_her, cons_ole])?.toAnsi()
+          if (args[0].toLowerCase() === command.name) {
+//}//bot.getMessageAsPrismarine([cmd, 'Commands (', length, ') ', category, ...pub_lick, t_rust, own_her, cons_ole])?.toAnsi()
                   
             valid = true
     if (bot.options.useChat && !bot.options.isCreayun) {
-	  bot.sendFeedback([{text:`Trust levels: -1 = disabled, 0 = public, 1 = trusted, 2 = owner, 3 = console`,color:'dark_purple'}])
+	  bot.sendFeedback([{text:`Trust levels: -1 = disabled, 0 = public, 1 = trusted, 2 = owner, 3 = console`,color:`${bot.Commands.colors.help.t_rustedColor}`}])
 	  await bot.chatDelay(100)
-	  bot.sendFeedback({text: `${bot.Commands.prefixes[0]}${command.name} `,color:'#00ffff'})
+	  bot.sendFeedback({text: `${bot.Commands.prefixes[0]}${command.name} `,color:`${bot.Commands.colors.help.pub_lickColor}`})
 	  await bot.chatDelay(100)
-	  bot.sendFeedback({text:`Aliases`,color:'dark_purple'})
+	  bot.sendFeedback({text:`Aliases`,color:`${bot.Commands.colors.help.t_rustedColor}`})
 	  await bot.chatDelay(100)
-	  bot.sendFeedback({text:`${command.aliases}`,color:'dark_purple'})
+	  bot.sendFeedback({text:`${command.aliases}`,color:`${bot.Commands.colors.help.t_rustedColor}`})
 	  await bot.chatDelay(100)
 	  bot.sendFeedback({text:`${command.description}`})   
 	  await bot.chatDelay(100)
-	  bot.sendFeedback([{text:`Trust Level: `,color:'#00ffff'},{text:`${command.trustLevel}`,color:'dark_purple'}])
+	  bot.sendFeedback([{text:`Trust Level: `,color:`${bot.Commands.colors.help.pub_lickColor}`},{text:`${command.trustLevel}`,color:`${bot.Commands.colors.help.t_rustedColor}`}])
 	  await bot.chatDelay(100)
 	 if (command.trustLevel === 2) {
 	  await bot.chatDelay(100)
-	  bot.sendFeedback([{text:`Usage: `,color:'#00ffff'},{text:`${bot.Commands.prefixes[0]}${command.name} <owner hash> `,color:'dark_purple'},{text:`${command.usage}`,color:'dark_red'}])  
+	  bot.sendFeedback([{text:`Usage: `,color:`${bot.Commands.colors.help.pub_lickColor}`},{text:`${bot.Commands.prefixes[0]}${command.name} <owner hash> `,color:`${bot.Commands.colors.help.t_rustedColor}`},{text:`${command.usage}`,color:`${bot.Commands.colors.help.own_herColor}`}])  
 	  await bot.chatDelay(100)
 	} else if (command.trustLevel === 1) {
 	  await bot.chatDelay(100)
-	  bot.sendFeedback([{text:`Usage: `,color:'#00ffff'},{text:`${bot.Commands.prefixes[0]}${command.name} <trusted/owner hash> `,color:'dark_purple'},{text:`${command.usage}`,color:'dark_red'}])  
+	  bot.sendFeedback([{text:`Usage: `,color:`${bot.Commands.colors.help.pub_lickColor}`},{text:`${bot.Commands.prefixes[0]}${command.name} <trusted/owner hash> `,color:`${bot.Commands.colors.help.t_rustedColor}`},{text:`${command.usage}`,color:`${bot.Commands.colors.help.own_herColor}`}])  
 	  await bot.chatDelay(100)
 	} else {
 	  await bot.chatDelay(100)
-	  bot.sendFeedback([{text:`Usage: `,color:'#00ffff'},{text:`${bot.Commands.prefixes[0]}${command.name} `,color:'dark_purple'},{text:`${command.usage}`,color:'dark_red'}])  
+	  bot.sendFeedback([{text:`Usage: `,color:`${bot.Commands.colors.help.pub_lickTheme}`},{text:`${bot.Commands.prefixes[0]}${command.name} `,color:`${bot.Commands.colors.help.t_rustedColor}`},{text:`${command.usage}`,color:`${bot.Commands.colors.help.own_herColor}`}])  
 	  await bot.chatDelay(100)
 	}
 
@@ -101,16 +95,16 @@ const command = bot.commandManager.commandlist[commands]
 		  await bot.chatDelay(2000)
 		}
 	} else {
-	bot.sendFeedback([cmd,{text:`Trust levels: -1 = disabled, 0 = public, 1 = trusted, 2 = owner, 3 = console`,color:'dark_purple'}])
-	bot.sendFeedback([cmd, {text:`${bot.Commands.prefixes[0]}${command.name} `,color:'#00ffff'},{text:`(Aliases: ${command.aliases}) › ${command.description}`,color:'dark_purple'}])        
-	bot.sendFeedback([cmd,{text:`Trust Level: `,color:'#00ffff'},{text:`${command.trustLevel}`,color:'dark_purple'}])
+	bot.sendFeedback([cmd,{text:`Trust levels: -1 = disabled, 0 = public, 1 = trusted, 2 = owner, 3 = console`,color:`${bot.Commands.colors.help.t_rustedColor}`}])
+	bot.sendFeedback([cmd, {text:`${bot.Commands.prefixes[0]}${command.name} `,color:`${bot.Commands.colors.help.pub_lickColor}`},{text:`(Aliases: ${command.aliases}) › ${command.description}`,color:`${bot.Commands.colors.help.t_rustedColor}`}])        
+	bot.sendFeedback([cmd,{text:`Trust Level: `,color:`${bot.Commands.colors.help.pub_lickColor}`},{text:`${command.trustLevel}`,color:`${bot.Commands.colors.help.t_rustedColor}`}])
 
 	if (command.trustLevel === 2) {
-	bot.sendFeedback([cmd,{text:`Usage: `,color:'#00ffff'},{text:`${bot.Commands.prefixes[0]}${command.name} <owner hash> `,color:'dark_purple'},{text:`${command.usage}`,color:'dark_red'}])  
+	bot.sendFeedback([cmd,{text:`Usage: `,color:`${bot.Commands.colors.help.pub_lickColor}`},{text:`${bot.Commands.prefixes[0]}${command.name} <owner hash> `,color:`${bot.Commands.colors.help.t_rustedColor}`},{text:`${command.usage}`,color:`${bot.Commands.colors.help.own_herColor}`}])  
 	} else if (command.trustLevel === 1) {
-	bot.sendFeedback([cmd,{text:`Usage: `,color:'#00ffff'},{text:`${bot.Commands.prefixes[0]}${command.name} <trusted/owner hash> `,color:'dark_purple'},{text:`${command.usage}`,color:'dark_red'}])  
+	bot.sendFeedback([cmd,{text:`Usage: `,color:`${bot.Commands.colors.help.pub_lickColor}`},{text:`${bot.Commands.prefixes[0]}${command.name} <trusted/owner hash> `,color:`${bot.Commands.colors.help.t_rustedColor}`},{text:`${command.usage}`,color:`${bot.Commands.colors.help.own_herColor}`}])  
 	} else {
-	bot.sendFeedback([cmd,{text:`Usage: `,color:'#00ffff'},{text:`${bot.Commands.prefixes[0]}${command.name} `,color:'dark_purple'},{text:`${command.usage}`,color:'dark_red'}])  
+	bot.sendFeedback([cmd,{text:`Usage: `,color:`${bot.Commands.colors.help.pub_lickColor}`},{text:`${bot.Commands.prefixes[0]}${command.name} `,color:`${bot.Commands.colors.help.t_rustedColor}`},{text:`${command.usage}`,color:`${bot.Commands.colors.help.own_herColor}`}])  
  	}
     }
 break
@@ -287,11 +281,11 @@ bot.console.info([cmd, 'Commands (', JSON.stringify(CommandManager.commandlist.l
                 
                 const length = context.bot.commandManager.commandlist.filter(c => c.trustLevel != 3).length        
                 bot.chat('&8Commands &3(&6' + JSON.stringify(length) + '&3) (&bPublic &f| &5Trusted &f| &4Owner&f)') 
-                await bot.chatDelay(100)
+                await bot.chatDelay(200)
                 bot.chat(`${bot.getMessageAsPrismarine(pub_lick)?.toMotd().replaceAll(',','')}`)
-                await bot.chatDelay(100)
+                await bot.chatDelay(200)
                 bot.chat(`${bot.getMessageAsPrismarine(t_rust)?.toMotd().replaceAll(',','')}`)
-                await bot.chatDelay(100)
+                await bot.chatDelay(200)
                 bot.chat(`${bot.getMessageAsPrismarine(own_her)?.toMotd().replaceAll(',','')}`)
 
 
@@ -429,4 +423,3 @@ throw new CommandError(`Unknown command ${args[0]}. type "${bot.Discord.commandP
   }
  }
 }
-

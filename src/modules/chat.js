@@ -23,9 +23,11 @@ function inject (bot) {
     ChatMessage = loadPrismarineChat(registry)
   })
   if (bot.options.isCreayun && !bot.options.isKaboom) {
-     bot.chatParsers = [creayunChatParser];
+    bot.chatParsers = [creayunChatParser];
+  } else if (bot.options.isSavage) {
+    bot.chatParsers = [savageChatParser, sayChatParser, creayunChatParser]; 
   } else if (bot.options.isKaboom && !bot.options.isCreayun) {   
-    bot.chatParsers = [kaboomChatParser, chipmunkmodChatParser, chipmunkmodblackilykatverChatParser, typetextChatParser, typeemotetextChatParser, sayChatParser, creayunChatParser]
+    bot.chatParsers = [kaboomChatParser, chipmunkmodChatParser, chipmunkmodblackilykatverChatParser, typetextChatParser, typeemotetextChatParser, creayunChatParser]
   }
 
   bot.on('packet.profileless_chat', packet => {//loadPrismarineChat.processNbtMessage(nbt.comp(json))
@@ -63,11 +65,12 @@ function inject (bot) {
     })
     const translateMessage = bot.getMessageAsPrismarine(message)?.toMotd()
     const translateUsername = bot.getMessageAsPrismarine(sender)?.toMotd()
-    if (packet.type === 1) bot.emit('message', bot.getMessageAsPrismarine({translate:"chat.type.emote",with:[`${translateUsername}`,`${translateMessage}`]})?.toMotd())
+    if (packet.type === 1) bot.emit('message', bot.getMessageAsPrismarine({translate:"chat.type.emote", with:[`${translateUsername}`,`${translateMessage}`]})?.toMotd())
+//    if (packet.type === 1) bot.emit('message', `[${translateUsername}§r] translateMessage`)
     if (packet.type === 2) bot.emit('message', bot.getMessageAsPrismarine({"translate":"commands.message.display.incoming","with":[`${translateUsername}`,`${translateMessage}`],"color":"gray","italic":true})?.toMotd())
     if (packet.type === 3) bot.emit('message', bot.getMessageAsPrismarine({"translate":"commands.message.display.outgoing","with":[`${translateUsername}`,`${translateMessage}`],"color":"gray","italic":true})?.toMotd())
-    if (packet.type === 4) bot.emit('message', message)
-    if (packet.type === 5) bot.emit('message', bot.getMessageAsPrismarine({translate:"chat.type.announcement",color:'white',with:[`${translateUsername}`,`${translateMessage}`]})?.toMotd())
+    if (packet.type === 4) bot.emit('message', message);
+    if (packet.type === 5) bot.emit('message', bot.getMessageAsPrismarine({translate:"chat.type.announcement",color:'white', with:[`${translateUsername}`,`${translateMessage}`]})?.toMotd())
     tryParsingMessage(message, { senderName: sender, players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine })
   })
  // Ignores command set messages
@@ -89,7 +92,9 @@ function inject (bot) {
     }
     
     const message = parseMessage(tryParse(packet.content))
-    if (packet.plainMessage === 'chat.type.announcement') console.log('e') //bot.emit('message', sender, message)
+    const translateMessage = bot.getMessageAsPrismarine(unsigned)?.toMotd()
+    const translateUsername = bot.getMessageAsPrismarine(packet.sender)?.toMotd()
+    if (packet.type === 5) bot.emit('message', bot.getMessageAsPrismarine({translate:"chat.type.announcement",color:'white', with:[`${translateUsername}`,`${translateMessage}`]})?.toMotd())
     bot.emit('player_chat', { plain: packet.plainMessage, unsigned, senderUuid: packet.senderUuid })
     bot.emit('message', unsigned)
     tryParsingMessage(unsigned, { senderUuid: packet.senderUuid, players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine})

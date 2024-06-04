@@ -21,7 +21,7 @@ let tag = 'bruhify'
                          bot.chat(ChatMessage.fromNotch(component).toMotd().replaceAll('§', '&'))
                          startHue = (startHue + increment) % 360
                  } else {
-      bot.core.run(`/minecraft:title @a title ${JSON.stringify(component)}`)
+      bot.core.run(`/minecraft:title @a actionbar ${JSON.stringify(component)}`)
      
       startHue = (startHue + increment) % 360
                  }

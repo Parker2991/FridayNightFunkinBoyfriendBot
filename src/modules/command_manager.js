@@ -48,13 +48,11 @@ if (command?.trustLevel === -1) {
 throw new CommandError('this command has been disabled!')
 }
         if (command?.trustLevel > 0) {
-         
-
 if (command?.trustLevel === 1 && !source?.sources?.discord && !source?.sources?.console) {
   const hash = `${args[0]}`
 
-if (args.length === 0 && bot.hash && bot.owner && bot.hashing.hash) throw new CommandError([{text:'Please provide an ',color:'gray'},{text:'Trusted ',color:'dark_purple'},{text:'hash or an ',color:'gray'},{text:'Owner ',color:'dark_red'},{text:'hash',color:'gray'}])
-if (hash !== bot.hash && hash !== bot.owner && hash !== bot.hashing.hash) throw new CommandError([{text:'Invalid ',color:'gray'},{text:'Trusted ',color:'dark_purple'},{text:'hash or Invalid ',color:'gray'},{text:'Owner ',color:'dark_red'},{text:'hash',color:'gray'}])
+if (args.length === 0 && bot.hash && bot.owner && bot.hashing.hash) throw new CommandError([{text:'Please provide an ',color:'gray'},{text:'Trusted ',color:'#219696'},{text:'hash or an ',color:'gray'},{text:'Owner ',color:'#2081c3'},{text:'hash',color:'gray'}])
+if (hash !== bot.hash && hash !== bot.owner && hash !== bot.hashing.hash) throw new CommandError([{text:'Invalid ',color:'gray'},{text:'Trusted ',color:'#219696'},{text:'hash or Invalid ',color:'gray'},{text:'Owner ',color:'#2081c3'},{text:'hash',color:'gray'}])
 
 } else if (command.trustLevel === 1 && source?.sources?.discord && !source.sources.console) {
   
@@ -70,12 +68,11 @@ if (hash !== bot.hash && hash !== bot.owner && hash !== bot.hashing.hash) throw 
           } else if (args[0] === bot.owner) {
             bot.console.info({ text: `Player ${player} UUID: ${uuid} Hash:${bot.owner}`, color: 'white' })
           }
-if(command?.trustLevel === 2 && !source?.sources?.discord && !source?.sources?.console){
+if (command?.trustLevel === 2 && !source?.sources?.discord && !source?.sources?.console) {
 const owner = `${args[0]}`
-
-if(args.length === 0 && bot.owner) throw new CommandError([{text:'Please provide a ',color:'red',color:'gray'},{text:'Owner ',color:'dark_red'},{text:'hash',color:'gray'}])
-if(owner === bot.hash || owner === bot.hashing.hash) throw new CommandError([{text:"THATS A ",color:'gray'},{text:'TRUSTED ',color:'dark_purple'},{text:'HASH AFAIK',color:'gray'}])
-if (owner !== bot.owner) throw new CommandError([{text:"Invalid ",color:'gray'},{text:'Owner ',color:'dark_red'},{text:'Hash',color:'gray'}])
+if (args.length === 0 && bot.owner) throw new CommandError([{text:'Please provide a ',color:'red',color:'gray'},{text:'Owner ',color:'#2081c3'},{text:'hash',color:'gray'}])
+if (owner === bot.hash || owner === bot.hashing.hash) throw new CommandError([{text:"THATS A ",color:'gray'},{text:'TRUSTED ',color:'#219696'},{text:'HASH AFAIK',color:'gray'}])
+if (owner !== bot.owner) throw new CommandError([{text:"Invalid ",color:'gray'},{text:'Owner ',color:'#2081c3'},{text:'Hash',color:'gray'}])
 
 } else if (command?.trustLevel === 2 && source?.sources?.discord && !source?.sources?.console) {
   //        const events = source.discordMessageEvent

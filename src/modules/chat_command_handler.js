@@ -69,7 +69,7 @@ function chat_command_handler(bot) {
       if (bot.options.useChat) {
       bot.tellraw([message]);
       } else {  
-      bot.tellraw(["", prefix, message]);
+      bot.tellraw(["", message]);
       }
 
 };
@@ -83,7 +83,7 @@ try{
           ratelimit--
         }, 1000)
     if (ratelimit > bot.Commands.ratelimit) { // ,.     
-       bot.sendFeedback({text:'You are using commands to fast!',color:'dark_red'})
+       bot.sendFeedback({text:'You are using commands too fast!',color:'dark_red'})
       // this isn't blocking running the command you know that right?
     } else {
       bot.commandManager.executeString(source, command);

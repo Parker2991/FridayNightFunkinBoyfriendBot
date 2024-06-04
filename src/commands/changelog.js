@@ -77,6 +77,12 @@ const bots = [
     foundation: '5/1/24',
     exclaimer:'added discord execute, redone the website command, added attachments for discord ported the urban package to the bot added ping',
   },
+  {//
+    name: { text: 'v5.0.8', color: 'dark_red', bold:false },
+    authors: ['Censory Overload'],
+    foundation: '6/4/24',
+    exclaimer:'rewritten the urban command to use undici removed the music command changed the colors for the help command and more',
+  },
 ]//
 //back
   
