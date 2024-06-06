@@ -81,7 +81,6 @@ client.on('ready', (context) => {
 
  
    try {
-     if (!bot.options.discord.log) return
          sendDiscordMessage(fixansi(ansi.replaceAll('`', '`\u200b')))
   //'```ansi\n' + fixansi(ansi.replaceAll('\u200b').substring(0, 1983)) + '\n```'
     } catch (e) {
