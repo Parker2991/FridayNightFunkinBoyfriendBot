@@ -112,7 +112,6 @@ client.on('ready', (context) => {
       bot.commandManager.executeString(source, message.content.substring(bot.discord.commandPrefix.length))
       return
     }
-if(!bot.options.discord.log) return
 if(bot.options.useChat){
      bot.chat(`&8[&5FNF&bBoyfriend&4Bot &9Discord&8] ${message.member.displayName.replaceAll('\xa7', '&')}&f › ${message.content.replaceAll('\xa7', '&')}`)     
 } else {
