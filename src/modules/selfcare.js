@@ -1,4 +1,4 @@
-const util = require('util')
+const util = require('util');
 
 const COMMANDSPY_ENABLED_MESSAGE = { text: 'Successfully enabled CommandSpy' }
 const COMMANDSPY_DISABLED_MESSAGE = { text: 'Successfully disabled CommandSpy' }
@@ -22,6 +22,7 @@ function selfcare (bot) {
   let tptoggle = false;
   let jail = false;
   let creayunJoin = false;
+//  console.log(config.Commands);
   bot.on('message', (message, data) => {
     ansiMessage = bot.getMessageAsPrismarine(message)?.toAnsi()
     stringmessage = bot.getMessageAsPrismarine(message)?.toString()
@@ -33,11 +34,12 @@ function selfcare (bot) {
       else if (stringmessage === `Vanish for ${bot.options.username}: disabled`) vanished = false;
 
       // savage prefix selfcare
-      else if (JSON.stringify(message) === `{"extra":[{"bold":true,"color":"aqua","text":" > "},{"color":"white","text":"Prefix for user "},{"color":"aqua","text":"${bot.options.username}"},{"color":"white","text":" "},{"color":"green","text":"set to"},{"color":"white","text":": "},{"color":"dark_gray","text":"["},{"color":"aqua","text":"Prefix"},{"color":"dark_gray","text":": "},{"color":"dark_red","text":"${bot.Commands.prefixes[0]}"},{"color":"dark_gray","text":"]"}],"text":""}`) prefix = true
+      else if (JSON.stringify(message) === `{"extra":[{"bold":true,"color":"aqua","text":" > "},{"color":"white","text":"Prefix for user "},{"color":"aqua","text":"${bot.options.username}"},{"color":"white","text":" "},{"color":"green","text":"set to"},{"color":"white","text":": "},{"color":"dark_gray","text":"["},{"color":"aqua","text":"Prefix"},{"color":"dark_gray","text":": "},{"color":"dark_red","text":"${bot.Commands?.prefixes[0]}"},{"color":"dark_gray","text":"]"}],"text":""}`) prefix = true
+      //else if (stringmessage === `> Prefix for user ${bot.options.username} set to: [Prefix: ~]`) prefix = true
 
-      else if (stringmessage === 'Prefix for user ${bot.options.username} removed.') prefix = false
+      else if (stringmessage === '> Prefix for user ${bot.options.username} removed.') prefix = false
 
-      else if (stringmessage.startsWith(`> Prefix for user ${bot.options.username} set to: `) || stringmessage === `> Prefix for user ${bot.options.username} removed.`) prefix = false
+      else if (stringmessage?.startsWith(`> Prefix for user ${bot.options.username} set to: `) || stringmessage === `> Prefix for user ${bot.options.username} removed.`) prefix = false
 
       // savage login selfcare
       else if (stringmessage === 'Please, register to the server with the command: /register <password> <ConfirmPassword>') register = false;
@@ -50,9 +52,11 @@ function selfcare (bot) {
 
       else if (stringmessage === 'Successful login!') login = true;
 
-      else if (stringmessage === "You're already logged in!") login = true; 
+      else if (stringmessage === "You're already logged in!") login = true;
 
-      else if (stringmessage === "You're already logged in!") registry = true;
+      else if (stringmessage === "You\'re already logged in!") register = true;
+
+      else if (stringmessage === "You already have registered this username!") registry = true
       // You're already logged in!
     } // Please, register to the server with the command: /register <password> <ConfirmPassword>
     // Please, login with the command: /login <password>
@@ -71,13 +75,13 @@ function selfcare (bot) {
 
     else if (stringmessage?.startsWith('Welcome ') || stringmessage === 'Welcome to survivayun!') creayunJoin = false
 
-    if (stringmessage === `Your prefix has been set to: [Prefix: ~]` || stringmessage === 'Something went wrong while saving the prefix. Please check console.' || stringmessage === 'Unknown command. Type /help for help' || stringmessage === '[SuffEx] Your prefix has been set to: [Prefix: ~]' || stringmessage === 'Unknown command. Type /help for help.') {
+    if (stringmessage === `Your prefix has been set to: [Prefix: ${bot.Commands?.prefixes[0]}]` || stringmessage === 'Something went wrong while saving the prefix. Please check console.' || stringmessage === 'Unknown command. Type /help for help' || stringmessage === '[SuffEx] Your prefix has been set to: [Prefix: ~]' || stringmessage === 'Unknown command. Type /help for help.') {
       prefix = true
       return
     }
    
     // creayun prefix selfcare
-    else if (stringmessage?.startsWith("Your prefix has been set to: ") || stringmessage.startsWith('[SuffEx] Your prefix has been set to: ') || stringmessage === '[SuffEx] Your prefix has been reset' || stringmessage === "Your prefix has been reset.") prefix = false
+    else if (stringmessage?.startsWith("Your prefix has been set to: ") || stringmessage?.startsWith('[SuffEx] Your prefix has been set to: ') || stringmessage === '[SuffEx] Your prefix has been reset' || stringmessage === "Your prefix has been reset.") prefix = false
 
     else if (stringmessage === 'You no longer have a nickname.' || stringmessage === '[SuffEx] Your nick has been reset!') {
       nickname = false
@@ -85,7 +89,7 @@ function selfcare (bot) {
     }
   
     // creayun nick selfcare
-    else if (stringmessage?.startsWith("Your nick has been set to: ") || stringmessage.startsWith("[SuffEx] Your nick has been set to: ")) nickname = true 
+    else if (stringmessage?.startsWith("Your nick has been set to: ") || stringmessage?.startsWith("[SuffEx] Your nick has been set to: ")) nickname = true 
    
     // creayun vanish selfcare
     else if (stringmessage === "You are now completely invisible to normal users, and hidden from in-game commands." || stringmessage === "You do not have access to that command." || stringmessage === "Unknown command. Type /help for help.") {
@@ -116,13 +120,13 @@ function selfcare (bot) {
     else if (JSON.stringify(message) === '{"text":"Successfully disabled CommandSpy"}') commandSpyEnabled = false
 
     // kaboom prefix selfcare
-    else if (JSON.stringify(message) === `{"extra":[{"text":"&8[&bPrefix: &4${bot.Commands.prefixes[0]}&8]"}],"text":"You now have the tag: "}` || stringmessage === 'Something went wrong while saving the prefix. Please check console.') {
+    else if (JSON.stringify(message) === `{"extra":[{"text":"&8[&bPrefix: &4${bot.Commands?.prefixes[0]}&8]"}],"text":"You now have the tag: "}` || stringmessage === 'Something went wrong while saving the prefix. Please check console.') {
       prefix = true
       return
     }
 
     else if (stringmessage?.startsWith("You now have the tag: ") || JSON?.stringify(message) === '{"text":"You no longer have a tag"}') prefix = false
-      
+
     // kaboom skin selfcare
     else if (JSON.stringify(message) === `{"extra":[{"text":"Parker2991"},{"text":"'s"}],"text":"Successfully set your skin to "}` || JSON.stringify(message) === `{"text":"A player with that username doesn't exist"}`) {
       skin = true
@@ -137,7 +141,7 @@ function selfcare (bot) {
 
     else if (stringmessage === 'Jails/Unjails a player, TPs them to the jail specified.') jail = true
   
-    else if(stringmessage === `You have been jailed!`){
+    else if (stringmessage === `You have been jailed!`) {
       jail = false
       return
     }
@@ -211,10 +215,10 @@ function selfcare (bot) {
 
      else if (!vanished && bot.options.selfcare.vanished) bot.core.run(`/essentials:vanish ${bot.username} enable`);
 
-     else if (!prefix && bot.options.selfcare.prefix) bot.command(`rank ${bot.options.username} &8[&bPrefix&8: &4${bot.Commands.prefixes[0]}&8]`);
+     else if (!prefix && bot.options.selfcare.prefix) bot.command(`rank ${bot.options.username} &8[&bPrefix&8: &4${bot.Commands?.prefixes[0]}&8]`);
    } else if (bot.options.isCreayun) {
     if (!creayunJoin) bot.command(`server creative`)
-    else if (!prefix && bot.options.selfcare.prefix) bot.command(`prefix &8[&bPrefix: &4${bot.Commands.prefixes[0]}&8]`)
+    else if (!prefix && bot.options.selfcare.prefix) bot.command(`prefix &8[&bPrefix: &4${bot.Commands?.prefixes[0]}&8]`)
 
     else if (!nickname && bot.options.selfcare.nickname) bot.command(`nick off`)
 
@@ -230,7 +234,7 @@ function selfcare (bot) {
 
     else if (unmuted && bot.options.selfcare.unmuted) bot.core.run(`/essentials:mute ${bot.uuid}`)  
 
-    else if (!prefix && bot.options.selfcare.prefix) bot.command(`prefix &8[&bPrefix: &4${bot.Commands.prefixes[0]}&8]`)
+    else if (!prefix && bot.options.selfcare.prefix) bot.command(`prefix &8[&bPrefix: &4${bot.Commands?.prefixes[0]}&8]`)
 
     else if (gameMode !== 1 && bot.options.selfcare.gmc) bot.command('gamemode creative @s[type=player]')
 

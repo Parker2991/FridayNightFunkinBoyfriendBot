@@ -1,5 +1,6 @@
 const CommandError = require('../CommandModules/command_error');
 const https = require('https');
+const http = require('http');
 const util = require('util');
 const { EmbedBuilder } = require('discord.js');
 module.exports = {
@@ -13,6 +14,21 @@ async execute (context) {
    const source = context.source
    const args = context.arguments
    try {
+     if (args.join(' ').startsWith('http://') && !args.join(' ').startsWith('https://')) {
+    const options = {
+            hostname: `${args.join(' ')}`
+    }
+http.request(`${args.join(' ')}`, (res) => {
+  res.setEncoding('utf8');
+  res.on('data', (chunk) => {
+    //console.log(`BODY: ${chunk}`);
+    bot.tellraw(chunk)
+  });
+  res.on('end', () => {
+    console.log('No more data in response.');
+  });
+});
+     } else if (args.join(' ').startsWith('https://') && !args.join(' ').startsWith('http://')) {
      https.get(`${args.join(' ')}`, (res) => {
        res.setEncoding('utf8');
        res.on('data', (data) => {
@@ -21,9 +37,10 @@ async execute (context) {
      }).on('error', (e) => {
         bot.sendError(`${e.toString()}`);
      }); 
+    }
     } catch (e) {
       bot.sendError(`${e.toString()}`)
-    } 
+    }
   },
   discordExecute (context) {
     const bot = context.bot;

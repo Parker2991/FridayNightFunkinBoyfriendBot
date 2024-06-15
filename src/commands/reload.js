@@ -30,7 +30,7 @@ discordExecute(context) {
   const source = context.source
    try {
      const Embed = new EmbedBuilder()
-                   .setColor('#00FFFF')
+                   .setColor(`${bot.Commands.colors.discord.embed}`)
                   .setTitle(`${this.name} Command`)
                   .setDescription(`reloading crap`)
      bot.discord.Message.reply({ embeds: [Embed] })

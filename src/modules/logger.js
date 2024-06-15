@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const { createGzip } = require("zlib");
 
-function consolefilelogger(bot, options, message) {
+function consolefilelogger(bot, options, config, message) {
   const currentDate = new Date();
   const timestamp = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
     .toString()
@@ -15,7 +15,7 @@ function consolefilelogger(bot, options, message) {
      fs.mkdirSync(path.join(__dirname, "../../logs"))
   }
 
-  if (!bot.Console.filelogging) return;
+  if (!config.console.filelogging) return;
 
   try {
     if (!fs.existsSync(logFolder)) {
@@ -26,7 +26,7 @@ function consolefilelogger(bot, options, message) {
   }
 
   function compressFile(input, output) {
-    if (!bot.Console.filelogging) return
+    if (!config.console.filelogging) return
     const plainOutput = output.slice(0, -3);
 
     fs.renameSync(input, plainOutput);
@@ -59,7 +59,7 @@ function consolefilelogger(bot, options, message) {
   }
 
   console?.info(
-    `File logging: ${bot.Console.filelogging ? "enabled" : "disabled"}`
+    `File logging: ${config.console.filelogging ? "enabled" : "disabled"}`
   );
   if (!bot.Console.filelogging) return; // instead of using bot why not just use options cause you already defined it
 

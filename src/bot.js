@@ -3,7 +3,7 @@ const { EventEmitter } = require("node:events");
 const usernameGen = require('./util/usernameGen');
 require("events").EventEmitter.defaultMaxListeners = Infinity;
 const { execSync } = require('child_process');
-function createBot(options = {}) {
+function createBot(options = {}, config) {
   const bot = new EventEmitter();
   // Set some default values in options
     bot.options = {
@@ -20,19 +20,19 @@ function createBot(options = {}) {
       bot.emit("packet", data, meta);
       bot.emit('packet.' + meta.name, data)
   });
-  const timer = setInterval(() => {
-    if (!bot.options.endcredits) {
+/*  const timer = setInterval(() => {
+    if (!config.bots.endcredits) {
     return
     } else {             
      bot.chat(`Join the FNFBoyfriendBot discord ${bot.discord.invite}`)
     }
-  }, 280000)
+  }, 280000)*/
    client.on("login", async function (data) {
       bot.uuid = client.uuid;
       bot.username = client.username;
       bot.port = bot.options.port;
       bot.version = bot.options.version;
-        if (bot.options.isCreayun) {
+/*        if (bot.options.isCreayun) {
         }
         var day = new Date().getDay()
         if (day === 5) {
@@ -44,11 +44,12 @@ function createBot(options = {}) {
        if (bot.options.useChat) {
 	 bot?.console?.warn(`useChat is active for ${bot.options.host} the bot will not be able to run commands in core`)
        } else if (bot.options.isCreayun) {
-         bot?.console?.info(`Creayun mode is active for ${bot.options.host} please not that the bot will not read kaboom commands and messages when Creayun mode is active`)
+bot?.console?.info(`Creayun mode is active for ${bot.options.host} please not that the bot will not read kaboom commands and messages when Creayun 
+mode is active`)
        }
        if (bot.options.debug.enabled) {
-          bot.console.warn(`Debug mode is enabled for ${bot.options.host}:${bot.options.port} please note this WILL spam console is all options are enabled`)
-       }
+bot.console.warn(`Debug mode is enabled for ${bot.options.host}:${bot.options.port} please note this WILL spam console is all options are enabled`)
+       }*/
     }) 
     client.on("end", (reason) => {
       const parsed = JSON.stringify(reason);
@@ -58,7 +59,7 @@ function createBot(options = {}) {
       bot.memusage.off()
       bot.tps.off()
       bot.bruhifyText = ''
-      clearInterval(timer) 
+//      clearInterval(timer) 
       bot?.discord?.channel?.send('Disconnected: ' + '``' + parsed + '``')
     }); 
   
@@ -66,10 +67,14 @@ function createBot(options = {}) {
       const parsed = JSON.parse(data.reason)
       bot.emit(parsed, "disconnect");
       if (parsed === 'Server is full!') {
-        bot.console.warn(`what the fuck?`)
+        bot.emit("disconnect", `what the fuck?`)
+      } else if (parsed === 'Wait 5 seconds before connecting, thanks! :)') {
+        bot.options.reconnectDelay = 1000 * 5
+        bot.console.info(`Setting reconnect delay to ${1000 * 5}`)
+        bot.discord.channel?.send(`Setting reconnecting delay to ${1000 * 5}`)
       } else {
-      bot.console.warn(`Disconnected: ${parsed}`);  
-      bot?.discord?.channel?.send('Disconnected: ' + '``' + parsed + '``') 
+      bot.console.warn(`Disconnected: ${JSON.stringify(parsed)}`);  
+      bot?.discord?.channel?.send('Disconnected: ' + '``' + JSON.stringify(parsed) + '``') 
       }
     });
 

@@ -1,8 +1,6 @@
 const CommandSource = require("../CommandModules/command_source");
 
-//const time = moment().tz('america/chicago').format('hh:mm:ss a');
-//const date = moment().tz('america/chicago').format('MM/DD/YY')
-function Console(bot, options, context, source) {
+function Console (bot, options, config) {
   const chat = require('prismarine-chat')(bot.options.version)
   let ratelimit = 0
   bot.console = {
@@ -20,7 +18,7 @@ function Console(bot, options, context, source) {
         )
           return;
 
-        if (line.startsWith(`${bot.Console.prefix}`)) {
+        if (line.startsWith(`${config.console.prefix}`)) {
           return bot.commandManager.executeString(
             bot.console.source,
 
@@ -32,16 +30,12 @@ function Console(bot, options, context, source) {
 
         if (line === ",kill") process.exit();
         if (line === ",reconnect") bot._client.end();
-
-        
-
         if (line.startsWith("")) {
           if (bot.options.useChat) {
-           
                 return bot.commandManager.executeString(
-            bot.console.source,
-            "echo " + line.substring(0),       
-            )
+                             bot.console.source,
+                             "echo " + line.substring(0),       
+                       )
              } else {
                 return bot.commandManager.executeString(
             bot.console.source,
@@ -117,24 +111,20 @@ function Console(bot, options, context, source) {
 
         const ansi = bot.getMessageAsPrismarine(message)?.toAnsi();
         const string = bot.getMessageAsPrismarine(message)?.toString();
-
-       // if (!bot.options.Console.input) return;
-        if (!bot.options.Console.enabled) return;
-        
+        if (!options.Console.enabled) return;
         ratelimit++
         setTimeout(() => {
           ratelimit--
         }, 1000)
-    if (ratelimit > bot.options.Console.ratelimit) { // ,.     
+    if (ratelimit > options.Console.ratelimit) { // ,.     
       bot._client.end("Anti spam :3")
-//      rl.pause();
     } else {
       bot?.console?.log(`${ansi}`);
              
-    if (bot.Console.filelogging) { 
+    if (config.console.filelogging) { 
       bot?.console?.filelogger(`${chat.fromNotch([{text:'<',color:'dark_gray'},{text:`${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} `,color:'dark_purple'},{text:`${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO"})}`,color:'#00FFFF'},{text:' LOGS',color:'gold'},{text:'>',color:'dark_gray'},{text:' [',color:'dark_gray'},{text:`${bot.options.serverName}`,color:'dark_gray'},{text:'] ',color:'dark_gray'}])?.toString()} ${string}`)
                       
-    }//nothing is logging to the file    
+    }
     };
    })
   }

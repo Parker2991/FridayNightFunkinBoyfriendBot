@@ -32,22 +32,12 @@ for (const options of config.bots) {
     bot.bots = bots;
     bot.Core = core;
     bot.Commands = commands;
-    bot.Console = Console;
+//    bot.Console = Console;
     bot.discord = discord;
     bot.validation = validation;
     bot.savage = savage;
     bot.options.username; 
-//    createBot(options, bot.core, bot.commands, bot.Console, bot.discord, bot.validation, bot.savage)
-//    bot.loadModule = (module) => module(bot, options);
-    loadModules(bot, options);
-/*for (const filename of fs.readdirSync(path.join(__dirname, "modules"))) {
-    try {
-       const module = require(path.join(__dirname, 'modules', filename))  
-       bot.loadModule(module);
-    } catch (error) {
-      console.error("Failed to load module",filename,":",error);
-    }
-  }*/
+    loadModules(bot, options, config);
 }
 //bot.console.useReadlineInterface(rl); 
 process.on("uncaughtException", (e) => {

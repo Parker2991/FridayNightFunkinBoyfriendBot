@@ -6,7 +6,7 @@ function reconnect (bot, options) {
   bot.on('end', (reason) => {
   if (bot.reconnectDelay < 0) return
      setTimeout(() => {
-       if (bot.options.usernameGen) {
+       if (options.usernameGen) {
           bot._client.end()
 //          bot.options.username = usernameGen()
           client = options.client ?? mc.createClient(options, bot.options.username = usernameGen(), options.selfcare)
@@ -14,8 +14,8 @@ function reconnect (bot, options) {
           client = options.client ?? mc.createClient(options, options.selfcare)
        }
        bot._client = client
-       bot.console.info(`Reconnecting to ${bot.options.host}:${bot.options.port}`)
-       bot?.discord?.channel?.send('Reconnecting to `' + bot.options.host + ':' + bot.options.port + '`')
+       bot.console.info(`Reconnecting to ${options.host}:${options.port}`)
+       bot?.discord?.channel?.send('Reconnecting to `' + options.host + ':' + options.port + '`')
        bot.emit('init_client', client)
     }, bot.reconnectDelay)
     bot.emit('reconnect', bot._client.end())

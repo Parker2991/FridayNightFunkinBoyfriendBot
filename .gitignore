@@ -3,7 +3,6 @@ logs
 midis
 config.yml
 .env
-amog
 src/commands/kick.js
 src/modules/exploits.js
 src/commands/kick.js

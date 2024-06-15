@@ -14,7 +14,7 @@ async function command_core (bot, options) {
 
       if (!pos) return
 
-      bot.command(`fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${bot.Core.JSON}'} destroy`)
+      bot.command(`fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${bot.Core.JSON}'} replace`)
     },
 
 

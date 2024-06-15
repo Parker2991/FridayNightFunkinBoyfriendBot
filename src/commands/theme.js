@@ -11,9 +11,9 @@ module.exports = {
    const source = context.source;
 if (!args && !args[0] && !args[1] && !args[2] && !args[3]) return
  if (args[0] === undefined || args[1] === undefined || args[2] === undefined) {
-  bot.Commands.colors.help.pub_lickColor = 'white'
-  bot.Commands.colors.help.t_rustedColor = 'white'
-  bot.Commands.colors.help.own_herColor = 'white'
+  bot.Commands.colors.help.pub_lickColor = '#2b7589'
+  bot.Commands.colors.help.t_rustedColor = '#219696'
+  bot.Commands.colors.help.own_herColor = '#2081c3'
   bot.sendFeedback(`Reseting theme colors,.,.,..`)
   } else {
   bot.Commands.colors.help.pub_lickColor = args[0] 

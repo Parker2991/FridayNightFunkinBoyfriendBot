@@ -9,7 +9,7 @@ const typeemotetextChatParser = require('../chat/chatTypeEmote')
 const sayChatParser = require('../chat/say');
 const savageChatParser = require('../chat/savage')
 const { parseMessage } = require('../util/NbtChatParser');
-
+const nbt = require('prismarine-nbt');
 function tryParse (json) {
   try {
     return JSON.parse(json)
@@ -25,16 +25,16 @@ function inject (bot) {
   if (bot.options.isCreayun && !bot.options.isKaboom) {
     bot.chatParsers = [creayunChatParser];
   } else if (bot.options.isSavage) {
-    bot.chatParsers = [savageChatParser, sayChatParser, creayunChatParser]; 
+    bot.chatParsers = [savageChatParser, sayChatParser, creayunChatParser, chipmunkmodChatParser]; 
   } else if (bot.options.isKaboom && !bot.options.isCreayun) {   
-    bot.chatParsers = [kaboomChatParser, chipmunkmodChatParser, chipmunkmodblackilykatverChatParser, typetextChatParser, typeemotetextChatParser, creayunChatParser]
+    bot.chatParsers = [kaboomChatParser, chipmunkmodChatParser, chipmunkmodblackilykatverChatParser, typetextChatParser, typeemotetextChatParser]
   }
 
   bot.on('packet.profileless_chat', packet => {//loadPrismarineChat.processNbtMessage(nbt.comp(json))
     if (bot.options.version === '1.20.4' || bot.options.version === '1.20.3') {
 //      message = tryParse(loadPrismarineChat.processNbtMessage(packet.message))
-      message = parseMessage(tryParse(loadPrismarineChat.processNbtMessage(packet.message)));
-      sender = parseMessage(tryParse(loadPrismarineChat.processNbtMessage(packet.name)));
+      message = tryParse(nbt.simplify(packet.message));
+      sender = tryParse(nbt.simplify(packet.name));
 //      sender = tryParse(loadPrismarineChat.processNbtMessage(packet.name))
 //      console.log(sender)
   //    console.log(message)
@@ -80,11 +80,18 @@ function inject (bot) {
     
     } else if (bot.options.version === '1.20.4' || bot.options.version === '1.20.3') {
  //     unsigned = tryParse(tryParse(loadPrismarineChat.processNbtMessage(packet.unsignedChatContent)))
-      unsigned = parseMessage(tryParse(loadPrismarineChat.processNbtMessage(packet.unsignedChatContent)))
+//      unsigned = parseMessage(tryParse(loadPrismarineChat.processNbtMessage(packet.unsignedChatContent)))
+//        unsigned = loadPrismarineChat.processNbtMessage(nbt.comp(packet.unsignedChatContent).value)
+        unsigned = nbt.simplify(packet.unsignedChatContent)
+//      console.log(packet.signature)
+     // tryParse(nbt.comp(packet.message));
+//        console.log(bot.getMessageAsPrismarine(nbt.comp(unsigned))?.toAnsi())
+// console.log(fromNotch(nbt.comp(msg).value).toAnsi())
+//        console.log(bot.getMessageAsPrismarine(unsigned)?.toAnsi())
     }
     
     if (bot.options.debug.enabled) {
-       if (bot.options.debug.chat.player.json && bot.options.debug.enabled) bot.console.debug(bot.getMessageAsPrismarine([{text:'[',color:'dark_gray'},{text:'playerChat',color:'dark_green'},{text:'] ',color:'dark_gray'},{text:'[',color:'dark_gray'},{text:'JSON',color:'yellow'},{text:'] ',color:'dark_gray'}])?.toAnsi() + JSON.stringify(unsigned))
+       if (bot.options.debug.chat.player.json && bot.options.debug.enabled) bot.console.debug(bot.getMessageAsPrismarine([{text:'[',color:'dark_gray'},{text:'playerChat',color:'dark_green'},{text:'] ',color:'dark_gray'},{text:'[',color:'dark_gray'},{text:'JSON',color:'yellow'},{text:'] ',color:'dark_gray'}])?.toAnsi() + JSON.stringify(packet.unsignedChatContent))
    
        if (bot.options.debug.chat.player.ansi && bot.options.debug.enabled) bot.console.debug(bot.getMessageAsPrismarine([{text:'[',color:'dark_gray'},{text:'playerChat',color:'dark_green'},{text:'] ',color:'dark_gray'},{text:'[',color:'dark_gray'},{text:'Ansi/normal',color:'gold'},{text:'] ',color:'dark_gray'}])?.toAnsi() + bot.getMessageAsPrismarine(tryParse(packet.unsigned))?.toAnsi())
     
@@ -95,14 +102,14 @@ function inject (bot) {
     const translateMessage = bot.getMessageAsPrismarine(unsigned)?.toMotd()
     const translateUsername = bot.getMessageAsPrismarine(packet.sender)?.toMotd()
     if (packet.type === 5) bot.emit('message', bot.getMessageAsPrismarine({translate:"chat.type.announcement",color:'white', with:[`${translateUsername}`,`${translateMessage}`]})?.toMotd())
-    bot.emit('player_chat', { plain: packet.plainMessage, unsigned, senderUuid: packet.senderUuid })
+    bot.emit('player_chat', { plain: nbt.simplify(packet.plainMessage), unsigned, senderUuid: packet.senderUuid })
     bot.emit('message', unsigned)
     tryParsingMessage(unsigned, { senderUuid: packet.senderUuid, players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine})
     })
  bot.getMessageAsPrismarine = message => {
   try {
     if (ChatMessage !== undefined) { 
-      return new ChatMessage(message)
+      return new ChatMessage(nbt.simplify(message))
     }
   } catch (error) {
     console.error(error); // Log any errors that occur during object creation
@@ -139,10 +146,12 @@ function inject (bot) {
     let parsed
     for (const parser of bot.chatParsers) {
       parsed = parser(message, data)
+//      console.log(parsed)
       if (parsed) break
     }
 
     if (!parsed) return
+//    console.log(data)
     bot.emit('parsed_message', parsed)
   }
 
@@ -151,7 +160,9 @@ function inject (bot) {
       if (ChatMessage !== undefined) {
         return new ChatMessage(message)
       }
-    } catch {}
+    } catch (e) {
+//      console.log(e)
+    }
     
     return undefined
   }
@@ -190,6 +201,8 @@ function inject (bot) {
   }
 
   bot.tellraw = (message, selector = '@a') => bot.core.run('/minecraft:tellraw @a ' + JSON.stringify(message)) // ? Should this be here?
+  bot.chatDelay = function delay(ms) {
+     return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 }
-    
 module.exports = inject

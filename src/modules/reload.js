@@ -8,6 +8,8 @@ function reload (bot,options,context) {
       try {
 // const command = require(path.join(__dirname, "../commands", filename));
         delete require.cache[require.resolve(path.join(__dirname,"../commands",filename))]
+  //      delete require.cache[require.resolve('../../filter.json')]
+//        const filter = require('../../filter.json');
         const command = require(path.join(__dirname, "../commands", filename));
         bot.commandManager.register(command);
         bot.commandManager.commandlist.pop(command) 

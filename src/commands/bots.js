@@ -10,7 +10,7 @@ const bots = [
   {
     name: { text: "CddehhBot", color: "red", bold: false },
     authors: ["CaydennO1","spyingcreeper09"],
-    exclaimer: "WHAT IS THIS GOOFY AAAH FUCKING BOT",
+    exclaimer: "WHAT IS THIS GOOFY AAAH FUCKING BOT FUCKING PIECE OF RETARDED ASS SHIT BOT ITS SO FUCKING SHIT I WANNA IPFILTER IT WITH FUCKING CHOMENS",
     foundation: "nodejs/mineflayer",
     prefixes: [","],
   },

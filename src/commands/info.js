@@ -39,11 +39,12 @@ module.exports = {
   async execute(context) {
     const bot = context.bot;
     const args = context.arguments;
-    const source = context.source  
+    const source = context.source; 
+    const config = context.config;
 switch(args.join(' ').toLowerCase()) {
  case 'version':
   if (bot.options.useChat && !bot.options.isCreayun) {
-   bot.chat(`${bot.getMessageAsPrismarine({text:`${process.env.buildstring}-${execSync('git rev-parse HEAD').toString().slice(0, 10)}`})?.toMotd().replaceAll('§',"&")}`)
+   bot.chat(bot.getMessageAsPrismarine({text:`${process.env.buildstring}-${execSync('git rev-parse HEAD').toString().slice(0, 10)}`})?.toMotd().replaceAll('§',"&"))
    await bot.chatDelay(100)
    bot.sendFeedback({text:`${process.env.FoundationBuildString}-${execSync('git rev-parse HEAD').toString().slice(0, 10)}`})
    await bot.chatDelay(100)
@@ -128,19 +129,6 @@ switch(args.join(' ').toLowerCase()) {
   }
  break
  case 'loaded':
-  let src = fs.readdirSync('./src/').filter(f => path.extname(f).toLowerCase() === '.js').length;
-  let util = fs.readdirSync('./src/util/').filter(f => path.extname(f).toLowerCase() === '.js').length; 
-  let utilJSON = fs.readdirSync('./src/util/').filter(f => path.extname(f).toLowerCase() === '.json').length;
-  let language = fs.readdirSync('./src/util/language').filter(f => path.extname(f).toLowerCase() === '.json').length;
-  let music = fs.readdirSync('./src/util/music').filter(f => path.extname(f).toLowerCase() === '.js').length;
-  let convertor = fs.readdirSync('./src/util/music/midi_converter').filter(f => path.extname(f).toLowerCase() === '.js').length;
-  let convertorJSON = fs.readdirSync('./src/util/music/midi_converter').filter(f => path.extname(f).toLowerCase() === '.json').length
-  let modules = fs.readdirSync('./src/modules').filter(f => path.extname(f).toLowerCase() === '.js').length;
-  let commands = fs.readdirSync('./src/commands').filter(f => path.extname(f).toLowerCase() === '.js').length;
-  let chat = fs.readdirSync('./src/chat').filter(f => path.extname(f).toLowerCase() === '.js').length;
-  let CommandModules = fs.readdirSync('./src/CommandModules').filter(f => path.extname(f).toLowerCase() === '.js').length;
-  let FileCount = `${src + util + utilJSON + language + music + convertor + convertorJSON + modules + commands + chat + CommandModules}`
-  
   
  // lazy file count :shrug:
 //  source.sendFeedback([{text:'Package Count \u203a ',color:'gray'},{text:`${Object.keys(packageJSON.dependencies).length}`,color:'gold'}])
@@ -149,11 +137,10 @@ switch(args.join(' ').toLowerCase()) {
   } else if (bot.options.isCreayun) {
     bot.chat(`Package Count \u203a ${Object.keys(packageJSON.dependencies).length}`)
     await bot.chatDelay(1500)
-    bot.chat(`File Could \u203a (${FileCount})`)
+    bot.chat(`File Could \u203a (${JSON.stringify(FileCount)})`)
   } else { 
-//  bot.sendFeedback([{text:'Packages \u203a ',color:'gray'},{text:`${Object.entries(packageJSON.dependencies).map((key, value) => key + ' ' + value).join(' ')}`}])  
+
   bot.sendFeedback([{text:'Package Count \u203a ', color:'gray'},{text:`${Object.keys(packageJSON.dependencies).length}`,color:'gold'}]) 
-  bot.sendFeedback([{text:'File count ',color:'gray'},{text:'(',color:'dark_blue'},{text:`${FileCount}`,color:'gold'},{text:')',color:'dark_blue'}])
   }
 break 
 case 'time':
@@ -195,7 +182,7 @@ await bot.chatDelay(150)
 break
 case 'config':
  if (bot.options.useChat) {
- bot.sendFeedback({text:`Prefixes \u203a ${bot.Commands.prefixes}`,color:'gray'})
+ bot.sendFeedback({text:`Prefixes \u203a ${config.Commands.prefixes}`,color:'gray'})
  await bot.chatDelay(100)
  bot.sendFeedback([{text:`Core enabled? `,color:'gray'},{text:`${bot.options.Core.enabled}`,color:'gold'}])
  await bot.chatDelay(100)
@@ -203,15 +190,15 @@ case 'config':
  await bot.chatDelay(100)
  bot.sendFeedback([{text:'Console logging enabled? ',color:'gray'},{text:`${bot.options.Console.enabled}`,color:'gold'}])
  await bot.chatDelay(100)
- bot.sendFeedback([{text:'Chat filelogging enabled? ',color:'gray'},{text:`${bot.Console.filelogging}`,color:'gold'}])
+ bot.sendFeedback([{text:'Chat filelogging enabled? ',color:'gray'},{text:`${config.console.filelogging}`,color:'gold'}])
  await bot.chatDelay(100)
  bot.sendFeedback([{text:'Multiconnect Server count \u203a ',color:'gray'},{text:`${Object.keys(bot.bots).length}`,color:'gold'}])
  } else {
- bot.sendFeedback({text:`Prefixes \u203a ${bot.Commands.prefixes}`,color:'gray'})
+ bot.sendFeedback({text:`Prefixes \u203a ${config.Commands.prefixes}`,color:'gray'})
  bot.sendFeedback([{text:`Core enabled? `,color:'gray'},{text:`${bot.options.Core.enabled}`,color:'gold'}])
 // bot.sendFeedback([{text:'Discord enabled? ',color:'gray'},{text:`${bot.Discord.enabled}`,color:'gold'}])
  bot.sendFeedback([{text:'Console logging enabled? ',color:'gray'},{text:`${bot.options.Console.enabled}`,color:'gold'}])
- bot.sendFeedback([{text:'Chat filelogging enabled? ',color:'gray'},{text:`${bot.Console.filelogging}`,color:'gold'}])
+ bot.sendFeedback([{text:'Chat filelogging enabled? ',color:'gray'},{text:`${config.console.filelogging}`,color:'gold'}])
  bot.sendFeedback([{text:'Multiconnect Server count \u203a ',color:'gray'},{text:`${Object.keys(bot.bots).length}`,color:'gold'}])
  bot.sendFeedback([{text:'Discord enabled? ',color:'gray'},{text:`${bot.Discord.enabled}`,color:'gold'}])
  }
@@ -268,7 +255,7 @@ const args = context.arguments
 switch(args.join(' ').toLowerCase()) {
   case 'version':
    let Embed = new EmbedBuilder()
-                  .setColor(`${bot.Commands.colors.discord.embed}`)
+                  .setColor(`${configCommands.colors.discord.embed}`)
                   .setTitle(`${this.name} Command`)
                   .setDescription('\u200b')
                   .addFields(
@@ -282,7 +269,7 @@ switch(args.join(' ').toLowerCase()) {
    case 'invites':
      try { 
        let inviteEmbed = new EmbedBuilder()
-                  .setColor(`${bot.Commands.colors.discord.embed}`)
+                  .setColor(`${config.Commands.colors.discord.embed}`)
                   .setTitle(`${this.name} Command`)
                   .setDescription('Discord Invite ↓↓↓')
        let inviteButton = new ButtonBuilder()
@@ -306,7 +293,7 @@ switch(args.join(' ').toLowerCase()) {
   case 'loaded':
   let packages = Object.entries(packageJSON.dependencies).map((key, value) => key + ' ' + value).join(' ')
   let Embed2 = new EmbedBuilder()
-                  .setColor(`${bot.Commands.colors.discord.embed}`)
+                  .setColor(`${config.Commands.colors.discord.embed}`)
                   .setTitle(`${this.name} Command`)
                   .setDescription('\u200b')
                   .addFields(
@@ -316,7 +303,7 @@ switch(args.join(' ').toLowerCase()) {
    break
    case 'login':
    let Embed3 = new EmbedBuilder()
-                  .setColor(`${bot.Commands.colors.discord.embed}`)
+                  .setColor(`${config.Commands.colors.discord.embed}`)
                   .setTitle(`${this.name} Command`)
                   .setDescription(`Server ${bot.options.serverName}\nIP ${bot.options.host}\nVersion ${bot.options.version}\nMinecraft Username ${bot.options.username}\nUUID ${bot._client.uuid}\nDiscord Username ${bot.discord.client.user.username}'#'${bot.discord.client.user.discriminator}\nDiscord Channel ${bot.discord.channel.name}`)
  
@@ -324,21 +311,21 @@ switch(args.join(' ').toLowerCase()) {
    break
    case 'config':
      let Embed4 = new EmbedBuilder()
-                  .setColor(`${bot.Commands.colors.discord.embed}`)
+                  .setColor(`${config.Commands.colors.discord.embed}`)
                   .setTitle(`${this.name} Command`)
                   .setDescription(`Prefixes ${bot.Commands.prefixes}\nCore Enabled? ${bot.options.Core.enabled}\nConsole logging enabled? ${bot.options.Console.enabled}\nChat filelogging enabled? ${bot.Console.filelogging}\nMulticonnect Server count ${(bot.bots).length}`)
     bot.discord.Message.reply({ embeds: [Embed4] })
    break 
    case 'uptime':
     let Embed5 = new EmbedBuilder()
-                  .setColor(`${bot.Commands.colors.discord.embed}`)
+                  .setColor(`${config.Commands.colors.discord.embed}`)
                   .setTitle(`${this.name} Command`)
                   .setDescription(`${format(process.uptime())}`)
     bot.discord.Message.reply({ embeds: [Embed5] })
    break
    case 'contributors':
     let Embed6 = new EmbedBuilder()
-                  .setColor(`${bot.Commands.colors.discord.embed}`)
+                  .setColor(`${config.Commands.colors.discord.embed}`)
                   .setTitle(`${this.name} Command`)
                   .setDescription(`Parker2991\n_ChipMC_\nchayapak\n_yfd\naaa\nMorganAnkan\nTurtleKid`)
     bot.discord.Message.reply({ embeds: [Embed6] })

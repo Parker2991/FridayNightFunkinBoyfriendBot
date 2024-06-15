@@ -37,7 +37,7 @@ module.exports = {
        let Embed = new EmbedBuilder()
                   .setColor(`${bot.Commands.colors.discord.embed}`)
                   .setTitle(`${this.name} Command`)
-                  .setDescription(util.inspect(eval(args.join(' '))))
+                  .setDescription(bot.getMessageAsPrismarine('```js\n' + util.inspect(eval(args.join(' '))) + '```')?.toMotd())
        bot.discord.Message.reply({ embeds: [Embed] })
      } catch (e) {
         let Embed = new EmbedBuilder()

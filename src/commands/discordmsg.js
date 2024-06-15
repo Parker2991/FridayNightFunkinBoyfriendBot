@@ -3,7 +3,7 @@ const CommandError = require("../CommandModules/command_error")
 module.exports = {
   name: 'discordmsg',
   description:['make me say something in discord'],
-  trustLevel: 0,
+  trustLevel: -1,
   aliases:['discordmessage', 'ddmsg'],
   usage:["message"],
   execute (context) {
