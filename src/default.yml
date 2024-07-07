@@ -1,0 +1,136 @@
+# i bet theres gonna be some whiny assholes complaining about this because config is .yml and not .js since most java bots use .yml and no other 
+# javascript bot uses .yml, all i got to say is go cry somewhere else about it you wont change my mind, you little shit, 
+# it looks cleaner than config.js - Parker2991
+
+
+# FNFBoyfriendBot Config
+# commands
+Commands: 
+  prefixes:
+    - "!"
+  ratelimit: 2
+  colors:
+    discord:
+      error: "#FF0000"
+      embed: "#000000"
+    help: 
+      pub_lickColor: "#2b7589"
+      t_rustedColor: "#219696"
+      own_herColor: "#2081c3"
+    error: "#FF0000"
+
+savage: 
+  password: "password here"
+
+# core
+Core: 
+  # PLEASE MAKE THIS A VALID JSON
+  JSON: '{"text":"FNFBoyfriendBot Core","color":"aqua","clickEvent":{"action":"open_url","value":"https://doin-your.mom"}}'
+  area: 
+    start: 
+      x: 0 
+      y: 0 
+      z: 0
+    end: 
+      x: 15
+      y: 0 
+      z: 15
+
+#validation
+validation:
+  discord: 
+    roles: 
+      trusted: "trusted"
+      owner: "FNFBoyfriendBot Owner"
+    channelId: "" # for sending hashes to discord if someone is too lazy to add validation for the bot to their client
+  keys: 
+    trustedKey: "trusted key here"
+    ownerKey: "Owner key here"
+
+#discord
+Discord: 
+  enabled: true
+  invite: "https://discord.gg/GCKtG4erux"
+  commandPrefix: "!"
+  token: "discord token here"
+  presence:
+    name: "amongus"
+    type: 4
+    status: "dnd"
+ 
+# console
+console:
+  filelogging: false
+  prefix: "c."
+  reconnectErrors: false
+# best to have reconnectErrors set to false when debug is active
+
+# bots
+bots:
+# isKaboom = running the bot in kaboom
+# isCreayun = running the bot in creayun
+# useChat = running the bot in chat and not core
+# usernameGen = regenerating the bot's username every join
+# endcredits = the bot advertising
+# serverName = the name of the server ofc
+# Console.ratelimit = the number of messages that the bot can read in a few seconds before rejoining this is used to prevent spam, i do not recommend setting it to Infinity 
+# selfcare.interval = selfcare interval duh
+# if username is commented out it will default to bot.js and use a random username
+# the bot can run on versions 1.19.3, 1.19.4, 1.20, 1.20.1, 1.20.2
+# debug is for ofc debug i do not recommend turning them all on unless you want a god damn warzone
+
+  - host: "localhost"
+    useChat: false
+    isSavage: false
+    isKaboom: true
+    isCreayun: false
+    usernameGen: true
+    username: "FNFBoyfriendBot"
+    version: "1.20.2"
+    serverName: "localhost"
+    reconnectDelay: 6000
+    endcredits: false
+    Console:
+      enabled: false
+      ratelimit: Infinity
+    Core: 
+      enabled: true
+      interval: 180000
+    discord: 
+      channelId: ""
+    debug:
+      enabled: false
+      core: false
+      chat:
+        player: 
+          json: true
+          ansi: false
+          motd: false
+        system: 
+          json: true
+          ansi: false
+          motd: false
+        profileless:
+          name: 
+            json: false
+            ansi: false
+            motd: false
+          message:
+            json: false
+            ansi: false
+            motd: false
+          type: true
+    selfcare: 
+      vanished: true
+      unmuted: true
+      prefix: true
+      cspy: true
+      tptoggle: true
+      skin: true
+      gmc: true
+      op: true
+      nickname: true
+      username: true
+      god: true
+      icu: false
+      interval: 1000

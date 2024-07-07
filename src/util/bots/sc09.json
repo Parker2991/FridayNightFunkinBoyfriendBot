@@ -1,0 +1,10 @@
+
+{
+    "name": { "text": "SC09", "color": "gray", "bold": "false" },
+    "authors": ["spyingcreeper09"],
+    "exclaimer": "i approve :3",
+    "foundation": "NodeJS/node-minecraft-protocol",
+    "prefixes": ["@"],
+    "maintained":"true"
+ }
+

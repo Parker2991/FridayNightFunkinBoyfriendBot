@@ -1,0 +1,25 @@
+const path = require('path');
+const fs = require('fs');
+const CommandError = require('../util/command_error')
+const { EmbedBuilder } = require('discord.js')
+function reload (bot,options,context) {
+  bot.commandReload = function () {
+    for (const filename of fs.readdirSync(path.join(__dirname, "../commands"))) {
+      try {
+// const command = require(path.join(__dirname, "../commands", filename));
+        delete require.cache[require.resolve(path.join(__dirname,"../commands",filename))]
+  //      delete require.cache[require.resolve('../../filter.json')]
+//        const filter = require('../../filter.json');
+        const command = require(path.join(__dirname, "../commands", filename));
+        bot.commandManager.register(command);
+        bot.commandManager.commandlist.pop(command) 
+        bot.commandManager.commandlist.push(command)
+      } catch (error) {
+        bot.console.error(["Failed to load File ", filename, ":", error.stack])
+        bot.tellraw({text: `Failed to reload file ${filename}`})
+        //bot.tellraw({text:`${error.stack}`,color:'dark_red'});
+      }
+    }
+  }
+}
+module.exports = reload;

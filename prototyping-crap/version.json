@@ -1,0 +1,35 @@
+{
+  "BotBuildstring": {
+     "name": [
+       {
+         "translate":"%s%s%s",
+         "with": [
+           {
+             "text": "FridayNightFunkin",
+             "color": "dark_purple"
+           },
+           {
+             "text": "Boyfriend",
+             "color": "#00FFFF"
+           },
+           {
+             "text": "Bot",
+             "color": "#ff0000"
+           }
+         ]
+       }
+     ],
+     "build":"#500",
+     "codename": [
+       { 
+         "text": "Censory ",
+         "color": "dark_red"
+       },
+       {
+         "text": "Overload",
+         "color": "red"
+       }
+     ],
+     "version":"v5.0.8"
+  }
+}

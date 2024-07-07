@@ -1,0 +1,11 @@
+node_modules
+logs
+midis
+config.yml
+.env
+src/commands/kick.js
+src/modules/exploits.js
+src/commands/kick.js
+prototyping-crap/java/build/
+prototying-crap/java/.gradle/
+.git

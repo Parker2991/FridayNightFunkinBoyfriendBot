@@ -1,0 +1,102 @@
+# i bet theres gonna be some whiny assholes complaining about this because config is .yml and not .js since most java bots use .yml and no other 
+# javascript bot uses .yml, all i got to say is go cry somewhere else about it you wont change my mind, you little shit, 
+# it looks cleaner than config.js - Parker2991
+
+
+# FNFBoyfriendBot Config
+# commands
+Commands: 
+  prefixes:
+    -  '!'
+  colors:
+    discord:
+      error: "#ff0000"
+      embed: "#00ffff"
+    help: 
+      pub_lickColor: "#00FFFF"
+      t_rustedColor: "dark_purple"
+      own_herColor: "dark_red"
+    error: "#FF0000"
+
+# core
+Core: 
+  JSON: ""
+  area: 
+    start: 
+      x: 0 
+      y: 0 
+      z: 0
+    end: 
+      x: 15
+      y: 0 
+      z: 15
+
+#validation
+validation:
+  discord: 
+    roles: 
+      trusted: "trusted"
+      owner: "owner"
+  channelId: "channel validation here" # for sending hashes to discord if someone is too lazy to add validation for the bot to their client
+  trustedKey: "trusted key here"
+  ownerKey: "owner key here"
+
+#discord
+Discord: 
+  enabled: false
+  invite: "https://discord.gg/GCKtG4erux"
+  commandPrefix: "!"
+  presence:
+    name: "amongus"
+    type: 4
+  status: "online"
+ 
+# console
+console:
+  filelogging: false
+  prefix: "c."
+
+# bots
+bots :
+# isKaboom = running the bot in kaboom
+# isCreayun = running the bot in creayun
+# useChat = running the bot in chat and not core
+# usernameGen = regenerating the bot's username every join
+# endcredits = the bot advertising
+# serverName = the name of the server ofc
+# Console.ratelimit = the number of messages that the bot can read in a few seconds before rejoining this is used to prevent spam, i do not recommend setting it to Infinity 
+# selfcare.interval = selfcare interval duh
+  - host: "localhost"
+    useChat: false
+    isKaboom: true
+    isCreayun: false
+    usernameGen: true
+    username: "FNFBoyfriendBot"
+    version: "1.20.2"
+    serverName: "localhost"
+    reconnectDelay: 6000
+    endcredits: false
+    Console:
+      enabled: true
+      ratelimit: 25
+    Core: 
+      enabled: true
+      interval: 180000
+    discord: 
+      channelId: ""
+      log: false
+    matrix:
+      roomId: ""
+    selfcare: 
+      vanished: true
+      unmuted: true
+      prefix: true
+      cspy: true
+      tptoggle: true
+      skin: true
+      gmc: true
+      op: true
+      nickname: true
+      username: true
+      god: true
+      interval: 500
