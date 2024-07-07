@@ -1,0 +1,14 @@
+const mc = require('minecraft-protocol')
+
+function reconnect (bot, options) {
+  bot.reconnectDelay = options.reconnectDelay ?? 5000
+
+  bot.on('end', () => {
+    if (bot.reconnectDelay < 0) return
+
+    bot._client = mc.createClient(options)
+    bot.emit('init_client', bot._client)
+  })
+}
+
+module.exports = reconnect;

@@ -1,0 +1,18 @@
+prefixes:
+  - "!"
+
+discord:
+  token: "discord bot token here"
+  prefix: "!"
+  invite: "discord server invite here"
+
+keys:
+  trusted: "trusted key here"
+  owner: "owner key here"
+
+bots:
+  - host: "localhost"
+    username: "FNFBoyfriendBot"
+    version: "1.20.2"
+    reconnectDelay: 6000
+    channelId: "channel id here"
