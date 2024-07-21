@@ -54,20 +54,6 @@ function createBot(options = {}) {
   bot.emit('init_client', client)
 
   bot.bots = options.bots ?? [bot]
-
-  // Modules
-/*
-  bot.loadModule = module => module(bot, options)
-
-  for (const filename of fs.readdirSync(path.join(__dirname, 'modules'))) {
-    try {
-      const module = require(path.join(__dirname, 'modules', filename))
-      bot.loadModule(module)
-    } catch (error) {
-      console.error('Failed to load module', filename, ':', error)
-    }
-  }
-*/
   return bot
 }
 

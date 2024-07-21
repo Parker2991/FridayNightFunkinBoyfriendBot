@@ -8,6 +8,13 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const { MessageContent, GuildMessages, Guilds } = GatewayIntentBits;
 const discordClient = new Client({ intents: [Guilds, GuildMessages, MessageContent] });
 console.log('Starting FNFBoyfriendBot');
+if (!fs.existsSync(path.join(__dirname, "../config.yml"))) {
+  console.log("Config not found creating config from the default config");
+  fs.copyFileSync(
+    path.join(__dirname, "./data/default_config.yml"),
+    path.join(__dirname, "../config.yml")
+  )
+}
 try {
   config = js_yaml.load(fs.readFileSync(path.join(__dirname, '../', 'config.yml')))
 } catch (e) {
@@ -17,12 +24,17 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 })
+if (config.discord.enabled) discordClient.login(config.discord.token);
 const bots = [];
 for (const options of config.bots) {
   const bot = createBot(options);
   bots.push(bot);
   bot.bots = bots;
-  discordClient.login(config.discord.token);
+/*  if (!config.discord.enabled) {
+    return
+  } else {
+    discordClient.login(config.discord.token);
+  }*/
   loadModules(bot, options, config, discordClient);
   bot.console.useReadlineInterface(rl);
 }

@@ -6,6 +6,9 @@ module.exports = {
     "botsay",
   ],
   description: 'Make me say something',
+  usages: [
+    "<message>"
+  ],
   execute (context) {
     const bot = context.bot
     const message = context.arguments.join(' ')

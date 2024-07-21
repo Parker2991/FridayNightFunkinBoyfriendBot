@@ -7,6 +7,7 @@ function command_loop (bot, options, config) {
 
     remove (index) {
       clearInterval(this.list[index].timer)
+      bot.cloop.list.splice(index, 1)
     },
     clear () {
       for (const cloop of this.list) clearInterval(cloop.timer)

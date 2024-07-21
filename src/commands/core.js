@@ -9,6 +9,9 @@ module.exports = {
     "commandcorerun",
   ],
   description: 'run commands in core!',
+  usages: [
+    "<command>",
+  ],
   execute (context) {
     const bot = context.bot
     const message = context.arguments.join(' ')

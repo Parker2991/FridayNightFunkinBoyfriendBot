@@ -23,15 +23,15 @@ function discord(bot, options, config, discordClient) {
 //    presence: bot.discord.presence,
     token: config.discord.token,
   }
-  discordClient.on('ready', (context) => {
+  discordClient.once('ready', (context) => {
     bot.discord.channel = discordClient.channels.cache.get(options.channelId)
-/*    client.user.setPresence({
+    discordClient.user.setPresence({
       activities: [{
-        name: `${bot.discord.presence.name}`,
-        type: bot.discord.presence.type
+        name: `amogus ඞ`,
+        type: 0
       }],
-      status: `${bot.discord.presence.status}`
-    });*/
+      status: `dnd`
+    });
   })
 
   let discordQueue = []
@@ -51,7 +51,7 @@ function discord(bot, options, config, discordClient) {
   }
 
   function sendComponent(message) {
-    const ansi = bot.getMessageAsPrismarine(message)?.toAnsi().replaceAll('```\u001b[9```' + '```\u001b[3```').replaceAll('https://discord','https:\rdiscord')?.replaceAll('discord.gg', 'discord.\rgg');
+    const ansi = bot.getMessageAsPrismarine(message)?.toAnsi(bot.registry.language).replaceAll('```\u001b[9```' + '```\u001b[3```').replaceAll('https://discord','https:\rdiscord')?.replaceAll('discord.gg', 'discord.\rgg').replaceAll('BlackStone Mafia On Top!', "Fuck off you god damn cunt");
     try {
       sendDiscordMessage(fixansi(ansi.replaceAll('`', '`\u200b')))
     } catch (e) {
@@ -64,7 +64,7 @@ function discord(bot, options, config, discordClient) {
   })
 
   function messageCreate(message, source) {
-    bot.discord.Message = message
+    bot.discord.message = message;
     if (message.author.id === bot.discord.client.user.id) return
 
     if (message.channel.id !== bot.discord.channel.id) return
@@ -151,32 +151,5 @@ function discord(bot, options, config, discordClient) {
     //  sendDiscordMessage("uncaught " + e.stack);
   });
 
-/*
-  function fixansi(message) {
-    const ansilist = {
-      "\x1B\[93m": "\x1B[33m", // Yellow
-      "\x1B\[96m": "\x1B[36m", // Blue
-      "\x1B\[94m": "\x1B[34m", // Discord Blue
-      "\x1B\[90m": "\x1B[30m", // Gray
-      "\x1B\[91m": "\x1B[31m", // Light Red
-      "\x1B\[95m": "\x1B\[35m", // Pink
-      "\x1B\[92m": "\x1B\[32m", // Green
-      "\x1B\[0m": "\x1B\[0m\x1B\[37m", // White
-      "\x1B\[97m": "\x1B\[0m\x1B\[37m", // White
-    };
-    let i = message;
-
-    for (const ansi in ansilist) {
-      if (ansilist.hasOwnProperty(ansi)) {
-        i = i.replace(new RegExp(escapeRegExpChars(ansi), 'g'), ansilist[ansi]);
-
-        function escapeRegExpChars(text) {
-          return text.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-        }
-      }
-    }
-
-    return i;
-  }*/
 }
 module.exports = discord;

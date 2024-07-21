@@ -6,6 +6,9 @@ module.exports = {
     "recon",
   ],
   description: 'reconnect the bot',
+  usages: [
+
+  ],
   execute (context) {
     const bot = context.bot
     const message = context.arguments.join(' ')

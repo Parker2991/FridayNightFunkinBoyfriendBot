@@ -1,18 +1,55 @@
+# FNFBoyfriendBot v6.0.0-alpha config
+
 prefixes:
   - "!"
+  - "fnfbfbot!"
 
 discord:
-  token: "discord bot token here"
+  token: "discord token here"
   prefix: "!"
-  invite: "discord server invite here"
+  invite: "discord invite here"
+
+matrix:
+  token: "matrix token here"
+  invite: "matrix invite here"
+  prefix: "!"
+  hostUrl: "matrix instance url here"
+  userId: "@fnfboyfriendbot:localhost"
+  enabled: false
+
+core:
+  name: {"translate":"outOfMemory.message"}
+  area:
+    start:
+      x: 0
+      y: 0
+      z: 0
+    end:
+      x: 15
+      y: 0
+      z: 15
 
 keys:
   trusted: "trusted key here"
   owner: "owner key here"
 
+colors:
+  discord:
+    embed: "#000000"
+    error: "#FF0000"
+
 bots:
   - host: "localhost"
     username: "FNFBoyfriendBot"
+    usernameGen: true
     version: "1.20.2"
+    serverName: "localhost"
     reconnectDelay: 6000
-    channelId: "channel id here"
+    channelId: "discord channel id here"
+    roomId: "matrix room id here"
+    logging: false
+    useChat: false
+    isKaboom: true
+    isSavage: false
+    isCreayun: false
+

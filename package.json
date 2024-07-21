@@ -4,6 +4,7 @@
     "js-yaml": "^4.1.0",
     "jvm": "^0.5.3",
     "man-db": "^1.0.3",
+    "matrix-js-sdk": "^31.5.0",
     "minecraft-data": "^3.36.1",
     "minecraft-protocol": "^1.47.0",
     "prismarine-auth": "^2.2.0",

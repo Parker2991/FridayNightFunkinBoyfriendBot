@@ -4,10 +4,13 @@ module.exports = {
   name: 'mcserver',
   trustLevel: 0,
   aliases: [
-//    "say",
+    "pingserver",
 //    "botsay",
   ],
   description: 'look up minecraft server info',
+  usages: [
+    "<minecraft server ip>",
+  ],
   async execute (context) {
     const bot = context.bot;
     const discordClient = context.discordClient;
@@ -37,10 +40,10 @@ module.exports = {
                    server.description,
      ])// error: 'Ping Failed',
     } catch (error) {
-      if (error.toString() === "TypeError: Cannot read properties of undefined (reading 'online')") {
-        bot.tellraw({ text: 'unable to ping server make sure the ip is correct', color: 'dark_red' })
+      if (error.toString() === "TypeError: Cannot read properties of undefined (reading 'online')" || server.error === "Ping Failed") {
+        bot.tellraw("@a", { text: 'unable to ping server make sure the ip is correct', color: 'dark_red' })
       } else {
-        bot.tellraw(error.toString())
+        bot.tellraw("@a", error.toString())
       }
     }
   }

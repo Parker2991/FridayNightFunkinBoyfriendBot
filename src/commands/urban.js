@@ -10,6 +10,9 @@ module.exports = {
     "all <definition>",
     "single <definition>",
   ],
+  usages: [
+    "<definition",
+  ],
   async execute (context) {
     const source = context.source
     const args = context.arguments
@@ -25,7 +28,7 @@ module.exports = {
    const dictResult = await request(`https://api.urbandictionary.com/v0/define?${query}`);
    const { list } = await dictResult.body.json();
    if (!list.length) {
-     bot.sendError('No results found');
+     bot.tellraw('@a', { text: 'No results found', color: 'dark_red' });
    }
    for (const definitions of list) {
      component.push(prefix, [

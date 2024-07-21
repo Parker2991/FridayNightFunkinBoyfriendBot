@@ -1,19 +1,18 @@
 function core (bot, options, config) {
   bot.core = {
     area: {
-      start: options.core?.area.start ?? { x: 0, y: 0, z: 0 },
-      end: options.core?.area.end ?? { x: 15, y: 0, z: 15 }
+      start: config.core?.area.start ?? { x: 0, y: 0, z: 0 },
+      end: config.core?.area.end ?? { x: 15, y: 0, z: 15 }
     },
     position: null,
     currentBlockRelative: { x: 0, y: 0, z: 0 },
-
     refill () {
       const pos = bot.core.position
       const { start, end } = bot.core.area
 
       if (!pos) return
-
-      bot.chat.command(`minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block`)
+//      if (bot.options.useChat ?? bot.options.isCreayun ?? bot.options.isSavage) return
+      bot.chat.command(`minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${JSON.stringify(config.core.name)}'}`)
     },
 
     move (pos = bot.position) {
@@ -58,16 +57,20 @@ function core (bot, options, config) {
     run (command) {
       const location = bot.core.currentBlock()
       if (!location) return
-
-      bot._client.write('update_command_block', { command: command.substring(0, 32767), location, mode: 1, flags: 0b100 })
-
-      bot.core.incrementCurrentBlock()
+      if (bot.options.useChat ?? bot.options.isCreayun ?? bot.options.isSavage) {
+        return
+      } else {
+        bot._client.write('update_command_block', { command: command.substring(0, 32767), location, mode: 1, flags: 0b100 })
+        bot.core.incrementCurrentBlock()
+      }
     }
   }
-
+ // if (bot.options.useChat ?? bot.options.isCreayun ?? bot.options.isSavage) return
+  if (bot.options.isSavage) return
   bot.on('move', () => {
+//    if (bot.options.isSavage) return
     bot.core.move(bot.position)
-     setTimeout(() => bot.core.run('say Hello, world!'), 1000)
+//     setTimeout(() => bot.core.run('say Hello, world!'), 1000)
   })
 }
 

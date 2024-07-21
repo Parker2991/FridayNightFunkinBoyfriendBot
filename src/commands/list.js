@@ -1,20 +1,17 @@
-const CommandError = require('../util/command_error')
-const { EmbedBuilder } = require('discord.js')
-const { request } = require('undici');
+const CommandError = require('../util/command_error');
+const { EmbedBuilder } = require('discord.js');
 module.exports = {
   name: 'list',
   description:['check the player list'],
   trustLevel: 0,
   aliases:['playerlist', 'plist', 'pl'],
   usage:[""],
-  async execute (context) {
+  execute (context) {
     const bot = context.bot
     const args = context.arguments
     const players = bot.players
     const source = context.source
     const component = []
-    const url = await request(`https://eu.mc-api.net/v3/server/ping/${bot.options.host}`)
-    const server = await url.body.json()
     for (const player of players) {
       component.push({
         translate: `%s \u203a %s [%s %s %s %s %s]`,
@@ -35,8 +32,6 @@ module.exports = {
                   { text: `Players: `, color:'gray' },
                   { text: '(' , color: 'gray' },
                   { text: `${JSON.stringify(bot.players.length)}`, color: 'gold' },
-                  { text: ` / `, color: 'gray' },
-                  { text: `${server.players.max}`, color: 'gold' },
                   { text: ')\n', color: 'gray' },
                   component
     ])
@@ -47,5 +42,3 @@ module.exports = {
     const players = bot.players
   }
 }
-//what is wi
-// IDK

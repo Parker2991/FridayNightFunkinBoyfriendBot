@@ -2,39 +2,103 @@ const fs = require('fs');
 const path = require('path');
 const CommandError = require('../util/command_error.js');
 const CommandSource = require('../util/command_source');
+const { EmbedBuilder } = require('discord.js');
 function command_manager (bot, options, config, discordClient) {
   bot.commandManager = {
     commands: {},
     commandlist: [],
     execute (source, commandName, args) {
-      const command = this.getCommand(commandName.toLowerCase())
-
+      const command = this.getCommand(commandName.toLowerCase());
       try {
-        if (!command || !command.execute) throw new CommandError({ translate: 'Unknown command: %s', with: [commandName] })
-        if (command.trustLevel === 1 && bot.trusted) {
-          const hash = args[0]
-          if (args.length === 0 && bot.trusted && bot.owner && !source.sources.console) throw new CommandError({ text: "Please provide an trusted or owner hash" })
-          if (args[0] !== bot.trusted && args[0] !== bot.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted or owner hash', color: 'dark_red' })
+        if (source?.sources?.discord && !source?.sources?.console) {
+          if (!command || !command?.execute) {
+            const Embed = new EmbedBuilder()
+              .setColor(`${config.colors.discord.error}`)
+              .setTitle("Unknown command")
+              .setDescription(`Unknown command: ${commandName}`)
+            bot?.discord?.message?.reply({ embeds: [Embed] })
+          }
+        } else if (!source?.sources?.discord && !source?.sources?.console) {
+          if (!command || !command.execute)
+         /* throw new CommandError({
+            translate: "Unknown command: %s",
+            with: [
+              commandName
+            ]
+          })*/
+          throw new CommandError(
+            bot.getMessageAsPrismarine([
+              {
+                translate: `command.unknown.command`
+              },
+              {
+                text: '\n'
+              },
+              {
+                text: `${commandName} `
+              },
+              {
+                translate: "command.context.here"
+              }])?.toMotd(bot.registry.language)
+          )
         }
-        if (command.trustLevel === 2 && bot.owner) {
-          if (args.length === 0 && bot.owner) throw new CommandError({ text: "Please provide an owner hash" })
-          if (args[0] !== bot.owner) throw new CommandError({ translate: 'Invalid owner hash', color: 'dark_red' })
-        } else if (command.trustLevel === 3 && !source.sources.console) {
-          throw new CommandError('This command can only be ran via console');
-        }
-        if (!command.discordExecute && command && source.sources.discord) {
+        if (command?.trustLevel > 0) {
+          const event = bot?.discord?.message;
+          const roles = event?.member?.roles?.cache;
+          if (command?.trustLevel === 1 && !source?.sources?.discord) {
+            const hash = args[0]
+            if (args.length === 0 && bot.validation.trusted && bot.validation.owner && !source.sources.console) throw new CommandError({ text: "Please provide an trusted or owner hash" })
+            if (args[0] !== bot.validation.trusted && args[0] !== bot.validation.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted or owner hash', color: 'dark_red' })
+          } else if (command?.trustLevel === 1 && source?.sources.discord) {
+            const hasRole = roles?.some(role => role.name === `${config.discord.roles.trusted}` || role.name === `${config.discord.roles.owner}`)
+            if (!hasRole) throw new CommandError({ translate: 'You are trusted or the owner!' })
+          }
+          if (command?.trustLevel === 2 && !source.sources.discord && !source.sources.console) {
+            if (args.length === 0 && bot.validation.owner) throw new CommandError({ text: "Please provide an owner hash" })
+            if (args[0] !== bot.validation.owner) throw new CommandError({ translate: 'Invalid owner hash', color: 'dark_red' })
+          } else if (command?.trustLevel === 2 && source.sources.discord && !source.sources.console) {
+            const hasRole = roles?.some(role => role.name === `${config.discord.roles.owner}`)
+            if (!hasRole) throw new CommandError({ translate: 'You are not the owner!' })
+          } else if (command?.trustLevel === 3 && !source.sources.console) {
+            throw new CommandError('This command can only be ran via console');
+          }
+        } if (!command?.discordExecute && command && source.sources.discord) {
           throw new CommandError(`${command.name} command is not supported in discord!`)
-        } else if (command.discordExecute && command && source.sources.discord) {
+        } else if (command?.discordExecute && command && source.sources.discord) {
           return command.discordExecute({ bot, source, arguments: args, config, discordClient })
-        } else if (command.execute && command && !source.sources.discord) {
-          return command.execute({ bot, source, arguments: args, config, discordClient})
+        } else if (!command?.execute && command && !source.sources.discord) {
+          throw new CommandError(`${command.name} command is not supported in game!`)
+        } else if (command?.execute && command && !source.sources.discord) {
+          return command?.execute({ bot, source, arguments: args, config, discordClient})
         }
       } catch (error) {
         console.error(error)
-        if (error instanceof CommandError) bot.tellraw("@a", { text: error.message, color: "dark_red" }) //bot.tellraw({ text: `${}`, color: "dark_red" })
-        else bot.tellraw("@a", { translate: 'command.failed', color: "dark_red", hoverEvent: { action: 'show_text', contents: `${error.stack}` } })
+        if (source?.sources?.discord && !source?.sources?.console) {
+    //      if (error instanceof CommandError) {
+            const Embed = new EmbedBuilder()
+               .setColor(`${config.colors.discord.error}`)
+               .setTitle(`${command?.name} command`)
+               .setDescription(`\`\`\`${error}\`\`\``)
+            bot?.discord?.message?.reply({
+              embeds: [
+                Embed
+              ]
+            })
+      //    }
+//            bot.tellraw("@a", { text: `${error.stack}`, color: "dark_red" })
+        } else if (!source?.sources?.discord && !source?.sources?.console) {
+          if (error instanceof CommandError)
+          bot.tellraw("@a", { text: error.message, color: "dark_red" })
+          else bot.tellraw("@a", bot.getMessageAsPrismarine({ translate: 'command.failed', color: "dark_red", hoverEvent: { action: 'show_text', contents: `${error.stack}` } })?.toMotd(bot.registry.language))
+        }
       }
     },
+    /*        const Embed = new EmbedBuilder()
+          .setColor(`${bot.Commands.colors.discord.error}`)
+          .setTitle(`${command?.name} Command`)
+          .setDescription(`\`\`\`${error}\`\`\``)
+        bot.discord.Message.reply({ embeds: [Embed] }) 
+    */
     executeString (source, command) {
       const [commandName, ...args] = command.split(' ')
       return this.execute(source, commandName, args)

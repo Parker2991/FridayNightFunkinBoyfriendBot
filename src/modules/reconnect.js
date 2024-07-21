@@ -1,13 +1,17 @@
-const mc = require('minecraft-protocol')
-
-function reconnect (bot, options) {
-  bot.reconnectDelay = options.reconnectDelay ?? 5000
-
+const mc = require('minecraft-protocol');
+const usernameGen = require("../util/usernameGen");
+function reconnect (bot, options, config) {
   bot.on('end', () => {
     if (bot.reconnectDelay < 0) return
-
-    bot._client = mc.createClient(options)
-    bot.emit('init_client', bot._client)
+    setTimeout(() => {
+      if (options.usernameGen) {
+        client = options.client ?? mc.createClient(options, bot.options.username = usernameGen())
+      } else {
+        client = options.client ?? mc.createClient(options)
+      }
+      bot._client = client
+      bot.emit('init_client', bot._client)
+    }, options.reconnectDelay);
   })
 }
 
