@@ -76,6 +76,10 @@ module.exports = {
             color: "gray"
           },
           {
+            text: `User \u203a ${os.userInfo().username}\n`,
+            color: "gray",
+          },
+          {
             text: `Working Directory \u203a ${process.mainModule.path}\n`,
             color: "gray"
           },

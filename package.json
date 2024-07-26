@@ -2,13 +2,18 @@
   "dependencies": {
     "discord.js": "^14.11.0",
     "js-yaml": "^4.1.0",
+    "json-stringify": "^1.0.0",
+    "json5": "^2.2.3",
     "jvm": "^0.5.3",
     "man-db": "^1.0.3",
     "matrix-js-sdk": "^31.5.0",
     "minecraft-data": "^3.36.1",
     "minecraft-protocol": "^1.47.0",
+    "mojangson": "^2.0.4",
     "prismarine-auth": "^2.2.0",
     "prismarine-chat": "^1.10.1",
-    "prismarine-registry": "^1.7.0"
+    "prismarine-registry": "^1.7.0",
+    "wikipedia": "^2.1.2",
+    "xml2js": "^0.6.2"
   }
 }

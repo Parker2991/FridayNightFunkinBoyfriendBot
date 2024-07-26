@@ -22,7 +22,8 @@ const {
 } = require('node:fs');
 */
 //  if (!bot.Console.filelogging) return;
-
+// ${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })}
+//  if (new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", }) === "10:45:00 PM") process.exit("daily reset");
   try {
     if (!fs.existsSync(logFolder)) {
       fs.mkdirSync(logFolder);

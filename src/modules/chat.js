@@ -2,6 +2,8 @@ const loadPrismarineChat = require('prismarine-chat');
 const KaboomChatParser = require('../util/ChatParsers/Kaboom');
 const ChipmunkModChatParser = require('../util/ChatParsers/ChipmunkMod');
 const CreayunChatParser = require('../util/ChatParsers/Creayun');
+const sayConsoleChatParser = require('../util/ChatParsers/sayConsole');
+const VanillaChatParser = require("../util/ChatParsers/VanillaChat")
 function tryParse (json) {
   try {
     return JSON.parse(json)
@@ -16,9 +18,9 @@ function chat (bot, options, config) {
     ChatMessage = loadPrismarineChat(registry)
   })
   if (options.isSavage) {
-    bot.chatParsers = [CreayunChatParser]
+    bot.chatParsers = [CreayunChatParser, sayConsoleChatParser]
   } else {
-    bot.chatParsers = [KaboomChatParser, ChipmunkModChatParser]
+    bot.chatParsers = [KaboomChatParser, ChipmunkModChatParser, VanillaChatParser, sayConsoleChatParser]
   }
   bot.on('packet.profileless_chat', packet => {
     const message = tryParse(packet.message)

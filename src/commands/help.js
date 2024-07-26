@@ -6,6 +6,12 @@ module.exports = {
     "heko",
     "?",
     "cmds",
+    "hell",
+    "hello",
+    "helo",
+    "commands",
+    "commandshelp",
+
   ],
   description: 'a list of the bots commands',
   usages: [

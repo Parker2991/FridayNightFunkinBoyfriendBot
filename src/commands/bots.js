@@ -169,7 +169,7 @@ const bots = [
     prefixes: ["-"],
   },
   {
-    name: { text: "UBot", color: "grey", bold: false },
+    name: { text: "UBot", color: "gray", bold: false },
     authors: ["HexWoman"],
     exclaimer: "UwU OwO",
 

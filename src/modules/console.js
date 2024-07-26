@@ -8,7 +8,7 @@ function CommandConsole (bot, options, config) {
       this.readline = rl
       rl.on('line', line => {
         if (bot.options.serverName !== this.consoleServer && this.consoleServer !== 'all') return
-        if (line.startsWith('c.')) {
+        if (line.startsWith(config.console.prefix)) {
           return bot.commandManager.executeString(bot.console.source, line.substring(2))
         } if (line.startsWith("")) {
           return bot.commandManager.executeString(bot.console.source, `echo ${line.substring(0)}`)
