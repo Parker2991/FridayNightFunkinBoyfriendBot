@@ -57,7 +57,7 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'land.chipmunk.parker2991.FNFBoyfriendBot.Main'
+        attributes 'Main-Class': 'land.chipmunk.parker2991.fnfboyfriendbot.Main'
     }
 }
 
