@@ -20,12 +20,6 @@ function command_manager (bot, options, config, discordClient) {
           }
         } else if (!source?.sources?.discord && !source?.sources?.console) {
           if (!command || !command.execute)
-         /* throw new CommandError({
-            translate: "Unknown command: %s",
-            with: [
-              commandName
-            ]
-          })*/
           throw new CommandError(
             bot.getMessageAsPrismarine([
               {
@@ -41,6 +35,25 @@ function command_manager (bot, options, config, discordClient) {
                 translate: "command.context.here"
               }])?.toMotd(bot.registry.language)
           )
+        } else if (source?.sources?.console && !source?.sources?.discord) {
+          if (!command || !command.execute)
+          bot.console.warn(bot.getMessageAsPrismarine([
+            {
+              translate: 'command.unknown.command',
+              color: "dark_red"
+            },
+            {
+              text: "\n",
+            },
+            {
+              text: `${commandName}`,
+              color: "dark_red"
+            },
+            {
+              translate: "command.context.here",
+              color: "dark_red"
+            }
+          ])?.toAnsi())
         }
         if (command?.trustLevel > 0) {
           const event = bot?.discord?.message;

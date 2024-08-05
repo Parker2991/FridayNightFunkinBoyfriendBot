@@ -13,5 +13,10 @@ module.exports = {
     const bot = context.bot
     bot.core.refill()
     bot.tellraw("@a", "Refilling core,...")
+  },
+  discordExecute (context) {
+    const bot = context.bot;
+    bot.core.refill();
+    bot.tellraw("@a", "Refilling core,...");
   }
 }

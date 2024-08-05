@@ -20,9 +20,11 @@ module.exports = {
   description: 'check the bots info',
   usages: [
     "version",
-    "login",
+    "config",
     "discord",
     "server",
+    "serverlist",
+    "contributors"
   ],
   execute (context) {
     const bot = context.bot;
@@ -32,18 +34,58 @@ module.exports = {
     const source = context.source;
     switch (args[0]) {
       case 'version':
-        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-v6.0.0-alpha-700-§bSk§4y §bRedux\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
+        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-v6.0.0-beta-700-§bSk§4y §bRedux\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
       break // &9 &3 &1
-      case 'login':
+      case 'config':
         bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
                       {
                         text: `Minecraft username \u203a ${bot.options.username}\n`,
                         color: 'gray',
                       },
                       {
-                        text: `Discord username \u203a ${discordClient.user.tag}`,
+                        text: `Ip \u203a ${bot.options.host}:${bot.options.port}\n`,
+                        color: "gray"
+                      },
+                      {
+                        text: `Version \u203a ${bot.options.version}\n`,
+                        color: "gray",
+                      },
+                      {
+                        text: `Discord username \u203a ${discordClient.user.tag}\n`,
                         color: 'gray',
-                      }
+                      },
+                      {
+                        text: `Channel \u203a ${bot.discord.channel?.name}\n`,
+                        color: "gray"
+                      },
+                      {
+                        text: `Server name \u203a ${bot.options.serverName}\n`,
+                        color: "gray",
+                      },
+                      {
+                        text: `Server count \u203a ${bot.bots.length}\n`,
+                        color: "gray"
+                      },
+                      {
+                        text: `Prefixes \u203a ${config.prefixes.map((e) => e + " ").join(' ')}\n`,
+                        color: "gray"
+                      },
+                      {
+                        text: `Prefix Length: ${config.prefixes.length}\n`,
+                        color: "gray"
+                      },
+                      {
+                        text: `isKaboom \u203a ${bot.options.isKaboom}\n`,
+                        color: "gray",
+                      },
+                      {
+                        text: `isCreayun \u203a ${bot.options.isCreayun}\n`,
+                        color: "gray",
+                      },
+                      {
+                        text: `isSavage \u203a ${bot.options.isSavage}\n`,
+                        color: "gray",
+                      },
         ]);
       break;
       case 'discord':
@@ -129,6 +171,61 @@ module.exports = {
           }
         ])
       break
+      case "serverlist":
+        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
+          {
+            text: "Servers \u203a\n",
+            color: "gray"
+          },
+          bot.bots.map((e) => e.options.serverName + "\n")
+        ])
+      break
+      case "contributors":
+      bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
+        {
+          text: "Parker",
+          color: "dark_red",
+        },
+        {
+          text: "2991",
+          color: "black"
+        },
+        {
+           text: " - Owner\n",
+           color: "gray"
+        },
+        {
+           text: "Contributors -\n",
+           color: "gray",
+        },
+        {
+           text: "_ChipMC_ - ChipmunkBot js & java\n",
+           color: "dark_blue"
+        },
+        {
+           text: "chayapak - ChomeNS js & java\n",
+           color: "yellow"
+        },
+        {
+           text: "_yfd - abot\n",
+           color: "light_purple"
+        },
+        {
+           text: "aaa - FBot, SnifferBot, Xbot\n",
+           color: "gold",
+        },
+        {
+           text: "Morgan Ankan - RecycleBot\n",
+           color: "dark_green"
+        },
+        {
+           text: "TurtleKid - TurtleBot",
+           color: "dark_green"
+        },
+      ])
+      break
+      default:
+      bot.chat.message(bot.getMessageAsPrismarine({ translate: "command.unknown.argument", color: "dark_red" })?.toMotd().replaceAll("§","&"))
     }
   }
 }

@@ -30,7 +30,7 @@ module.exports = {
    if (!list.length) {
      bot.tellraw('@a', { text: 'No results found', color: 'dark_red' });
    }
-   for (const definitions of list) {
+   for (definitions of list) {
      component.push(prefix, [
                     {
                       text: `${definitions.definition.replaceAll('\r','').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}\n`,
@@ -70,7 +70,14 @@ module.exports = {
                     },
        ])
     }
+    if (bot.options.useChat) {
+      for (const definitions of list) {
+        bot.chat.message(bot.getMessageAsPrismarine({ text: `${definitions.example.replaceAll('\r','').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}\n`})?.toMotd().replaceAll("§","&"));
+//        bot.chat.message(definitions.example.replaceAll("\r", ""));
+      }
+    } else {
     bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, component)
+    }
   },
   async discordExecute (context) {
     const bot = context.bot;

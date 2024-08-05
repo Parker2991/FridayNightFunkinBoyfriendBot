@@ -142,7 +142,11 @@ function discord(bot, options, config, discordClient) {
         }])
       })
     } else {
+      if (options.useChat || options.isSavage || options.isCreayun) {
+        bot.chat.message(bot.getMessageAsPrismarine(`&7[&9FNF&3Boyfriend&1Bot Discord&7] ${message?.member?.displayName} \u203a ${message?.content}`)?.toMotd().replaceAll('§','&'))
+      } else {
         bot.tellraw('@a', tag);
+      }
     }
   }
   discordClient.on('messageCreate', messageCreate)

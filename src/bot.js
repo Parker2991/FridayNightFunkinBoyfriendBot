@@ -34,6 +34,7 @@ function createBot(options = {}) {
     client.on('error', error => {
 //      bot.emit('error', error)
       console.log(error.toString())
+      bot?.discord?.channel?.send(error.toString())
     })
 
     client.on("keep_alive", ({ keepAliveId }) => {

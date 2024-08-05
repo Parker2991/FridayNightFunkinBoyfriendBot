@@ -12,6 +12,6 @@ module.exports = {
   execute (context) {
     const bot = context.bot
     const message = context.arguments.join(' ')
-    bot._client.end() 
+    bot._client.end("disconnect :3")
   }
 }

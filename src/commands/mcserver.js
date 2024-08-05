@@ -1,11 +1,13 @@
 const { request } = require('undici');
 const CommandError = require('../util/command_error.js');
+const mc = require('minecraft-protocol');
+const util = require('util')
 module.exports = {
   name: 'mcserver',
   trustLevel: 0,
   aliases: [
     "pingserver",
-//    "botsay",
+    "pingsrv",
   ],
   description: 'look up minecraft server info',
   usages: [
@@ -17,12 +19,11 @@ module.exports = {
     const args = context.arguments;
     const source = context.source;
     try {
-     const url = await request(`https://eu.mc-api.net/v3/server/ping/${args[0]}`)
-     server = await url.body.json()
-     console.log(server)
-     bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
+      const [host, port] = args[0].split(':')
+      const server = await mc.ping({ host, port: Number(port ?? 25565) })
+      bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
                    {
-                     text: `Ip \u203a ${args[0]}\n`,
+                     text: `Ip \u203a ${host}:${Number(port ?? 25565)}\n`,
                      color: 'gray'
                    },
                    {
@@ -38,13 +39,9 @@ module.exports = {
                      color: 'gray',
                    },
                    server.description,
-     ])// error: 'Ping Failed',
-    } catch (error) {
-      if (error.toString() === "TypeError: Cannot read properties of undefined (reading 'online')" || server.error === "Ping Failed") {
-        bot.tellraw("@a", { text: 'unable to ping server make sure the ip is correct', color: 'dark_red' })
-      } else {
-        bot.tellraw("@a", error.toString())
-      }
+       ])
+    } catch (e) {
+      bot.tellraw("@a", e.toString())
     }
   }
 }

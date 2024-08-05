@@ -20,6 +20,8 @@ module.exports = {
     try {
       if (source.sources.console) {
         bot.console.logs(bot.getMessageAsPrismarine({ text: util.inspect(eval(args.join(' ')), { stylize })})?.toAnsi())
+      } else if (bot.options.useChat ?? bot.options.isSavage) {
+        bot.chat.message(bot.getMessageAsPrismarine({ text: util.inspect(eval(script), { stylize }).substring(0, 32700) })?.toMotd().replaceAll('§','&'))
       } else {
         bot.tellraw(`@a[name="${source.player.profile.name}"]`, [
                    {

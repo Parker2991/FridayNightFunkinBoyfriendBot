@@ -14,11 +14,12 @@ module.exports = {
   ],
   execute (context) {
     const bot = context.bot
-    const message = context.arguments.join(' ')
-    if (message.startsWith('/')) {
-      bot.core.run(message.substring(1))
-      return
-    }
+    const message = context.arguments.join(' ');
     bot.core.run(message)
+  },
+  discordExecute (context) {
+    const bot = context.bot;
+    const args = context.arguments;
+    bot.core.run(args.join(' '));
   }
 }

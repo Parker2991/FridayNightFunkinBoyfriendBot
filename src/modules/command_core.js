@@ -11,7 +11,7 @@ function core (bot, options, config) {
       const { start, end } = bot.core.area
 
       if (!pos) return
-//      if (bot.options.useChat ?? bot.options.isCreayun ?? bot.options.isSavage) return
+      if (bot.options.useChat ?? bot.options.isCreayun ?? bot.options.isSavage) return
       bot.chat.command(`minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${JSON.stringify(config.core.name)}'}`)
     },
 
@@ -58,7 +58,7 @@ function core (bot, options, config) {
       const location = bot.core.currentBlock()
       if (!location) return
       if (bot.options.useChat ?? bot.options.isCreayun ?? bot.options.isSavage) {
-        return
+        bot.chat.command(command?.substring(0, 256))
       } else {
         bot._client.write('update_command_block', { command: command.substring(0, 32767), location, mode: 1, flags: 0b100 })
         bot.core.incrementCurrentBlock()

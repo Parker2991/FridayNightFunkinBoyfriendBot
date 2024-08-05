@@ -18,5 +18,14 @@ module.exports = {
       return
     }
     bot.chat.message(message)
+  },
+  discordExecute (context) {
+    const bot = context.bot;
+    const args = context.arguments;
+    if (args.join(' ').startsWith('/')) {
+      bot.chat.command(args.join(' ').substring(1))
+      return
+    }
+    bot.chat.message(args.join(' '))
   }
 }
