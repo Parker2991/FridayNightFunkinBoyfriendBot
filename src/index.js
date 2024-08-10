@@ -27,15 +27,10 @@ const rl = readline.createInterface({
 })
 if (config.discord.enabled) discordClient.login(config.discord.token);
 const bots = [];
-for (const options of config.bots) {
-  const bot = createBot(options);
+for (options of config.bots) {
+  bot = createBot(options);
   bots.push(bot);
   bot.bots = bots;
-/*  if (!config.discord.enabled) {
-    return
-  } else {
-    discordClient.login(config.discord.token);
-  }*/
   loadModules(bot, options, config, discordClient);
   bot.console.useReadlineInterface(rl);
 }
