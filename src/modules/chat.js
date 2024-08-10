@@ -3,7 +3,8 @@ const KaboomChatParser = require('../util/ChatParsers/Kaboom');
 const ChipmunkModChatParser = require('../util/ChatParsers/ChipmunkMod');
 const CreayunChatParser = require('../util/ChatParsers/Creayun');
 const sayConsoleChatParser = require('../util/ChatParsers/sayConsole');
-const VanillaChatParser = require("../util/ChatParsers/VanillaChat")
+const VanillaChatParser = require("../util/ChatParsers/VanillaChat");
+const nbt = require('prismarine-nbt');
 function tryParse (json) {
   try {
     return JSON.parse(json)
@@ -25,7 +26,7 @@ function chat (bot, options, config) {
   bot.on('packet.profileless_chat', packet => {
     const message = tryParse(packet.message)
     const sender = tryParse(packet.name)
-
+//    bot.tellraw("@a", `Packet type ${packet.type}`)
     bot.emit('profileless_chat', {
       message,
       type: packet.type,
@@ -38,12 +39,13 @@ function chat (bot, options, config) {
     if (packet.type === 3) bot.emit('message', bot.getMessageAsPrismarine({"translate":"commands.message.display.outgoing","with":[`${translateUsername}`,`${translateMessage}`],"color":"gray","italic":true})?.toMotd())
     if (packet.type === 4) bot.emit('message', message);
     if (packet.type === 5) bot.emit('message', bot.getMessageAsPrismarine({translate:"chat.type.announcement",color:'white', with:[`${translateUsername}`,`${translateMessage}`]})?.toMotd())
-
     tryParsingMessage(message, { senderName: sender, players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine })
   })
 
   bot.on('packet.player_chat', (packet, data) => {
     const unsigned = tryParse(packet.unsignedChatContent)
+//    const unsigned = JSON.parse(loadPrismarineChat.processNbtMessage(nbt.comp(nbt.string(packet.unsignedChatContent))))
+//    const unsigned = loadPrismarineChat.processNbtMessage(tryParse(packet.unsignedChatContent))
     bot.emit('player_chat', { plain: packet.plainMessage, unsigned, senderUuid: packet.senderUuid })
     if (packet.type === 5) bot.emit('message', bot.getMessageAsPrismarine({ translate: "chat.type.announcement", with: [`${bot.players.find(player => player.uuid === packet.senderUuid).profile.name}`, `${packet.plainMessage}`]})?.toMotd())
     if (packet.type !== 5) bot.emit("message", unsigned)

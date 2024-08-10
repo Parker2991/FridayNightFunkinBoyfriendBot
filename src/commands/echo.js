@@ -12,7 +12,6 @@ module.exports = {
   execute (context) {
     const bot = context.bot
     const message = context.arguments.join(' ')
-
     if (message.startsWith('/')) {
       bot.chat.command(message.substring(1))
       return

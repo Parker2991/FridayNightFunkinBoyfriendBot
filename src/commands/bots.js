@@ -222,7 +222,7 @@ const bots = [
     foundation: "NodeJS/node-minecraft-protocol",
     prefixes: ["["],
   },
-  {
+/*  {
     name: [
       { text: "Blurry", color: "dark_purple", bold: false },
       { text: "Bot", color: "red" },
@@ -231,7 +231,7 @@ const bots = [
     authors: ["SirLennox"],
     foundation: "Java/custom",
     prefixes: [","],
-  },
+  },*/
   {
     name: [{ text: "SnifferBot", color: "gold", bold: false }],
     exclaimer: "sniff sniff FNFBoyfriendBot simp",

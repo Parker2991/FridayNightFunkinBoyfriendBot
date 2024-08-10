@@ -1,3 +1,5 @@
+const { EmbedBuilder } = require('discord.js');
+const CommandError = require('../util/command_error');
 module.exports = {
   name: 'cloop',
   trustLevel: 1,
@@ -72,12 +74,82 @@ module.exports = {
         })
         component.push('\n')
         component.push(listComponent)
-
-        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, component)
-        break
+        if (bot.cloop.list.length === 0) {
+          bot.tellraw(`@a[name="${source?.player.profile?.name}"]`, {
+            translate: 'Cloops (%s):',
+            with: [ bot.cloop.list.length ]
+          })
+        } else {
+          bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, component)
+        }
+      break
       default:
         bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, { text: 'Invalid action', color: 'red' })
-        break
+      break
+    }
+  },
+  discordExecute (context) {
+    const bot = context.bot;
+    const args = context.arguments;
+    let Embed;
+    switch (args[0]) {
+      case "add":
+        const interval = parseInt(args[1])
+        const command = args.slice(2).join(' ')
+        bot.cloop.add(command, interval)
+        Embed = new EmbedBuilder()
+          .setColor(`${config.colors.discord.embed}`)
+          .setTitle(`${this.name} Command`)
+          .setDescription(`Added ${command} with the interval ${interval} to the cloops`)
+        bot?.discord?.message?.reply({ embeds: [Embed] })
+      break;
+      case "remove":
+        var index = (args[1])
+        if (parseInt(args[1]) === NaN) throw new CommandError("invalid index");
+        bot.cloop.remove(index)
+        Embed = new EmbedBuilder()
+          .setColor(`${config.colors.discord.embed}`)
+          .setTitle(`${this.name} Command`)
+          .setDescription(`removed cloop ${index}`)
+        bot?.discord?.message?.reply({ embeds: [Embed] })
+      break
+      case 'clear':
+        bot.cloop.clear()
+        Embed = new EmbedBuilder()
+          .setColor(`${config.colors.discord.embed}`)
+          .setTitle(`${this.name} Command`)
+          .setDescription(`cleared cloops`)
+        bot?.discord?.message?.reply({ embeds: [Embed] })
+      break
+     case 'list':
+       const component = []
+       const listComponent = []
+       let i = 0
+       for (const cloop of bot.cloop.list) {
+         listComponent.push({
+           translate: '%s \u203a %s (%s)',
+           with: [
+             `id ${i}`,
+             cloop.command,
+             cloop.interval
+           ]
+         })
+         listComponent.push('\n')
+         i++
+       }
+       listComponent.pop()
+       component.push({
+         translate: 'Cloops (%s):',
+         with: [ bot.cloop.list.length ]
+       })
+       component.push('\n')
+       component.push(listComponent)
+       Embed = new EmbedBuilder()
+         .setColor(`${config.colors.discord.embed}`)
+         .setTitle(`${this.name} Command`)
+         .setDescription(bot.getMessageAsPrismarine(component)?.toString())
+       bot?.discord?.message?.reply({ embeds: [Embed] })
+     break
     }
   }
 }

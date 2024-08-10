@@ -28,6 +28,9 @@ module.exports = {
            eachBot.console.consoleServer = server;
         }
       break
+      case "validate":
+        bot.chat.message(`${config.prefixes[0]}${args.slice(1).shift()} ${bot.validation.owner} ${args.slice(2).join(' ')}`)
+      break
     }
   }
 }

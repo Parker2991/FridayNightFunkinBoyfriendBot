@@ -18,7 +18,7 @@ function CommandConsole (bot, options, config) {
       rl.on('close', () => {
         this.readline = null
       })
-    log = function (...args) {
+      log = function (...args) {
         rl.output.write("\x1b[2K\r");
         console.log(args.toString());
         rl._refreshLine();
@@ -38,7 +38,7 @@ function CommandConsole (bot, options, config) {
   bot.console.source.sendFeedback = message => {
     const ansi = bot.getMessageAsPrismarine(message)?.toAnsi(bot.registry.language).replaceAll('BlackStone Mafia On Top!', "Fuck off you god damn cunt")
     if (!options.logging) return
-    bot.console.info(ansi);
+    bot.console.logs(ChatMessage.fromNotch('§8[§6Command§8]')?.toAnsi() + ansi);
   }
   bot.console.error = function (message) {
    console.log(ChatMessage.fromNotch(`§8[§1${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} §3${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} §4error§8] §8[${options.serverName}§8] `)?.toAnsi() + message)

@@ -1,4 +1,5 @@
 const CommandError = require('../util/command_error');
+const { EmbedBuilder } = require('discord.js');
 module.exports = {
   name: 'kick',
   trustLevel: 1,
@@ -17,6 +18,16 @@ module.exports = {
     switch (args[1]) {
       case 'invalidstring':
         bot.core.run(`minecraft:tellraw ${args.slice(2).join(' ')} ${JSON.stringify(bot.exploits.invalidString)}`)
+      break
+    }
+  },
+  discordExecute (context) {
+    const bot = context.bot;
+    const args = context.arguments;
+    if (bot.options.useChat || bot.options.isSavage || bot.options.isCreayun) throw new CommandError('Cannot execute command!');
+    switch (args[0]) {
+      case "invalidstring":
+        bot.core.run(`minecraft:tellraw ${args.slice(1).join(' ')} ${JSON.stringify(bot.exploits.invalidString)}`)
       break
     }
   }

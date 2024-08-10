@@ -34,7 +34,7 @@ module.exports = {
     const source = context.source;
     switch (args[0]) {
       case 'version':
-        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-v6.0.0-beta-700-§bSk§4y §bRedux\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
+        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-v6.0.0-beta-#800-§#fe019aGraffiti §7Groovin\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
       break // &9 &3 &1
       case 'config':
         bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [

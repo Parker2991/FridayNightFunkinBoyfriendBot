@@ -7,11 +7,10 @@ module.exports = {
   aliases:['urbandictionary'],
   trustLevel: 0,
   usage:[
-    "all <definition>",
-    "single <definition>",
+    "<definition>",
   ],
   usages: [
-    "<definition",
+    "<definition>",
   ],
   async execute (context) {
     const source = context.source
@@ -42,20 +41,20 @@ module.exports = {
                         action:"show_text",
                         value: [
                           {
-                           text: `Example \u203a \n ${definitions.example.replaceAll('\r', '').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}`,
-                           color: 'dark_blue'
+                           text: `Example \u203a \n ${definitions.example.replaceAll('\r', '').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}\n`,
+                           color: 'gray'
                           },
                           {
                            text: `Word \u203a ${definitions.word.replaceAll('\r', '').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}\n`,
-                           color: 'dark_blue',
+                           color: 'gray',
                           },
                           {
                            text: `Author \u203a ${definitions.author.replaceAll('\r', '').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}\n`,
-                           color: 'dark_blue'
+                           color: 'gray'
                           },
                           {
                            text: `written on \u203a ${definitions.written_on.replaceAll('\r', '').replaceAll('[', '\xa71\xa7n\xa7o').replaceAll(']','\xa7r\xa77')}\n`,
-                           color: 'dark_blue'
+                           color: 'gray'
                           },
                           {
                            text: `Rating \u203a Thumbs-Up ${definitions.thumbs_up} / Thumbs-Down ${definitions.thumbs_down}`,

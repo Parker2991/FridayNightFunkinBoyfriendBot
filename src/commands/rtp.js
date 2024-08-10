@@ -3,7 +3,7 @@ const CommandError = require('../util/command_error')
 module.exports = {
   name: 'tpr',
   description:['teleport to a random place'],
-  trustLevel: 0,
+  trustLevel: 1,
   aliases:['rtp', 'teleportrandom', 'randomteleport'],
   usage:[""],
   async execute (context) {

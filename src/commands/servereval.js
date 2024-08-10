@@ -6,7 +6,7 @@ module.exports = {
   trustLevel: 2,
   aliases: [
   ],
-  description: 'run commands unisolated',
+  description: 'run code unisolated',
   usages: [
     "<code>",
   ],

@@ -1,0 +1,5 @@
+1. add discord hashes back to the bot (v6.0.0-beta)
+2. add a reset interval to cloops (v6.0.0-beta)
+3. finish useChat (v6.0.1)
+4. finish isSavage (v6.0.2)
+5. start working on isCreayun (v6.0.7) fuck you creayun

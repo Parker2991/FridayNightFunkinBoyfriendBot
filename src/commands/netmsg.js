@@ -16,10 +16,11 @@ module.exports = {
 //throw new CommandError('ohio')
     const component = {
       translate: '[%s] %s \u203a %s',
+      color: "dark_gray",
       with: [
-        bot.options.serverName,
+        { text: bot.options.serverName, color: "gray" },
         source.player.displayName ?? source.player.profile.name,
-        args.join(' ')
+        { text: args.join(' '), color: "gray" },
       ]
     }
 //  bot.bots.filter((eachBot) => { if (eachBot.options.useChat) eachBot.chat.message('sussy'); 

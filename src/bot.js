@@ -12,7 +12,7 @@ function createBot(options = {}) {
     hideErrors: options.hideErrors ??= true, // HACK: Hide errors by default as a lazy fix to console being spammed with them
   };
   bot.options = options
-
+  const ChatMessage = require('prismarine-chat')(bot.options.version);
   // Create our client object, put it on the bot, and register some events
   bot.on('init_client', client => {
     client.on('packet', (data, meta) => {
@@ -33,7 +33,8 @@ function createBot(options = {}) {
 
     client.on('error', error => {
 //      bot.emit('error', error)
-      console.log(error.toString())
+//      console.log(error.toString())
+      bot.console.logs(ChatMessage.fromNotch('§8[§bClient Reconnect§8]§r ')?.toAnsi() + error.toString())
       bot?.discord?.channel?.send(error.toString())
     })
 
@@ -43,10 +44,11 @@ function createBot(options = {}) {
 
     client.on('kick_disconnect', (data) => {
       bot.emit("kick_disconnect", data.reason)
+      bot.console.logs(ChatMessage.fromNotch('§8[§bClient Reconnect§8]§r ')?.toAnsi() + data.toString())
     })
 
     process.on("uncaughtException", (e) => {
-      console?.warn(e.stack)
+//      console?.warn(e.stack)
     });
   })
 

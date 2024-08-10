@@ -129,7 +129,9 @@ function command_manager (bot, options, config, discordClient) {
         command.aliases.map((a) => (this.commands[a] = command));
       }
     },
-
+    unregister (command) {
+      this.commands = {}
+    },
     getCommand (name) {
       return this.commands[name]
     },
@@ -169,5 +171,23 @@ function command_manager (bot, options, config, discordClient) {
       }
     })
   })
+  bot.commandManager.reload = function () {
+    commandlist = [];
+    for (const filename of fs.readdirSync(path.join(__dirname, "../commands"))) {
+      try {
+        delete require.cache[require.resolve(path.join(__dirname, "../commands", filename))]
+        const command = require(path.join(__dirname, "../commands", filename));
+//        bot.commandManager.unregister(command);
+//        this.commands = {};
+        bot.commandManager.register(command);
+        bot.commandManager.commandlist.pop(command);
+    //    bot.commandManager.register(command);
+        bot.commandManager.commandlist.push(command)
+      } catch (error) {
+        bot.console.error(["Failed to load File ", filename, ":", error.stack])
+        bot.tellraw("@a", { text: `Failed to reload file ${filename}\n${error.stack}`, color: "red" })
+      }
+    }
+  }
 }
 module.exports = command_manager;
