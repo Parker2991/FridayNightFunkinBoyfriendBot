@@ -27,19 +27,22 @@ module.exports = {
     const source = context.source;
     const args = context.arguments;
     const category = {
-      translate: '(%s%s%s%s%s) \u203a ',
+      translate: '(%s%s%s%s%s%s%s) \u203a ',
       bold: false,
       color: 'gray',
       with: [
-        { color: "blue", text: 'Public'},
+        { color: "aqua", text: 'Public'},
            { color: "gray", text: ' | '},
         { color: "dark_aqua", text: 'Trusted'},
            { color: 'gray', text: ' | '},
+        { color: "blue", text: "Admin" },
+          { color: "gray", text: " | " },
         { color: "dark_blue", text: 'Owner'},
       ]
     }
     let public = [];
     let trusted = [];
+    let admin = [];
     let owner = [];
     for (const command of bot.commandManager.commandlist) {
       if (args[0] === command.name) {
@@ -76,7 +79,7 @@ module.exports = {
         public.push([
                       {
                         text: command.name + ' ',
-                        color: "blue",
+                        color: "aqua",
                         translate: "",
                         hoverEvent:{
                           action:"show_text",
@@ -147,6 +150,43 @@ module.exports = {
                       }
         ])
       } else if (command.trustLevel === 2) {
+        admin.push([
+                      {
+                        text: command.name + ' ',
+                        color: "blue",
+                        translate: "",
+                        hoverEvent:{
+                          action:"show_text",
+                            value:[
+                                    {
+                                      text: `Command:${command.name}\n`,
+                                      color: 'gray'
+                                    },
+                                    {
+                                      text: `Trust Level: `,
+                                      color: 'gray'
+                                    },
+                                    {
+                                      text: `${command.trustLevel}\n`,
+                                      color: 'red'
+                                    },
+                                    {
+                                      text: `${command.description}\n`,
+                                     color: 'gray'
+                                    },
+                                    {
+                                      text: `Command Aliases: ${command.aliases}\n`,
+                                      color: 'gray'
+                                    },
+                                    {
+                                      text: 'click on me to use me :)',
+                                      color: 'gray',
+                                    },
+                                ],
+                        }
+                      }
+        ])
+      } else if (command.trustLevel === 3) {
         owner.push([
                       {
                         text: command.name + ' ',
@@ -185,7 +225,7 @@ module.exports = {
         ])
       }
     }
-    const length = bot.commandManager.commandlist.filter(c => c.trustLevel != 3).length
+    const length = bot.commandManager.commandlist.filter(c => c.trustLevel != 4).length
     if (bot.options.useChat) {
       bot.chat.message(bot.getMessageAsPrismarine([
           {
@@ -217,6 +257,7 @@ module.exports = {
                   '\n',
                   public,
                   trusted,
+                  admin,
                   owner
       ])
     }
@@ -266,7 +307,7 @@ module.exports = {
                        }
 
         ])
-      } else if (command?.trustLevel === 2) {
+      } else if (command?.trustLevel === 3) {
         owner.push([
                       {
                         text: command.name + ' ',

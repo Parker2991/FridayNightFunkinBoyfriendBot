@@ -57,8 +57,8 @@ function core (bot, options, config) {
     run (command) {
       const location = bot.core.currentBlock()
       if (!location) return
-      if (bot.options.useChat ?? bot.options.isCreayun ?? bot.options.isSavage) {
-        bot.chat.command(command?.substring(0, 256))
+      if (bot.options.isSavage || bot.options.isCreayun || bot.options.useChat) {
+        bot.chat.command(`${command?.substring(0, 256)}`)
       } else {
         bot._client.write('update_command_block', { command: command.substring(0, 32767), location, mode: 1, flags: 0b100 })
         bot.core.incrementCurrentBlock()

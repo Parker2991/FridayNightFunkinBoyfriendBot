@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 module.exports = {
   name: 'xml',
-  trustLevel: 2,
+  trustLevel: 3,
   aliases: [
   ],
   description: 'eval xml shit',

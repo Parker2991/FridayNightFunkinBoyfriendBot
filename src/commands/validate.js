@@ -13,10 +13,28 @@ module.exports = {
     const bot = context.bot;
     const args = context.arguments;
     const source = context.source;
+/*    if (args[0] === bot.validation.trusted) {
+      if (bot.options.isSavage) {
+        bot.chat.message('&2Valid Trusted hash');
+      } else {
+        bot.tellraw(`@a`, { text: "Valid Trusted hash", color: "dark_green" });
+      }
+    }
+    if (args[0] === bot.validation.owner) {
+      if (bot.options.isSavage) {
+        bot.chat.message("&2Valid Owner hash");
+      } else {
+        bot.tellraw(`@a`, { text: "Valid Owner hash", color: "dark_green" });
+      }
+    }*/
     if (args[0] === bot.validation.trusted) {
-      bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, { text: "Valid Trusted hash", color: "dark_green" });
-    } if (args[0] === bot.validation.owner) {
-      bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, { text: "Valid Owner hash", color: "dark_green" });
+      bot.chat.message('&2Valid Trusted hash');
+    }
+    if (args[0] === bot.validation.admin) {
+      bot.chat.message('&2Valid Admin hash');
+    }
+    if (args[0] === bot.validation.owner) {
+      bot.chat.message('&2Valid Owner hash');
     }
   },
   discordExecute (context) {

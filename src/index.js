@@ -27,8 +27,8 @@ const rl = readline.createInterface({
 })
 if (config.discord.enabled) discordClient.login(config.discord.token);
 const bots = [];
-for (options of config.bots) {
-  bot = createBot(options);
+for (const options of config.bots) {
+  const bot = createBot(options, config);
   bots.push(bot);
   bot.bots = bots;
   loadModules(bot, options, config, discordClient);

@@ -2,7 +2,7 @@ const CommandError = require('../util/command_error');
 const { EmbedBuilder } = require('discord.js');
 module.exports = {
   name: 'kick',
-  trustLevel: 1,
+  trustLevel: 2,
   aliases: [
   ],
   description: 'kick or crash players',
@@ -19,6 +19,8 @@ module.exports = {
       case 'invalidstring':
         bot.core.run(`minecraft:tellraw ${args.slice(2).join(' ')} ${JSON.stringify(bot.exploits.invalidString)}`)
       break
+      default:
+        bot.chat.message(bot.getMessageAsPrismarine({ translate: "command.unknown.argument", color: "dark_red" })?.toMotd().replaceAll("§","&"))
     }
   },
   discordExecute (context) {

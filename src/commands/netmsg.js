@@ -12,16 +12,28 @@ module.exports = {
   execute (context) {
     const args = context.arguments;
     const bot = context.bot;
-    const source = context.source
+    const source = context.source;
+    const config = context.config;
 //throw new CommandError('ohio')
-    const component = {
-      translate: '[%s] %s \u203a %s',
-      color: "dark_gray",
-      with: [
+    if (config.patches.netmsg) {
+      component = [
+        { text: '[', color: "dark_gray" },
         { text: bot.options.serverName, color: "gray" },
-        source.player.displayName ?? source.player.profile.name,
-        { text: args.join(' '), color: "gray" },
+        { text: "] ", color: "dark_gray" },
+        source.player.displayName,
+        { text: " \u203a ", color: "dark_gray", bold: false },
+        { text: args.join(' '), color: "gray", bold: false }
       ]
+    } else {
+      component = {
+        translate: '[%s] %s \u203a %s',
+        color: "dark_gray",
+        with: [
+          { text: bot.options.serverName, color: "gray" },
+          source.player.displayName ?? source.player.profile.name,
+          { text: args.join(' '), color: "gray" },
+        ]
+      }
     }
 //  bot.bots.filter((eachBot) => { if (eachBot.options.useChat) eachBot.chat.message('sussy'); 
 // else if (!eachBot.options.useChat) eachBot.chat.message('baka!')})
@@ -30,7 +42,6 @@ module.exports = {
     bot.bots.filter((eachBot) => {
       if (eachBot.options.serverName === "Savage Friends" && eachBot.options.isSavage && !eachBot.options.useChat && !eachBot.options.isKaboom) {
         eachBot.chat.message(`[${bot.options.serverName}] ${bot.getMessageAsPrismarine(source.player.displayName ?? source.player.profile.name)?.toMotd().replaceAll('§','&')} \u203a ${args.join(' ')}`)
-         
       } else if (!eachBot.options.serverName !== "Savage Friends" && !eachBot.options.isSavage && !eachBot.options.useChat && eachBot.options.isKaboom) {
         eachBot.tellraw("@a", component);
       } else if (!eachBot.options.serverName !== "Savage Friends" && !eachBot.options.isSavage && eachBot.options.useChat && eachBot.options.isKaboom) {

@@ -60,19 +60,24 @@ function command_manager (bot, options, config, discordClient) {
           const roles = event?.member?.roles?.cache;
           if (command?.trustLevel === 1 && !source?.sources?.discord) {
             const hash = args[0]
-            if (args.length === 0 && bot.validation.trusted && bot.validation.owner && !source.sources.console) throw new CommandError({ text: "Please provide an trusted or owner hash" })
-            if (args[0] !== bot.validation.trusted && args[0] !== bot.validation.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted or owner hash', color: 'dark_red' })
+            if (args.length === 0 && bot.validation.trusted && bot.validation.admin && bot.validation.owner && !source.sources.console) throw new CommandError({ text: "Please provide an trusted or and admin or an owner hash" })
+            if (args[0] !== bot.validation.trusted && args[0] !== bot.validation.admin && args[0] !== bot.validation.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted or admin or owner hash', color: 'dark_red' })
           } else if (command?.trustLevel === 1 && source?.sources.discord) {
             const hasRole = roles?.some(role => role.name === `${config.discord.roles.trusted}` || role.name === `${config.discord.roles.owner}`)
-            if (!hasRole) throw new CommandError({ translate: 'You are trusted or the owner!' })
+            if (!hasRole) throw new CommandError({ translate: 'You are not trusted or the owner!' })
           }
-          if (command?.trustLevel === 2 && !source.sources.discord && !source.sources.console) {
+          if (command?.trustLevel === 2 && !source.sources.console) {
+            // bot.chat.message('trust level 2 does nothing currently'); placeholder code
+            if (args.length === 0 && bot.validation.admin && bot.validation.owner && !source.sources.console) throw new CommandError({ text: "Please provide an trusted or owner hash" })
+            if (args[0] !== bot.validation.trusted && args[0] !== bot.validation.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted or owner hash', color: 'dark_red' })
+          }
+          if (command?.trustLevel === 3 && !source.sources.discord && !source.sources.console) {
             if (args.length === 0 && bot.validation.owner) throw new CommandError({ text: "Please provide an owner hash" })
             if (args[0] !== bot.validation.owner) throw new CommandError({ translate: 'Invalid owner hash', color: 'dark_red' })
-          } else if (command?.trustLevel === 2 && source.sources.discord && !source.sources.console) {
+          } else if (command?.trustLevel === 3 && source.sources.discord && !source.sources.console) {
             const hasRole = roles?.some(role => role.name === `${config.discord.roles.owner}`)
             if (!hasRole) throw new CommandError({ translate: 'You are not the owner!' })
-          } else if (command?.trustLevel === 3 && !source.sources.console) {
+          } else if (command?.trustLevel === 4 && !source.sources.console) {
             throw new CommandError('This command can only be ran via console');
           }
         } if (!command?.discordExecute && command && source.sources.discord) {
@@ -87,7 +92,6 @@ function command_manager (bot, options, config, discordClient) {
       } catch (error) {
         console.error(error)
         if (source?.sources?.discord && !source?.sources?.console) {
-    //      if (error instanceof CommandError) {
             const Embed = new EmbedBuilder()
                .setColor(`${config.colors.discord.error}`)
                .setTitle(`${command?.name} command`)
@@ -97,8 +101,6 @@ function command_manager (bot, options, config, discordClient) {
                 Embed
               ]
             })
-      //    }
-//            bot.tellraw("@a", { text: `${error.stack}`, color: "dark_red" })
         } else if (!source?.sources?.discord && !source?.sources?.console) {
           if (error instanceof CommandError)
           bot.tellraw("@a", { text: error.message, color: "dark_red" })
@@ -106,12 +108,6 @@ function command_manager (bot, options, config, discordClient) {
         }
       }
     },
-    /*        const Embed = new EmbedBuilder()
-          .setColor(`${bot.Commands.colors.discord.error}`)
-          .setTitle(`${command?.name} Command`)
-          .setDescription(`\`\`\`${error}\`\`\``)
-        bot.discord.Message.reply({ embeds: [Embed] }) 
-    */
     executeString (source, command) {
       const [commandName, ...args] = command.split(' ')
       return this.execute(source, commandName, args)
@@ -130,7 +126,8 @@ function command_manager (bot, options, config, discordClient) {
       }
     },
     unregister (command) {
-      this.commands = {}
+//      commands = {};
+      this.commands = {};
     },
     getCommand (name) {
       return this.commands[name]
@@ -173,6 +170,8 @@ function command_manager (bot, options, config, discordClient) {
   })
   bot.commandManager.reload = function () {
     commandlist = [];
+    bot.commandManager.unregister();
+    bot.commandManager.commandlist = [];
     for (const filename of fs.readdirSync(path.join(__dirname, "../commands"))) {
       try {
         delete require.cache[require.resolve(path.join(__dirname, "../commands", filename))]
@@ -180,7 +179,7 @@ function command_manager (bot, options, config, discordClient) {
 //        bot.commandManager.unregister(command);
 //        this.commands = {};
         bot.commandManager.register(command);
-        bot.commandManager.commandlist.pop(command);
+//        bot.commandManager.commandlist.pop(command);
     //    bot.commandManager.register(command);
         bot.commandManager.commandlist.push(command)
       } catch (error) {

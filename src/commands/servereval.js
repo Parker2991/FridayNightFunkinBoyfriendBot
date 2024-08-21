@@ -3,7 +3,7 @@ const { stylize } = require('../util/stylizeEval');
 const util = require('util');
 module.exports = {
   name: 'servereval',
-  trustLevel: 2,
+  trustLevel: 3,
   aliases: [
   ],
   description: 'run code unisolated',

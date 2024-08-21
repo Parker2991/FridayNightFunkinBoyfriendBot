@@ -35,7 +35,7 @@ module.exports = {
         console.log('statusCode:', res.statusCode);
         console.log('headers:', res.headers);
         res.on('data', (d) => {
-          bot.tellraw("@a", { text: util.inspect(d), color: "dark_green", })
+          bot.tellraw("@a", { text: util.inspect(d.toString()), color: "dark_green", })
         });
       }).on('error', (e) => {
         bot.chat.message(`&4${e.toString()}`);

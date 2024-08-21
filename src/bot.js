@@ -3,7 +3,8 @@ const { EventEmitter } = require('events')
 const fs = require('fs')
 const path = require('path')
 require("events").EventEmitter.defaultMaxListeners = Infinity;
-function createBot(options = {}) {
+const util = require('util');
+function createBot(options = {}, config) {
   const bot = new EventEmitter()
   bot.options = {
   // Set some default values in options
@@ -25,17 +26,22 @@ function createBot(options = {}) {
       bot.username = client.username
     })
     client.on('disconnect', (data) => {
-      bot.emit("disconnect", data.reason)
+      bot.emit("disconnect", JSON.stringify(data.reason))
+      bot?.discord?.channel?.send(util.inspect(data.reason))
+      if (config.console.filelogger) {
+        bot?.console?.filelogging(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ` + '[Client Reconnect] ' + util.inspect(data.reason))
+      }
     })
     client.on('end', reason => {
       bot.emit('end', reason);
     })
 
     client.on('error', error => {
-//      bot.emit('error', error)
-//      console.log(error.toString())
-      bot.console.logs(ChatMessage.fromNotch('§8[§bClient Reconnect§8]§r ')?.toAnsi() + error.toString())
+      bot.console.logs(ChatMessage.fromNotch('§8[§bClient Reconnect§8]§r ')?.toAnsi() + util.inspect(error.toString()))
       bot?.discord?.channel?.send(error.toString())
+      if (config.console.filelogger) {
+        bot?.console?.filelogging(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ` + '[Client Reconnect] ' + util.inspect(error.toString()))
+      }
     })
 
     client.on("keep_alive", ({ keepAliveId }) => {
@@ -44,7 +50,11 @@ function createBot(options = {}) {
 
     client.on('kick_disconnect', (data) => {
       bot.emit("kick_disconnect", data.reason)
-      bot.console.logs(ChatMessage.fromNotch('§8[§bClient Reconnect§8]§r ')?.toAnsi() + data.toString())
+      bot.console.logs(ChatMessage.fromNotch('§8[§bClient Reconnect§8]§r ')?.toAnsi() + util.inspect(data.reason))
+      bot?.discord?.channel?.send(util.inspect(data.reason))
+      if (config.console.filelogger) {
+        bot?.console?.filelogging(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ` + '[Client Reconnect] ' + util.inspect(data.reason))
+      }
     })
 
     process.on("uncaughtException", (e) => {

@@ -1,8 +1,9 @@
 module.exports = {
   name: 'kill',
-  trustLevel: 2,
+  trustLevel: 3,
   aliases: [
     "suicide",
+    "quit",
   ],
   description: 'kill the bots process',
   usages: [
