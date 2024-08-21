@@ -8,14 +8,10 @@ discord:
   token: "discord token here"
   prefix: "!"
   invite: "discord invite here"
-
-matrix:
-  token: "matrix token here"
-  invite: "matrix invite here"
-  prefix: "!"
-  hostUrl: "matrix instance url here"
-  userId: "@fnfboyfriendbot:localhost"
-  enabled: false
+  roles:
+    trusted: "trusted"
+    admin: "admin"
+    owner: "FNFBoyfriendBot Owner"
 
 core:
   name: {"translate":"outOfMemory.message"}
@@ -31,12 +27,17 @@ core:
 
 keys:
   trusted: "trusted key here"
+  admin: "admin key here"
   owner: "owner key here"
 
 colors:
   discord:
     embed: "#000000"
     error: "#FF0000"
+
+console:
+  prefix: "c."
+  filelogger: false
 
 bots:
   - host: "localhost"
@@ -46,7 +47,6 @@ bots:
     serverName: "localhost"
     reconnectDelay: 6000
     channelId: "discord channel id here"
-    roomId: "matrix room id here"
     logging: false
     useChat: false
     isKaboom: true
