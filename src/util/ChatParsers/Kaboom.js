@@ -1,6 +1,6 @@
 const util = require('util')
 
-function parseMessage (message, data) {
+function kaboom (message, data) {
   if (message === null || typeof message !== 'object') return
 
   if (message.text !== '' || !Array.isArray(message.extra) || message.extra.length < 3) return
@@ -38,4 +38,4 @@ function isSeparatorAt (children, start) {
   return (children[start]?.text === ':' || children[start]?.text === '\xa7f:') && children[start + 1]?.text  === ' ' 
 }
 
-module.exports = parseMessage
+module.exports = kaboom

@@ -8,7 +8,6 @@ const client = new Client({ intents: [Guilds, GuildMessages, MessageContent] })
 const util = require('util')
 
 function discord(bot, options, config, discordClient) {
-//  client.login(config.discord.token)
   if (!options?.channelId) {
     bot.discord = {
       invite: config.discord?.invite
@@ -40,8 +39,7 @@ function discord(bot, options, config, discordClient) {
     try {
       bot?.discord?.channel?.send(`\`\`\`ansi\n${discordQueue.join('\n').substring(0, 1984)}\n\`\`\``)
     } catch (error) {
-      bot.console.error(error.toString())
-
+      bot.console.warn(error.toString())
     }
     discordQueue = []
   }, 2000)

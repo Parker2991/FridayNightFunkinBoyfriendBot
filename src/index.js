@@ -33,10 +33,3 @@ for (const options of config.bots) {
   loadModules(bot, options, config, discordClient);
   bot.console.useReadlineInterface(rl);
 }
-/*config.bots.filter((options) => {
-  const bot = createBot(options, config);
-  bots.push(bot);
-  bot.bots = bots;
-  loadModules(bot, options, config, discordClient);
-  bot.console.useReadlineInterface(rl);
-})*/
