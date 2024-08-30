@@ -6,7 +6,7 @@ module.exports = {
   trustLevel: 1,
   aliases:['rtp', 'teleportrandom', 'randomteleport'],
   usage:[""],
-  async execute (context) {
+  execute (context) {
     const bot = context.bot
     const sender = context.source.player
     const source = context.source
@@ -15,6 +15,6 @@ module.exports = {
     const y = 100
     const z = between(-1_000_000, 1_000_000)
     bot.tellraw("@a", `Randomly Teleported: ${sender.profile.name} to x:${x} y:${y} z:${z} `)
-    bot.core.run(`tp ${sender.uuid} ${x} ${y} ${z}`)
+    bot.core.run(`minecraft:tp ${sender.profile.name} ${x} ${y} ${z}`)
   }
 }

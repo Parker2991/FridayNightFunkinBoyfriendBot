@@ -9,9 +9,9 @@ function CommandConsole (bot, options, config) {
       rl.on('line', line => {
         if (bot.options.serverName !== this.consoleServer && this.consoleServer !== 'all') return
         if (line.startsWith(config.console.prefix)) {
-          return bot.commandManager.executeString(bot.console.source, line.substring(2))
+          return bot.commandManager.executeString(bot.console.source, line.substring(config.console.prefix.length))
         } if (line.startsWith("")) {
-          return bot.commandManager.executeString(bot.console.source, `echo ${line.substring(0)}`)
+          return bot.commandManager.executeString(bot.console.source, `console say ${line.substring(0)}`)
         }
       })
 
@@ -42,6 +42,34 @@ function CommandConsole (bot, options, config) {
   }
   bot.console.error = function (message) {
    console.log(ChatMessage.fromNotch(`§8[§1${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} §3${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} §4error§8] §8[${options.serverName}§8] `)?.toAnsi() + message)
+  }
+  bot.console.customChat = {
+    enabled: false,
+    chat (message) {
+      const prefix = {
+        translate: '[%s] %s \u203a %s',
+        color:'dark_gray',
+          with: [
+            {
+              text: 'FNFBoyfriendBot Console',
+              color:'#00FFFF'
+            },
+            {
+              selector: `${bot.username}`, color:'#00FFFF',
+              clickEvent: { action: 'suggest_command', value:  '~help' }
+            },
+            {
+               text: '',
+               extra: [`${message}`],
+               color:'white'
+            },
+          ],
+          hoverEvent: { action:"show_text", value: 'FNF Sky is a fangirl but a simp for boyfriend confirmed??'},
+          clickEvent: 'https://doin-your.mom' ?
+          { action: 'open_url', value: 'https://doin-your.mom' } : undefined,
+      }
+      bot.tellraw('@a', prefix)
+    }
   }
   bot.on('message', message => {
     const ansi = bot.getMessageAsPrismarine(message)?.toAnsi(bot.registry.language).replaceAll('BlackStone Mafia On Top!', "Fuck off you god damn cunt")

@@ -23,7 +23,6 @@ try {
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
-//  prompt: `Boot success! type ${config.console.prefix}help for a list of commands`
 })
 if (config.discord.enabled) discordClient.login(config.discord.token);
 const bots = [];
@@ -34,3 +33,10 @@ for (const options of config.bots) {
   loadModules(bot, options, config, discordClient);
   bot.console.useReadlineInterface(rl);
 }
+/*config.bots.filter((options) => {
+  const bot = createBot(options, config);
+  bots.push(bot);
+  bot.bots = bots;
+  loadModules(bot, options, config, discordClient);
+  bot.console.useReadlineInterface(rl);
+})*/

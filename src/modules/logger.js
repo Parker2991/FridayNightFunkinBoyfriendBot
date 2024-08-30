@@ -15,15 +15,6 @@ function consolefilelogger(bot, options, message) {
   if (!fs.existsSync(path.join(__dirname, "../../logs"))) {
      fs.mkdirSync(path.join(__dirname, "../../logs"))
   }
-/*
-const {
-  createReadStream,
-  createWriteStream,
-} = require('node:fs');
-*/
-//  if (!bot.Console.filelogging) return;
-// ${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })}
-//  if (new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", }) === "10:45:00 PM") process.exit("daily reset");
   try {
     if (!fs.existsSync(logFolder)) {
       fs.mkdirSync(logFolder);
@@ -60,38 +51,10 @@ const {
       newFileName = path.join(logFolder, `${name}.log.gz`);
       counter++;
     }
-    // if (plainName !== timestamp) {
     compressFile(logFilePath, newFileName);
-    // }
   }
-
- // console?.info(
-   // `File logging: ${bot.Console.filelogging ? "enabled" : "disabled"}`
- // );
-//  if (!bot.Console.filelogging) return; // instead of using bot why not just use options cause you already defined it
-
-  // if (toFile) logStream.write(toWrite + '\n');
-
   bot.console.filelogging = function logging (message) {
-    logStream.write(message + "\n"); // toFile is not defined
+    logStream.write(message + "\n");
   };
-//  console.log(process.stdin.setEncoding('utf-8'))
 }
-
-/*
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-*/
 module.exports = consolefilelogger;
-/*
-child.stdin.setEncoding('utf-8');
-child.stdout.pipe(process.stdout);
-
-child.stdin.write("console.log('Hello from PhantomJS')\n");
-
-child.stdin.end();
-*/
-

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "cowsay": "^1.6.0",
     "cowsay2": "^2.0.4",
     "discord.js": "^14.11.0",
     "java-parser": "^2.3.2",
@@ -8,7 +9,6 @@
     "json5": "^2.2.3",
     "jvm": "^0.5.3",
     "man-db": "^1.0.3",
-    "matrix-js-sdk": "^31.5.0",
     "minecraft-data": "^3.36.1",
     "minecraft-protocol": "^1.47.0",
     "mojangson": "^2.0.4",

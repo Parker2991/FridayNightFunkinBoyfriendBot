@@ -2,7 +2,7 @@ const CommandError = require('../util/command_error');
 const { EmbedBuilder } = require('discord.js');
 module.exports = {
   name: 'kick',
-  trustLevel: 2,
+  trustLevel: 1,
   aliases: [
   ],
   description: 'kick or crash players',

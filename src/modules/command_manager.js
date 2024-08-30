@@ -91,6 +91,7 @@ function command_manager (bot, options, config, discordClient) {
         }
       } catch (error) {
         console.error(error)
+        bot?.console?.filelogging(error.stack);
         if (source?.sources?.discord && !source?.sources?.console) {
             const Embed = new EmbedBuilder()
                .setColor(`${config.colors.discord.error}`)
@@ -104,7 +105,7 @@ function command_manager (bot, options, config, discordClient) {
         } else if (!source?.sources?.discord && !source?.sources?.console) {
           if (error instanceof CommandError)
           bot.tellraw("@a", { text: error.message, color: "dark_red" })
-          else bot.tellraw("@a", bot.getMessageAsPrismarine({ translate: 'command.failed', color: "dark_red", hoverEvent: { action: 'show_text', contents: `${error.stack}` } })?.toMotd(bot.registry.language))
+          else bot.tellraw("@a", [{ translate: 'command.failed', color: "dark_red", hoverEvent: { action: 'show_text', contents: `${error.stack}` } }])
         }
       }
     },
@@ -146,6 +147,7 @@ function command_manager (bot, options, config, discordClient) {
       bot.commandManager.commandlist.push(command)
     } catch (error) {
       console.error('Failed to load command', filename, ':', error)
+      bot?.console.filelogging(error.stack)
     }
   }
   let ratelimit = 0;
@@ -169,22 +171,25 @@ function command_manager (bot, options, config, discordClient) {
     })
   })
   bot.commandManager.reload = function () {
-    commandlist = [];
-    bot.commandManager.unregister();
-    bot.commandManager.commandlist = [];
+    //commandlist = [];
+//    bot.commandManager.unregister();
+//    bot.commandManager.commandlist = [];
     for (const filename of fs.readdirSync(path.join(__dirname, "../commands"))) {
       try {
-        delete require.cache[require.resolve(path.join(__dirname, "../commands", filename))]
-        const command = require(path.join(__dirname, "../commands", filename));
-//        bot.commandManager.unregister(command);
-//        this.commands = {};
+  //      bot.commandManager.unregister();
+        delete require.cache[require.resolve(path.join(__dirname, "../commands/", filename))]
+        const command = require(path.join(__dirname, "../commands/", filename));
+//        bot.commandManager.unregister();
+  //      delete require.cache[require.resolve(path.join(__dirname, "../commands", filename))]
+//        bot.commandManager.register(command);
+//        bot.commandManager.commandlist.push(command);
         bot.commandManager.register(command);
-//        bot.commandManager.commandlist.pop(command);
-    //    bot.commandManager.register(command);
+        bot.commandManager.commandlist.pop(command)
         bot.commandManager.commandlist.push(command)
       } catch (error) {
-        bot.console.error(["Failed to load File ", filename, ":", error.stack])
+//        bot.console.error(["Failed to load File ", filename, ":", error.stack])
         bot.tellraw("@a", { text: `Failed to reload file ${filename}\n${error.stack}`, color: "red" })
+        bot?.console?.filelogger(error.stack);
       }
     }
   }

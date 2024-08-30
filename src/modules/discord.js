@@ -53,7 +53,7 @@ function discord(bot, options, config, discordClient) {
   function sendComponent(message) {
     const ansi = bot.getMessageAsPrismarine(message)?.toAnsi(bot.registry.language).replaceAll('```\u001b[9```' + '```\u001b[3```').replaceAll('https://discord','https:\rdiscord')?.replaceAll('discord.gg', 'discord.\rgg').replaceAll('BlackStone Mafia On Top!', "Fuck off you god damn cunt");
     try {
-      sendDiscordMessage(fixansi(ansi.replaceAll('`', '`\u200b')))
+      sendDiscordMessage(fixansi(ansi?.replaceAll('`', '`\u200b')))
     } catch (e) {
       bot.console.error(`Error sending a message to Discord:\n${e.message}`)
       sendDiscordMessage(e.message)

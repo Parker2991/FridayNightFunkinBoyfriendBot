@@ -16,6 +16,7 @@ module.exports = {
       bot.chat.command(message.substring(1))
       return
     }
+//    if
     bot.chat.message(message)
   },
   discordExecute (context) {

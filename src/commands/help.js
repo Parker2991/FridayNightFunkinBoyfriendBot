@@ -21,7 +21,7 @@ module.exports = {
     "",
     "<command>",
   ],
-  async execute (context) {
+  execute (context) {
     const commandList = [];
     const bot = context.bot;
     const source = context.source;
@@ -66,7 +66,7 @@ module.exports = {
                       },
                       {
                         text: "Usages \u203a\n",
-                        color: "dark_gray"
+                        color: "gray"
                       },
         ]);
 //        }
@@ -229,7 +229,7 @@ module.exports = {
     if (bot.options.useChat) {
       bot.chat.message(bot.getMessageAsPrismarine([
           {
-            text: 'Commands (', 
+            text: 'Commands (',
             color: 'gray'
           },
           {
@@ -242,12 +242,30 @@ module.exports = {
           },
           category,
         ])?.toMotd().replaceAll('§','&'))
-      await sleep(100)
+      setTimeout(() => {
       bot.chat.message(bot.getMessageAsPrismarine(public)?.toMotd().replaceAll("§","&"))
-      await sleep(100)
+      }, 200)
+      setTimeout(() => {
       bot.chat.message(bot.getMessageAsPrismarine(trusted)?.toMotd().replaceAll("§","&"));
-      await sleep(100)
+      }, 200)
+      setTimeout(() => {
+      bot.chat.message(bot.getMessageAsPrismarine(admin)?.toMotd()?.replaceAll('§','&'))
+      }, 200)
+      setTimeout(() => {
       bot.chat.message(bot.getMessageAsPrismarine(owner).toMotd().replaceAll("§","&"));
+      }, 200)
+    } else if (admin.length === 0) {
+      bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
+                  { text: 'Commands (', color: 'gray' },
+                  { text: JSON.stringify(length), color: 'gold' },
+                  { text: ') ', color: 'gray' },
+                  category,
+                  '\n',
+                  public,
+                  trusted,
+        //          admin,
+                  owner
+      ])
     } else {
       bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
                   { text: 'Commands (', color: 'gray' },
@@ -261,7 +279,6 @@ module.exports = {
                   owner
       ])
     }
-//    bot.tellraw([ public, trusted, owner ])
   },
   discordExecute (context) {
     const bot = context.bot;

@@ -27,7 +27,8 @@ module.exports = {
 
         bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, {
           translate: 'Added \'%s\' with interval %s to the cloops',
-          with: [ command, interval ]
+          color: 'gray',
+          with: [ command, { text: `${interval}`, color: 'gold' } ]
         })
         break
       case 'remove':
@@ -39,7 +40,8 @@ module.exports = {
 
         bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, {
           translate: 'Removed cloop %s',
-          with: [ index ]
+          color: 'gray',
+          with: [ { text: `${index}`, color: 'gold' } ]
         })
         break
       case 'clear':
@@ -55,14 +57,14 @@ module.exports = {
         for (const cloop of bot.cloop.list) {
           listComponent.push({
             translate: '%s \u203a %s (%s)',
+            color: 'gray',
             with: [
-              i,
+              { text: `${i}`, color: 'gold' },
               cloop.command,
-              cloop.interval
+              { text: `${cloop.interval}`, color: 'gold'},
             ]
           })
           listComponent.push('\n')
-
           i++
         }
 
@@ -70,14 +72,15 @@ module.exports = {
 
         component.push({
           translate: 'Cloops (%s):',
-          with: [ bot.cloop.list.length ]
+          with: [ { text: `${bot.cloop.list.length}`, color: 'gold' } ]
         })
         component.push('\n')
         component.push(listComponent)
         if (bot.cloop.list.length === 0) {
           bot.tellraw(`@a[name="${source?.player.profile?.name}"]`, {
             translate: 'Cloops (%s):',
-            with: [ bot.cloop.list.length ]
+            color: 'gray',
+            with: [ { text: `${bot.cloop.list.length}`, color: 'gold' } ]
           })
         } else {
           bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, component)

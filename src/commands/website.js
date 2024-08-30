@@ -32,10 +32,9 @@ module.exports = {
       });
     } else if (args.join(' ').toLowerCase().startsWith('https://')) {
       https.get(args.join(' '), (res) => {
-        console.log('statusCode:', res.statusCode);
-        console.log('headers:', res.headers);
         res.on('data', (d) => {
           bot.tellraw("@a", { text: util.inspect(d.toString()), color: "dark_green", })
+//          console.log(Object.keys(d.toString().length));
         });
       }).on('error', (e) => {
         bot.chat.message(`&4${e.toString()}`);

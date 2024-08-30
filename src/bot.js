@@ -1,7 +1,5 @@
 const mc = require('minecraft-protocol')
 const { EventEmitter } = require('events')
-const fs = require('fs')
-const path = require('path')
 require("events").EventEmitter.defaultMaxListeners = Infinity;
 const util = require('util');
 function createBot(options = {}, config) {
@@ -65,9 +63,7 @@ function createBot(options = {}, config) {
   const client = options.client ?? mc.createClient(options)
   bot._client = client
   bot.emit('init_client', client)
-
   bot.bots = options.bots ?? [bot]
   return bot
 }
-
 module.exports = createBot
