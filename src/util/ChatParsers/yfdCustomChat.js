@@ -1,10 +1,10 @@
-function VanillaChat (message, data, context) {
+function yfdCustomChat (message, data, context, bot) {
   try {
     if (message === null || typeof message !== 'object') return
+    if (message.with?.length < 3 || (message.translate !== '[%s] %s: %s' && message.translate !== '%s %s › %s')) return
 
-    if (message.with?.length < 2 || (message.translate !== 'chat.type.text' && message.translate !== '%s %s')) return
-    const senderComponent = message.with[0]
-    const contents = message.with[1]
+    const senderComponent = message.with[1]
+    const contents = message.with[2]
     let sender
     const hoverEvent = senderComponent.hoverEvent
     if (hoverEvent?.action === 'show_entity') {
@@ -14,11 +14,12 @@ function VanillaChat (message, data, context) {
       const stringUsername = data.getMessageAsPrismarine(senderComponent).toString() // TypeError: data.getMessageAsPrismarine is not a function
       sender = data.players.find(player => player.profile.name === stringUsername)
     }
-    if (!sender) return undefined
+
+    if (!sender) return null
 
     return { sender, contents, type: 'minecraft:chat', senderComponent }
   } catch(e) {
-    console.error(`${e.toString()}`)
+     console.error(e)
   }
 }
-module.exports = VanillaChat;
+module.exports = yfdCustomChat

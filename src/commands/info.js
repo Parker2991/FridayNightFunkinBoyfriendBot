@@ -49,8 +49,12 @@ module.exports = {
                         color: 'gray',
                       },
                       {
-                        text: `Ip \u203a ${bot.options.host}:${bot.options.port}\n`,
+                        text: `Ip \u203a ${bot.options.host}:`,
                         color: "gray"
+                      },
+                      {
+                        text: `${bot.options.port}\n`,
+                        color: 'gold'
                       },
                       {
                         text: `Version \u203a ${bot.options.version}\n`,
@@ -69,16 +73,24 @@ module.exports = {
                         color: "gray",
                       },
                       {
-                        text: `Server count \u203a ${bot.bots.length}\n`,
+                        text: `Server count \u203a `,
                         color: "gray"
+                      },
+                      {
+                        text: `${bot.bots.length}\n`,
+                        color: 'gold'
                       },
                       {
                         text: `Prefixes \u203a ${config.prefixes.map((e) => e + " ").join(' ')}\n`,
                         color: "gray"
                       },
                       {
-                        text: `Prefix Length: ${config.prefixes.length}\n`,
+                        text: `Prefix Length: `,
                         color: "gray"
+                      },
+                      {
+                        text: `${config.prefixes.length}\n`,
+                        color: 'gold'
                       },
                       {
                         text: `isKaboom \u203a ${bot.options.isKaboom}\n`,
@@ -151,8 +163,12 @@ module.exports = {
               color: "gray"
             },
             {
-              text: `Cores \u203a ${os.cpus().length}\n`,
+              text: `Core Count \u203a `,
               color: "gray",
+            },
+            {
+              text: `${os.cpus().length}\n`,
+              color: 'gold'
             },
             {
               text: `CPU \u203a ${os.cpus()[0].model}\n`,
@@ -201,7 +217,6 @@ module.exports = {
               text: `Device uptime \u203a ${format(os.uptime())}\n`,
               color: 'gray'
             },
-// {text:`${format(process.uptime())}`,color:'gray'}
             {
               text: `Bot uptime \u203a ${format(process.uptime())}\n`,
               color: "gray"
@@ -303,7 +318,19 @@ module.exports = {
         bot.discord.message.reply({ embeds: [Embed] });
       break
       case "config":
-        message = bot.getMessageAsPrismarine([ { text: `Minecraft username \u203a ${bot.options.username}\n`, color: 'gray', }, { text: `Ip \u203a ${bot.options.host}:${bot.options.port}\n`, color: "gray" }, { text: `Version \u203a ${bot.options.version}\n`, color: "gray", }, { text: `Discord username \u203a ${discordClient.user.tag}\n`, color: 'gray', }, { text: `Channel \u203a ${bot.discord.channel?.name}\n`, color: "gray" }, { text: `Server name \u203a ${bot.options.serverName}\n`, color: "gray", }, { text: `Server count \u203a ${bot.bots.length}\n`, color: "gray" }, { text: `Prefixes \u203a ${config.prefixes.map((e) => e + " ").join(' ')}\n`, color: "gray" }, { text: `Prefix Length: ${config.prefixes.length}\n`, color: "gray" }, { text: `isKaboom \u203a ${bot.options.isKaboom}\n`, color: "gray", }, { text: `isCreayun \u203a ${bot.options.isCreayun}\n`, color: "gray", }, { text: `isSavage \u203a ${bot.options.isSavage}\n`, color: "gray", }, ])?.toAnsi();
+        message = bot.getMessageAsPrismarine([
+          { text: `Minecraft username \u203a ${bot.options.username}\n`, color: 'gray', },
+          { text: `Ip \u203a ${bot.options.host}:${bot.options.port}\n`, color: "gray" },
+          { text: `Version \u203a ${bot.options.version}\n`, color: "gray" },
+          { text: `Discord username \u203a ${discordClient.user.tag}\n`, color: 'gray' },
+          { text: `Channel \u203a ${bot.discord.channel?.name}\n`, color: "gray" },
+          { text: `Server name \u203a ${bot.options.serverName}\n`, color: "gray" },
+          { text: `Server count \u203a ${bot.bots.length}\n`, color: "gray" },
+          { text: `Prefixes \u203a ${config.prefixes.map((e) => e + " ").join(' ')}\n`, color: "gray" },
+          { text: `Prefix Length: ${config.prefixes.length}\n`, color: "gray" },
+          { text: `isKaboom \u203a ${bot.options.isKaboom}\n`, color: "gray" },
+          { text: `isCreayun \u203a ${bot.options.isCreayun}\n`, color: "gray" },
+          { text: `isSavage \u203a ${bot.options.isSavage}\n`, color: "gray", } ])?.toAnsi();
         fix = fixansi(message.replaceAll('`', '`\u200b'))
         Embed = new EmbedBuilder()
           .setColor(`${config.colors.discord.embed}`)
@@ -312,7 +339,28 @@ module.exports = {
         bot.discord.message.reply({ embeds: [Embed] })
       break
       case "server":
-        message = bot.getMessageAsPrismarine([ { text: `Hostname \u203a ${os.hostname()}\n`, color: "gray" }, { text: `User \u203a ${os.userInfo().username}\n`, color: "gray", }, { text: `Working Directory \u203a ${process.mainModule.path}\n`, color: "gray" }, { text: `Arch \u203a ${os.arch()}\n`, color: "gray" }, { text: `OS \u203a ${os.platform()}\n`, color: "gray" }, { text: `OS Version/distro \u203a ${os.version()}\n`, color: "gray", }, { text: `Kernel Version \u203a ${os.release()}\n`, color: "gray" }, { text: `Cores \u203a ${os.cpus().length}\n`, color: "gray", }, { text: `CPU \u203a ${os.cpus()[0].model}\n`, color: "gray" }, { text: `Server Free memory `, color: 'gray' }, { text: `${Math.floor( os.freemem() / 1048576, )} `, color: 'gray' }, { text: `MiB / ${Math.floor(os.totalmem() / 1048576)} MiB\n`, color: 'gray' }, { text: `Device uptime \u203a ${format(os.uptime())}\n`, color: 'gray' }, { text: `Node version \u203a ${process.version}`, color: 'gray' } ])?.toString();
+        message = bot.getMessageAsPrismarine([
+          { text: `Hostname \u203a ${os.hostname()}\n`, color: "gray" },
+          { text: `User \u203a ${os.userInfo().username}\n`, color: "gray" },
+          { text: `Working Directory \u203a ${process.mainModule.path}\n`, color: "gray" },
+          { text: `Arch \u203a ${os.arch()}\n`, color: "gray" }, { text: `OS \u203a ${os.platform()}\n`, color: "gray" },
+          { text: `OS Version/distro \u203a ${os.version()}\n`, color: "gray" },
+          { text: `Kernel Version \u203a ${os.release()}\n`, color: "gray" },
+          { text: `Cores \u203a ${os.cpus().length}\n`, color: "gray" },
+          { text: `CPU \u203a ${os.cpus()[0].model}\n`, color: "gray" },
+          { text: `Server Free memory `, color: 'gray' },
+          { text: `${Math.floor( os.freemem() / 1048576, )} `, color: 'gold' },
+          { text: 'MiB / ', color: 'gray' },
+          { text: `${Math.floor(os.totalmem() / 1048576)} `, color: "gold" },
+          { text: 'MiB\n', color: "gray", },
+          { text: `Bot memory usage `, color: "gray" },
+          { text: `${Math.floor( process.memoryUsage().heapUsed / 1048576, )} `, color: "gold", },
+          { text: "MiB / ", color: "gray", },
+          { text: `${Math.floor( process.memoryUsage().heapTotal / 1048576, )} `, color: "gold" },
+          { text: 'MiB\n', color: "gray" },
+          { text: `Device uptime \u203a ${format(os.uptime())}\n`, color: 'gray' },
+          { text: `Bot uptime \u203a ${format(process.uptime())}\n`, color: "gray" },
+          { text: `Node version \u203a ${process.version}`, color: 'gray' } ])?.toAnsi();
         fix = fixansi(message.replace('`', '`\u200b'))
         Embed = new EmbedBuilder()
           .setColor(`${config.colors.discord.embed}`)

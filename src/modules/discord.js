@@ -26,7 +26,7 @@ function discord(bot, options, config, discordClient) {
     bot.discord.channel = discordClient.channels.cache.get(options.channelId)
     discordClient.user.setPresence({
       activities: [{
-        name: `amogus ඞ`,
+        name: `your mother`,
         type: 0
       }],
       status: `dnd`

@@ -14,8 +14,12 @@ function selfcare (bot, options, config) {
   // You no longer have a tag
   bot.on('message', (message) => {
     const stringMessage = bot.getMessageAsPrismarine(message)?.toString();
-    if (stringMessage?.startsWith("Successfully enabled CommandSpy")) commandSpy = true;
-    else if (stringMessage?.startsWith("Successfully disabled CommandSpy")) commandSpy = false;
+//    if (stringMessage?.startsWith("Successfully enabled CommandSpy")) commandSpy = true;
+//    else if (stringMessage?.startsWith("Successfully disabled CommandSpy")) commandSpy = false;
+    if (stringMessage === "Successfully enabled CommandSpy") commandSpy = true;
+    else if (stringMessage === "Successfully enabled CommandSpy.") commandSpy = true;
+    else if (stringMessage === "Successfully disabled CommandSpy") commandSpy = false;
+    else if (stringMessage === "Successfully disabled CommandSpy.") commandSpy = false;
     else if (stringMessage === `Vanish for ${bot.options.username}: enabled`) vanished = true;
     else if (stringMessage === `Vanish for ${bot.options.username}: disabled`) vanished = false;
     else if (stringMessage === `You now have the tag: &8[&bPrefix&8: &3${config.prefixes[0]}&8]` || stringMessage === "Something went wrong while saving the prefix. Please check console.") prefix = true;
@@ -58,7 +62,7 @@ function selfcare (bot, options, config) {
         if (clientLock !== 4) bot._client.write("client_command", { actionId: 0 });
       } else if (bot.options.isKaboom && !bot.options.isSavage) {
         if (permissionLevel < 2) bot.chat.command('op @s[type=player]');
-        else if (gameMode !== 1) bot.chat.command('gamemode creative @s[type=player]');
+        else if (gameMode !== 1) bot.chat.command('minecraft:gamemode creative');
         else if (!commandSpy) bot.chat.command('commandspy on');
         else if (username) bot.chat.command(`username ${bot.options.username}`)
         else if (nickname) bot.chat.command(`nick off`)

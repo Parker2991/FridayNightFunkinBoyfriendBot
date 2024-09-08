@@ -12,8 +12,8 @@ function core (bot, options, config) {
 
       if (!pos) return
       if (bot.options.useChat ?? bot.options.isCreayun ?? bot.options.isSavage) return
-  //    if (isNaN(pos.x + start.x)) bot.chat.command('world 3');
-  //    console.log(isNaN(pos.x + start.x))
+//      if (isNaN(pos.x + start.x)) bot.chat.command('world 3');
+//      console.log(isNaN(pos.x + start.x))
       bot.chat.command(`minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${JSON.stringify(config.core.name)}'}`)
     },
 

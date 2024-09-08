@@ -14,7 +14,6 @@ module.exports = {
     const bot = context.bot;
     const source = context.source;
     const config = context.config;
-//throw new CommandError('ohio')
     if (config.patches.netmsg) {
       component = [
         { text: '[', color: "dark_gray" },
@@ -35,10 +34,6 @@ module.exports = {
         ]
       }
     }
-//  bot.bots.filter((eachBot) => { if (eachBot.options.useChat) eachBot.chat.message('sussy'); 
-// else if (!eachBot.options.useChat) eachBot.chat.message('baka!')})
-//    for (const eachBot of bot.bots) eachBot.tellraw("@a", component)
-//    for (const eachBot of bot.bots) {
     bot.bots.filter((eachBot) => {
       if (eachBot.options.serverName === "Savage Friends" && eachBot.options.isSavage && !eachBot.options.useChat && !eachBot.options.isKaboom) {
         eachBot.chat.message(`[${bot.options.serverName}] ${bot.getMessageAsPrismarine(source.player.displayName ?? source.player.profile.name)?.toMotd().replaceAll('§','&')} \u203a ${args.join(' ')}`)

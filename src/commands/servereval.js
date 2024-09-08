@@ -25,7 +25,18 @@ module.exports = {
       } else {
         bot.tellraw(`@a[name="${source.player.profile.name}"]`, [
                    {
-                     text: util.inspect(eval(script), { stylize }).substring(0, 32700)
+                     text: util.inspect(eval(script), { stylize }).substring(0, 32700),
+                     hoverEvent: {
+                       action: 'show_text',
+                       contents: [{
+                         text: 'click here to copy the code input',
+                         color: 'gray'
+                       }]
+                     },
+                     clickEvent: {
+                       action: 'copy_to_clipboard',
+                       value: `${script}`
+                     }
                    }
         ]);
       }

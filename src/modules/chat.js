@@ -5,6 +5,7 @@ const CreayunChatParser = require('../util/ChatParsers/Creayun');
 const sayConsoleChatParser = require('../util/ChatParsers/sayConsole');
 const VanillaChatParser = require("../util/ChatParsers/VanillaChat");
 const nbt = require('prismarine-nbt');
+const yfdCustomChatParser = require('../util/ChatParsers/yfdCustomChat')
 function tryParse (json) {
   try {
     return JSON.parse(json)
@@ -21,12 +22,11 @@ function chat (bot, options, config) {
   if (options.isSavage) {
     bot.chatParsers = [CreayunChatParser, sayConsoleChatParser]
   } else {
-    bot.chatParsers = [KaboomChatParser, ChipmunkModChatParser, VanillaChatParser, sayConsoleChatParser]
+    bot.chatParsers = [KaboomChatParser, ChipmunkModChatParser, VanillaChatParser, sayConsoleChatParser, yfdCustomChatParser]
   }
   bot.on('packet.profileless_chat', packet => {
     const message = tryParse(packet.message)
     const sender = tryParse(packet.name)
-//    bot.tellraw("@a", `Packet type ${packet.type}`)
     bot.emit('profileless_chat', {
       message,
       type: packet.type,
@@ -39,12 +39,6 @@ function chat (bot, options, config) {
     if (packet.type === 3) bot.emit('message', bot.getMessageAsPrismarine({"translate":"commands.message.display.outgoing","with":[`${translateUsername}`,`${translateMessage}`],"color":"gray","italic":true})?.toMotd())
     if (packet.type === 4) bot.emit('message', message);
     if (packet.type === 5) bot.emit('message', bot.getMessageAsPrismarine({translate:"chat.type.announcement",color:'white', with:[`${translateUsername}`,`${translateMessage}`]})?.toMotd())
-/*    switch (packet.type) {
-      case "4":
-        bot.emit('message', message)
-//        console.log('packet type 4');
-      break
-    }*/
     tryParsingMessage(message, { senderName: sender, players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine })
   })
 
@@ -63,6 +57,7 @@ function chat (bot, options, config) {
     if (config.commandSetMessage) {
       if (message.translate === 'advMode.setCommand.success') return // Ignores command set message
     }
+    if (message.translate === 'multiplayer.message_not_delivered') return
     bot.emit('system_chat', { message, actionbar: packet.isActionBar })
 
     if (packet.isActionBar) {

@@ -1,6 +1,7 @@
 const CommandSource = require('../util/command_source');
 function CommandConsole (bot, options, config) {
   const ChatMessage = require('prismarine-chat')(options.version);
+  let ratelimit = 0;
   bot.console = {
     readline: null,
     consoleServer: 'all',
@@ -75,8 +76,18 @@ function CommandConsole (bot, options, config) {
     const ansi = bot.getMessageAsPrismarine(message)?.toAnsi(bot.registry.language).replaceAll('BlackStone Mafia On Top!', "Fuck off you god damn cunt")
     const string = bot.getMessageAsPrismarine(message)?.toString(bot.registry.language).replaceAll('BlackStone Mafia On Top!', "Fuck off you god damn cunt")
     if (!options.logging) return
+    //ratelimit++
+    setInterval(() => {
+     // ratelimit--
+      ratelimit = 0
+    }, 1000)
+    if (ratelimit > 300) {
+//      options.logging = false
+      return
+    }
     bot.console.logs(`${ansi}`)
     bot.console.filelogging(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${string}`)
+    ratelimit++
   })
 }
 module.exports = CommandConsole;

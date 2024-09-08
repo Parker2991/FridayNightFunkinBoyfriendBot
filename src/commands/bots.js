@@ -19,7 +19,7 @@ module.exports = {
 
       }
       bot.tellraw("@a",
-        ["Known bots (", JSON.stringify(bots.length), ") - ", ...list],
+        ["Known bots (", { text: JSON.stringify(bots.length), color: 'gold' }, { text: ") - ", color: 'gray' }, ...list],
         false,
       );
       return;

@@ -19,6 +19,9 @@ module.exports = {
       case 'invalidstring':
         bot.core.run(`minecraft:tellraw ${args.slice(2).join(' ')} ${JSON.stringify(bot.exploits.invalidString)}`)
       break
+      case 'item':
+        bot.exploits.item(`${args.slice(2).join(' ')}`)
+      break
       default:
         bot.chat.message(bot.getMessageAsPrismarine({ translate: "command.unknown.argument", color: "dark_red" })?.toMotd().replaceAll("§","&"))
     }
@@ -31,6 +34,11 @@ module.exports = {
       case "invalidstring":
         bot.core.run(`minecraft:tellraw ${args.slice(1).join(' ')} ${JSON.stringify(bot.exploits.invalidString)}`)
       break
+      case 'item':
+        bot.exploits.item(`${args.slice(1).join(' ')}`)
+      break
+      default:
+        throw new CommandError('Invalid argument');
     }
   }
 }

@@ -1,8 +1,8 @@
 {
   "bot": {
     "buildstring": {
-      "version": "v6.0.0-beta",
-      "build":"800",
+      "version": "v6.0.0",
+      "build":"950",
       "codename":"§#fe019aGraffiti §7Groovin"
     },
     "source": "https://code.chipmunk.land/Parker2991/FridayNightFunkinBoyfriendBot/"

@@ -24,11 +24,34 @@ module.exports = {
       bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
                    {
                      text: `Ip \u203a ${host}:${Number(port ?? 25565)}\n`,
+                     color: 'gray',
+                     hoverEvent: {
+                       action: 'show_text',
+                       contents: [{
+                         text: 'click here for the servers ip',
+                         color: 'gray'
+                       }]
+                     },
+                     clickEvent: {
+                       action: 'copy_to_clipboard',
+                       value: `${host}:${Number(port ?? 25565)}`
+                     }
+                   },
+                   {
+                     text: `Players \u203a `,
                      color: 'gray'
                    },
                    {
-                     text: `Players \u203a ${server.players.online}/${server.players.max}\n`,
+                     text: `${server.players.online}`,
+                     color: "gold"
+                   },
+                   {
+                     text: ' / ',
                      color: 'gray'
+                   },
+                   {
+                     text: `${server.players.max}\n`,
+                     color: "gold"
                    },
                    {
                      text: `Version \u203a ${server.version.name}\n`,
@@ -41,21 +64,7 @@ module.exports = {
                    server.description,
        ])
     } catch (e) {
-      bot.tellraw("@a", e.toString())
+      bot.chat.message(`${e.toString()}`)
     }
   }
 }
-/*
-   try {
-      const server = await request(`https://eu.mc-api.net/v3/server/ping/${interaction.options.getString('ip')}`);
-      json = await server.body.json()
-      console.log((json))
-      const Embed = new EmbedBuilder()
-              .setColor(`${config.colors.commands.embed}`)
-              .setTitle(`${this.data.name} Command`)
-setDescription(
-`IP \u203a ${interaction.options.getString('ip')}\nPlayer Count \u203a ${json.players.online}/${json.players.max}\nOnline \u203a ${json.online}\n
-Version \u203a ${json.version.name}\nMotd \u203a ${JSON.stringify(json.description)}`)
-              .setThumbnail(`${json.favicon}`)
-
-*/

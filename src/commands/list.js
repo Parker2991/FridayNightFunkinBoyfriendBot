@@ -16,9 +16,24 @@ module.exports = {
     for (const player of players) {
       component.push({
         translate: `%s \u203a %s [%s %s %s %s %s]`,
+        color: 'gray',
         with: [
           player.displayName ?? player.profile.name,
-          player.uuid,
+          {
+            text: `${player.uuid}`,
+            color: 'gray',
+            clickEvent: {
+              action: 'copy_to_clipboard',
+              value: `${player.uuid}`
+            },
+            hoverEvent: {
+              action: 'show_text',
+              contents: [{
+                text: 'click here to copy the player\'s uuid',
+                color: 'aqua'
+              }]
+            }
+          },
           { text: `Ping:`, color: 'dark_green' },
           { text: `${player.latency}`, color: 'gold' },
           { text: '/', color: 'gray' },
@@ -29,7 +44,7 @@ module.exports = {
       component.push('\n')
     }
     component.pop()
-    bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
+    bot.tellraw(`@a[name="${source.player.profile.name}"]`, [
                   { text: `Players: `, color:'gray' },
                   { text: '(' , color: 'gray' },
                   { text: `${JSON.stringify(bot.players.length)}`, color: 'gold' },
