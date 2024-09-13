@@ -1,6 +1,6 @@
 module.exports = {
   name: 'reload',
-  trustLevel: 0,
+  trustLevel: 3,
   aliases: [
   ],
   description: 'reloads commands',

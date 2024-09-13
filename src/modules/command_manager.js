@@ -34,7 +34,6 @@ function command_manager (bot, options, config, discordClient) {
               translate: "command.context.here"
             }
           ])
-          //}
         } else if (source?.sources?.console && !source?.sources?.discord) {
           if (!command || !command.execute)
           bot.console.warn(bot.getMessageAsPrismarine([
@@ -56,7 +55,7 @@ function command_manager (bot, options, config, discordClient) {
           ])?.toAnsi())
         }
         if (command?.trustLevel > 0) {
-          const event = bot?.discord?.message;
+          const event = bot.discord.message;
           const roles = event?.member?.roles?.cache;
           if (command?.trustLevel === 1 && !source?.sources?.discord) {
             const hash = args[0]
@@ -91,7 +90,6 @@ function command_manager (bot, options, config, discordClient) {
         }
       } catch (error) {
         console.error(error.stack)
-        bot?.console?.filelogging(error.stack);
         if (source?.sources?.discord && !source?.sources?.console) {
             const Embed = new EmbedBuilder()
                .setColor(`${config.colors.discord.error}`)

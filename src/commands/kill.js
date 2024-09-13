@@ -9,19 +9,12 @@ module.exports = {
   usages: [
    ""
   ],
-  async execute (context) {
+  execute (context) {
     const bot = context.bot;
-    // ik theres a better way to do but shut the fuck up about it
-    await bot.chat.message("killing process");
-    await bot.console.info("killing process");
-    await bot.discord.channel?.send("killing process");
-    await process.kill(0);
+    process.exit(69);
   },
-  async discordExecute (context) {
+  discordExecute (context) {
     const bot = context.bot;
-    await bot.chat.message("killing process");
-    await bot.console.info("killing process");
-    await bot.discord.channel?.send("killing process");
-    await process.exit(0);
+    process.exit(69);
   }
 }

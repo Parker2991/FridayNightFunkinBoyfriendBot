@@ -7,7 +7,9 @@ const CommandSource = require('../util/command_source')
 const client = new Client({ intents: [Guilds, GuildMessages, MessageContent] })
 const util = require('util')
 
-function discord(bot, options, config, discordClient) {
+function discord(bot, options, config) {
+  if (!config.discord.enabled) return;
+  client.login(config.discord.token)
   if (!options?.channelId) {
     bot.discord = {
       invite: config.discord?.invite
@@ -15,16 +17,16 @@ function discord(bot, options, config, discordClient) {
     return
   }
   bot.discord = {
-    client: discordClient,
+    client,
     channel: undefined,
     invite: config.discord.invite || undefined,
     prefix: config.discord.prefix,
 //    presence: bot.discord.presence,
 //    token: config.discord.token,
   }
-  discordClient.once('ready', (context) => {
-    bot.discord.channel = discordClient.channels.cache.get(options.channelId)
-    discordClient.user.setPresence({
+  client.once('ready', (context) => {
+    bot.discord.channel = client.channels.cache.get(options.discord.channelId)
+    client.user.setPresence({
       activities: [{
         name: `your mother`,
         type: 0
@@ -147,7 +149,11 @@ function discord(bot, options, config, discordClient) {
       }
     }
   }
-  discordClient.on('messageCreate', messageCreate)
+  client.on('messageCreate', messageCreate)
+
+  process.on("uncaughtException", (e) => {
+    //  sendDiscordMessage("uncaught " + e.stack);
+  });
 
 }
 module.exports = discord;

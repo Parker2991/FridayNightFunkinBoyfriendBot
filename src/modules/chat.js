@@ -4,8 +4,7 @@ const ChipmunkModChatParser = require('../util/ChatParsers/ChipmunkMod');
 const CreayunChatParser = require('../util/ChatParsers/Creayun');
 const sayConsoleChatParser = require('../util/ChatParsers/sayConsole');
 const VanillaChatParser = require("../util/ChatParsers/VanillaChat");
-const nbt = require('prismarine-nbt');
-const yfdCustomChatParser = require('../util/ChatParsers/yfdCustomChat')
+const yfdCustomChatParser = require('../util/ChatParsers/yfdCustomChat');
 function tryParse (json) {
   try {
     return JSON.parse(json)
@@ -32,23 +31,36 @@ function chat (bot, options, config) {
       type: packet.type,
       sender
     })
-    const translateMessage = bot.getMessageAsPrismarine(message)?.toMotd()
-    const translateUsername = bot.getMessageAsPrismarine(sender)?.toMotd()
-    if (packet.type === 1) bot.emit('message', bot.getMessageAsPrismarine({translate:"chat.type.emote", with:[`${translateUsername}`,`${translateMessage}`]})?.toMotd())
-    if (packet.type === 2) bot.emit('message', bot.getMessageAsPrismarine({"translate":"commands.message.display.incoming","with":[`${translateUsername}`,`${translateMessage}`],"color":"gray","italic":true})?.toMotd())
-    if (packet.type === 3) bot.emit('message', bot.getMessageAsPrismarine({"translate":"commands.message.display.outgoing","with":[`${translateUsername}`,`${translateMessage}`],"color":"gray","italic":true})?.toMotd())
-    if (packet.type === 4) bot.emit('message', message);
-    if (packet.type === 5) bot.emit('message', bot.getMessageAsPrismarine({translate:"chat.type.announcement",color:'white', with:[`${translateUsername}`,`${translateMessage}`]})?.toMotd())
+    switch (packet.type) {
+      case 1:
+        bot.emit('message', { translate: "chat.type.emote", with: [ sender, message ]})
+      break
+      case 2:
+        bot.emit('message', { translate: "commands.message.display.incoming", with: [ sender, message], color: "gray", italic: true })
+      break
+      case 3:
+        bot.emit('message', { translate: "commands.message.display.outgoing", with: [ sender, message ], color: "gray", italic: true })
+      break
+      case 4:
+        bot.emit('message', message);
+      break
+      case 5:
+        bot.emit('message', { translate: 'chat.type.announcement', with: [ sender, message ]})
+      break
+    }
     tryParsingMessage(message, { senderName: sender, players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine })
   })
 
   bot.on('packet.player_chat', (packet, data) => {
     const unsigned = tryParse(packet.unsignedChatContent)
-//    const unsigned = JSON.parse(loadPrismarineChat.processNbtMessage(nbt.comp(nbt.string(packet.unsignedChatContent))))
-//    const unsigned = loadPrismarineChat.processNbtMessage(tryParse(packet.unsignedChatContent))
     bot.emit('player_chat', { plain: packet.plainMessage, unsigned, senderUuid: packet.senderUuid })
-    if (packet.type === 5) bot.emit('message', bot.getMessageAsPrismarine({ translate: "chat.type.announcement", with: [`${bot.players.find(player => player.uuid === packet.senderUuid).profile.name}`, `${packet.plainMessage}`]})?.toMotd())
-    if (packet.type !== 5) bot.emit("message", unsigned)
+    switch (packet.type) {
+      case 5:
+        bot.emit('message', { translate: "chat.type.announcement", with: [ bot.players.find(player => player.uuid === packet.senderUuid).profile.name, packet.plainMessage ]})
+      break
+      default:
+        bot.emit('message', unsigned)
+    }
     tryParsingMessage(unsigned, { senderUuid: packet.senderUuid, players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine })
   })
 
