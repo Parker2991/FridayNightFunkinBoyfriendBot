@@ -36,7 +36,7 @@ function command_manager (bot, options, config, discordClient) {
           ])
         } else if (source?.sources?.console && !source?.sources?.discord) {
           if (!command || !command.execute)
-          bot.console.warn(bot.getMessageAsPrismarine([
+          bot.console.warn([
             {
               translate: 'command.unknown.command',
               color: "dark_red"
@@ -52,21 +52,20 @@ function command_manager (bot, options, config, discordClient) {
               translate: "command.context.here",
               color: "dark_red"
             }
-          ])?.toAnsi())
+          ])
         }
         if (command?.trustLevel > 0) {
           const event = bot.discord.message;
           const roles = event?.member?.roles?.cache;
           if (command?.trustLevel === 1 && !source?.sources?.discord) {
             const hash = args[0]
-            if (args.length === 0 && bot.validation.trusted && bot.validation.admin && bot.validation.owner && !source.sources.console) throw new CommandError({ text: "Please provide an trusted or and admin or an owner hash" })
+            if (args.length === 0 && bot.validation.trusted && bot.validation.admin && bot.validation.owner && !source?.sources?.console) throw new CommandError({ text: "Please provide an trusted or and admin or an owner hash" })
             if (args[0] !== bot.validation.trusted && args[0] !== bot.validation.admin && args[0] !== bot.validation.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted or admin or owner hash', color: 'dark_red' })
           } else if (command?.trustLevel === 1 && source?.sources.discord) {
             const hasRole = roles?.some(role => role.name === `${config.discord.roles.trusted}` || role.name === `${config.discord.roles.owner}`)
             if (!hasRole) throw new CommandError({ translate: 'You are not trusted or the owner!' })
           }
           if (command?.trustLevel === 2 && !source.sources.console) {
-            // bot.chat.message('trust level 2 does nothing currently'); placeholder code
             if (args.length === 0 && bot.validation.admin && bot.validation.owner && !source.sources.console) throw new CommandError({ text: "Please provide an trusted or owner hash" })
             if (args[0] !== bot.validation.trusted && args[0] !== bot.validation.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted or owner hash', color: 'dark_red' })
           }
@@ -79,13 +78,14 @@ function command_manager (bot, options, config, discordClient) {
           } else if (command?.trustLevel === 4 && !source.sources.console) {
             throw new CommandError('This command can only be ran via console');
           }
-        } if (!command?.discordExecute && command && source.sources.discord) {
+        }
+        if (!command?.discordExecute && command && source?.sources?.discord) {
           throw new CommandError(`${command.name} command is not supported in discord!`)
-        } else if (command?.discordExecute && command && source.sources.discord) {
+        } else if (command?.discordExecute && command && source?.sources?.discord) {
           return command.discordExecute({ bot, source, arguments: args, config, discordClient })
-        } else if (!command?.execute && command && !source.sources.discord) {
+        } else if (!command?.execute && command && !source?.sources?.discord) {
           throw new CommandError(`${command.name} command is not supported in game!`)
-        } else if (command?.execute && command && !source.sources.discord) {
+        } else if (command?.execute && command && !source?.sources?.discord) {
           return command?.execute({ bot, source, arguments: args, config, discordClient})
         }
       } catch (error) {

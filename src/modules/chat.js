@@ -18,7 +18,7 @@ function chat (bot, options, config) {
   bot.on('registry_ready', registry => {
     ChatMessage = loadPrismarineChat(registry)
   })
-  if (options.isSavage) {
+  if (options.isSavage || options.isCreayun) {
     bot.chatParsers = [CreayunChatParser, sayConsoleChatParser]
   } else {
     bot.chatParsers = [KaboomChatParser, ChipmunkModChatParser, VanillaChatParser, sayConsoleChatParser, yfdCustomChatParser]
@@ -128,6 +128,9 @@ function chat (bot, options, config) {
         previousMessages: []
       })
     }
+  }
+  bot.tellraw = (selector, message) => {
+    bot.core.run(`minecraft:tellraw ${selector} ` + JSON.stringify(message))
   }
 }
 module.exports = chat;

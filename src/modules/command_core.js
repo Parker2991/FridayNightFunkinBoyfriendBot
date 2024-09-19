@@ -11,9 +11,16 @@ function core (bot, options, config) {
       const { start, end } = bot.core.area
 
       if (!pos) return
-      if (bot.options.useChat ?? bot.options.isCreayun ?? bot.options.isSavage) return
-//      if (isNaN(pos.x + start.x)) bot.chat.command('world 3');
-//      console.log(isNaN(pos.x + start.x))
+      if (bot.options.useChat || bot.options.isCreayun || bot.options.isSavage) return
+      if (isNaN(pos.x + start.x)) {
+        bot.chat.command('spawn');
+        return
+      }
+      /*^^^
+      for checking is the core pos is null and if so
+      it will not refill core until the pos is not NaN
+      instead of tping to a set cords cuz fuck you im not doing that
+      */
       bot.chat.command(`minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${JSON.stringify(config.core.name)}'}`)
     },
 
@@ -68,7 +75,7 @@ function core (bot, options, config) {
     }
   }
  // if (bot.options.useChat ?? bot.options.isCreayun ?? bot.options.isSavage) return
-  if (bot.options.isSavage) return
+  if (bot.options.isSavage || bot.options.isCreayun) return
   bot.on('move', () => {
 //    if (bot.options.isSavage) return
     bot.core.move(bot.position)

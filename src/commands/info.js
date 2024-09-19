@@ -40,7 +40,11 @@ module.exports = {
     const source = context.source;
     switch (args[0]?.toLowerCase()) {
       case 'version':
-        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-${botInfo.bot.buildstring.version}-#${botInfo.bot.buildstring.build}-${botInfo.bot.buildstring.codename}\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
+        if (botInfo.bot.buildstring.codename === '') {
+          bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-${botInfo.bot.buildstring.version}-#${botInfo.bot.buildstring.build}\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
+        } else {
+          bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-${botInfo.bot.buildstring.version}-#${botInfo.bot.buildstring.build}-${botInfo.bot.buildstring.codename}\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
+        }
       break
       case 'config':
         bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
@@ -275,7 +279,7 @@ module.exports = {
       case "about":
         bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
           {
-             text: `FNFBoyfriendBot is a open source kaboom bot created by Parker2991\nThe source can be found here ${botInfo.bot.source}`,
+             text: `FNFBoyfriendBot is a open source kaboom bot created by Parker2991\nThe source code and changelog can be found here ${botInfo.bot.source}`,
              color: "gray",
              translate: "",
              hoverEvent: {

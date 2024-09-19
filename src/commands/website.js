@@ -5,7 +5,7 @@ const fixansi = require('../util/ansi');
 const CommandError = require('../util/command_error')
 module.exports = {
   name: 'website',
-  trustLevel: 4,
+  trustLevel: 1,
   aliases: [
   ],
   description: 'look up website data',

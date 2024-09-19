@@ -1,6 +1,7 @@
 const readline = require('readline');
 function boot (bot, options, discordClient, config) {
   bot.on("packet.login", (data) => {
+    if (bot.options.isCreayun) return
     if (new Date().getDay() === 5) {
       bot.chat.message('Gettin\' freaky on a friday night!');
     } else {

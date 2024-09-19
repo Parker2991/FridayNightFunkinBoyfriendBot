@@ -1,6 +1,7 @@
 const CommandSource = require('../util/command_source');
 const prismarineChat = require('prismarine-chat')('1.20.2');
 function Console (bot, options, config) {
+  let rateLimit = 0;
   bot.console = {
     readline: null,
     server: 'all',
@@ -34,7 +35,7 @@ function Console (bot, options, config) {
       this.refreshLine(bot.getMessageAsPrismarine(`§8[§1${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} §3${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} §4error§8] §8[${options.serverName}§8] `)?.toAnsi() + error)
     },
     info (message) {
-      this.refreshLine(bot.getMessageAsPrismarine(`§8[§1${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} §3${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} §2info§8] §8[${options.serverName}§8] `)?.toAnsi() + message)
+      this.refreshLine(prismarineChat.fromNotch(`§8[§1${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} §3${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} §2info§8] §8[${options.serverName}§8] `)?.toAnsi() + message)
     },
     customChat: {
       enabled: false,
@@ -66,7 +67,14 @@ function Console (bot, options, config) {
     }
   }
   bot.on('message', (message) => {
+    rateLimit++
+    setTimeout(() => {
+      rateLimit--
+    }, 1000)
     if (!options.logging) return;
+/*    if (rateLimit > 100) {
+      return
+    }*/
     bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
     bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
   })

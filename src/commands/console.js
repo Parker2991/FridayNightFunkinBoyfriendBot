@@ -75,7 +75,7 @@ module.exports = {
             if (bot.console.customChat.enabled) {
               bot.console.customChat.chat(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.owner} ${args.slice(3).join(' ')}`);
             } else if (!bot.console.customChat.enabled) {
-              bot.chat.message(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.trusted} ${args.slice(3).join(' ')}`)
+              bot.chat.message(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.trusted} ${args.slice(3).join(' ')}`);
             }
           break
           default:

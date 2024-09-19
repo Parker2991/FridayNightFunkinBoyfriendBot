@@ -35,7 +35,7 @@ module.exports = {
       }
     }
     bot.bots.filter((eachBot) => {
-      if (eachBot.options.serverName === "Savage Friends" && eachBot.options.isSavage && !eachBot.options.useChat && !eachBot.options.isKaboom) {
+      if (eachBot.options.isSavage && !eachBot.options.useChat && !eachBot.options.isKaboom || eachBot.options.isCreayun && !eachBot.options.isSavage && !eachBot.options.useChat && !eachBot.options.isKaboom) {
         eachBot.chat.message(`[${bot.options.serverName}] ${bot.getMessageAsPrismarine(source.player.displayName ?? source.player.profile.name)?.toMotd().replaceAll('§','&')} \u203a ${args.join(' ')}`)
       } else if (!eachBot.options.serverName !== "Savage Friends" && !eachBot.options.isSavage && !eachBot.options.useChat && eachBot.options.isKaboom) {
         eachBot.tellraw("@a", component);

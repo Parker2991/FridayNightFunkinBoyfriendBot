@@ -58,8 +58,10 @@ function selfcare (bot, options, config) {
     gameMode = packet.gameMode;
     clientLock = packet.gameMode;
     timer = setInterval(() => {
-      if (bot.options.isSavage && !bot.options.isKaboom) {
+      if (bot.options.isSavage && !bot.options.isKaboom && !bot.options.isCreayun) {
         if (clientLock !== 4) bot._client.write("client_command", { actionId: 0 });
+      } else if (bot.options.isCreayun && !bot.options.isKaboom && !bot.options.isSavage) {
+
       } else if (bot.options.isKaboom && !bot.options.isSavage) {
         if (permissionLevel < 2) bot.chat.command('op @s[type=player]');
         else if (gameMode !== 1) bot.chat.command('minecraft:gamemode creative');

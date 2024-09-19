@@ -33,6 +33,25 @@
   {
     "name": [
       {
+        "text": "Hydra",
+        "color": "dark_red"
+      }
+    ],
+    "authors": [
+      "popbob/aaa"
+    ],
+    "exclaimer": "",
+    "foundation": "nodejs/node-minecraft-protocol",
+    "prefixes": [
+      "+",
+      "$",
+      "h:",
+      "hydra:"
+    ]
+  },
+  {
+    "name": [
+      {
          "text": "JokerBot",
          "color": "green"
       }
