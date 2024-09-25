@@ -58,6 +58,12 @@ function chat (bot, options, config) {
       case 5:
         bot.emit('message', { translate: "chat.type.announcement", with: [ bot.players.find(player => player.uuid === packet.senderUuid).profile.name, packet.plainMessage ]})
       break
+      case 3:
+        bot.emit('message', { translate: "commands.message.display.outgoing", with: [ bot.players.find(player => player.uuid === packet.senderUuid).profile.name, packet.plainMessage ], color: "gray", italic: true })
+      break
+      case 2:
+        bot.emit('message', { translate: "commands.message.display.incoming", with: [ bot.players.find(player => player.uuid === packet.senderUuid).profile.name, packet.plainMessage ], color: "gray", italic: true })
+      break
       default:
         bot.emit('message', unsigned)
     }

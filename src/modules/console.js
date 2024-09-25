@@ -50,7 +50,7 @@ function Console (bot, options, config) {
               },
               {
                 selector: `${bot.username}`, color:'#00FFFF',
-                clickEvent: { action: 'suggest_command', value:  '~help' }
+                clickEvent: { action: 'suggest_command', value:  `${config.prefixes[0]}help` }
               },
               {
                  text: '',

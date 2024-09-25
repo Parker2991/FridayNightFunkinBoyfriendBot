@@ -59,7 +59,7 @@ function command_manager (bot, options, config, discordClient) {
           const roles = event?.member?.roles?.cache;
           if (command?.trustLevel === 1 && !source?.sources?.discord) {
             const hash = args[0]
-            if (args.length === 0 && bot.validation.trusted && bot.validation.admin && bot.validation.owner && !source?.sources?.console) throw new CommandError({ text: "Please provide an trusted or and admin or an owner hash" })
+            if (args.length === 0 && bot.validation.trusted && bot.validation.admin && bot.validation.owner && !source?.sources?.console) throw new CommandError({ text: "Please provide an trusted or an admin or an owner hash" })
             if (args[0] !== bot.validation.trusted && args[0] !== bot.validation.admin && args[0] !== bot.validation.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted or admin or owner hash', color: 'dark_red' })
           } else if (command?.trustLevel === 1 && source?.sources.discord) {
             const hasRole = roles?.some(role => role.name === `${config.discord.roles.trusted}` || role.name === `${config.discord.roles.owner}`)
@@ -101,9 +101,21 @@ function command_manager (bot, options, config, discordClient) {
               ]
             })
         } else if (!source?.sources?.discord && !source?.sources?.console) {
-          if (error instanceof CommandError)
-          bot.tellraw("@a", { text: error.message, color: "dark_red" })
-          else bot.tellraw("@a", [{ translate: 'command.failed', color: "dark_red", hoverEvent: { action: 'show_text', contents: `${error.stack}` } }])
+          if (error instanceof CommandError) {
+            if (bot.options.isSavage || bot.options.isCreayun) {
+              bot.chat.message(`&4${error.message}`)
+            } else {
+              bot.tellraw("@a", { text: error.message, color: "dark_red" })
+            }
+          } else {
+            if (bot.options.isSavage || bot.options.isCreayun) {
+              bot.chat.message(`${bot.getMessageAsPrismarine({ translate: "command.failed", color: "dark_red" })?.toMotd().replaceAll('§','&')}`)
+            } else {
+              bot.tellraw("@a", [{ translate: 'command.failed', color: "dark_red", hoverEvent: { action: 'show_text', contents: `${error.stack}` } }])
+            }
+          }
+//          else bot.tellraw("@a", [{ translate: 'command.failed', color: "dark_red", hoverEvent: { action: 'show_text', contents: `${error.stack}` } }])
+          //}
         }
       }
     },

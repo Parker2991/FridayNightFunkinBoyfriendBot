@@ -25,7 +25,8 @@ function createBot(options = {}, config) {
       bot.username = client.username
     })
     client.on('disconnect', (data) => {
-      bot.emit("disconnect", JSON.stringify(data.reason))
+      bot.emit("disconnect", data)
+//      bot.console.info(JSON.stringify(data))
 //      bot?.discord?.channel?.send(util.inspect(data.reason))
       if (config.console.filelogger) {
 //        bot?.console?.filelogging(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ` + '[Client Reconnect] ' + util.inspect(data.reason))
@@ -49,7 +50,7 @@ function createBot(options = {}, config) {
 
     client.on('kick_disconnect', (data) => {
       bot.emit("kick_disconnect", data.reason)
-      bot.console?.warn(ChatMessage.fromNotch('§8[§bClient Reconnect§8]§r ')?.toAnsi() + util.inspect(data.reason))
+      bot.console?.warn(ChatMessage.fromNotch(`§8[§bClient Reconnect§8]§r `)?.toAnsi() + util.inspect(data.reason))
       bot?.discord?.channel?.send(util.inspect(data.reason))
       if (config.console.filelogger) {
     //    bot?.console?.filelogging(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ` + '[Client Reconnect] ' + util.inspect(data.reason))

@@ -15,7 +15,7 @@ module.exports = {
     const bot = context.bot;
     const args = context.arguments;
     const source = context.source;
-    if (args[0] === "list") {
+    if (args[0]?.toLowerCase() === "list") {
       const list = Object.keys(cows);
       let content = [];
       let color = true;

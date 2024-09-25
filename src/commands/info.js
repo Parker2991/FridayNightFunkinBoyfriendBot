@@ -41,7 +41,14 @@ module.exports = {
     switch (args[0]?.toLowerCase()) {
       case 'version':
         if (botInfo.bot.buildstring.codename === '') {
-          bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-${botInfo.bot.buildstring.version}-#${botInfo.bot.buildstring.build}\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
+          if (bot.options.isSavage) {
+            bot.chat.message(`&9Friday &9Night &9Funkin &3Boyfriend &1Bot&8&r-${botInfo.bot.buildstring.version}-#${botInfo.bot.buildstring.build}`)
+            setTimeout(() => {
+              bot.chat.message(`11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`)
+            }, 300)
+          } else {
+            bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-${botInfo.bot.buildstring.version}-#${botInfo.bot.buildstring.build}\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
+          }
         } else {
           bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-${botInfo.bot.buildstring.version}-#${botInfo.bot.buildstring.build}-${botInfo.bot.buildstring.codename}\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
         }

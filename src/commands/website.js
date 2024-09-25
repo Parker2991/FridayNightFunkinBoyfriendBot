@@ -15,8 +15,8 @@ module.exports = {
   execute (context) {
     const bot = context.bot
     const args = context.arguments;
-    if (args.join(' ').toLowerCase().startsWith("http://")) {
-      http.get(args.join(' '), (res) => {
+    if (args.slice(1).join(' ').toLowerCase().startsWith("http://")) {
+      http.get(args.slice(1).join(' '), (res) => {
         const { statusCode } = res;
         const contentType = res.headers['content-type'];
         res.setEncoding('utf8');
@@ -33,7 +33,7 @@ module.exports = {
         bot.chat.message(`&4${e.toString()}`);
       });
     } else {
-      https.get(args.join(' '), (res) => {
+      https.get(args.slice(1).join(' '), (res) => {
         res.on('data', (d) => {
           bot.tellraw("@a", { text: util.inspect(d.toString().substring(0, 32750)), color: "dark_green", })
 //          console.log(Object.keys(d.toString().length));

@@ -18,11 +18,20 @@ function player_list (bot, options, config) {
     }
   })
 
-  bot.on('packet.player_remove', ({ players }) => {
-    // TODO: Add player removal (with validation)
-    for (const player of players) {
-      bot.players = bot.players.filter(entry => entry.uuid !== player)
-    }
+  bot.on('packet.player_remove', async ({players}) => { // players has uuids of the players
+    let player_completion = (await bot.tab_complete('scoreboard players add ')).filter(_ => _.tooltip == undefined) // exclude @a, @r, @s, @e, @p -aaa
+
+    bot.players.forEach(async player => {
+      if(!players.includes(player.uuid)) return
+
+      const a = player_completion.filter(_ => _.match == player.profile.name)
+
+      if(a.length >= 1) {
+        player.vanished = true
+      } else {
+        bot.players = bot.players.filter(_ => _.uuid != player.uuid)
+      }
+    })
   })
 
   function addPlayer (entry) {
@@ -35,7 +44,8 @@ function player_list (bot, options, config) {
       gamemode: undefined,
       listed: undefined,
       latency: undefined,
-      displayName: undefined
+      displayName: undefined,
+      vanished: false
     })
   }
 

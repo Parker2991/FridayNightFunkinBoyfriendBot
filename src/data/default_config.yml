@@ -25,6 +25,8 @@ core:
       y: 0
       z: 15
 
+commandSetMessage: true
+
 keys:
   trusted: "trusted key here"
   admin: "admin key here"
