@@ -158,7 +158,7 @@ function command_manager (bot, options, config, discordClient) {
           bot.commandManager.commandlist.push(command)
         } catch (error) {
           bot.tellraw("@a", { text: `Failed to reload file ${filename}\n${error.stack}`, color: "red" })
-          bot?.console?.filelogger(error.stack);
+          bot?.console?.fileLogger(error.stack);
         }
       }
     }

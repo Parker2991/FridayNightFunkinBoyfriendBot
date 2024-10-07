@@ -5,7 +5,7 @@ function reconnect (bot, options, config) {
     if (bot.reconnectDelay < 0) return
     setTimeout(() => {
       if (options.usernameGen) {
-        client = options.client ?? mc.createClient(options, bot.options.username = usernameGen())
+        client = options.client ?? mc.createClient(options, bot.options.username = usernameGen(bot))
       } else {
         client = options.client ?? mc.createClient(options)
       }

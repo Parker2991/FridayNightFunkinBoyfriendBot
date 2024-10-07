@@ -39,13 +39,13 @@ function chat (bot, options, config) {
         bot.emit('message', { translate: "commands.message.display.incoming", with: [ sender, message], color: "gray", italic: true })
       break
       case 3:
-        bot.emit('message', { translate: "commands.message.display.outgoing", with: [ sender, message ], color: "gray", italic: true })
+        bot.emit('message', [{ translate: "commands.message.display.outgoing", with: [ sender, message ], color: "gray", italic: true }])
       break
       case 4:
-        bot.emit('message', message);
+        bot.emit('message', [message]);
       break
       case 5:
-        bot.emit('message', { translate: 'chat.type.announcement', with: [ sender, message ]})
+        bot.emit('message', [{ translate: 'chat.type.announcement', with: [ sender, message ]}])
       break
     }
     tryParsingMessage(message, { senderName: sender, players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine })

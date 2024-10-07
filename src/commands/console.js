@@ -4,6 +4,7 @@ module.exports = {
   aliases: [
 
   ],
+  usages: [],
   execute (context) {
     const bot = context.bot
     const args = context.arguments;
@@ -52,7 +53,6 @@ module.exports = {
       case "validate":
       case "validation":
       case "val":
-//        bot.chat.message(`${config.prefixes[0]}${args.slice(1).shift()} ${bot.validation.owner} ${args.slice(2).join(' ')}`)
         switch (args[1]?.toLowerCase()) {
           case "owner":
           case "o":
@@ -80,6 +80,33 @@ module.exports = {
           break
           default:
             bot.chat.message(bot.getMessageAsPrismarine({ translate: "command.unknown.argument", color: "dark_red" })?.toMotd().replaceAll("§","&"))
+        }
+      break
+      case 'logging':
+      case 'togglelogging':
+        switch (args[1]?.toLowerCase()) {
+          case 'on':
+          case 'enable':
+          case 'enabled':
+          case 'true':
+            if (bot.options.logging === true) {
+              bot.console.info(`logging for ${bot.options.serverName} is already enabled!`);
+            } else {
+              bot.console.info(`logging for ${bot.options.serverName} is now enabled`);
+              bot.options.logging = true;
+            }
+          break
+          case 'off':
+          case 'disable':
+          case 'disabled':
+          case 'false':
+            if (bot.options.logging === false) {
+              bot.console.info(`logging for ${bot.options.serverName} is already disabled!`);
+            } else {
+              bot.console.info(`logging for ${bot.options.serverName} is now disabled`);
+              bot.options.logging = false;
+            }
+          break
         }
       break
       default:

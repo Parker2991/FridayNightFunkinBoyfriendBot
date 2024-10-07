@@ -5,7 +5,7 @@ module.exports = {
   description: ["shows a list of known bots"],
   aliases: ["knownbots"],
   trustLevel: 0,
-  usage:[""],
+  usages:[""],
  async execute(context) {
     const query = context.arguments.join(" ").toLowerCase();
     const bot = context.bot;

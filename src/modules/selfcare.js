@@ -10,35 +10,57 @@ function selfcare (bot, options, config) {
   let teleportToggle = false;
   let username = false;
   let nickname = false;
+  let login = false;
+  let register = false;
   // You now have the tag: &8[&bPrefix&8: &3~&8]
   // You no longer have a tag
   bot.on('message', (message) => {
     const stringMessage = bot.getMessageAsPrismarine(message)?.toString();
-//    if (stringMessage?.startsWith("Successfully enabled CommandSpy")) commandSpy = true;
-//    else if (stringMessage?.startsWith("Successfully disabled CommandSpy")) commandSpy = false;
-    if (stringMessage === "Successfully enabled CommandSpy") commandSpy = true;
-    else if (stringMessage === "Successfully enabled CommandSpy.") commandSpy = true;
-    else if (stringMessage === "Successfully disabled CommandSpy") commandSpy = false;
-    else if (stringMessage === "Successfully disabled CommandSpy.") commandSpy = false;
-    else if (stringMessage === `Vanish for ${bot.options.username}: enabled`) vanished = true;
-    else if (stringMessage === `Vanish for ${bot.options.username}: disabled`) vanished = false;
-    else if (stringMessage === `You now have the tag: &8[&bPrefix&8: &3${config.prefixes[0]}&8]` || stringMessage === "Something went wrong while saving the prefix. Please check console.") prefix = true;
-    else if (stringMessage?.startsWith("You now have the tag: ") || stringMessage === "You no longer have a tag") prefix = false
-    else if (stringMessage?.startsWith("You have been muted")) unmuted = true;
-    else if (stringMessage?.startsWith("You have been unmuted")) unmuted = false;
-    else if (stringMessage?.startsWith("Your voice has been silenced")) unmuted = true;
-    else if (stringMessage === "God mode disabled.") god = false;
-    else if (stringMessage === "God mode enabled.") god = true;
-    else if (stringMessage === "Teleportation disabled.") teleportToggle = true;
-    else if (stringMessage === "Teleportation enabled.") teleportToggle = false;
-    else if (stringMessage === `Successfully set your username to "${bot.username}"`) {
-      username = false
-      return
+    if (options.isSavage) {
+      if (stringMessage === "Please, login with the command: /login <password>") login = true;
+      else if (stringMessage === "Successful login!") login = false;
+      else if (stringMessage === "You're already logged in!") login = false;
+      else if (stringMessage === "Please, register to the server with the command: /register <password> <ConfirmPassword>") register = true;
+      else if (stringMessage === "Successfully registered!") register = false;
+//      else if (stringMessage === "You already have registered this username!") register = false;
+
+      else if (stringMessage === "You're already logged in!") register = false;
+      else if (stringMessage === "Successful login!") register = false;
+/*
+You're already logged in!
+Please, register to the server with the command: /register <password> <ConfirmPassword>
+Please, login with the command: /login <password>
+Successfully registered!
+Successful login!
+You already have registered this username!
+*/
+
+    } else if (options.isKaboom) {
+//      const stringMessage = bot.getMessageAsPrismarine(message)?.toString();
+      if (stringMessage === "Successfully enabled CommandSpy") commandSpy = true;
+      else if (stringMessage === "Successfully enabled CommandSpy.") commandSpy = true;
+      else if (stringMessage === "Successfully disabled CommandSpy") commandSpy = false;
+      else if (stringMessage === "Successfully disabled CommandSpy.") commandSpy = false;
+      else if (stringMessage === `Vanish for ${bot.options.username}: enabled`) vanished = true;
+      else if (stringMessage === `Vanish for ${bot.options.username}: disabled`) vanished = false;
+      else if (stringMessage === `You now have the tag: &8[&bPrefix&8: &3${config.prefixes[0]}&8]` || stringMessage === "Something went wrong while saving the prefix. Please check console.") prefix = true;
+      else if (stringMessage?.startsWith("You now have the tag: ") || stringMessage === "You no longer have a tag") prefix = false
+      else if (stringMessage?.startsWith("You have been muted")) unmuted = true;
+      else if (stringMessage?.startsWith("You have been unmuted")) unmuted = false;
+      else if (stringMessage?.startsWith("Your voice has been silenced")) unmuted = true;
+      else if (stringMessage === "God mode disabled.") god = false;
+      else if (stringMessage === "God mode enabled.") god = true;
+      else if (stringMessage === "Teleportation disabled.") teleportToggle = true;
+      else if (stringMessage === "Teleportation enabled.") teleportToggle = false;
+      else if (stringMessage === `Successfully set your username to "${bot.username}"`) {
+        username = false
+        return
+      }
+      else if (stringMessage?.startsWith("Successfully set your username to ")) username = true
+      else if (stringMessage === `You already have the username "${bot.username}"`) username = false
+      else if (stringMessage === `You no longer have a nickname.`) nickname = false;
+      else if (stringMessage.startsWith('Your nickname is now ')) nickname = true;
     }
-    else if (stringMessage?.startsWith("Successfully set your username to ")) username = true
-    else if (stringMessage === `You already have the username "${bot.username}"`) username = false
-    else if (stringMessage === `You no longer have a nickname.`) nickname = false;
-    else if (stringMessage.startsWith('Your nickname is now ')) nickname = true;
   })
   bot.on('packet.entity_status', packet => {
     if (packet.entityId !== entityId || packet.entityStatus < 24 || packet.entityStatus > 28) return
@@ -59,7 +81,11 @@ function selfcare (bot, options, config) {
     clientLock = packet.gameMode;
     timer = setInterval(() => {
       if (bot.options.isSavage && !bot.options.isKaboom && !bot.options.isCreayun) {
-        if (clientLock !== 4) bot._client.write("client_command", { actionId: 0 });
+        if (login) bot.chat.command('login amogusissus');
+        else if (register) bot.chat.command('register amogusissus amogusissus');
+//        else if (permissionLevel < 2) bot.chat.command(`minecraft:op ${bot.options.username}`);
+        else if (gameMode !== 1) bot.chat.command('minecraft:gamemode creative');
+        else if (clientLock !== 4) bot._client.write("client_command", { actionId: 0 });
       } else if (bot.options.isCreayun && !bot.options.isKaboom && !bot.options.isSavage) {
 
       } else if (bot.options.isKaboom && !bot.options.isSavage) {

@@ -6,9 +6,6 @@ module.exports = {
   description:['urban dictionary'],
   aliases:['urbandictionary'],
   trustLevel: 0,
-  usage:[
-    "<definition>",
-  ],
   usages: [
     "<definition>",
   ],

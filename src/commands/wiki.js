@@ -6,7 +6,7 @@ module.exports = {
   description:['wikipedia'],
   trustLevel: 0,
   aliases:['wikipedia'],
-  usage:["<definition>"],
+  usages:["<definition>"],
   async execute (context) {
     const source = context.source
     const args = context.arguments

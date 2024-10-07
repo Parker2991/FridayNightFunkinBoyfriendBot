@@ -45,38 +45,79 @@ module.exports = {
     let admin = [];
     let owner = [];
     for (const command of bot.commandManager.commandlist) {
-      if (args[0] === command.name) {
-        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
-                      {
-                        text: `CommandName \u203a ${command.name}\n`,
-                        color: 'gray',
-                      },
-                      {
-                        text: `Aliases \u203a ${command.aliases}\n`,
-                        color: 'gray',
-                      },
-                      {
-                        text: `Description \u203a ${command.description}\n`,
-                        color: 'gray',
-                      },
-                      {
-                        text: `trustLevel \u203a `,
-                        //${command.trustLevel}\n`,
-                        color: 'gray'
-                      },
-                      {
-                        text: `${command.trustLevel}\n`,
-                        color: 'gold'
-                      },
-                      {
-                        text: "Usages \u203a\n",
-                        color: "gray"
-                      },
-        ]);
-        for (const usageArray of command.usages) {
-           bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, { text: `${config.prefixes[0]}${command.name} ${usageArray}`, color: 'gray' })
+      let usagesComponent = [];
+      let commandComponent = [];
+      for (const usages of command.usages) {
+        if (command?.trustLevel === 1) {
+          usagesComponent.push({
+            translate: "%s%s %s",
+            with: [
+              { text: `${config.prefixes[0]}`, color: "dark_blue" },
+              { text: `${command.name} <trusted/admin/owner hashes>`, color: "blue" },
+              { text: `${command.usages}`, color: "aqua" },
+            ]
+          })
+        } else if (command?.trustLevel === 2) {
+          usagesComponent.push({
+            translate: "%s%s %s",
+            with: [
+              { text: `${config.prefixes[0]}`, color: "dark_blue" },
+              { text: `${command.name} <admin/owner hashes>`, color: "blue" },
+              { text: `${command.usages}`, color: "aqua" },
+            ]
+          })
+        } else if (command?.trustLevel === 3) {
+          usagesComponent.push({
+            translate: "%s%s %s",
+            with: [
+              { text: `${config.prefixes[0]}`, color: "dark_blue" },
+              { text: `${command.name} <owner hash>`, color: "blue" },
+              { text: `${command.usages}`, color: "aqua" },
+            ]
+          })
+        } else {
+          usagesComponent.push({
+            translate: "%s%s %s",
+            with: [
+              { text: `${config.prefixes[0]}`, color: "dark_blue" },
+              { text: `${command.name}`, color: "blue" },
+              { text: `${command.usages.toString().replaceAll(',','')}`, color: "aqua" },
+            ]
+          })
         }
-        return
+        usagesComponent.push('\n');
+      }
+      usagesComponent.pop();
+      commandComponent.push({
+        translate: "%s %s %s\n%s %s %s\n%s %s %s\n%s %s %s\n%s %s",
+        color: "dark_gray",
+        with: [
+          { text: "Command Name", color: "dark_blue" },
+          { text: "\u203a" },
+          { text: `${command.name}`, color: "blue" },
+          { text: "Aliases", color: "dark_blue" },
+          { text: "\u203a" },
+          { text: `${command.aliases.toString().replaceAll(',',' ')}`, color: "blue" },
+          { text: "Description", color: "dark_blue" },
+          { text: "\u203a" },
+          { text: `${command.description}`, color: "blue" },
+          { text: "Trust Level", color: "dark_blue" },
+          { text: "\u203a" },
+          { text: `${command.trustLevel}`, color: "gold" },
+          { text: "Usages", color: "dark_blue" },
+          { text: "\u203a" }
+        ]
+      })
+      commandComponent.push("\n");
+      commandComponent.push(usagesComponent);
+      for (const aliases of command.aliases) {
+        if (args[0] === command.name) {
+          bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, commandComponent)
+          return;
+        } if (args[0] === aliases) {
+          bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, commandComponent)
+          return
+        }
       }
       if (command.trustLevel === 0) {
         public.push([
@@ -263,16 +304,44 @@ module.exports = {
         ])?.toMotd().replaceAll('§','&'))
       setTimeout(() => {
       bot.chat.message(bot.getMessageAsPrismarine(public)?.toMotd().replaceAll("§","&"))
-      }, 200)
+      }, 300)
       setTimeout(() => {
       bot.chat.message(bot.getMessageAsPrismarine(trusted)?.toMotd().replaceAll("§","&"));
-      }, 200)
+      }, 300)
       setTimeout(() => {
       bot.chat.message(bot.getMessageAsPrismarine(admin)?.toMotd()?.replaceAll('§','&'))
-      }, 200)
+      }, 300)
       setTimeout(() => {
       bot.chat.message(bot.getMessageAsPrismarine(owner).toMotd().replaceAll("§","&"));
-      }, 200)
+      }, 300)
+    } else if (bot.options.isSavage) {
+      bot.chat.message(bot.getMessageAsPrismarine([
+        {
+          text: 'Commands (',
+          color: 'gray'
+        },
+        {
+          text: length,
+          color: 'gold'
+        },
+        {
+          text: ') ',
+          color: 'gray'
+        },
+        category,
+      ])?.toMotd().replaceAll('§','&'))
+      setTimeout(() => {
+      bot.chat.message(bot.getMessageAsPrismarine(public)?.toMotd().replaceAll("§","&"))
+      }, 400)
+      setTimeout(() => {
+      bot.chat.message(bot.getMessageAsPrismarine(trusted)?.toMotd().replaceAll("§","&"));
+      }, 400)
+      setTimeout(() => {
+      bot.chat.message(bot.getMessageAsPrismarine(admin)?.toMotd()?.replaceAll('§','&'))
+      }, 400)
+      setTimeout(() => {
+      bot.chat.message(bot.getMessageAsPrismarine(owner).toMotd().replaceAll("§","&"));
+      }, 400)
     } else if (admin.length === 0) {
       bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
                   { text: 'Commands (', color: 'gray' },

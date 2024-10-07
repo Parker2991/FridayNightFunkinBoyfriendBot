@@ -19,25 +19,25 @@ module.exports = {
     const script = args.slice(1).join(' ');
     try {
       if (source.sources.console) {
-        bot.console.logs(bot.getMessageAsPrismarine({ text: util.inspect(eval(args.join(' ')), { stylize })})?.toAnsi())
-      } else if (bot.options.useChat ?? bot.options.isSavage) {
+        bot.console.log(bot.getMessageAsPrismarine({ text: util.inspect(eval(args.join(' ')), { stylize })})?.toAnsi())
+      } else if (bot.options.useChat || bot.options.isSavage) {
         bot.chat.message(bot.getMessageAsPrismarine({ text: util.inspect(eval(script), { stylize }).substring(0, 32700) })?.toMotd().replaceAll('§','&'))
       } else {
         bot.tellraw(`@a[name="${source.player.profile.name}"]`, [
-                   {
-                     text: util.inspect(eval(script), { stylize }).substring(0, 32700),
-                     hoverEvent: {
-                       action: 'show_text',
-                       contents: [{
-                         text: 'click here to copy the code input',
-                         color: 'gray'
-                       }]
-                     },
-                     clickEvent: {
-                       action: 'copy_to_clipboard',
-                       value: `${script}`
-                     }
-                   }
+          {
+            text: util.inspect(eval(script), { stylize }).substring(0, 32700),
+            hoverEvent: {
+              action: 'show_text',
+              contents: [{
+                text: 'click here to copy the code input',
+                color: 'gray'
+              }]
+            },
+            clickEvent: {
+              action: 'copy_to_clipboard',
+              value: `${script}`
+            }
+          }
         ]);
       }
     } catch (e) {

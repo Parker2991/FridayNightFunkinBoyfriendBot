@@ -3,3 +3,5 @@ config.yml
 .git
 src/modules/exploits.js
 logs/*
+src/data/filter.json
+prototyping-crap
