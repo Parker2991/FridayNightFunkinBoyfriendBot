@@ -58,7 +58,7 @@ function command_manager (bot, options, config, discordClient) {
           const event = bot.discord.message;
           const roles = event?.member?.roles?.cache;
           if (command?.trustLevel === 1 && !source?.sources?.discord) {
-            const hash = args[0]
+//            const hash = args[0]
             if (args.length === 0 && bot.validation.trusted && bot.validation.admin && bot.validation.owner && !source?.sources?.console) throw new CommandError({ text: "Please provide an trusted or an admin or an owner hash" })
             if (args[0] !== bot.validation.trusted && args[0] !== bot.validation.admin && args[0] !== bot.validation.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted or admin or owner hash', color: 'dark_red' })
           } else if (command?.trustLevel === 1 && source?.sources.discord) {

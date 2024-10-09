@@ -270,7 +270,7 @@ module.exports = {
            color: "light_purple"
         },
         {
-           text: "aaa - FBot, SnifferBot, Xbot\n",
+           text: "aaa - FBot, SnifferBot, Xbot, Hydra\n",
            color: "gold",
         },
         {

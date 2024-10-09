@@ -18,10 +18,32 @@ module.exports = {
     const discordClient = context.discordClient;
     const args = context.arguments;
     const source = context.source;
+    let component = [];
     try {
       const [host, port] = args[0].split(':')
       const server = await mc.ping({ host, port: Number(port ?? 25565) })
-      bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
+      component.push({
+        translate: '%s %s %s:%s\n%s %s %s / %s\n%s %s %s\n%s %s %s',
+        color: 'dark_gray',
+        with: [
+          { text: 'Ip', color: 'dark_blue' },
+          { text: '\u203a' },
+          { text: `${host}`, color: 'dark_blue' },
+          { text: `${Number(port ?? 25565)}`, color: 'gold' },
+          { text: 'Players', color: 'dark_blue' },
+          { text: '\u203a' },
+          { text: `${server.players.online}`, color: 'gold' },
+          { text: `${server.players.max}`, color: 'gold' },
+          { text: 'Version', color: 'dark_blue' },
+          { text: '\u203a' },
+          { text: `${server.version.name}`, color: 'blue' },
+          { text: 'Motd', color: 'dark_blue' },
+          { text: '\u203a' },
+          server.description
+        ]
+      })
+      bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, component);
+/*      bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
                    {
                      text: `Ip \u203a ${host}:${Number(port ?? 25565)}\n`,
                      color: 'gray',
@@ -62,7 +84,7 @@ module.exports = {
                      color: 'gray',
                    },
                    server.description,
-       ])
+       ])*/
     } catch (e) {
       bot.chat.message(`${e.toString()}`)
     }

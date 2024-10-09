@@ -17,7 +17,7 @@ function creayun (messageobj, data) {
 //    console.log(data.players.find(player => player.profile.name === match[2]))
     sender = data.players.find(player => player.profile.name === match[2])
 //    sender = data.players.find(player => util.isDeepStrictEqual(player.displayName, playerListDisplayName))
-    if (!sender) return;
+//    if (!sender) return;
 //    console.log(sender)
     return { sender, contents: match[3], type: 'minecraft:chat'};
   }

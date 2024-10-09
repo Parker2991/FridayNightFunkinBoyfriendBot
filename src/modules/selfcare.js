@@ -95,7 +95,7 @@ You already have registered this username!
         else if (username) bot.chat.command(`username ${bot.options.username}`)
         else if (nickname) bot.chat.command(`nick off`)
         else if (!prefix) bot.chat.command(`prefix &8[&bPrefix&8: &3${config.prefixes[0]}&8]`);
-        else if (!vanished) bot.core.run(`vanish ${bot.options.username} on`);
+        else if (!vanished) bot.chat.command(`essentials:vanish on`);
         else if (unmuted) bot.core.run(`essentials:mute ${bot.uuid}`);
         else if (!god) bot.core.run(`god ${bot.options.username} enable`);
         else if (!teleportToggle) bot.core.run(`tptoggle ${bot.options.username} disable`);

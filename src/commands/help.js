@@ -111,11 +111,19 @@ module.exports = {
       commandComponent.push("\n");
       commandComponent.push(usagesComponent);
       for (const aliases of command.aliases) {
-        if (args[0] === command.name) {
-          bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, commandComponent)
+        if (args[0]?.toLowerCase() === command.name) {
+          if (bot.options.isSavage) {
+            bot.chat.message(`${bot.getMessageAsPrismarine(commandComponent)?.toMotd().replaceAll('§','&')}`);
+          } else {
+            bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, commandComponent)
+          }
           return;
-        } if (args[0] === aliases) {
-          bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, commandComponent)
+        } if (args[0]?.toLowerCase() === aliases) {
+          if (bot.options.isSavage) {
+            bot.chat.message(`${bot.getMessageAsPrismarine(commandComponent)?.toMotd().replaceAll('§','&')}`)
+          } else {
+            bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, commandComponent)
+          }
           return
         }
       }

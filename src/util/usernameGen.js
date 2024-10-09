@@ -1,7 +1,5 @@
 function usernameGen (bot, config) {
 //  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-  const unicode = "▄".codePointAt(0).toString(16);
-  const unicodeGen = "\\u" + "0000".substring(0, 4 - unicode.length) + unicode;
   if (bot.options.isSavage || bot.options.isCreayun && !bot.options.isKaboom) {
     characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
   } else {

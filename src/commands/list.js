@@ -15,8 +15,8 @@ module.exports = {
     const component = []
     for (const player of players) {
       component.push({
-        translate: `%s \u203a %s [%s %s %s %s %s]`,
-        color: 'blue',
+        translate: `%s \u203a %s [%s: %s %s %s: %s]`,
+        color: 'dark_gray',
         with: [
           player.displayName ?? player.profile.name,
           {
@@ -34,10 +34,10 @@ module.exports = {
               }]
             }
           },
-          { text: `Ping:`, color: 'dark_blue' },
+          { text: `Ping`, color: 'dark_blue' },
           { text: `${player.latency}`, color: 'gold' },
-          { text: '/', color: 'dark_aqua' },
-          { text: `Gamemode:`, color: 'dark_blue' },
+          { text: '/', color: 'dark_gray' },
+          { text: `Gamemode`, color: 'dark_blue' },
           { text: `${player.gamemode}`, color: 'gold' },
         ]
       })
@@ -53,10 +53,11 @@ module.exports = {
       }, 300)
     } else if (bot.options.isKaboom) {
       bot.tellraw(`@a[name="${source.player.profile.name}"]`, [
-        { text: `Players: `, color:'gray' },
-        { text: '(' , color: 'gray' },
+        { text: `Players`, color: 'dark_blue' },
+        { text: ': ', color: 'dark_gray' },
+        { text: '(' , color: 'dark_gray' },
         { text: `${JSON.stringify(bot.players.length)}`, color: 'gold' },
-        { text: ')\n', color: 'gray' },
+        { text: ')\n', color: 'dark_gray' },
         component
       ])
     }

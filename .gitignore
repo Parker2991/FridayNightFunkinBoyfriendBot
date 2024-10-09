@@ -4,4 +4,6 @@ config.yml
 src/modules/exploits.js
 logs/*
 src/data/filter.json
+data/filter.json
 prototyping-crap
+

@@ -14,11 +14,11 @@ module.exports = {
 //    if (!source.player) return
     if (bot.options.isKaboom) {
       x = between(-30_000_000, 30_000_000)
-      y = between(-30_000_000, 30_000_000)
+      y = 100
       z = between(-30_000_000, 30_000_000)
     } else if (bot.options.isSavage) {
       x = between(-4096, 4096);
-      y = between(-4096, 4096);
+      y = 100
       z = between(-4096, 4096);
     }
 //    bot.tellraw("@a", `Randomly Teleported: ${sender.profile.name} to x:${x} y:${y} z:${z} `)

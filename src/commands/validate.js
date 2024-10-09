@@ -13,20 +13,6 @@ module.exports = {
     const bot = context.bot;
     const args = context.arguments;
     const source = context.source;
-/*    if (args[0] === bot.validation.trusted) {
-      if (bot.options.isSavage) {
-        bot.chat.message('&2Valid Trusted hash');
-      } else {
-        bot.tellraw(`@a`, { text: "Valid Trusted hash", color: "dark_green" });
-      }
-    }
-    if (args[0] === bot.validation.owner) {
-      if (bot.options.isSavage) {
-        bot.chat.message("&2Valid Owner hash");
-      } else {
-        bot.tellraw(`@a`, { text: "Valid Owner hash", color: "dark_green" });
-      }
-    }*/
     if (args[0] === bot.validation.trusted) {
       bot.chat.message('&2Valid Trusted hash');
     }
@@ -42,7 +28,6 @@ module.exports = {
     const event = bot?.discord?.message
     const roles = event?.member?.roles?.cache
     const source = context.source;
-    console.log(Object.keys(bot.discord.message.member.user.username));
     if (roles?.some(role => role.name === `${config.discord.roles.trusted}`)) {
       bot.discord.message.reply('Valid trusted user')
       bot.chat.message(`Valid trusted user [${bot.discord.message.member.user.username}]`)
