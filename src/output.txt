@@ -1,7 +1,0 @@
-       27 util/ChatParsers/ChipmunkMod.js
-       25 util/ChatParsers/Creayun.js
-       41 util/ChatParsers/Kaboom.js
-       23 util/ChatParsers/VanillaChat.js
-       26 util/ChatParsers/sayConsole.js
-       25 util/ChatParsers/yfdCustomChat.js
-      167 total
