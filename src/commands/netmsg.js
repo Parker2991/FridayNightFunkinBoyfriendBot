@@ -1,7 +1,7 @@
 const CommandError = require('../util/command_error.js')
 module.exports = {
   name: 'netmsg',
-  trustLevel: 0,
+  trustLevel: 1,
   aliases: [
 
   ],

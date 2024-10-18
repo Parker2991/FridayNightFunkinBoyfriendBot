@@ -21,6 +21,7 @@ function selfcare (bot, options, config) {
       else if (stringMessage === "Successful login!") login = false;
       else if (stringMessage === "You're already logged in!") login = false;
       else if (stringMessage === "Please, register to the server with the command: /register <password> <ConfirmPassword>") register = true;
+      else if (stringMessage === "This user isn't registered!") register = true;
       else if (stringMessage === "Successfully registered!") register = false;
 //      else if (stringMessage === "You already have registered this username!") register = false;
 

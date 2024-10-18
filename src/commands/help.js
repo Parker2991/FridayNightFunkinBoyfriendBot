@@ -54,7 +54,7 @@ module.exports = {
             with: [
               { text: `${config.prefixes[0]}`, color: "dark_blue" },
               { text: `${command.name} <trusted/admin/owner hashes>`, color: "blue" },
-              { text: `${command.usages}`, color: "aqua" },
+              { text: `${usages}`, color: "aqua" },
             ]
           })
         } else if (command?.trustLevel === 2) {
@@ -63,7 +63,7 @@ module.exports = {
             with: [
               { text: `${config.prefixes[0]}`, color: "dark_blue" },
               { text: `${command.name} <admin/owner hashes>`, color: "blue" },
-              { text: `${command.usages}`, color: "aqua" },
+              { text: `${usages}`, color: "aqua" },
             ]
           })
         } else if (command?.trustLevel === 3) {
@@ -72,16 +72,16 @@ module.exports = {
             with: [
               { text: `${config.prefixes[0]}`, color: "dark_blue" },
               { text: `${command.name} <owner hash>`, color: "blue" },
-              { text: `${command.usages}`, color: "aqua" },
+              { text: `${usages}`, color: "aqua" },
             ]
           })
-        } else {
+        } else if (command?.trustLevel === 0 || command.trustLevel === 4) {
           usagesComponent.push({
             translate: "%s%s %s",
             with: [
               { text: `${config.prefixes[0]}`, color: "dark_blue" },
               { text: `${command.name}`, color: "blue" },
-              { text: `${command.usages.toString().replaceAll(',','')}`, color: "aqua" },
+              { text: `${usages.toString().replaceAll(',','')}`, color: "aqua" },
             ]
           })
         }
@@ -110,7 +110,7 @@ module.exports = {
       })
       commandComponent.push("\n");
       commandComponent.push(usagesComponent);
-      for (const aliases of command.aliases) {
+//      for (const aliases of command.aliases) {
         if (args[0]?.toLowerCase() === command.name) {
           if (bot.options.isSavage) {
             bot.chat.message(`${bot.getMessageAsPrismarine(commandComponent)?.toMotd().replaceAll('§','&')}`);
@@ -118,7 +118,8 @@ module.exports = {
             bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, commandComponent)
           }
           return;
-        } if (args[0]?.toLowerCase() === aliases) {
+        }
+  /*      } if (args[0]?.toLowerCase() === aliases) {
           if (bot.options.isSavage) {
             bot.chat.message(`${bot.getMessageAsPrismarine(commandComponent)?.toMotd().replaceAll('§','&')}`)
           } else {
@@ -126,7 +127,8 @@ module.exports = {
           }
           return
         }
-      }
+        console.log(aliases)*/
+//      }
       if (command.trustLevel === 0) {
         public.push([
           {

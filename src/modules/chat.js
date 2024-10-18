@@ -72,7 +72,7 @@ function chat (bot, options, config) {
 
   bot.on('packet.system_chat', packet => {
     const message = tryParse(packet.content)
-    if (config.commandSetMessage) {
+    if (!config.commandSetMessage) {
       if (message.translate === 'advMode.setCommand.success') return // Ignores command set message
     }
     if (message.translate === 'multiplayer.message_not_delivered') return

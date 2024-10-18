@@ -11,6 +11,7 @@ function command_loop (bot, options, config) {
       })
 
       bot.on('packet.login', () => {
+        if (this.list.length === 0) return
         timer = ({ timer: setInterval(() => bot.core.run(command), interval), command, interval })
         this.list.push(timer);
       })

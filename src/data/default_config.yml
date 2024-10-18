@@ -23,17 +23,24 @@ core:
       y: 0
       z: 15
 
-commandSetMessage: true
+commandSetMessage: false
 
 keys:
   trusted: "trusted key here"
   admin: "admin key here"
   owner: "owner key here"
 
+weatherApiKey: ""
+
 colors:
+  integer: "gold"
   discord:
     embed: "#000000"
     error: "#FF0000"
+  commands:
+    primary: "dark_blue"
+    secondary: "blue"
+    tertiary: "dark_gray"
 
 console:
   prefix: "c."

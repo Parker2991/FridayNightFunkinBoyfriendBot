@@ -11,10 +11,10 @@ module.exports = {
   ],
   execute (context) {
     const bot = context.bot;
-    process.exit(69);
+    process.kill(process.pid);
   },
   discordExecute (context) {
     const bot = context.bot;
-    process.exit(69);
+    process.kill(process.pid);
   }
 }

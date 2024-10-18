@@ -1,9 +1,8 @@
 function player_list (bot, options, config) {
   bot.players = []
 
-  bot.on('packet.player_info', packet => {
+  bot.on('packet.player_info', async (packet) => {
     const actions = []
-
     if (packet.action & 0b000001) actions.push(addPlayer)
     if (packet.action & 0b000010) actions.push(initializeChat)
     if (packet.action & 0b000100) actions.push(updateGamemode)
@@ -16,16 +15,17 @@ function player_list (bot, options, config) {
         action(entry)
       }
     }
+
   })
 
   bot.on('packet.player_remove', async ({players}) => { // players has uuids of the players
     let player_completion = (await bot.tab_complete('scoreboard players add ')).filter(_ => _.tooltip == undefined) // exclude @a, @r, @s, @e, @p -aaa
-
     bot.players.forEach(async player => {
       if(!players.includes(player.uuid)) return
 
       const a = player_completion.filter(_ => _.match == player.profile.name)
-
+      const b = op.filter(_ => _.match == player.profile.name);
+      //console.log(b)
       if(a.length >= 1) {
         player.vanished = true
       } else {
@@ -39,7 +39,7 @@ function player_list (bot, options, config) {
     bot.players.push({
       uuid: entry.uuid,
       profile: { name: entry.player.name, properties: entry.player.properties },
-
+//      opped: false,
       chatSession: undefined,
       gamemode: undefined,
       listed: undefined,
@@ -50,7 +50,7 @@ function player_list (bot, options, config) {
   }
 
   function initializeChat (entry) {
-    // TODO: Handle chat sessions
+
   }
 
   function updateGamemode (entry) {
@@ -66,6 +66,21 @@ function player_list (bot, options, config) {
 
     target.listed = entry.listed
   }
+
+/*  async function op (target) {
+//    let player_completion = (await bot.tab_complete('minecraft:op ')).filter(_ => _.tooltip === undefined);
+//    console.log(player_completion);
+    bot.players.forEach(async player => {
+      if (!players.includes(player.uuid)) return;
+      let player_completion = (await bot.tab_complete('minecraft:op ')).filter(_ => _.tooltip === undefined);
+      const op = player_completion.filter(_ => _.match === players.profile.name);
+      console.log(op);
+      if (op.length >= 1) {
+        player.opped = true
+      }
+    })
+    target.opped = true
+  }*/
 
   function updateLatency (entry) {
     const target = bot.players.find(_entry => _entry.uuid === entry.uuid)

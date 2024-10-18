@@ -3,8 +3,9 @@ module.exports = {
   name: 'filter',
   trustLevel: 1,
   aliases: [
+    "blacklist"
   ],
-  description: '',
+  description: 'filters players',
   usages: [
     "list",
     "--regex(-r) --ignorecase(-i) add <player>",
@@ -89,7 +90,12 @@ module.exports = {
       break;
       case "--ignorecase":
       case "-i":
-        bot.filter.add(true, false, args.slice(2).join(' '))
+        switch (args[2]?.toLowerCase()) {
+          case "add":
+            bot.filter.add(true, false, args[3]);
+            bot.chat.message(`Added ${args[3]} to the filter`)
+          break;
+        }
       break;
       case "add":
       case "a":

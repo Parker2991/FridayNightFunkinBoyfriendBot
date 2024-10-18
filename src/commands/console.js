@@ -4,7 +4,13 @@ module.exports = {
   aliases: [
 
   ],
-  usages: [],
+  usages: [
+    'server/srv <all/servername>',
+    'customchat <on/true/enable/off/false/disable>',
+    'say <message>',
+    'validate/validation/val <owner/o/admin/a/trusted/t>',
+    'logging/togglelogging/logtoconsole <on/true/enable/off/false/disable>'
+  ],
   execute (context) {
     const bot = context.bot
     const args = context.arguments;
@@ -68,7 +74,7 @@ module.exports = {
             if (bot.console.customChat.enabled) {
               bot.console.customChat.chat(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.admin} ${args.slice(3).join(' ')}`)
             } else if (!bot.console.customChat.enabled) {
-//              bot.chat.message(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.admin} ${args.slice(3).join(' ')}`)
+              bot.chat.message(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.admin} ${args.slice(3).join(' ')}`)
             }
           break
           case "trusted":
@@ -85,6 +91,7 @@ module.exports = {
       break
       case 'logging':
       case 'togglelogging':
+      case 'logtoconsole':
         switch (args[1]?.toLowerCase()) {
           case 'on':
           case 'enable':

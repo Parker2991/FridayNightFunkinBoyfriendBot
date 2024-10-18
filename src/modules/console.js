@@ -1,5 +1,6 @@
 const CommandSource = require('../util/command_source');
 const prismarineChat = require('prismarine-chat')('1.20.2');
+const convert = require('color-convert')
 function Console (bot, options, config) {
   let rateLimit = 0;
   bot.console = {
@@ -39,28 +40,34 @@ function Console (bot, options, config) {
     },
     customChat: {
       enabled: false,
+      rainbow: false,
       chat (message) {
-        const prefix = {
-          translate: '[%s] %s \u203a %s',
-          color:'dark_gray',
-            with: [
-              {
-                text: 'FNFBoyfriendBot Console',
-                color:'#00FFFF'
-              },
-              {
-                selector: `${bot.username}`, color:'#00FFFF',
-                clickEvent: { action: 'suggest_command', value:  `${config.prefixes[0]}help` }
-              },
-              {
-                 text: '',
-                 extra: [`${message}`],
-                 color:'white'
-              },
-            ],
-            hoverEvent: { action:"show_text", value: 'FNF Sky is a fangirl but a simp for boyfriend confirmed??'},
-            clickEvent: 'https://doin-your.mom' ?
-            { action: 'open_url', value: 'https://doin-your.mom' } : undefined,
+        if (this.rainbow) {
+
+        
+        } else {
+          prefix = {
+            translate: '[%s] %s \u203a %s',
+            color:'dark_gray',
+              with: [
+                {
+                  text: 'FNFBoyfriendBot Console',
+                  color:'#00FFFF'
+                },
+                {
+                  selector: `${bot.username}`, color:'#00FFFF',
+                  clickEvent: { action: 'suggest_command', value:  `${config.prefixes[0]}help` }
+                },
+                {
+                   text: '',
+                   extra: [`${message}`],
+                   color:'white'
+                },
+              ],
+              hoverEvent: { action:"show_text", value: 'FNF Sky is a fangirl but a simp for boyfriend confirmed??'},
+              clickEvent: 'https://doin-your.mom' ?
+              { action: 'open_url', value: 'https://doin-your.mom' } : undefined,
+          }
         }
         bot.tellraw('@a', prefix)
       }
