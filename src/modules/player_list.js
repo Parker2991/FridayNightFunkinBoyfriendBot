@@ -24,8 +24,6 @@ function player_list (bot, options, config) {
       if(!players.includes(player.uuid)) return
 
       const a = player_completion.filter(_ => _.match == player.profile.name)
-      const b = op.filter(_ => _.match == player.profile.name);
-      //console.log(b)
       if(a.length >= 1) {
         player.vanished = true
       } else {
@@ -39,7 +37,6 @@ function player_list (bot, options, config) {
     bot.players.push({
       uuid: entry.uuid,
       profile: { name: entry.player.name, properties: entry.player.properties },
-//      opped: false,
       chatSession: undefined,
       gamemode: undefined,
       listed: undefined,
@@ -66,21 +63,6 @@ function player_list (bot, options, config) {
 
     target.listed = entry.listed
   }
-
-/*  async function op (target) {
-//    let player_completion = (await bot.tab_complete('minecraft:op ')).filter(_ => _.tooltip === undefined);
-//    console.log(player_completion);
-    bot.players.forEach(async player => {
-      if (!players.includes(player.uuid)) return;
-      let player_completion = (await bot.tab_complete('minecraft:op ')).filter(_ => _.tooltip === undefined);
-      const op = player_completion.filter(_ => _.match === players.profile.name);
-      console.log(op);
-      if (op.length >= 1) {
-        player.opped = true
-      }
-    })
-    target.opped = true
-  }*/
 
   function updateLatency (entry) {
     const target = bot.players.find(_entry => _entry.uuid === entry.uuid)

@@ -1,6 +1,5 @@
 prefixes:
   - "!"
-  - "fnfbfbot!"
 
 discord:
   token: "discord token here"

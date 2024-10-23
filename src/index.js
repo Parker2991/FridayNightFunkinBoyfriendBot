@@ -4,10 +4,13 @@ const loadModules = require('./util/loadModules');
 const js_yaml = require('js-yaml');
 const fs = require('fs');
 const path = require('path');
+const checks = require('./util/checks');
 const { Client, GatewayIntentBits } = require('discord.js');
 const { MessageContent, GuildMessages, Guilds } = GatewayIntentBits;
 const discordClient = new Client({ intents: [Guilds, GuildMessages, MessageContent] });
 console.log('Starting FNFBoyfriendBot');
+checks();
+/*
 if (!fs.existsSync(path.join(__dirname, "../config.yml"))) {
   console.log("Config not found creating config from the default config");
   fs.copyFileSync(
@@ -15,6 +18,7 @@ if (!fs.existsSync(path.join(__dirname, "../config.yml"))) {
     path.join(__dirname, "../config.yml")
   )
 }
+*/
 try {
   config = js_yaml.load(fs.readFileSync(path.join(__dirname, '../', 'config.yml')))
 } catch (e) {

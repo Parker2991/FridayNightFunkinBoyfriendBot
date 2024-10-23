@@ -1,7 +1,7 @@
 const CommandError = require('../util/command_error');
 module.exports = {
   name: 'filter',
-  trustLevel: 1,
+  trustLevel: 2,
   aliases: [
     "blacklist"
   ],

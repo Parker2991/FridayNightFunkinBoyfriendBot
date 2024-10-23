@@ -54,6 +54,15 @@ module.exports = {
         }
       break
       case 'config':
+        if (bot.options.isKaboom) {
+          mode = 'Kaboom'
+        } else if (bot.options.isCreayun) {
+          mode = 'Creayun'
+        } else if (bot.options.useChat) {
+          mode = 'useChat / Kaboom'
+        } else if (bot.options.isSavage) {
+          mode = 'Savage'
+        }
         bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
                       {
                         text: `Minecraft username \u203a ${bot.options.username}\n`,
@@ -104,6 +113,14 @@ module.exports = {
                         color: 'gold'
                       },
                       {
+                        text: 'Mode \u203a ',
+                        color: 'gray'
+                      },
+                      {
+                        text: `${mode}`,
+                        color: 'gray',
+                      }
+/*                      {
                         text: `isKaboom \u203a ${bot.options.isKaboom}\n`,
                         color: "gray",
                       },
@@ -114,7 +131,7 @@ module.exports = {
                       {
                         text: `isSavage \u203a ${bot.options.isSavage}`,
                         color: "gray",
-                      },
+                      },*/
         ]);
       break;
       case 'discord':

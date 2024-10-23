@@ -83,7 +83,7 @@ module.exports = {
     }
     component.pop()
     const ansi = bot.getMessageAsPrismarine([{ text: `Players: `, color:'gray' }, { text: '(' , color: 'gray' }, { text: `${JSON.stringify(bot.players.length)}`, color: 'gold' }, { text: ')\n', color: 'gray' }, component])?.toAnsi()
-    const fix = fixansi(ansi.replaceAll('`', '`\u200b'))
+    const fix = fixansi(ansi.replaceAll('`', '`\u200b').substring(0, 3080))
     const Embed = new EmbedBuilder()
             .setColor(`${config.colors.discord.embed}`)
             .setTitle(`${this.name} Command`)

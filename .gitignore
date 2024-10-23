@@ -6,4 +6,5 @@ logs/*
 src/data/filter.json
 data/filter.json
 prototyping-crap
-
+src/data/trustedPlayers.js
+data/trustedPlayers.js

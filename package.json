@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "color-convert": "^2.0.1",
     "cowsay": "^1.6.0",
     "cowsay2": "^2.0.4",
     "discord.js": "^14.16.3",
@@ -16,6 +17,7 @@
     "prismarine-auth": "^2.2.0",
     "prismarine-chat": "^1.10.1",
     "prismarine-registry": "^1.7.0",
+    "proxy-agent": "^6.4.0",
     "wikipedia": "^2.1.2",
     "xml2js": "^0.6.2"
   }
