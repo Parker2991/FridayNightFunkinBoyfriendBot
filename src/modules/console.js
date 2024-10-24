@@ -19,7 +19,7 @@ function Console (bot, options, config) {
         })
       })
     },
-    source: new CommandSource(bot.options.username, { console: true, discord: false }),
+    source: new CommandSource(bot._client.username, { console: true, discord: false }),
     refreshLine (...args) {
       this.readline.output.write("\x1b[2K\r");
       console.log.apply(console, arguments);

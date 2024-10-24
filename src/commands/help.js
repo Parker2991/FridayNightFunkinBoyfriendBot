@@ -409,28 +409,28 @@ module.exports = {
         bot.discord.message.reply({ embeds: [Embed] })
         return
       }
-      if (command?.trustLevel === 0) {
+      if (command?.trustLevel === 0 && command.discordExecute) {
         public.push([
           {
             text: command.name + ' ',
             color: "aqua",
           }
         ])
-      } else if (command?.trustLevel === 1) {
+      } else if (command?.trustLevel === 1 && command.discordExecute) {
         trusted.push([
           {
             text: command.name + ' ',
             color: "dark_aqua"
           }
         ])
-      } else if (command?.trustLevel === 2) {
+      } else if (command?.trustLevel === 2 && command.discordExecute) {
         admin.push([
           {
             text: command.name + ' ',
             color: 'blue'
           }
         ])
-      } else if (command?.trustLevel === 3) {
+      } else if (command?.trustLevel === 3 && command.discordExecute) {
         owner.push([
           {
             text: command.name + ' ',
@@ -439,7 +439,7 @@ module.exports = {
         ])
       }
     }
-    const length = bot.commandManager.commandlist.filter(c => c.trustLevel != 3).length
+    const length = bot.commandManager.commandlist.filter(c => c.trustLevel !== 3 && c.discordExecute).length
     const ansi1 = bot.getMessageAsPrismarine([ { text: 'Commands (', color: 'gray' }, { text: JSON.stringify(length), color: 'gold' }, { text: ') ', color: 'gray' }, category, '\n', public, trusted, owner ])?.toAnsi();
     const fix1 = fixansi(ansi1.replaceAll('`', '`\u200b'))
     const Embed = new EmbedBuilder()

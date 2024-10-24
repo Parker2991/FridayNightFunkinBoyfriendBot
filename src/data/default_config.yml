@@ -51,6 +51,7 @@ bots:
     usernameGen: true
     version: "1.20.2"
     serverName: "localhost"
+    private: false
     reconnectDelay: 6000
     channelId: "discord channel id here"
     logging: false

@@ -1,7 +1,7 @@
 const CommandError = require('../util/command_error.js')
 module.exports = {
   name: 'netmsg',
-  trustLevel: 1,
+  trustLevel: 0,
   aliases: [
 
   ],
@@ -14,23 +14,25 @@ module.exports = {
     const bot = context.bot;
     const source = context.source;
     const config = context.config;
-    if (config.patches.netmsg) {
-      component = [
-        { text: '[', color: "dark_gray" },
-        { text: bot.options.serverName, color: "gray" },
-        { text: "] ", color: "dark_gray" },
-        source.player.displayName,
-        { text: " \u203a ", color: "dark_gray", bold: false },
-        { text: args.join(' '), color: "gray", bold: false }
-      ]
-    } else {
+    if (bot.options.private) {
       component = {
         translate: '[%s] %s \u203a %s',
         color: "dark_gray",
         with: [
-          { text: bot.options.serverName, color: "gray" },
+          { text: bot.options.serverName, color: "blue" },
           source.player.displayName ?? source.player.profile.name,
-          { text: args.join(' '), color: "gray" },
+          { text: args.join(' '), color: "blue" },
+        ]
+      }
+    } else if (!bot.options.private) {
+      component = {
+        translate: '[%s:%s] %s \u203a %s',
+        color: "dark_gray",
+        with: [
+          { text: bot.options.host, color: "blue" },
+          { text: `${bot.options.port}`, color: "gold" },
+          source.player.displayName ?? source.player.profile.name,
+          { text: args.join(' '), color: "blue" },
         ]
       }
     }
@@ -53,13 +55,27 @@ module.exports = {
     const bot = context.bot;
     const args = context.arguments;
     const source = context.source;
-    const component = {
-      translate: '[%s] %s \u203a %s',
-      with: [
-        bot.options.serverName,
-        source.player.displayName ?? source.player.profile.name,
-        args.join(' ')
-      ]
+    if (bot.options.private) {
+      component = {
+        translate: '[%s] %s \u203a %s',
+        color: "dark_gray",
+        with: [
+          { text: bot.options.serverName, color: "blue" },
+          source.player.displayName ?? source.player.profile.name,
+          { text: args.join(' '), color: "blue" },
+        ]
+      }
+    } else if (!bot.options.private) {
+      component = {
+        translate: '[%s:%s] %s \u203a %s',
+        color: "dark_gray",
+        with: [
+          { text: bot.options.host, color: "blue" },
+          { text: `${bot.options.port}`, color: "gold" },
+          source.player.displayName ?? source.player.profile.name,
+          { text: args.join(' '), color: "blue" },
+        ]
+      }
     }
     bot.bots.filter((eachBot) => {
       if (eachBot.options.serverName === "Savage Friends" && eachBot.options.isSavage && !eachBot.options.useChat && !eachBot.options.isKaboom) {

@@ -12,6 +12,8 @@ function selfcare (bot, options, config) {
   let nickname = false;
   let login = false;
   let register = false;
+  let positionCount = 0;
+  bot.vanished = true
   // You now have the tag: &8[&bPrefix&8: &3~&8]
   // You no longer have a tag
   bot.on('message', (message) => {
@@ -63,18 +65,34 @@ You already have registered this username!
       else if (stringMessage.startsWith('Your nickname is now ')) nickname = true;
     }
   })
+
   bot.on('packet.entity_status', packet => {
     if (packet.entityId !== entityId || packet.entityStatus < 24 || packet.entityStatus > 28) return
     permissionLevel = packet.entityStatus - 24
   })
+
   bot.on('packet.game_state_change', packet => {
     if (packet.reason !== 3) return // Reason 3 = Change Game Mode
     gameMode = packet.gameMode;
   });
+
   bot.on("packet.game_state.change", packet => {
     if (packet.reason !== 4) return // checks if the bot is seeing the endcredits or died
     clientLock = packet.gameMode;
   })
+
+  bot.on("packet.position", (packet, position) => {
+    positionCount++
+    setTimeout(() => {
+      positionCount--
+      if (positionCount > 4) {
+        bot.core.run('sudo * icu stop');
+      } if (permissionLevel < 2 || gameMode !== 1) {
+        bot._client.end('anti icu :3');
+      }
+    }, 1000)
+  })
+
   let timer;
   bot.on('packet.login', (packet) => {
     entityId = packet.entityId;
@@ -96,7 +114,7 @@ You already have registered this username!
         else if (username) bot.chat.command(`username ${bot.options.username}`)
         else if (nickname) bot.chat.command(`nick off`)
         else if (!prefix) bot.chat.command(`prefix &8[&bPrefix&8: &3${config.prefixes[0]}&8]`);
-        else if (!vanished) bot.chat.command(`essentials:vanish on`);
+        else if (!vanished && bot.vanished) bot.chat.command(`essentials:vanish on`);
         else if (unmuted) bot.core.run(`essentials:mute ${bot.uuid}`);
         else if (!god) bot.core.run(`god ${bot.options.username} enable`);
         else if (!teleportToggle) bot.core.run(`tptoggle ${bot.options.username} disable`);
