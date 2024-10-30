@@ -7,7 +7,6 @@ async function command_manager (bot, options, config, discordClient) {
   bot.commandManager = {
     commands: {},
     commandlist: [],
-    collection: new Collection(),
     execute (source, commandName, args) {
       const command = this.getCommand(commandName.toLowerCase());
       try {
@@ -162,12 +161,10 @@ async function command_manager (bot, options, config, discordClient) {
     try {
       if (filename.endsWith('.mjs')) {
          let commands = await import(path.join(__dirname, '../commands', filename))
-         bot.commandManager.register(commands.command);
          bot.commandManager.commandlist.push(commands.command);
       } if (filename.endsWith('.js')) {
         let commands = require(path.join(__dirname, '../commands', filename));
         bot.commandManager.register(commands);
-        bot.commandManager.collection.set(commands.name, commands)
         bot.commandManager.commandlist.push(commands);
       }
     } catch (error) {
