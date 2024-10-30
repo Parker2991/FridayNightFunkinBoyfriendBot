@@ -129,6 +129,7 @@ module.exports = {
         }
         console.log(aliases)*/
 //      }
+// tellraw @p {"text":"this","clickEvent":{"action":"suggest_command","value":"this"}}
       if (command.trustLevel === 0) {
         public.push([
           {
@@ -139,12 +140,12 @@ module.exports = {
               action: "show_text",
               value: [
                 {
-                  text: `Command:${command.name}\n`,
-                  color: 'gray'
+                  text: `Command: ${command.name}\n`,
+                  color: 'blue'
                 },
                 {
                   text: `Trust Level: `,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: `${command.trustLevel}\n`,
@@ -152,20 +153,20 @@ module.exports = {
                 },
                 {
                   text: `${command.description}\n`,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: `Command Aliases: ${command.aliases}\n`,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: 'click on me to use me :)',
-                  color: 'gray',
+                  color: 'dark_blue',
                 },
               ],
             },
             clickEvent: {
-              action: 'run_command',
+              action: 'suggest_command',
               value: `${config.prefixes[0]}${command?.name}`
             }
           }
@@ -181,11 +182,11 @@ module.exports = {
               value: [
                 {
                   text: `Command:${command.name}\n`,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: `Trust Level: `,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: `${command.trustLevel}\n`,
@@ -193,20 +194,20 @@ module.exports = {
                 },
                 {
                   text: `${command.description}\n`,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: `Command Aliases: ${command.aliases}\n`,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: 'click on me to use me :)',
-                  color: 'gray',
+                  color: 'dark_blue',
                 },
               ],
             },
             clickEvent: {
-              action: 'run_command',
+              action: 'suggest_command',
               value: `${config.prefixes[0]}${command?.name}`
             }
           }
@@ -222,11 +223,11 @@ module.exports = {
               value: [
                 {
                   text: `Command:${command.name}\n`,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: `Trust Level: `,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: `${command.trustLevel}\n`,
@@ -234,20 +235,20 @@ module.exports = {
                 },
                 {
                   text: `${command.description}\n`,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: `Command Aliases: ${command.aliases}\n`,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: 'click on me to use me :)',
-                  color: 'gray',
+                  color: 'dark_blue',
                 },
               ],
             },
             clickEvent: {
-              action: 'run_command',
+              action: 'suggest_command',
               value: `${config.prefixes[0]}${command?.name}`
             }
           }
@@ -263,11 +264,11 @@ module.exports = {
               value: [
                 {
                   text: `Command:${command.name}\n`,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: `Trust Level: `,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: `${command.trustLevel}\n`,
@@ -275,20 +276,20 @@ module.exports = {
                 },
                 {
                   text: `${command.description}\n`,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: `Command Aliases: ${command.aliases}\n`,
-                  color: 'gray'
+                  color: 'blue'
                 },
                 {
                   text: 'click on me to use me :)',
-                  color: 'gray',
+                  color: 'dark_blue',
                 },
               ],
             },
             clickEvent: {
-              action: 'run_command',
+              action: 'suggest_command',
               value: `${config.prefixes[0]}${command?.name}`
             }
           }

@@ -2,7 +2,7 @@ const between = require('../util/between')
 const CommandError = require('../util/command_error')
 module.exports = {
   name: 'tpr',
-  description:['teleport to a random place'],
+  description:'teleport to a random place',
   trustLevel: 1,
   aliases:['rtp', 'teleportrandom', 'randomteleport'],
   usages:[""],

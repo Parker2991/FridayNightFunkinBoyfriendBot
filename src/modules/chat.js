@@ -33,19 +33,19 @@ function chat (bot, options, config) {
     })
     switch (packet.type) {
       case 1:
-        bot.emit('message', { translate: "chat.type.emote", with: [ sender, message ]})
+        bot.emit('profilelessChat', { translate: "chat.type.emote", with: [ sender, message ]})
       break
       case 2:
-        bot.emit('message', { translate: "commands.message.display.incoming", with: [ sender, message], color: "gray", italic: true })
+        bot.emit('profilelessChat', { translate: "commands.message.display.incoming", with: [ sender, message], color: "gray", italic: true })
       break
       case 3:
-        bot.emit('message', [{ translate: "commands.message.display.outgoing", with: [ sender, message ], color: "gray", italic: true }])
+        bot.emit('profilelessChat', [{ translate: "commands.message.display.outgoing", with: [ sender, message ], color: "gray", italic: true }])
       break
       case 4:
-        bot.emit('message', [message]);
+        bot.emit('profilelessChat', [message]);
       break
       case 5:
-        bot.emit('message', [{ translate: 'chat.type.announcement', with: [ sender, message ]}])
+        bot.emit('profilelessChat', [{ translate: 'chat.type.announcement', with: [ sender, message ]}])
       break
     }
     tryParsingMessage(message, { senderName: sender, players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine })
@@ -56,16 +56,20 @@ function chat (bot, options, config) {
     bot.emit('player_chat', { plain: packet.plainMessage, unsigned, senderUuid: packet.senderUuid })
     switch (packet.type) {
       case 5:
-        bot.emit('message', { translate: "chat.type.announcement", with: [ bot.players.find(player => player.uuid === packet.senderUuid).profile.name, packet.plainMessage ]})
+        bot.emit('playerChat', { translate: "chat.type.announcement", with: [ bot.players.find(player => player.uuid === packet.senderUuid).profile.name, packet.plainMessage ]})
+      break
+      case 4:
+        bot.emit('playerChat', unsigned);
       break
       case 3:
-        bot.emit('message', { translate: "commands.message.display.outgoing", with: [ bot.players.find(player => player.uuid === packet.senderUuid).profile.name, packet.plainMessage ], color: "gray", italic: true })
+        bot.emit('playerChat', { translate: "commands.message.display.outgoing", with: [ bot.players.find(player => player.uuid === packet.senderUuid).profile.name, packet.plainMessage ], color: "gray", italic: true })
       break
       case 2:
-        bot.emit('message', { translate: "commands.message.display.incoming", with: [ bot.players.find(player => player.uuid === packet.senderUuid).profile.name, packet.plainMessage ], color: "gray", italic: true })
+        bot.emit('playerChat', { translate: "commands.message.display.incoming", with: [ bot.players.find(player => player.uuid === packet.senderUuid).profile.name, packet.plainMessage ], color: "gray", italic: true })
       break
-      default:
-        bot.emit('message', unsigned)
+      case 1:
+        bot.emit('playerChat', { translate: "chat.type.emote", with: [ bot.players.find(player => player.uuid === packet.senderUuid).profile.name, packet.plainMessage ]})
+      break
     }
     tryParsingMessage(unsigned, { senderUuid: packet.senderUuid, players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine })
   })
@@ -82,9 +86,34 @@ function chat (bot, options, config) {
       return
     }
 
-    bot.emit('message', message)
+    bot.emit('systemChat', message)
 
     tryParsingMessage(message, { players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine })
+  })
+
+  bot.on('packet.action_bar', (message) => {
+    let parsedMessage = tryParse(message.text)
+    bot.emit('actionBar', {
+      translate: '[%s] %s',
+      color: 'dark_gray',
+      with: [
+        { text: "Action Bar", color: "light_purple" },
+        parsedMessage
+      ]
+    });
+  })
+
+  bot.on('packet.boss_bar', (data) => {
+    bot.emit('bossBar', {
+      translate: '[%s | %s: %s] %s',
+      color: 'dark_gray',
+      with: [
+        { text: "Boss Bar", color: "dark_aqua" },
+        { text: "Action ID", color: "blue" },
+        { text: `${data.action}`, color: 'gold' },
+        tryParse(data.title)
+      ]
+    })
   })
 
   function tryParsingMessage (message, data) {
@@ -140,3 +169,4 @@ function chat (bot, options, config) {
   }
 }
 module.exports = chat;
+

@@ -1,7 +1,7 @@
 const CommandSource = require('../util/command_source');
 const prismarineChat = require('prismarine-chat')('1.20.2');
 function Console (bot, options, config) {
-  let rateLimit = 0;
+  let ratelimit = 0;
   bot.console = {
     readline: null,
     server: 'all',
@@ -66,17 +66,74 @@ function Console (bot, options, config) {
       }
     }
   }
-  bot.on('message', (message) => {
+  setInterval(() => ratelimit = 0, 1000 * 2);
+
+  bot.on('profilelessChat', (message) => {
+    if (!options.logging) return;
+    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
+    bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
+  })
+
+  bot.on('systemChat', (message) => {
+    if (!options.logging) return;
+    if (ratelimit > 15) return;
+    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
+    bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
+    ratelimit++
+  })
+
+  bot.on('playerChat', (message) => {
+    if (!options.logging) return;
+    if (ratelimit > 15) return;
+    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
+    bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
+    ratelimit++
+  })
+//  console.log(ratelimit)
+  bot.on('bossBar', (message) => {
+    if (!options.logging) return;
+    if (ratelimit > 10) return;
+    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
+    bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
+    ratelimit++
+  })
+
+  bot.on('actionBar', (message) => {
+    if (!options.logging) return;
+    if (ratelimit > 10) return
+    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
+    bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
+    ratelimit++
+  })
+
+/*
+setInterval(() => spamCount = 0, 1000 * 2)
+
+  bot.on('message', message => {
+    if (spamCount > 300) {
+      console.log('WTF spam detected not logging')
+      return
+    }
+    
+    const ansi = bot.getMessageAsPrismarine(message)?.toAnsi()
+    const string = bot.getMessageAsPrismarine(message)?.toString()
+    const now = new Date().toLocaleString()
+    
+
+    spamCount++
+*/
+
+/*  bot.on('message', (message) => {
     rateLimit++
     setTimeout(() => {
       rateLimit--
     }, 1000)
     if (!options.logging) return;
-/*    if (rateLimit > 100) {
+    if (rateLimit > 100) {
       return
-    }*/
+    }
     bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
     bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
-  })
+  })*/
 }
 module.exports = Console;

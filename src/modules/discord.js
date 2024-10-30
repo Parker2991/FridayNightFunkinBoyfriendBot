@@ -1,10 +1,10 @@
 // TODO: Maybe move client creation elsepwhere
-const { Client, GatewayIntentBits, interaction } = require('discord.js')
-const { MessageContent, GuildMessages, Guilds } = GatewayIntentBits
+//const { Client, GatewayIntentBits, interaction } = require('discord.js')
+//const { MessageContent, GuildMessages, Guilds } = GatewayIntentBits
 const fixansi = require('../util/ansi');
 const CommandSource = require('../util/command_source')
 
-const client = new Client({ intents: [Guilds, GuildMessages, MessageContent] })
+//const client = new Client({ intents: [Guilds, GuildMessages, MessageContent] })
 const util = require('util')
 
 function discord(bot, options, config, discordClient) {
@@ -57,9 +57,21 @@ function discord(bot, options, config, discordClient) {
       sendDiscordMessage(e.message)
     }
   }
-  bot.on('message', message => {
-    sendComponent(message)
+
+  bot.on('profilelessChat', (message) => {
+    sendComponent(message);
   })
+
+  bot.on('systemChat', (message) => {
+    sendComponent(message);
+  })
+
+  bot.on('playerChat', (message) => {
+    sendComponent(message);
+  })
+/*  bot.on('message', message => {
+    sendComponent(message)
+  })*/
 
   function messageCreate(message, source) {
     bot.discord.message = message;

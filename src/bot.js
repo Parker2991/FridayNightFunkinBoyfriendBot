@@ -1,6 +1,6 @@
 const mc = require('minecraft-protocol');
 const { EventEmitter } = require('events');
-EventEmitter.defaultMaxListeners = Infinity;
+EventEmitter.defaultMaxListeners = 5e6;
 const util = require('util');
 const createRegistry = require('prismarine-registry');
 const ChatMessage = require('prismarine-chat');
@@ -27,15 +27,18 @@ function createBot(options = {}, config) {
       bot.registry.language = require('./data/language.json');
       bot.emit('registry_ready', bot.registry)
     })
+
     client.on('disconnect', data => {
       bot.emit("disconnect", data);
-      console.log(ChatMessage(bot._client.version).fromNotch(data.reason)?.toAnsi())
       bot.console.warn(`${ChatMessage(bot._client.version).fromNotch("§8[§bClient Reconnect§8]§r")?.toAnsi()} ${ChatMessage(bot._client.version).fromNotch(data.reason)?.toAnsi()}`)
     })
+
     client.on('end', reason => {
       bot.emit('end', reason);
       if (reason === "socketClosed") return;
       bot.console.warn(ChatMessage(bot._client.version).fromNotch(`§8[§bClient Reconnect§8]§r ${reason}`)?.toAnsi())
+      //      bot = undefined;
+//      config = undefined;
     })
 
     client.on('error', error => {
@@ -64,4 +67,4 @@ function createBot(options = {}, config) {
   bot.bots = options.bots ?? [bot]
   return bot
 }
-module.exports = createBot
+module.exports = createBot;

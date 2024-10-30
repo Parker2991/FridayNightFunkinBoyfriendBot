@@ -7,9 +7,10 @@ module.exports = {
   trustLevel: 0,
   aliases: [
   ],
-  description: 'amogus',
+  description: 'cows',
   usages: [
-    "just wait till the command is ready :3"
+    "<message>",
+    "list"
   ],
   execute (context) {
     const bot = context.bot;

@@ -7,6 +7,7 @@ async function command_manager (bot, options, config, discordClient) {
   bot.commandManager = {
     commands: {},
     commandlist: [],
+    collection: new Collection(),
     execute (source, commandName, args) {
       const command = this.getCommand(commandName.toLowerCase());
       try {
@@ -20,7 +21,7 @@ async function command_manager (bot, options, config, discordClient) {
           }
         } else if (!source?.sources?.discord && !source?.sources?.console) {
           if (!command || !command.execute)
-          throw new CommandError({
+          bot.tellraw("@a", {
             translate: "%s%s%s %s",
             color: "dark_gray",
             with: [
@@ -50,6 +51,7 @@ async function command_manager (bot, options, config, discordClient) {
             }
           ])
         }
+        
         if (command?.trustLevel > 0) {
           const event = bot.discord.message;
           const roles = event?.member?.roles?.cache;
@@ -84,7 +86,7 @@ async function command_manager (bot, options, config, discordClient) {
           return command?.execute({ bot, source, arguments: args, config, discordClient });
         }
       } catch (error) {
-        console.error(error.stack)
+        console.error(error)
         if (source?.sources?.discord && !source?.sources?.console) {
             const Embed = new EmbedBuilder()
                .setColor(`${config.colors.discord.error}`)
@@ -100,7 +102,17 @@ async function command_manager (bot, options, config, discordClient) {
             if (bot.options.isSavage || bot.options.isCreayun) {
               bot.chat.message(`&4${error.message}`)
             } else {
-              bot.tellraw("@a", error._message)
+//              console.log(error.toString());
+              if (error.toString().length > 256) {
+                bot.tellraw("@a", error._message);
+              } else if (error.toString().length < 256) {
+                bot.chat.message(`${bot.getMessageAsPrismarine(error._message)?.toMotd().replaceAll('§','&')}`)
+              /*}*else if (error.toString().length < 256 && error._useChat === false) {
+                bot.tellraw("@a", error._message);*/
+              } else {
+                bot.tellraw("@a", error._message);
+              }
+//              bot.tellraw("@a", error._message)
             }
           } else {
             if (bot.options.isSavage || bot.options.isCreayun) {
@@ -120,9 +132,9 @@ async function command_manager (bot, options, config, discordClient) {
 
     discordExecute(source, command) {
       const [commandName, ...args] = command.split(" ");
-      if (source?.sources?.discord && !source.sources.console) {
+      if (source?.sources?.discord && !source?.sources?.console) {
         return this.discordExecute(source, commandName, args)
-       }
+      }
     },
 
     register (command) {
@@ -155,6 +167,7 @@ async function command_manager (bot, options, config, discordClient) {
       } if (filename.endsWith('.js')) {
         let commands = require(path.join(__dirname, '../commands', filename));
         bot.commandManager.register(commands);
+        bot.commandManager.collection.set(commands.name, commands)
         bot.commandManager.commandlist.push(commands);
       }
     } catch (error) {

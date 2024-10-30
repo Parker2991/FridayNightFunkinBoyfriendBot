@@ -3,7 +3,7 @@ const { EmbedBuilder } = require('discord.js');
 const fixansi = require('../util/ansi');
 module.exports = {
   name: 'list',
-  description:['check the player list'],
+  description:'check the player list',
   trustLevel: 0,
   aliases:['playerlist', 'plist', 'pl'],
   usages:[""],

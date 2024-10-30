@@ -1,4 +1,3 @@
-const readline = require('readline');
 function boot (bot, options, discordClient, config) {
   bot.on("packet.login", (data) => {
     if (bot.options.isCreayun) return

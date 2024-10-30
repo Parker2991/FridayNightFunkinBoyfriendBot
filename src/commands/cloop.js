@@ -20,7 +20,8 @@ module.exports = {
     if (!args && !args[0] && !args[1] && !args[2] && !args[3]) return
     switch (args[1]) {
       case 'add':
-        if (parseInt(args[2]) === NaN) bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, { text: 'Invalid interval', color: 'red' })
+        if (isNaN(args[2])) throw new CommandError({ text: 'Invalid interval', color: 'red' })
+//bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, { text: 'Invalid interval', color: 'red' })
         const interval = parseInt(args[2])
         const command = args.slice(3).join(' ');
         bot.cloop.add(command, interval)

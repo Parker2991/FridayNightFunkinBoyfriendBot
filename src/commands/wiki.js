@@ -3,7 +3,7 @@ const CommandError = require('../util/command_error')
 const { EmbedBuilder } = require('discord.js')
 module.exports = {
   name: 'wiki',
-  description:['wikipedia'],
+  description:'wikipedia',
   trustLevel: 0,
   aliases:['wikipedia'],
   usages:["<definition>"],

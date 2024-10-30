@@ -3,7 +3,7 @@ const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, StringSelect
 const { request } = require('undici');
 module.exports = {
   name: 'urban',
-  description:['urban dictionary'],
+  description:'urban dictionary',
   aliases:['urbandictionary'],
   trustLevel: 0,
   usages: [

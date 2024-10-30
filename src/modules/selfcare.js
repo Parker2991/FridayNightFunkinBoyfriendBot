@@ -16,7 +16,7 @@ function selfcare (bot, options, config) {
   bot.vanished = true
   // You now have the tag: &8[&bPrefix&8: &3~&8]
   // You no longer have a tag
-  bot.on('message', (message) => {
+  bot.on('systemChat', (message) => {
     const stringMessage = bot.getMessageAsPrismarine(message)?.toString();
     if (options.isSavage) {
       if (stringMessage === "Please, login with the command: /login <password>") login = true;
@@ -82,6 +82,7 @@ You already have registered this username!
   })
 
   bot.on("packet.position", (packet, position) => {
+    if (options.isSavage || options.isCreayun) return
     positionCount++
     setTimeout(() => {
       positionCount--

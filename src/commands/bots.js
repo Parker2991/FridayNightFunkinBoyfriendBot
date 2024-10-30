@@ -2,7 +2,7 @@ const bots = require('../data/bots.json');
 const CommandError = require('../util/command_error')
 module.exports = {
   name: "bots",
-  description: ["shows a list of known bots"],
+  description: "shows a list of known bots",
   aliases: ["knownbots"],
   trustLevel: 0,
   usages:[""],
