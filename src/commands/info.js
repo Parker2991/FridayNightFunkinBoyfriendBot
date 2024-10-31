@@ -1,7 +1,7 @@
 const os = require("os");
 const CommandError = require('../util/command_error');
 const fs = require("fs");
-const botInfo = require('../data/info.json');
+const botInfo = require('../../package-lock.json');
 const fixansi = require('../util/ansi.js');
 const { EmbedBuilder } = require('discord.js');
 const { exec } = require('child_process')
@@ -40,17 +40,17 @@ module.exports = {
     const source = context.source;
     switch (args[0]?.toLowerCase()) {
       case 'version':
-        if (botInfo.bot.buildstring.codename === '') {
+        if (botInfo.codename === '') {
           if (bot.options.isSavage) {
-            bot.chat.message(`&9Friday &9Night &9Funkin &3Boyfriend &1Bot&8&r-${botInfo.bot.buildstring.version}-#${botInfo.bot.buildstring.build}`)
+            bot.chat.message(`&9Friday &9Night &9Funkin &3Boyfriend &1Bot&8&r-${botInfo.version}-#${botInfo.build}`)
             setTimeout(() => {
               bot.chat.message(`11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`)
             }, 300)
           } else {
-            bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-${botInfo.bot.buildstring.version}-#${botInfo.bot.buildstring.build}\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
+            bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-${botInfo.version}-#${botInfo.build}\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
           }
         } else {
-          bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-${botInfo.bot.buildstring.version}-#${botInfo.bot.buildstring.build}-${botInfo.bot.buildstring.codename}\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
+          bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-${botInfo.version}-#${botInfo.build}-${botInfo.codename}\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
         }
       break
       case 'config':
@@ -303,7 +303,7 @@ module.exports = {
       case "about":
         bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
           {
-             text: `FNFBoyfriendBot is a open source kaboom bot created by Parker2991\nThe source code and changelog can be found here ${botInfo.bot.source}`,
+             text: `FNFBoyfriendBot is a open source kaboom bot created by Parker2991\nThe source code and changelog can be found here ${botInfo.url}`,
              color: "gray",
              translate: "",
              hoverEvent: {
@@ -317,7 +317,7 @@ module.exports = {
              },
              clickEvent: {
                action: "open_url",
-               value: `${botInfo.bot.source}`
+               value: `${botInfo.url}`
              }
           }
         ])
