@@ -155,8 +155,8 @@ async function command_manager (bot, options, config, discordClient) {
         const filePath = path.join(commandsPath, filename);
         if (filename.endsWith('.mjs')) {
           let command = await import(filePath);
-          bot.commandManager.register(command);
-          bot.commandManager.commandlist.push(command);
+          bot.commandManager.register(command.default);
+          bot.commandManager.commandlist.push(command.default);
         }
         if (filename.endsWith('.js')) {
           let command = require(filePath);

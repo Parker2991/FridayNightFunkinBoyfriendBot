@@ -2,6 +2,7 @@ module.exports = {
   data: {
     name: 'console',
     trustLevel: 4,
+    description: "",
     aliases: [
 
     ],
