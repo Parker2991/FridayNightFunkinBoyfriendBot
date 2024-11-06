@@ -1,17 +1,19 @@
 const http = require('http');
 const https = require('https');
 const util = require('util');
-const fixansi = require('../util/ansi');
-const CommandError = require('../util/command_error')
+const fixansi = require('../../util/ansi');
+const CommandError = require('../../util/command_error')
 module.exports = {
-  name: 'website',
-  trustLevel: 1,
-  aliases: [
-  ],
-  description: 'look up website data',
-  usages: [
-    "<url>"
-  ],
+  data: {
+    name: 'website',
+    trustLevel: 1,
+    aliases: [
+    ],
+    description: 'look up website data',
+    usages: [
+      "<url>"
+    ],
+  },
   execute (context) {
     const bot = context.bot
     const args = context.arguments;

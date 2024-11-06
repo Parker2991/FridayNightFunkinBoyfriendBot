@@ -94,6 +94,25 @@ You already have registered this username!
     }, 1000)
   })
 
+  bot.on("packet.teams", (data) => {
+    if (options.isSavage || options.isCreayun) return;
+    try {
+/*
+      if (data.team !== "FNFBoyfriendBot") {
+        bot.chat.command(`minecraft:team add FNFBoyfriendBot`);
+      }
+      if (data.mode > 1 && !data.team === "FNFBoyfriendBot") {
+        bot.chat.command(`minecraft:team add FNFBoyfriendBot`);
+      }
+      if (data.team === "FNFBoyfriendBot") {
+        console.log(data);
+      }
+*/
+    } catch (e) {
+      console.log(e.stack)
+    }
+  })
+
   let timer;
   bot.on('packet.login', (packet) => {
     entityId = packet.entityId;

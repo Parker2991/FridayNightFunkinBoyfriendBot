@@ -1,15 +1,17 @@
-const CommandError = require('../util/command_error.js');
-const { stylize } = require('../util/stylizeEval');
+const CommandError = require('../../util/command_error.js');
+const { stylize } = require('../../util/stylizeEval');
 const util = require('util');
 module.exports = {
-  name: 'servereval',
-  trustLevel: 3,
-  aliases: [
-  ],
-  description: 'run code unisolated',
-  usages: [
-    "<code>",
-  ],
+  data: {
+    name: 'servereval',
+    trustLevel: 3,
+    aliases: [
+    ],
+    description: 'run code unisolated',
+    usages: [
+      "<code>",
+    ],
+  },
   execute (context) {
     const bot = context.bot;
     const source = context.source;
@@ -23,7 +25,7 @@ module.exports = {
       } else if (bot.options.useChat || bot.options.isSavage) {
         bot.chat.message(bot.getMessageAsPrismarine({ text: util.inspect(eval(script), { stylize }).substring(0, 32700) })?.toMotd().replaceAll('§','&'))
       } else {
-        bot.tellraw(`@a[name="${source.player.profile.name}"]`, [
+        bot.tellraw(`@a`, [
           {
             text: util.inspect(eval(script), { stylize }).substring(0, 32700),
             hoverEvent: {

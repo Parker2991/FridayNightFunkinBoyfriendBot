@@ -1,14 +1,17 @@
-const CommandError = require('../util/command_error');
+const CommandError = require('../../util/command_error');
 const { EmbedBuilder } = require('discord.js');
 module.exports = {
-  name: 'kick',
-  trustLevel: 1,
-  aliases: [
-  ],
-  description: 'kick or crash players',
-  usages: [
-    "invalidstring <player>",
-  ],
+  data: {
+    name: 'kick',
+    trustLevel: 1,
+    aliases: [
+    ],
+    description: 'kick or crash players',
+    usages: [
+      "invalidstring <player>",
+      "item <player>"
+    ],
+  },
   execute (context) {
     const bot = context.bot
     const args = context.arguments;

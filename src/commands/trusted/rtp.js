@@ -1,17 +1,23 @@
-const between = require('../util/between')
-const CommandError = require('../util/command_error')
+const between = require('../../util/between')
+const CommandError = require('../../util/command_error')
 module.exports = {
-  name: 'tpr',
-  description:'teleport to a random place',
-  trustLevel: 1,
-  aliases:['rtp', 'teleportrandom', 'randomteleport'],
-  usages:[""],
+  data: {
+    name: 'tpr',
+    description: 'teleport to a random place',
+    trustLevel: 1,
+    aliases: [
+      'rtp',
+      'teleportrandom',
+      'randomteleport'
+    ],
+    usages: [
+      ""
+    ],
+  },
   execute (context) {
     const bot = context.bot
-//    const sender = context.source.player
     const args = context.arguments;
     const source = context.source
-//    if (!source.player) return
     if (bot.options.isKaboom) {
       x = between(-30_000_000, 30_000_000)
       y = 100
@@ -21,8 +27,6 @@ module.exports = {
       y = 100
       z = between(-4096, 4096);
     }
-//    bot.tellraw("@a", `Randomly Teleported: ${sender.profile.name} to x:${x} y:${y} z:${z} `)
-//    bot.core.run(`minecraft:tp ${sender.profile.name} ${x} ${y} ${z}`)
     if (args.slice(1).join(' ')) {
       bot.tellraw("@a", [
         { text: 'Randomly Teleported: ', color: 'gray' },

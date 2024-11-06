@@ -1,16 +1,18 @@
 module.exports = {
-  name: 'console',
-  trustLevel: 4,
-  aliases: [
+  data: {
+    name: 'console',
+    trustLevel: 4,
+    aliases: [
 
-  ],
-  usages: [
-    'server/srv <all/servername>',
-    'customchat <on/true/enable/off/false/disable>',
-    'say <message>',
-    'validate/validation/val <owner/o/admin/a/trusted/t>',
-    'logging/togglelogging/logtoconsole <on/true/enable/off/false/disable>'
-  ],
+    ],
+    usages: [
+      'server/srv <all/servername>',
+      'customchat <on/true/enable/off/false/disable>',
+      'say <message>',
+      'validate/validation/val <owner/o/admin/a/trusted/t>',
+      'logging/togglelogging/logtoconsole <on/true/enable/off/false/disable>'
+    ],
+  },
   execute (context) {
     const bot = context.bot
     const args = context.arguments;

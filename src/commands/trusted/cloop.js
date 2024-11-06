@@ -1,18 +1,20 @@
 const { EmbedBuilder } = require('discord.js');
-const CommandError = require('../util/command_error');
+const CommandError = require('../../util/command_error');
 module.exports = {
-  name: 'cloop',
-  trustLevel: 1,
-  aliases: [
-    "commandloop"
-  ],
-  description: 'run cloops',
-  usages: [
-    "add <interval> <command>",
-    "remove <index>",
-    "clear",
-    "list",
-  ],
+  data: {
+    name: 'cloop',
+    trustLevel: 1,
+    aliases: [
+      "commandloop"
+    ],
+    description: 'run cloops',
+    usages: [
+      "add <interval> <command>",
+      "remove <index>",
+      "clear",
+      "list",
+    ],
+  },
   execute (context) {
     const args = context.arguments
     const bot = context.bot

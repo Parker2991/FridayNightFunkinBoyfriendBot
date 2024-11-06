@@ -1,19 +1,21 @@
-const CommandError = require('../util/command_error');
+const CommandError = require('../../util/command_error');
 module.exports = {
-  name: 'filter',
-  trustLevel: 2,
-  aliases: [
-    "blacklist"
-  ],
-  description: 'filters players',
-  usages: [
-    "list",
-    "--regex(-r) --ignorecase(-i) add <player>",
-    "--ignorecase(-i) add <player>",
-    "add <player>",
-    "clear",
-    "remove(rm) <index>"
-  ],
+  data: {
+    name: 'filter',
+    trustLevel: 2,
+    aliases: [
+      "blacklist"
+    ],
+    description: 'filters players',
+    usages: [
+      "list",
+      "--regex(-r) --ignorecase(-i) add <player>",
+      "--ignorecase(-i) add <player>",
+      "add <player>",
+      "clear",
+      "remove(rm) <index>"
+    ],
+  },
   execute (context) {
     /*
      note:

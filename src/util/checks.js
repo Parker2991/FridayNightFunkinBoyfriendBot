@@ -15,9 +15,10 @@ module.exports = () => {
     fs.writeFileSync(path.join(__dirname, "../data/filter.json"), JSON.stringify(data))
   }
 
+/*
   if (!fs.existsSync(path.join(__dirname, "../data/trustedPlayers.json"))) {
     console.warn("Trusted Players json not found creating the file,......");
     let data = [{player: ""}]
     fs.writeFileSync(path.join(__dirname, "../data/trustedPlayers.json"), JSON.stringify(data))
-  }
+  }*/
 }

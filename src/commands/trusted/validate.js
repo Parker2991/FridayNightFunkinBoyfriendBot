@@ -1,14 +1,16 @@
 const { EmbedBuilder } = require('discord.js');
 module.exports = {
-  name: 'validate',
-  trustLevel: 1,
-  aliases: [
-    "val"
-  ],
-  description: 'validate through the bot',
-  usages: [
-    ""
-  ],
+  data: {
+    name: 'validate',
+    trustLevel: 1,
+    aliases: [
+      "val"
+    ],
+    description: 'validate through the bot',
+    usages: [
+      ""
+    ],
+  },
   execute (context) {
     const bot = context.bot;
     const args = context.arguments;

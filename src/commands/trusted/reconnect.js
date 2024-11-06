@@ -1,14 +1,16 @@
 module.exports = {
-  name: 'reconnect',
-  trustLevel: 1,
-  aliases: [
-    "end",
-    "recon",
-  ],
-  description: 'reconnect the bot',
-  usages: [
+  data: {
+    name: 'reconnect',
+    trustLevel: 1,
+    aliases: [
+      "end",
+      "recon",
+    ],
+    description: 'reconnect the bot',
+    usages: [
 
-  ],
+    ],
+  },
   execute (context) {
     const bot = context.bot
     const message = context.arguments.join(' ')

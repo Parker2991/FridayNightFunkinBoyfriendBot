@@ -1,12 +1,20 @@
-const CommandError = require('../util/command_error');
+const CommandError = require('../../util/command_error');
 const { EmbedBuilder } = require('discord.js');
-const fixansi = require('../util/ansi');
+const fixansi = require('../../util/ansi');
 module.exports = {
-  name: 'list',
-  description:'check the player list',
-  trustLevel: 0,
-  aliases:['playerlist', 'plist', 'pl'],
-  usages:[""],
+  data: {
+    name: 'list',
+    description: 'check the player list',
+    trustLevel: 0,
+    aliases: [
+      'playerlist',
+      'plist',
+      'pl'
+    ],
+    usages: [
+      ""
+    ],
+  },
   execute (context) {
     const bot = context.bot
     const args = context.arguments

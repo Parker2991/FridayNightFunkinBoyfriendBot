@@ -1,17 +1,19 @@
 const cowsay = require('cowsay2');
 const cows = require('cowsay2/cows');
 const { EmbedBuilder } = require('discord.js');
-const fixansi = require('../util/ansi');
+const fixansi = require('../../util/ansi');
 module.exports = {
-  name: 'cowsay',
-  trustLevel: 0,
-  aliases: [
-  ],
-  description: 'cows',
-  usages: [
-    "<message>",
-    "list"
-  ],
+  data: {
+    name: 'cowsay',
+    trustLevel: 0,
+    aliases: [
+    ],
+    description: 'cows',
+    usages: [
+      "<message>",
+      "list"
+    ],
+  },
   execute (context) {
     const bot = context.bot;
     const args = context.arguments;

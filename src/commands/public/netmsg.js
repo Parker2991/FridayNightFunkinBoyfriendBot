@@ -1,14 +1,16 @@
-const CommandError = require('../util/command_error.js')
+const CommandError = require('../../util/command_error.js')
 module.exports = {
-  name: 'netmsg',
-  trustLevel: 0,
-  aliases: [
+  data: {
+    name: 'netmsg',
+    trustLevel: 0,
+    aliases: [
 
-  ],
-  description: 'netmsg to other servers',
-  usages: [
-    "<message>"
-  ],
+    ],
+    description: 'netmsg to other servers',
+    usages: [
+      "<message>"
+    ],
+  },
   execute (context) {
     const args = context.arguments;
     const bot = context.bot;

@@ -1,14 +1,18 @@
-const CommandError = require('../util/command_error')
+const CommandError = require('../../util/command_error')
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder } = require('discord.js');
 const { request } = require('undici');
 module.exports = {
-  name: 'urban',
-  description:'urban dictionary',
-  aliases:['urbandictionary'],
-  trustLevel: 0,
-  usages: [
-    "<definition>",
-  ],
+  data: {
+    name: 'urban',
+    description: 'urban dictionary',
+    aliases: [
+      'urbandictionary'
+    ],
+    trustLevel: 0,
+    usages: [
+      "<definition>",
+    ],
+  },
   async execute (context) {
     const source = context.source
     const args = context.arguments

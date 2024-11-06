@@ -1,15 +1,17 @@
-const CommandError = require('../util/command_error');
+const CommandError = require('../../util/command_error');
 module.exports = {
-  name: 'test',
-  trustLevel: 0,
-  aliases: [
-  ],
-  description: 'Make me say something',
-  usages: [
-    "error stack <message>",
-    "error message <message>",
-    "message <message>"
-  ],
+  data: {
+    name: 'test',
+    trustLevel: 0,
+    aliases: [
+    ],
+    description: 'Make me say something',
+    usages: [
+      "error stack <message>",
+      "error message <message>",
+      "message <message>"
+    ],
+  },
   execute (context) {
     const bot = context.bot
     const args = context.arguments;
@@ -24,7 +26,6 @@ module.exports = {
             throw new CommandError(args.slice(2).join(' '));
           break
         }
-//        throw new Error(args.slice(1).join(' '));
       break;
       case "message":
         bot.tellraw("@a", [

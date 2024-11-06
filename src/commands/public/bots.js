@@ -1,12 +1,18 @@
-const bots = require('../data/bots.json');
-const CommandError = require('../util/command_error')
+const bots = require('../../data/bots.json');
+const CommandError = require('../../util/command_error')
 module.exports = {
-  name: "bots",
-  description: "shows a list of known bots",
-  aliases: ["knownbots"],
-  trustLevel: 0,
-  usages:[""],
- async execute(context) {
+  data: {
+    name: "bots",
+    description: "shows a list of known bots",
+    aliases: [
+      "knownbots"
+    ],
+    trustLevel: 0,
+    usages: [
+      ""
+    ],
+  },
+  async execute(context) {
     const query = context.arguments.join(" ").toLowerCase();
     const bot = context.bot;
     if (query.length === 0) {

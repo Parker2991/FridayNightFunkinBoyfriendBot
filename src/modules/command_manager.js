@@ -32,46 +32,38 @@ async function command_manager (bot, options, config, discordClient) {
           })
         } else if (source?.sources?.console && !source?.sources?.discord) {
           if (!command || !command.execute)
-          bot.console.warn([
-            {
-              translate: 'command.unknown.command',
-              color: "dark_red"
-            },
-            {
-              text: "\n",
-            },
-            {
-              text: `${commandName}`,
-              color: "dark_red"
-            },
-            {
-              translate: "command.context.here",
-              color: "dark_red"
-            }
-          ])
+          bot.console.warn(bot.getMessageAsPrismarine({
+            translate: "%s%s%s %s",
+            color: "dark_gray",
+            with: [
+              { translate: "command.unknown.command", color: "red" },
+              { text: "\n" },
+              { text: `${commandName}` },
+              { translate: "command.context.here", color: "red" }
+            ]
+          })?.toAnsi())
         }
-        
-        if (command?.trustLevel > 0) {
+        if (command?.data?.trustLevel > 0) {
           const event = bot.discord.message;
           const roles = event?.member?.roles?.cache;
-          if (command?.trustLevel === 1 && !source?.sources?.discord) {
+          if (command?.data?.trustLevel === 1 && !source?.sources?.discord) {
             if (args.length === 0 && bot.validation.trusted && bot.validation.admin && bot.validation.owner && !source?.sources?.console) throw new CommandError({ text: "Please provide an trusted or an admin or an owner hash", color: "dark_red" })
             if (args[0] !== bot.validation.trusted && args[0] !== bot.validation.admin && args[0] !== bot.validation.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted or admin or owner hash', color: 'dark_red' });
-          } else if (command?.trustLevel === 1 && source?.sources.discord) {
+          } else if (command?.data?.trustLevel === 1 && source?.sources.discord) {
             const hasRole = roles?.some(role => role.name === `${config.discord.roles.trusted}` || role.name === `${config.discord.roles.owner}`)
             if (!hasRole) throw new CommandError({ translate: 'You are not trusted or the owner!', color: "dark_red" })
           }
-          if (command?.trustLevel === 2 && !source.sources.console) {
+          if (command?.data?.trustLevel === 2 && !source.sources.console) {
             if (args.length === 0 && bot.validation.admin && bot.validation.owner && !source.sources.console) throw new CommandError({ text: "Please provide an trusted or owner hash", color: 'dark_red' })
-            if (args[0] !== bot.validation.trusted && args[0] !== bot.validation.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted or owner hash', color: 'dark_red' });
+            if (args[0] !== bot.validation.admin && args[0] !== bot.validation.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted or owner hash', color: 'dark_red' });
           }
-          if (command?.trustLevel === 3 && !source.sources.discord && !source.sources.console) {
+          if (command?.data?.trustLevel === 3 && !source.sources.discord && !source.sources.console) {
             if (args.length === 0 && bot.validation.owner) throw new CommandError({ text: "Please provide an owner hash", color: "dark_red" })
             if (args[0] !== bot.validation.owner) throw new CommandError({ translate: 'Invalid owner hash', color: 'dark_red' })
-          } else if (command?.trustLevel === 3 && source.sources.discord && !source.sources.console) {
+          } else if (command?.data?.trustLevel === 3 && source.sources.discord && !source.sources.console) {
             const hasRole = roles?.some(role => role.name === `${config.discord.roles.owner}`)
             if (!hasRole) throw new CommandError({ translate: 'You are not the owner!', color: "dark_red" })
-          } else if (command?.trustLevel === 4 && !source.sources.console) {
+          } else if (command?.data?.trustLevel === 4 && !source.sources.console) {
             throw new CommandError({ text: 'This command can only be ran via console', color: "dark_red" });
           }
         }
@@ -101,17 +93,13 @@ async function command_manager (bot, options, config, discordClient) {
             if (bot.options.isSavage || bot.options.isCreayun) {
               bot.chat.message(`&4${error.message}`)
             } else {
-//              console.log(error.toString());
               if (error.toString().length > 256) {
                 bot.tellraw("@a", error._message);
               } else if (error.toString().length < 256) {
                 bot.chat.message(`${bot.getMessageAsPrismarine(error._message)?.toMotd().replaceAll('§','&')}`)
-              /*}*else if (error.toString().length < 256 && error._useChat === false) {
-                bot.tellraw("@a", error._message);*/
               } else {
                 bot.tellraw("@a", error._message);
               }
-//              bot.tellraw("@a", error._message)
             }
           } else {
             if (bot.options.isSavage || bot.options.isCreayun) {
@@ -137,14 +125,10 @@ async function command_manager (bot, options, config, discordClient) {
     },
 
     register (command) {
-      this.commands[command.name] = command
-      if (command.aliases) {
-        command.aliases.map((a) => (this.commands[a] = command));
+      this.commands[command.data.name] = command
+      if (command.data.aliases) {
+        command.data.aliases.map((a) => (this.commands[a] = command));
       }
-    },
-
-    unregister (command) {
-      this.commands = {};
     },
 
     getCommand (name) {
@@ -156,19 +140,32 @@ async function command_manager (bot, options, config, discordClient) {
     },
   }
 
+  /*
+   file loader ported from my discord bot SkiBot
+   and edited to support mjs files and to support FNFBoyfriendBot's command format
+  */
   commandlist = [];
-  for (const filename of fs.readdirSync(path.join(__dirname, '../commands'))) {
-    try {
-      if (filename.endsWith('.mjs')) {
-         let commands = await import(path.join(__dirname, '../commands', filename))
-         bot.commandManager.commandlist.push(commands.command);
-      } if (filename.endsWith('.js')) {
-        let commands = require(path.join(__dirname, '../commands', filename));
-        bot.commandManager.register(commands);
-        bot.commandManager.commandlist.push(commands);
+  const foldersPath = path.join(__dirname, '../commands');
+  const commandFolders = fs.readdirSync(foldersPath);
+  for (const folder of commandFolders) {
+    const commandsPath = path.join(foldersPath, folder);
+    const commandFiles = fs.readdirSync(commandsPath)
+    for (const filename of commandFiles) {
+      try {
+        const filePath = path.join(commandsPath, filename);
+        if (filename.endsWith('.mjs')) {
+          let command = await import(filePath);
+          bot.commandManager.register(command);
+          bot.commandManager.commandlist.push(command);
+        }
+        if (filename.endsWith('.js')) {
+          let command = require(filePath);
+          bot.commandManager.register(command);
+          bot.commandManager.commandlist.push(command);
+        }
+      } catch (error) {
+        console.error('Failed to load command ', filename, ':', error);
       }
-    } catch (error) {
-      console.error('Failed to load command ', filename, ':', error)
     }
   }
 }

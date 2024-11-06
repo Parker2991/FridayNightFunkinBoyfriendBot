@@ -1,18 +1,20 @@
 const { request } = require('undici');
-const CommandError = require('../util/command_error.js');
+const CommandError = require('../../util/command_error.js');
 const mc = require('minecraft-protocol');
 const util = require('util')
 module.exports = {
-  name: 'mcserver',
-  trustLevel: 0,
-  aliases: [
-    "pingserver",
-    "pingsrv",
-  ],
-  description: 'look up minecraft server info',
-  usages: [
-    "<minecraft server ip>",
-  ],
+  data: {
+    name: 'mcserver',
+    trustLevel: 0,
+    aliases: [
+      "pingserver",
+      "pingsrv",
+    ],
+    description: 'look up minecraft server info',
+    usages: [
+      "<minecraft server ip>",
+    ],
+  },
   async execute (context) {
     const bot = context.bot;
     const discordClient = context.discordClient;

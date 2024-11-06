@@ -1,14 +1,16 @@
-const CommandError = require('../util/command_error');
+const CommandError = require('../../util/command_error');
 const { request } = require('undici');
 module.exports = {
-  name: 'weather',
-  trustLevel: 0,
-  aliases: [
-  ],
-  description: 'check the weather of cities',
-  usages: [
-    "<message>"
-  ],
+  data: {
+    name: 'weather',
+    trustLevel: 0,
+    aliases: [
+    ],
+    description: 'check the weather of cities',
+    usages: [
+      "<message>"
+    ],
+  },
   async execute (context) {
     const bot = context.bot
     const args = context.arguments;
@@ -40,7 +42,7 @@ module.exports = {
           { text: "Wind speed" , color: config.colors.commands.primary },
           { text: `${info.current.wind_kph}`, color: config.colors.integer },
           { text: `kph`, color: config.colors.commands.secondary },
-          { text: `${info.current.wind_dir}`, color: config.colors.secondary },
+          { text: `${info.current.wind_dir}`, color: config.colors.commands.secondary },
           { text: `${info.current.wind_mph}`, color: config.colors.integer },
           { text: `mph`, color: config.colors.commands.secondary },
           { text: `${info.current.wind_dir}`, color: config.colors.commands.secondary },
