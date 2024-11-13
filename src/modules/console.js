@@ -101,7 +101,7 @@ function Console (bot, options, config) {
   bot.on('actionBar', (message) => {
     if (!options.logging) return;
     if (ratelimit > 10) return
-    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
+//    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
     bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
     ratelimit++
   })

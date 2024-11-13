@@ -59,7 +59,7 @@ module.exports = {
       const fixAnsiList = fixansi(ansiList.replaceAll('`', '`\u200b'))
       Embed = new EmbedBuilder()
               .setColor(`${config.colors.discord.embed}`)
-              .setTitle(`${this.name} Command`)
+              .setTitle(`${this.data.name} Command`)
               .setDescription(`\`\`\`ansi\n${fixAnsiList}\n\`\`\``)
       bot.discord.message.reply({ embeds: [Embed] })
     } else if (cows[args[0]]) {
@@ -67,7 +67,7 @@ module.exports = {
       const fixAnsiCow1 = fixansi(ansiCow1.replaceAll('`', '`\u200b'))
       Embed = new EmbedBuilder()
         .setColor(`${config.colors.discord.embed}`)
-        .setTitle(`${this.name} Command`)
+        .setTitle(`${this.data.name} Command`)
         .setDescription(`\`\`\`ansi\n${fixAnsiCow1}\n\`\`\``)
       bot.discord.message.reply({ embeds: [Embed] })
     } else {

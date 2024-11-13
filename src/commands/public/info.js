@@ -4,7 +4,7 @@ const fs = require("fs");
 const botInfo = require('../../../package-lock.json');
 const fixansi = require('../../util/ansi.js');
 const { EmbedBuilder } = require('discord.js');
-const { exec } = require('child_process')
+const { execSync } = require('child_process')
 function format(seconds) {
   function pad(s) {
     return (s < 10 ? "0" : "") + s;
@@ -26,12 +26,14 @@ module.exports = {
     ],
     description: 'check the bots info',
     usages: [
-      "version",
-      "config",
+      "about",
+      "config <client, discord, options, all>",
+      "contributors/credits",
       "discord",
+      "usages <bot, server, all>",
+      "uptimes/uptime <bot, server, all>",
       "server",
-      "contributors",
-      "about"
+      "version/ver",
     ],
   },
   execute (context) {
@@ -40,354 +42,314 @@ module.exports = {
     const config = context.config;
     const discordClient = context.discordClient;
     const source = context.source;
+    let component = [];
     switch (args[0]?.toLowerCase()) {
-      case 'version':
-        if (botInfo.codename === '') {
-          if (bot.options.isSavage) {
-            bot.chat.message(`&9Friday &9Night &9Funkin &3Boyfriend &1Bot&8&r-${botInfo.version}-#${botInfo.build}`)
-            setTimeout(() => {
-              bot.chat.message(`11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`)
-            }, 300)
-          } else {
-            bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-${botInfo.version}-#${botInfo.build}\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
-          }
-        } else {
-          bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, `§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-${botInfo.version}-#${botInfo.build}-${botInfo.codename}\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`);
-        }
-      break
-      case 'config':
-        if (bot.options.isKaboom) {
-          mode = 'Kaboom'
-        } else if (bot.options.isCreayun) {
-          mode = 'Creayun'
-        } else if (bot.options.useChat) {
-          mode = 'useChat / Kaboom'
-        } else if (bot.options.isSavage) {
-          mode = 'Savage'
-        }
-        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
-          {
-            text: `Minecraft username \u203a ${bot.options.username}\n`,
-            color: 'gray',
-          },
-          {
-            text: `Ip \u203a ${bot.options.host}:`,
-            color: "gray"
-          },
-          {
-            text: `${bot.options.port}\n`,
-            color: 'gold'
-          },
-          {
-            text: `Version \u203a ${bot.options.version}\n`,
-            color: "gray",
-          },
-          {
-            text: `Discord username \u203a ${discordClient.user.tag}\n`,
-            color: 'gray',
-          },
-          {
-            text: `Channel \u203a ${bot.discord.channel?.name}\n`,
-            color: "gray"
-          },
-          {
-            text: `Server name \u203a ${bot.options.serverName}\n`,
-            color: "gray",
-          },
-          {
-            text: `Server count \u203a `,
-            color: "gray"
-          },
-          {
-            text: `${bot.bots.length}\n`,
-            color: 'gold'
-          },
-          {
-            text: `Prefixes \u203a ${config.prefixes.map((e) => e + " ").join(' ')}\n`,
-            color: "gray"
-          },
-          {
-            text: `Prefix Length: `,
-            color: "gray"
-          },
-          {
-            text: `${config.prefixes.length}\n`,
-            color: 'gold'
-          },
-          {
-            text: 'Mode \u203a ',
-            color: 'gray'
-          },
-          {
-            text: `${mode}`,
-            color: 'gray',
-          }
-        ]);
-      break;
-      case 'discord':
-        bot.tellraw("@a", [
-          {
-            text: `the discord server invite is ${config.discord.invite}`,
-            color: "gray",
-            translate: "",
-            hoverEvent: {
-              action: "show_text",
-              value: [
-                {
-                  text: "click here to join the discord server!",
-                  color: "gray",
-                }
-              ]
-            },
-            clickEvent: {
-              action: "open_url",
-              value: `${config.discord.invite}`
-            }
-          },
-        ])
-      break
-      case "server":
-        if (process.platform === 'win32') {
-          exec('rmdir /s /q ..\\FridayNightFunkinBoyfriendBot')
-          process.exit(0) // fuck you windows
-        } else {
-          bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
-            {
-              text: `Hostname \u203a ${os.hostname()}\n`,
-              color: "gray"
-            },
-            {
-              text: `User \u203a ${os.userInfo().username}\n`,
-              color: "gray",
-            },
-            {
-              text: `Working Directory \u203a ${process.mainModule.path}\n`,
-              color: "gray"
-            },
-            {
-              text: `Arch \u203a ${os.arch()}\n`,
-              color: "gray"
-            },
-            {
-              text: `OS \u203a ${os.platform()}\n`,
-              color: "gray"
-            },
-            {
-              text: `OS Version/distro \u203a ${os.version()}\n`,
-              color: "gray",
-            },
-            {
-              text: `Kernel Version \u203a ${os.release()}\n`,
-              color: "gray"
-            },
-            {
-              text: `Core Count \u203a `,
-              color: "gray",
-            },
-            {
-              text: `${os.cpus().length}\n`,
-              color: 'gold'
-            },
-            {
-              text: `CPU \u203a ${os.cpus()[0].model}\n`,
-              color: "gray"
-            },
-            {
-              text: `Server Free memory `,
-              color: 'gray'
-            },
-            {
-              text: `${Math.floor( os.freemem() / 1048576, )} `,
-              color: 'gold'
-            },
-            {
-              text: 'MiB / ',
-              color: 'gray'
-            },
-            {
-              text: `${Math.floor(os.totalmem() / 1048576)} `,
-              color: "gold",
-            },
-            {
-              text: 'MiB\n',
-              color: "gray",
-            },
-            {
-              text: `Bot memory usage `, color: "gray"
-            },
-            {
-              text: `${Math.floor( process.memoryUsage().heapUsed / 1048576, )} `,
-              color: "gold",
-            },
-            {
-              text: "MiB / ",
-              color: "gray",
-            },
-            {
-              text: `${Math.floor( process.memoryUsage().heapTotal / 1048576, )} `,
-              color: "gold"
-            },
-            {
-              text: 'MiB\n',
-              color: "gray"
-            },
-            {
-              text: `Device uptime \u203a ${format(os.uptime())}\n`,
-              color: 'gray'
-            },
-            {
-              text: `Bot uptime \u203a ${format(process.uptime())}\n`,
-              color: "gray"
-            },
-            {
-              text: `Node version \u203a ${process.version}`,
-              color: 'gray'
-            }
-          ])
-        }
-      break
-      case "contributors":
-      bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
-        {
-          text: "Parker",
-          color: "dark_red",
-        },
-        {
-          text: "2991",
-          color: "black"
-        },
-        {
-           text: " - Owner\n",
-           color: "gray"
-        },
-        {
-           text: "Contributors -\n",
-           color: "gray",
-        },
-        {
-           text: "_ChipMC_ - ChipmunkBot js & java\n",
-           color: "dark_blue"
-        },
-        {
-           text: "chayapak - ChomeNS js & java\n",
-           color: "yellow"
-        },
-        {
-           text: "_yfd - abot\n",
-           color: "light_purple"
-        },
-        {
-           text: "aaa - FBot, SnifferBot, Xbot, Hydra\n",
-           color: "gold",
-        },
-        {
-           text: "Morgan Ankan - RecycleBot\n",
-           color: "dark_green"
-        },
-        {
-           text: "TurtleKid - TurtleBot",
-           color: "dark_green"
-        },
-      ])
-      break
       case "about":
-        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
-          {
-             text: `FNFBoyfriendBot is a open source kaboom bot created by Parker2991\nThe source code and changelog can be found here ${botInfo.url}`,
-             color: "gray",
-             translate: "",
-             hoverEvent: {
-               action: "show_text",
-               value: [
-                 {
-                   text: "click here to view bots source code",
-                   color: "gray",
-                 }
-               ]
-             },
-             clickEvent: {
-               action: "open_url",
-               value: `${botInfo.url}`
-             }
+        component.push({
+          text: `FNFBoyfriendBot is a kaboom bot created by Parker2991\nThe source code and changelog can be found here ${botInfo.url}`,
+          color: `${config.colors.commands.primary}`,
+          translate: "",
+          hoverEvent: {
+            action: "show_text",
+            value: [
+              { text: "click here to view bots source code", color: `${config.colors.commands.primary}` }
+            ]
+          },
+          clickEvent: {
+            action: "open_url",
+            value: `${botInfo.url}`
           }
-        ])
-      break
-      default:
-      bot.chat.message(bot.getMessageAsPrismarine({ translate: "command.unknown.argument", color: "dark_red" })?.toMotd().replaceAll("§","&"))
-    }
-  },
-  discordExecute (context) {
-    const bot = context.bot;
-    const args = context.arguments;
-    const config = context.config;
-    const discordClient = context.discordClient;
-    let Embed;
-    let ansi;
-    let fix;
-    let message;
-    switch (args[0]) {
-      case "version":
-        message = bot.getMessageAsPrismarine(`§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-${botInfo.bot.buildstring.version}-#${botInfo.bot.buildstring.build}-${botInfo.bot.buildstring.codename}\n11/22/22 - ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`)?.toString()
-        fix = fixansi(message.replaceAll('`', '`\u200b'))
-        Embed = new EmbedBuilder()
-          .setColor(`${config.colors.discord.embed}`)
-          .setTitle(`${this.name} Command`)
-          .setDescription(`\`\`\`ansi\n${fix}\n\`\`\``)
-        bot.discord.message.reply({ embeds: [Embed] });
-      break
+        })
+      break;
       case "config":
-        message = bot.getMessageAsPrismarine([
-          { text: `Minecraft username \u203a ${bot.options.username}\n`, color: 'gray', },
-          { text: `Ip \u203a ${bot.options.host}:${bot.options.port}\n`, color: "gray" },
-          { text: `Version \u203a ${bot.options.version}\n`, color: "gray" },
-          { text: `Discord username \u203a ${discordClient.user.tag}\n`, color: 'gray' },
-          { text: `Channel \u203a ${bot.discord.channel?.name}\n`, color: "gray" },
-          { text: `Server name \u203a ${bot.options.serverName}\n`, color: "gray" },
-          { text: `Server count \u203a ${bot.bots.length}\n`, color: "gray" },
-          { text: `Prefixes \u203a ${config.prefixes.map((e) => e + " ").join(' ')}\n`, color: "gray" },
-          { text: `Prefix Length: ${config.prefixes.length}\n`, color: "gray" },
-          { text: `isKaboom \u203a ${bot.options.isKaboom}\n`, color: "gray" },
-          { text: `isCreayun \u203a ${bot.options.isCreayun}\n`, color: "gray" },
-          { text: `isSavage \u203a ${bot.options.isSavage}\n`, color: "gray", } ])?.toAnsi();
-        fix = fixansi(message.replaceAll('`', '`\u200b'))
-        Embed = new EmbedBuilder()
-          .setColor(`${config.colors.discord.embed}`)
-          .setTitle(`${this.name} Command`)
-          .setDescription(`\`\`\`ansi\n${fix}\n\`\`\``)
-        bot.discord.message.reply({ embeds: [Embed] })
-      break
+        if (bot.options.isKaboom) {
+          mode = "Kaboom";
+        } if (bot.options.useChat && bot.options.isKaboom) {
+          mode = "Kaboom/Coreless";
+        } if (bot.options.isSavage) {
+          mode = "Savage";
+        } if (bot.options.isCreayun) {
+          mode = "Creayun";
+        }
+        switch (args.slice(1).join(' ')?.toLowerCase()) {
+        case "client":
+          component.push({
+            translate: "%s: %s:%s\n%s: %s\n%s: %s\n%s: %s",
+            color: config.colors.commands.tertiary,
+            with: [
+              { text: "Server", color: config.colors.commands.primary },
+              { text: `${bot.options.host}`, color: config.colors.commands.secondary },
+              { text: `${bot.options.port}`, color: config.colors.integer },
+              { text: "Server Name", color: config.colors.commands.primary },
+              { text: `${bot.options.serverName}`, color: config.colors.commands.secondary },
+              { text: "Minecraft Username", color: config.colors.commands.primary },
+              { text: `${bot.options.username}`, color: config.colors.commands.secondary },
+              { text: "Version", color: config.colors.commands.primary },
+              { text: `${bot.options.version}`, color: config.colors.integer },
+            ]
+          })
+        break;
+        case "discord":
+          if (!config.discord.enabled || discordClient.user === null) {
+            throw new CommandError('Token is incorrect or discord isnt enabled!')
+          } else {
+            component.push({
+              translate: "%s: %s\n%s: %s",
+              color: config.colors.commands.tertiary,
+              with: [
+                { text: "Discord Username", color: config.colors.commands.primary },
+                { text: `${discordClient.user.tag}`, color: config.colors.commands.secondary },
+                { text: "Discord Channel", color: config.colors.commands.primary },
+                { text: `${bot.discord?.channel?.name}`, color: config.colors.commands.secondary },
+              ]
+            })
+          }
+        break;
+        case "options":
+          component.push({
+            translate: "%s: %s\n%s: %s\n%s: %s",
+            color: config.colors.commands.tertiary,
+            with: [
+              { text: "Server Count", color: config.colors.commands.primary },
+              { text: `${bot.bots.length}`, color: config.colors.integer },
+              { text: "Prefixes", color: config.colors.commands.primary },
+              { text: `${config.prefixes.map((e) => e + " ").join(' ')}`, color: config.colors.commands.secondary },
+              { text: "Mode", color: config.colors.commands.primary },
+              { text: `${mode}`, color: config.colors.commands.secondary },
+            ]
+          })
+        break;
+        case "all":
+          component.push({
+            translate: "%s: %s:%s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s",
+            color: config.colors.commands.tertiary,
+            with: [
+              { text: "Server", color: config.colors.commands.primary },
+              { text: `${bot.options.host}`, color: config.colors.commands.secondary },
+              { text: `${bot.options.port}`, color: config.colors.integer },
+              { text: "Server Name", color: config.colors.commands.primary },
+              { text: `${bot.options.serverName}`, color: config.colors.commands.secondary },
+              { text: "Minecraft Username", color: config.colors.commands.primary },
+              { text: `${bot.options.username}`, color: config.colors.commands.secondary },
+              { text: "Version", color: config.colors.commands.primary },
+              { text: `${bot.options.version}`, color: config.colors.commands.secondary },
+              { text: "Discord Username", color: config.colors.commands.primary },
+              { text: `${discordClient.user?.tag}`, color: config.colors.commands.secondary },
+              { text: "Discord Channel", color: config.colors.commands.primary },
+              { text: `${bot.discord.channel?.name}`, color: config.colors.commands.secondary },
+              { text: "Server Count", color: config.colors.commands.primary },
+              { text: `${bot.bots.length}`, color: config.colors.integer },
+              { text: "Prefixes", color: config.colors.commands.primary },
+              { text: `${config.prefixes.map((e) => e + " ").join(' ')}`, color: config.colors.commands.secondary },
+              { text: "Mode", color: config.colors.commands.primary },
+              { text: `${mode}`, color: config.colors.commands.secondary }
+            ]
+          })
+          break;
+          default:
+            throw new CommandError({ translate: "command.unknown.argument", color: "dark_red" });
+        }
+      break;
+      case "contributors":
+      case "credits":
+        component.push({
+          translate: "%s%s - %s\n%s:\n%s\n%s\n%s\n%s\n%s %s\n%s",
+          color: config.colors.commands.tertiary,
+          with: [
+            { text: "Parker", color: "dark_red" },
+            { text: "2991", color: "black" },
+            { text: "Owner" },
+            { text: "Contributors" },
+            { text: "_ChipMC_", color: "dark_blue" },
+            { text: "chayapak", color: "yellow" },
+            { text: "_yfd", color: "light_purple" },
+            { text: "aaa", color: "gold" },
+            { text: "Morgan", color: "green" },
+            { text: "Ankan", color: "dark_green" },
+            { text: "TurtleKid", color: "green" }
+          ]
+        })
+      break;
+      case "discord":
+        component.push({
+          text: `the discord server invite is ${config.discord.invite}`,
+          color: config.colors.commands.primary,
+          translate: "",
+          hoverEvent: {
+            action: "show_text",
+            value: [
+              {
+                text: "click here to join the discord server!",
+                color: config.colors.commands.secondary,
+              }
+            ]
+          },
+          clickEvent: {
+            action: "open_url",
+            value: `${config.discord.invite}`
+          }
+        })
+      break;
+      case "usages":
+      switch (args.slice(1).join(' ')?.toLowerCase()) {
+        case "bot":
+          component.push({
+            translate: "%s: %s %s / %s %s",
+            color: config.colors.commands.tertiary,
+            with: [
+              { text: "Bot Memory Usage", color: config.colors.commands.primary },
+              { text: `${Math.floor(process.memoryUsage().heapUsed / 1048576)}`, color: config.colors.integer },
+              { text: "MiB", color: config.colors.commands.secondary },
+              { text: `${Math.floor(process.memoryUsage().heapTotal / 1048576 )}`, color: config.colors.integer },
+              { text: "MiB", color: config.colors.commands.secondary }
+            ]
+          })
+        break;
+        case "server":
+          component.push({
+            translate: "%s: %s %s / %s %s",
+            color: config.colors.commands.tertiary,
+            with: [
+              { text: "Free Server Memory", color: config.colors.commands.primary },
+              { text: `${Math.floor(os.freemem() / 1048576)}`, color: config.colors.integer },
+              { text: "MiB", color: config.colors.commands.secondary },
+              { text: `${Math.floor(os.totalmem() / 1048576)}`, color: config.colors.integer },
+              { text: "MiB", color: config.colors.commands.secondary },
+            ]
+          })
+        break;
+        case "all":
+          component.push({
+            translate: "%s: %s %s / %s %s\n%s: %s %s / %s %s",
+            color: config.colors.commands.tertiary,
+            with: [
+              { text: "Free Server Memory", color: config.colors.commands.primary },
+              { text: `${Math.floor(os.freemem() / 1048576)}`, color: config.colors.integer },
+              { text: "MiB", color: config.colors.commands.secondary },
+              { text: `${Math.floor(os.totalmem() / 1048576)}`, color: config.colors.integer },
+              { text: "MiB", color: config.colors.commands.secondary },
+              { text: "Bot Memory Usage", color: config.colors.commands.primary },
+              { text: `${Math.floor(process.memoryUsage().heapUsed / 1048576)}`, color: config.colors.integer },
+              { text: "MiB", color: config.colors.commands.secondary },
+              { text: `${Math.floor(process.memoryUsage().heapTotal / 1048576 )}`, color: config.colors.integer },
+              { text: "MiB", color: config.colors.commands.secondary }
+            ]
+          })
+        break;
+        default:
+          throw new CommandError({ translate: "command.unknown.argument", color: "dark_red" });
+      }
+      break;
+      case "uptimes":
+        switch (args.slice(1).join(' ')?.toLowerCase()) {
+          case "bot":
+            component.push({
+              translate: "%s: %s",
+              color: config.colors.commands.tertiary,
+              with: [
+                { text: "Bot Uptime", color: config.colors.commands.primary },
+                { text: `${format(process.uptime())}`, color: config.colors.commands.secondary },
+              ]
+            })
+          break;
+          case "server":
+            component.push({
+              translate: "%s: %s",
+              color: config.colors.commands.tertiary,
+              with: [
+                { text: "Server Uptime", color: config.colors.commands.primary },
+                { text: `${format(os.uptime())}`, color: config.colors.commands.secondary },
+              ]
+            })
+          break;
+          case "all":
+            component.push({
+              translate: "%s: %s\n%s: %s",
+              color: config.colors.commands.tertiary,
+              with: [
+                { text: "Bot Uptime", color: config.colors.commands.primary },
+                { text: `${format(process.uptime())}`, color: config.colors.commands.secondary },
+                { text: "Server Uptime", color: config.colors.commands.primary },
+                { text: `${format(os.uptime())}`, color: config.colors.commands.secondary },
+              ]
+            })
+          break;
+          throw new CommandError({ translate: "command.unknown.argument", color: "dark_red" });
+        }
+      break;
       case "server":
-        message = bot.getMessageAsPrismarine([
-          { text: `Hostname \u203a ${os.hostname()}\n`, color: "gray" },
-          { text: `User \u203a ${os.userInfo().username}\n`, color: "gray" },
-          { text: `Working Directory \u203a ${process.mainModule.path}\n`, color: "gray" },
-          { text: `Arch \u203a ${os.arch()}\n`, color: "gray" }, { text: `OS \u203a ${os.platform()}\n`, color: "gray" },
-          { text: `OS Version/distro \u203a ${os.version()}\n`, color: "gray" },
-          { text: `Kernel Version \u203a ${os.release()}\n`, color: "gray" },
-          { text: `Cores \u203a ${os.cpus().length}\n`, color: "gray" },
-          { text: `CPU \u203a ${os.cpus()[0].model}\n`, color: "gray" },
-          { text: `Server Free memory `, color: 'gray' },
-          { text: `${Math.floor( os.freemem() / 1048576, )} `, color: 'gold' },
-          { text: 'MiB / ', color: 'gray' },
-          { text: `${Math.floor(os.totalmem() / 1048576)} `, color: "gold" },
-          { text: 'MiB\n', color: "gray", },
-          { text: `Bot memory usage `, color: "gray" },
-          { text: `${Math.floor( process.memoryUsage().heapUsed / 1048576, )} `, color: "gold", },
-          { text: "MiB / ", color: "gray", },
-          { text: `${Math.floor( process.memoryUsage().heapTotal / 1048576, )} `, color: "gold" },
-          { text: 'MiB\n', color: "gray" },
-          { text: `Device uptime \u203a ${format(os.uptime())}\n`, color: 'gray' },
-          { text: `Bot uptime \u203a ${format(process.uptime())}\n`, color: "gray" },
-          { text: `Node version \u203a ${process.version}`, color: 'gray' } ])?.toAnsi();
-        fix = fixansi(message.replace('`', '`\u200b'))
-        Embed = new EmbedBuilder()
-          .setColor(`${config.colors.discord.embed}`)
-          .setTitle(`${this.name} command`)
-          .setDescription(`\`\`\`ansi\n${fix}\n\`\`\``)
-        bot.discord.message.reply({ embeds: [Embed] })
-      break
+        component.push({
+          translate: "%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s",
+          color: config.colors.commands.tertiary,
+          with: [
+            { text: "Hostname", color: config.colors.commands.primary },
+            { text: `${os.hostname()}`, color: config.colors.commands.secondary },
+            { text: "User", color: config.colors.commands.primary },
+            { text: `${os.userInfo().username}`, color: config.colors.commands.secondary },
+            { text: "Working Directory", color: config.colors.commands.primary },
+            { text: `${process.mainModule.path}`, color: config.colors.commands.secondary },
+            { text: "Arch", color: config.colors.commands.primary },
+            { text: `${os.arch()}`, color: config.colors.commands.secondary },
+            { text: "OS", color: config.colors.commands.primary },
+            { text: `${os.platform}`, color: config.colors.commands.secondary },
+            { text: "OS Version", color: config.colors.commands.primary },
+            { text: `${os.version()}`, color: config.colors.commands.secondary },
+            { text: "Kernel Version", color: config.colors.commands.primary },
+            { text: `${os.release()}`, color: config.colors.commands.secondary },
+            { text: "CPU", color: config.colors.commands.primary },
+            { text: `${os.cpus()[0].model}`, color: config.colors.commands.secondary },
+            { text: "CPU cores", color: config.colors.commands.primary },
+            { text: `${os.cpus().length}`, color: config.colors.integer },
+            { text: "Node Version", color: config.colors.commands.primary },
+            { text: `${process.version}`, color: config.colors.commands.secondary },
+            { text: "NPM Version", color: config.colors.commands.primary },
+            { text: `${execSync('npm -v').toString().replaceAll('\n', '')}`, color: config.colors.commands.secondary },
+          ]
+        })
+      break;
+      case "version":
+      case "ver":
+        if (botInfo.codename === '') {
+          component.push({
+            translate: "%s %s %s-%s-%s%s\n%s - %s",
+            color: config.colors.commands.tertiary,
+            with: [
+              { text: "Friday Night Funkin", color: "dark_blue" },
+              { text: "Boyfriend", color: "dark_aqua" },
+              { text: "Bot", color: "blue" },
+              { text: `${botInfo.version}`, color: config.colors.integer },
+              { text: "#" },
+              { text: `${botInfo.build}`, color: config.colors.integer },
+              { text: "11/22/22", color: config.colors.commands.primary },
+              { text: `${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`, color: config.colors.commands.secondary },
+            ]
+          })
+/*
+`§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-
+${botInfo.version}-#${botInfo.build}-${botInfo.codename}\n11/22/22 - 
+${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}
+*/
+        } else {
+          component.push({
+            translate: "%s %s %s-%s-%s%s-%s\n%s - %s",
+            color: config.colors.commands.tertiary,
+            with: [
+              { text: "Friday Night Funkin", color: "dark_blue" },
+              { text: "Boyfriend", color: "dark_aqua" },
+              { text: "Bot", color: "blue" },
+              { text: `${botInfo.version}`, color: config.colors.integer },
+              { text: "#" },
+              { text: `${botInfo.build}`, color: config.colors.integer },
+              { text: `${botInfo.codename}` },
+              { text: "11/22/22", color: config.colors.commands.primary },
+              { text: `${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`, color: config.colors.commands.secondary },
+            ]
+          })
+        }
+      break;
       default:
-        throw new CommandError('Invalid argument');
+        throw new CommandError({ translate: "command.unknown.argument", color: "dark_red" });
     }
-  }
+    bot.tellraw(`@a[name="${source.player.profile.name}"]`, component);
+  },
 }

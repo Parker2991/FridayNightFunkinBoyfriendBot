@@ -1,11 +1,15 @@
 function core (bot, options, config) {
+  let number = 0;
   bot.core = {
     area: {
       start: config.core?.area.start ?? { x: 0, y: 0, z: 0 },
       end: config.core?.area.end ?? { x: 15, y: 0, z: 15 }
     },
+
     position: null,
+
     currentBlockRelative: { x: 0, y: 0, z: 0 },
+
     refill () {
       const pos = bot.core.position
       const { start, end } = bot.core.area
@@ -64,22 +68,22 @@ function core (bot, options, config) {
     },
 
     run (command) {
+      const eee = Math.floor(Math.random() * 10000)
       const location = bot.core.currentBlock()
       if (!location) return
       if (bot.options.isSavage || bot.options.isCreayun || bot.options.useChat) {
         return
       } else {
-        bot._client.write('update_command_block', { command: command.substring(0, 32767), location, mode: 1, flags: 0b100 })
+        bot._client.write('update_command_block', { command: command.substring(0, 32767), location, mode: 1, flags: 0b100 });
+        bot._client.write('query_block_nbt', ({ location: location, transactionId: eee}));
         bot.core.incrementCurrentBlock()
       }
-    }
+    },
   }
- // if (bot.options.useChat ?? bot.options.isCreayun ?? bot.options.isSavage) return
+
   if (bot.options.isSavage || bot.options.isCreayun) return
   bot.on('move', () => {
-//    if (bot.options.isSavage) return
     bot.core.move(bot.position)
-//     setTimeout(() => bot.core.run('say Hello, world!'), 1000)
   })
 }
 

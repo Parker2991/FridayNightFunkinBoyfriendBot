@@ -67,7 +67,7 @@ module.exports = {
             fix = fixansi(ansi.replaceAll('`', '`\u200b'))
             Embed = new EmbedBuilder()
               .setColor(`${config.colors.discord.embed}`)
-              .setTitle(`${this.name} Command`)
+              .setTitle(`${this.data.name} Command`)
               .setDescription(`\`\`\`ansi\n${fix}\n\`\`\``)
             bot.discord.message.reply({ embeds: [Embed] })
 //          } catch (e) {
@@ -87,7 +87,7 @@ module.exports = {
           fix = fixansi(ansi.replaceAll('`', '`\u200b'))
           Embed = new EmbedBuilder()
             .setColor(`${config.colors.discord.embed}`)
-            .setTitle(`${this.name} Command`)
+            .setTitle(`${this.datta.name} Command`)
             .setDescription(`\`\`\`ansi\n${fix}\n\`\`\``)
           bot.discord.message.reply({ embeds: [Embed] })
 //          bot.discord.message.reply('e');
