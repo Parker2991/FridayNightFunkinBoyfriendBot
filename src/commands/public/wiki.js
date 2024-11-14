@@ -10,7 +10,7 @@ module.exports = {
       'wikipedia'
     ],
     usages:[
-      "<definition>"
+      "<article>"
     ],
   },
   async execute (context) {
@@ -23,7 +23,7 @@ module.exports = {
       bot.tellraw(`@a`, { text: `${summary}`, color: 'gray' });
     } catch (error) {
        if (error.toString() === "pageError: TypeError: Cannot read properties of undefined (reading 'pages')") {
-         bot.tellraw(`@a`, { text: 'Definition not found!', color: 'dark_red' })
+         bot.tellraw(`@a`, { text: 'Article not found!', color: 'dark_red' })
        } else {
          bot.tellraw(`@a`, `${error.toString()}`)
        }

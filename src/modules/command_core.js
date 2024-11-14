@@ -1,3 +1,4 @@
+const mcData = require('minecraft-data')('1.20.2');
 function core (bot, options, config) {
   let number = 0;
   bot.core = {
@@ -25,7 +26,51 @@ function core (bot, options, config) {
       it will not refill core until the pos is not NaN
       instead of tping to a set cords cuz fuck you im not doing that
       */
-      bot.chat.command(`minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${JSON.stringify(config.core.name)}'}`)
+      if (config.core.method === 'chat') {
+        bot.chat.command(`minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${JSON.stringify(config.core.name)}'}`)
+      } else if (config.core.method === 'item') {
+        bot._client.write('set_creative_slot', {
+          slot: 36,
+          item: {
+            present: true,
+            itemId: mcData.itemsByName.command_block.id,
+            itemCount: 1,
+            nbtData: {
+            }
+          }
+        });
+
+        bot._client.write('block_dig', {
+          status: 0,
+          location: {
+            x: bot.position.x,
+            y: bot.position.y,
+            z: bot.position.z
+          },
+          face: 0
+        });
+
+        bot._client.write('block_place', {
+          hand: 0,
+          location: {
+            x: bot.position.x,
+            y: bot.position.y,
+            z: bot.position.z
+          },
+          direction: 0,
+          cursorX: 0.1,
+          cursorY: 0,
+          cursorZ: 0.1,
+          insideBlock: false
+        });
+
+        bot._client.write('update_command_block', {
+          location: bot.position,
+          command: `minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${JSON.stringify(config.core.name)}'}`,
+          flags: 5,
+          mode: 1
+        })
+      }
     },
 
     move (pos = bot.position) {
@@ -76,7 +121,7 @@ function core (bot, options, config) {
       } else {
         bot._client.write('update_command_block', { command: command.substring(0, 32767), location, mode: 1, flags: 0b100 });
         bot._client.write('query_block_nbt', ({ location: location, transactionId: eee}));
-        bot.core.incrementCurrentBlock()
+        bot.core.incrementCurrentBlock();
       }
     },
   }
@@ -85,6 +130,15 @@ function core (bot, options, config) {
   bot.on('move', () => {
     bot.core.move(bot.position)
   })
-}
 
+  bot.on('packet.block_change', (data) => {
+//    console.log('data pos ' + JSON.stringify(data.location))
+//    console.log('core pos ' +JSON.stringify(bot.core.position));
+    if (data.type === 0) {
+//      console.log('data pos ' + JSON.stringify(data.location));
+//      console.log('core position ' + JSON.stringify(bot.core.position));
+//      bot.core.refill();
+    }
+  })
+}
 module.exports = core;

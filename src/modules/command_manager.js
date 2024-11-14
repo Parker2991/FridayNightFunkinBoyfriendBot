@@ -47,8 +47,8 @@ async function command_manager (bot, options, config, discordClient) {
           const event = bot.discord.message;
           const roles = event?.member?.roles?.cache;
           if (command?.data?.trustLevel === 1 && !source?.sources?.discord) {
-            if (args.length === 0 && bot.validation.trusted && bot.validation.admin && bot.validation.owner && !source?.sources?.console) throw new CommandError({ text: "Please provide an trusted or an admin or an owner hash", color: "dark_red" })
-            if (args[0] !== bot.validation.trusted && args[0] !== bot.validation.admin && args[0] !== bot.validation.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted or admin or owner hash', color: 'dark_red' });
+            if (args.length === 0 && bot.validation.trusted && bot.validation.admin && bot.validation.owner && !source?.sources?.console) throw new CommandError({ text: "Please provide a trusted, admin or owner hash", color: "dark_red" })
+            if (args[0] !== bot.validation.trusted && args[0] !== bot.validation.admin && args[0] !== bot.validation.owner && !source.sources.console) throw new CommandError({ translate: 'Invalid trusted, admin or owner hash', color: 'dark_red' });
           } else if (command?.data?.trustLevel === 1 && source?.sources.discord) {
             const hasRole = roles?.some(role => role.name === `${config.discord.roles.trusted}` || role.name === `${config.discord.roles.owner}`)
             if (!hasRole) throw new CommandError({ translate: 'You are not trusted or the owner!', color: "dark_red" })

@@ -1,17 +1,21 @@
 prefixes:
   - "!"
-
 discord:
   token: "discord token here"
   prefix: "!"
   invite: "discord invite here"
+  enabled: true
   roles:
     trusted: "trusted"
     admin: "admin"
     owner: "FNFBoyfriendBot Owner"
 
 core:
+  # core refill methods:
+  # chat: refill core in chat
+  # item refill core in a command block placed by the bot
   name: {"translate":"outOfMemory.message"}
+  method: 'item'
   area:
     start:
       x: 0

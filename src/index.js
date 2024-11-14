@@ -16,6 +16,10 @@ try {
 } catch (e) {
   console.log(e.stack);
 }
+if (config.core.method !== 'item' && config.core.method !== 'chat') {
+  config.core.method = 'item';
+  console.warn('invalid core method type defaulting to item');
+}
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
