@@ -6,8 +6,11 @@ const CommandSource = require('../util/command_source')
 
 //const client = new Client({ intents: [Guilds, GuildMessages, MessageContent] })
 const util = require('util')
-
-function discord(bot, options, config, discordClient) {
+function discord (context) {
+  const bot = context.bot;
+  const config = context.config;
+  const discordClient = context.discordClient;
+  const options = context.options;
   if (!options?.channelId) {
     bot.discord = {
       invite: config.discord?.invite
@@ -82,7 +85,7 @@ function discord(bot, options, config, discordClient) {
     if (message.content.startsWith(config.discord.prefix)) { // TODO: Don't hardcode this
       const source = new CommandSource({
         profile: {
-          name: message?.member?.displayName
+          name: `${message?.member.nickname || message?.author.displayName}`
         }
       }, {
         discord: true,
@@ -132,7 +135,7 @@ function discord(bot, options, config, discordClient) {
           }
         },
         {
-          text: message?.member?.displayName
+          text: `${message.member.nickname || message.author.displayName}`,
         },
         message.content
       ]

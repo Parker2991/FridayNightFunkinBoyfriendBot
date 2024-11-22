@@ -1,6 +1,10 @@
 const CommandSource = require('../util/command_source');
 const prismarineChat = require('prismarine-chat')('1.20.2');
-function Console (bot, options, config) {
+
+function Console (context) {
+  const bot = context.bot;
+  const config = context.config;
+  const options = context.options;
   let ratelimit = 0;
   bot.console = {
     readline: null,
@@ -101,39 +105,9 @@ function Console (bot, options, config) {
   bot.on('actionBar', (message) => {
     if (!options.logging) return;
     if (ratelimit > 10) return
-//    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
+    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
     bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
     ratelimit++
   })
-
-/*
-setInterval(() => spamCount = 0, 1000 * 2)
-
-  bot.on('message', message => {
-    if (spamCount > 300) {
-      console.log('WTF spam detected not logging')
-      return
-    }
-    
-    const ansi = bot.getMessageAsPrismarine(message)?.toAnsi()
-    const string = bot.getMessageAsPrismarine(message)?.toString()
-    const now = new Date().toLocaleString()
-    
-
-    spamCount++
-*/
-
-/*  bot.on('message', (message) => {
-    rateLimit++
-    setTimeout(() => {
-      rateLimit--
-    }, 1000)
-    if (!options.logging) return;
-    if (rateLimit > 100) {
-      return
-    }
-    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
-    bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
-  })*/
 }
 module.exports = Console;

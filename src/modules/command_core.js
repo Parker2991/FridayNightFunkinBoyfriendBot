@@ -1,6 +1,9 @@
 const mcData = require('minecraft-data')('1.20.2');
-function core (bot, options, config) {
-  let number = 0;
+
+function core (context) {
+  const bot = context.bot;
+  const config = context.config;
+  const options = context.options;
   bot.core = {
     area: {
       start: config.core?.area.start ?? { x: 0, y: 0, z: 0 },
@@ -26,8 +29,9 @@ function core (bot, options, config) {
       it will not refill core until the pos is not NaN
       instead of tping to a set cords cuz fuck you im not doing that
       */
+      const command = `minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${JSON.stringify(config.core.name)}'} destroy`
       if (config.core.method === 'chat') {
-        bot.chat.command(`minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${JSON.stringify(config.core.name)}'}`)
+        bot.chat.command(`${command}`)
       } else if (config.core.method === 'item') {
         bot._client.write('set_creative_slot', {
           slot: 36,
@@ -35,8 +39,7 @@ function core (bot, options, config) {
             present: true,
             itemId: mcData.itemsByName.command_block.id,
             itemCount: 1,
-            nbtData: {
-            }
+            nbtData: { }
           }
         });
 
@@ -66,7 +69,7 @@ function core (bot, options, config) {
 
         bot._client.write('update_command_block', {
           location: bot.position,
-          command: `minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${JSON.stringify(config.core.name)}'}`,
+          command,
           flags: 5,
           mode: 1
         })
@@ -124,6 +127,43 @@ function core (bot, options, config) {
         bot.core.incrementCurrentBlock();
       }
     },
+
+    runTracked (command) {
+      const transactionId = Math.floor(Math.random() * 1000);
+      const location = bot.core.currentBlock();
+      if (!location) return;
+
+      if (bot.position.y !== bot.core.position.y) {
+        bot.chat.command(`minecraft:tp ${bot.core.position.x} ${bot.core.position.y} ${bot.core.position.z}`)
+      }
+
+      bot._client.write('update_command_block', {
+        command: command.substring(0, 32767),
+        location,
+        flags: 5,
+        mode: 1,
+//        LastOutput: true,
+      });
+
+      bot.core.incrementCurrentBlock();
+
+      bot._client.write('query_block_nbt', {
+        location,
+        transactionId
+      });
+
+      bot.on('packet.nbt_query_response', (data) => {
+//          transactionId,
+        try {
+        if (data.transactionId === transactionId) {
+          bot.tellraw("@a", require('util').inspect(data.value))
+          bot.tellraw("@a", JSON.stringify(data.value))
+        }
+        } catch (e) {
+          bot.tellraw("@a", require("util").inspect(e.stack));
+        }
+      })
+    }
   }
 
   if (bot.options.isSavage || bot.options.isCreayun) return

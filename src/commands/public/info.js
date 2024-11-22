@@ -46,7 +46,7 @@ module.exports = {
     switch (args[0]?.toLowerCase()) {
       case "about":
         component.push({
-          text: `FNFBoyfriendBot is a kaboom bot created by Parker2991\nThe source code and changelog can be found here ${botInfo.url}`,
+          text: `FNFBoyfriendBot is a kaboom bot created by Parker2991\nThe source code and changelog can be found here ${botInfo.buildstring.url}`,
           color: `${config.colors.commands.primary}`,
           translate: "",
           hoverEvent: {
@@ -57,7 +57,7 @@ module.exports = {
           },
           clickEvent: {
             action: "open_url",
-            value: `${botInfo.url}`
+            value: `${botInfo.buildstring.url}`
           }
         })
       break;
@@ -153,7 +153,7 @@ module.exports = {
       case "contributors":
       case "credits":
         component.push({
-          translate: "%s%s - %s\n%s:\n%s\n%s\n%s\n%s\n%s %s\n%s",
+          translate: "%s%s - %s\n%s:\n%s\n%s\n%s\n%s\n%s %s\n%s\n%s",
           color: config.colors.commands.tertiary,
           with: [
             { text: "Parker", color: "dark_red" },
@@ -166,7 +166,8 @@ module.exports = {
             { text: "aaa", color: "gold" },
             { text: "Morgan", color: "green" },
             { text: "Ankan", color: "dark_green" },
-            { text: "TurtleKid", color: "green" }
+            { text: "TurtleKid", color: "green" },
+            { text: "Ploat/ImGloriz", color: "#cd8ccb" },
           ]
         })
       break;
@@ -191,6 +192,7 @@ module.exports = {
         })
       break;
       case "usages":
+      case "usage":
       switch (args.slice(1).join(' ')?.toLowerCase()) {
         case "bot":
           component.push({
@@ -310,26 +312,7 @@ module.exports = {
       case "version":
       case "ver":
         if (botInfo.codename === '') {
-          component.push({
-            translate: "%s %s %s-%s-%s%s\n%s - %s",
-            color: config.colors.commands.tertiary,
-            with: [
-              { text: "Friday Night Funkin", color: "dark_blue" },
-              { text: "Boyfriend", color: "dark_aqua" },
-              { text: "Bot", color: "blue" },
-              { text: `${botInfo.version}`, color: config.colors.integer },
-              { text: "#" },
-              { text: `${botInfo.build}`, color: config.colors.integer },
-              { text: "11/22/22", color: config.colors.commands.primary },
-              { text: `${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`, color: config.colors.commands.secondary },
-            ]
-          })
-/*
-`§9Friday §9Night §9Funkin §3Boyfriend §1Bot§8§r-
-${botInfo.version}-#${botInfo.build}-${botInfo.codename}\n11/22/22 - 
-${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}
-*/
-        } else {
+
           component.push({
             translate: "%s %s %s-%s-%s%s-%s\n%s - %s",
             color: config.colors.commands.tertiary,
@@ -337,10 +320,27 @@ ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}
               { text: "Friday Night Funkin", color: "dark_blue" },
               { text: "Boyfriend", color: "dark_aqua" },
               { text: "Bot", color: "blue" },
-              { text: `${botInfo.version}`, color: config.colors.integer },
+              { text: `${botInfo.buildstring.version}`, color: config.colors.integer },
               { text: "#" },
-              { text: `${botInfo.build}`, color: config.colors.integer },
-              { text: `${botInfo.codename}` },
+              { text: `${botInfo.buildstring.build}`, color: config.colors.integer },
+              { text: `${botInfo.buildstring.releaseDate}`, color: config.colors.commands.secondary },
+              { text: "11/22/22", color: config.colors.commands.primary },
+              { text: `${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`, color: config.colors.commands.secondary },
+            ]
+          })
+        } else {
+          component.push({
+            translate: "%s %s %s-%s-%s%s-%s-%s\n%s - %s",
+            color: config.colors.commands.tertiary,
+            with: [
+              { text: "Friday Night Funkin", color: "dark_blue" },
+              { text: "Boyfriend", color: "dark_aqua" },
+              { text: "Bot", color: "blue" },
+              { text: `${botInfo.buildstring.version}`, color: config.colors.integer },
+              { text: "#" },
+              { text: `${botInfo.buildstring.build}`, color: config.colors.integer },
+              { text: `${botInfo.buildstring.releaseDate}`, color: config.colors.commands.secondary },
+              { text: `${botInfo.buildstring.codename}` },
               { text: "11/22/22", color: config.colors.commands.primary },
               { text: `${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`, color: config.colors.commands.secondary },
             ]

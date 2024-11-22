@@ -14,11 +14,10 @@ module.exports = {
       "<command>",
     ],
   },
-  async execute (context) {
+  execute (context) {
     const bot = context.bot
     const message = context.arguments.join(' ');
-    bot.core.run(message);
-    await sleep(45);
+    bot.core.runTracked(message);
 /*    bot.on('commandBlockOutput', (packet) => {
       bot.tellraw("@a", require('util').inspect(packet));
       console.log(packet);

@@ -12,8 +12,11 @@ function tryParse (json) {
     return { text: '' }
   }
 }
-//what was changed??
-function chat (bot, options, config) {
+//what was changed?
+function chat (context) {
+  const bot = context.bot;
+  const config = context.config;
+  const options = context.options;
   let ChatMessage
   bot.on('registry_ready', registry => {
     ChatMessage = loadPrismarineChat(registry)

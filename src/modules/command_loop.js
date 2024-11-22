@@ -1,4 +1,5 @@
-function command_loop (bot, options, config) {
+function command_loop (context) {
+  const bot = context.bot;
   bot.cloop = {
     list: [],
     add (command, interval) {

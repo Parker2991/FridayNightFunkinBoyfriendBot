@@ -1,6 +1,9 @@
 const mc = require('minecraft-protocol');
 const usernameGen = require("../util/usernameGen");
-function reconnect (bot, options, config) {
+function reconnect (context) {
+  const bot = context.bot;
+  const config = context.config;
+  const options = context.options;
   bot.on('end', () => {
     //bot = undefined;
   

@@ -1,4 +1,6 @@
-function position (bot, options, config) {
+
+function position (context) {
+  const bot = context.bot;
   bot.position = null
 
   bot.on('packet.position', packet => {

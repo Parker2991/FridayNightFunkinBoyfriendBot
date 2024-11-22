@@ -1,6 +1,9 @@
 const CommandSource = require('../util/command_source');
-module.exports = (bot, options, config) => {
+module.exports = (context) => {
   let ratelimit = 0;
+  const bot = context.bot;
+  const config = context.config;
+  const options = context.options;
   bot.on("parsed_message", (data) => {
     if (data.type !== "minecraft:chat") return;
     const prefixes = config.prefixes;

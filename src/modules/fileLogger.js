@@ -3,7 +3,10 @@ const path = require("path");
 const { createGzip } = require("zlib");
 const readline = require('readline');
 const { Console } = require("console");
-function fileLogger(bot, options, message) {
+function fileLogger(context) {
+  const bot = context.bot;
+  const config = context.config;
+  const options = context.options;
   const currentDate = new Date();
   const timestamp = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
     .toString()

@@ -1,4 +1,7 @@
-function selfcare (bot, options, config) {
+function selfcare (context) {
+  const bot = context.bot;
+  const config = context.config;
+  const options = context.options;
   let entityId;
   let permissionLevel = 2;
   let unmuted = false;
@@ -62,7 +65,7 @@ You already have registered this username!
       else if (stringMessage?.startsWith("Successfully set your username to ")) username = true
       else if (stringMessage === `You already have the username "${bot.username}"`) username = false
       else if (stringMessage === `You no longer have a nickname.`) nickname = false;
-      else if (stringMessage.startsWith('Your nickname is now ')) nickname = true;
+      else if (stringMessage?.startsWith('Your nickname is now ')) nickname = true;
     }
   })
 

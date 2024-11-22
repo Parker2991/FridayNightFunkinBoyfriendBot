@@ -1,4 +1,7 @@
-function player_list (bot, options, config) {
+function player_list (context) {
+  const bot = context.bot;
+  const config = context.config;
+  const options = context.options;
   bot.players = []
 
   bot.on('packet.player_info', async (packet) => {

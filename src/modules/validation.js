@@ -1,5 +1,7 @@
 const crypto = require('crypto')
-function validation (bot, options, config) {
+function validation (context) {
+  const bot = context.bot;
+  const config = context.config;
   setInterval(() => {
     bot.validation = {
       trusted: crypto.createHash('sha256').update(Math.floor(Date.now() / 1000) + config.keys.trusted).digest('hex').substring(0, 16),
