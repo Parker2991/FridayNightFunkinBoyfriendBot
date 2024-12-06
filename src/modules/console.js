@@ -93,7 +93,7 @@ function Console (context) {
     bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
     ratelimit++
   })
-//  console.log(ratelimit)
+
   bot.on('bossBar', (message) => {
     if (!options.logging) return;
     if (ratelimit > 10) return;

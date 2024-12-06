@@ -2,9 +2,9 @@ const mc = require('minecraft-protocol');
 const { EventEmitter } = require('events');
 EventEmitter.defaultMaxListeners = 5e6;
 const util = require('util');
-const createRegistry = require('prismarine-registry');
 const ChatMessage = require('prismarine-chat');
 function createBot(options = {}, config) {
+  let endCount = 0;
   const bot = new EventEmitter();
   bot.options = {
   // Set some default values in options
@@ -17,15 +17,15 @@ function createBot(options = {}, config) {
   bot.on('init_client', client => {
     client.on('packet', (data, meta) => {
       bot.emit('packet', data, meta)
-      bot.emit('packet.' + meta.name, data)
+      bot.emit('packet.' + meta.name, data);
     })
 
-    client.on('login', () => {
+    client.on('login', (data) => {
       bot.uuid = client.uuid
       bot.username = client.username
-      bot.registry = createRegistry(client.version)
+      bot.registry = require('prismarine-registry')(client.version);
       bot.registry.language = require('./data/language.json');
-      bot.emit('registry_ready', bot.registry)
+      bot.emit('registry_ready', bot.registry);
     })
 
     client.on('disconnect', data => {
@@ -36,14 +36,21 @@ function createBot(options = {}, config) {
     client.on('end', reason => {
       bot.emit('end', reason);
       if (reason === "socketClosed") return;
-      bot.console.warn(ChatMessage(bot._client.version).fromNotch(`§8[§bClient Reconnect§8]§r ${reason}`)?.toAnsi())
-      //      bot = undefined;
-//      config = undefined;
+      bot.console.warn(ChatMessage(bot._client.version).fromNotch(`§8[§bClient Reconnect§8]§r ${reason}`)?.toAnsi());
     })
 
     client.on('error', error => {
-      bot.console.warn(ChatMessage(bot._client.version).fromNotch('§8[§bClient Reconnect§8]§r ')?.toAnsi() + util.inspect(error.toString()))
-      bot?.discord?.channel?.send(error.toString())
+      endCount++
+      if (endCount === 10) {
+        bot.console.info('stopped logging disconnect messages for now...');
+        bot?.discord?.channel?.send('stopped logging disconnect messages for now...');
+        return;
+      } else if (endCount > 10) {
+        return;
+      } else {
+        bot.console.warn(ChatMessage(bot._client.version).fromNotch('§8[§bClient Reconnect§8]§r ')?.toAnsi() + util.inspect(error.toString()))
+        bot?.discord?.channel?.send(error.toString());
+      }
     })
 
     client.on("keep_alive", ({ keepAliveId }) => {
@@ -54,6 +61,10 @@ function createBot(options = {}, config) {
       bot.emit("kick_disconnect", data.reason)
       bot.console?.warn(`${ChatMessage(bot._client.version).fromNotch("§8[§bClient Reconnect§8]§r")?.toAnsi()} ${ChatMessage(bot._client.version).fromNotch(data.reason)?.toAnsi()}`)
       bot?.discord?.channel?.send(util.inspect(data.reason))
+    })
+
+    client.on('success', (data) => {
+      endCount = 0;
     })
 
     process.on("uncaughtException", (e) => {

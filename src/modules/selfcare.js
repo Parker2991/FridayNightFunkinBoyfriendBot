@@ -1,3 +1,5 @@
+const sleep = require('../util/sleep');
+
 function selfcare (context) {
   const bot = context.bot;
   const config = context.config;
@@ -17,8 +19,6 @@ function selfcare (context) {
   let register = false;
   let positionCount = 0;
   bot.vanished = true
-  // You now have the tag: &8[&bPrefix&8: &3~&8]
-  // You no longer have a tag
   bot.on('systemChat', (message) => {
     const stringMessage = bot.getMessageAsPrismarine(message)?.toString();
     if (options.isSavage) {
@@ -32,17 +32,8 @@ function selfcare (context) {
 
       else if (stringMessage === "You're already logged in!") register = false;
       else if (stringMessage === "Successful login!") register = false;
-/*
-You're already logged in!
-Please, register to the server with the command: /register <password> <ConfirmPassword>
-Please, login with the command: /login <password>
-Successfully registered!
-Successful login!
-You already have registered this username!
-*/
 
     } else if (options.isKaboom) {
-//      const stringMessage = bot.getMessageAsPrismarine(message)?.toString();
       if (stringMessage === "Successfully enabled CommandSpy") commandSpy = true;
       else if (stringMessage === "Successfully enabled CommandSpy.") commandSpy = true;
       else if (stringMessage === "Successfully disabled CommandSpy") commandSpy = false;
@@ -96,31 +87,54 @@ You already have registered this username!
       }
     }, 1000)
   })
-
-  bot.on("packet.teams", (data) => {
+/*
+  bot.on("packet.teams", async (data) => {
     if (options.isSavage || options.isCreayun) return;
     try {
-/*
-      if (data.team !== "FNFBoyfriendBot") {
-        bot.chat.command(`minecraft:team add FNFBoyfriendBot`);
+//      console.log(data);
+//      bot.chat.command('minecraft:team add FNFBoyfriendBot');
+//      if (data.team === "FNFBoyfriendBot") return;
+      if (data.team === "FNFBoyfriendBot" && data.mode === 1) {
+        bot.core.run("minecraft:team add FNFBoyfriendBot");
       }
-      if (data.mode > 1 && !data.team === "FNFBoyfriendBot") {
-        bot.chat.command(`minecraft:team add FNFBoyfriendBot`);
+
+      for (const eachPlayer of data?.players) {
+        if (eachPlayer !== bot.options.username) {
+          bot.core.run("minecraft:team empty FNFBoyfriendBot");
+          await sleep(100);
+          bot.core.run("minecraft:team join FNFBoyfriendBot");
+        }
       }
-      if (data.team === "FNFBoyfriendBot") {
-        console.log(data);
-      }
-*/
     } catch (e) {
       console.log(e.stack)
     }
-  })
+  })*/
+/*
+ {
+  team: 'FNFBoyfriendBot',
+  mode: 3,
+  name: undefined,
+  friendlyFire: undefined,
+  nameTagVisibility: undefined,
+  collisionRule: undefined,
+  formatting: undefined,
+  prefix: undefined,
+  suffix: undefined,
+  players: [ 'Parker2991' ]
+}
+*/
+
 
   let timer;
-  bot.on('packet.login', (packet) => {
+  bot.on('packet.login', async (packet) => {
     entityId = packet.entityId;
     gameMode = packet.gameMode;
     clientLock = packet.gameMode;
+/*    if (bot.options.isKaboom) {
+      bot.core.run('minecraft:team add FNFBoyfriendBot');
+      await sleep(100);
+      bot.core.run('minecraft:team join FNFBoyfriendBot');
+    }*/
     timer = setInterval(() => {
       if (bot.options.isSavage && !bot.options.isKaboom && !bot.options.isCreayun) {
         if (login) bot.chat.command('login amogusissus');

@@ -9,9 +9,9 @@ module.exports = (context) => {
       })
       const tab_completeH = (packet) => {
         bot._client.removeListener('tab_complete', tab_completeH)
-          resolve(packet.matches)
-        }
-        bot._client.once('tab_complete', tab_completeH)
-      })
+        resolve(packet.matches)
+      }
+      bot._client.once('tab_complete', tab_completeH)
+    })
   }
 }

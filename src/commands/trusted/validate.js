@@ -33,7 +33,7 @@ module.exports = {
     if (roles?.some(role => role.name === `${config.discord.roles.trusted}`)) {
       bot.discord.message.reply('Valid trusted user')
       bot.chat.message(`Valid trusted user [${bot.discord.message.member.user.username}]`)
-    } else if (roles?.some(role => role.name === `${config.discord.roles.owner}`)) {
+    } else if (roles?.some(role => role.name === `${config.discord.roles.owner}` || role.name === `${config.discord.roles.fullAccess}`)) {
       bot.discord.message.reply('Valid Owner user')
       bot.chat.message(`Valid Owner User [${bot.discord.message.member.user.username}]`);
     }

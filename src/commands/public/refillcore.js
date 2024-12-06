@@ -12,13 +12,16 @@ module.exports = {
     ],
   },
   execute (context) {
-    const bot = context.bot
-    bot.core.refill()
+    const bot = context.bot;
+    const config = context.config;
+    bot.core.move();
     bot.tellraw("@a", "Refilling core,...")
   },
+
   discordExecute (context) {
     const bot = context.bot;
-    bot.core.refill();
+    const config = context.config;
+    bot.core.move();
     bot.tellraw("@a", "Refilling core,...");
   }
 }

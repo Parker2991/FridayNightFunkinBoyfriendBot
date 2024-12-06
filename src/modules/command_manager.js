@@ -57,7 +57,7 @@ async function command_manager (context) {
           break;
           case 1:
             if (source?.sources?.discord) {
-            const hasRole = roles?.some(role => role.name === `${config.discord.roles.trusted}` || role.name === `${config.discord.roles.admin}` || role.name === `${config.discord.roles.owner}`)
+            const hasRole = roles?.some(role => role.name === `${config.discord.roles.trusted}` || role.name === `${config.discord.roles.admin}` || role.name === `${config.discord.roles.fullAccess}` || role.name === `${config.discord.roles.owner}`)
             if (!hasRole) throw new CommandError({ translate: 'You are not trusted or the owner!', color: "dark_red" })
             } else if (!source?.sources.console) {
               if (args.length === 0) throw new CommandError({ text: "Please provide a trusted, admin or owner hash", color: "dark_red" });
@@ -66,7 +66,7 @@ async function command_manager (context) {
           break;
           case 2:
             if (source?.sources?.discord) {
-              const hasRole = roles?.some(role => role.name === `${config.discord.roles.admin}` || role.name === `${config.discord.roles.owner}`)
+              const hasRole = roles?.some(role => role.name === `${config.discord.roles.admin}` || role.name === `${config.discord.roles.fullAccess}` ||role.name === `${config.discord.roles.owner}`)
               if (!hasRole) throw new CommandError({ translate: 'You are not trusted or the owner!', color: "dark_red" })
             } else if (!source?.sources?.console) {
               if (args.length === 0) throw new CommandError({ text: "Please provide an admin or owner hash", color: 'dark_red' })
@@ -75,7 +75,7 @@ async function command_manager (context) {
           break;
           case 3:
             if (source?.sources?.discord) {
-              const hasRole = roles?.some(role => role.name === `${config.discord.roles.owner}`)
+              const hasRole = roles?.some(role => role.name === `${config.discord.roles.owner}` || role.name === `${config.discord.roles.fullAccess}`)
               if (!hasRole) throw new CommandError({ translate: 'You are not the owner!', color: "dark_red" })
             } else if (!source?.sources?.console) {
               if (args.length === 0 && bot.validation.owner) throw new CommandError({ text: "Please provide an owner hash", color: "dark_red" })

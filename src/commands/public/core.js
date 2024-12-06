@@ -1,5 +1,5 @@
 const CommandError = require('../../util/command_error')
-const sleep = require('../../util/sleep');
+
 module.exports = {
   data: {
     name: 'core',
@@ -17,12 +17,7 @@ module.exports = {
   execute (context) {
     const bot = context.bot
     const message = context.arguments.join(' ');
-    bot.core.runTracked(message);
-/*    bot.on('commandBlockOutput', (packet) => {
-      bot.tellraw("@a", require('util').inspect(packet));
-      console.log(packet);
-    })*/
-//    bot.core.commandBlockOutput()
+    bot.core.run(message);
   },
   discordExecute (context) {
     const bot = context.bot;

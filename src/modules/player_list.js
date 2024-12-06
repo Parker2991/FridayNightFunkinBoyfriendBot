@@ -18,19 +18,20 @@ function player_list (context) {
         action(entry)
       }
     }
-
+    bot.emit("player_info", packet);
   })
 
   bot.on('packet.player_remove', async ({players}) => { // players has uuids of the players
     let player_completion = (await bot.tab_complete('scoreboard players add ')).filter(_ => _.tooltip == undefined) // exclude @a, @r, @s, @e, @p -aaa
     bot.players.forEach(async player => {
-      if(!players.includes(player.uuid)) return
+      if (!players.includes(player.uuid)) return
 
       const a = player_completion.filter(_ => _.match == player.profile.name)
-      if(a.length >= 1) {
-        player.vanished = true
+      if (a.length >= 1) {
+        player.vanished = true;
       } else {
-        bot.players = bot.players.filter(_ => _.uuid != player.uuid)
+        bot.players = bot.players.filter(_ => _.uuid != player.uuid);
+        bot.emit("player_left", player);
       }
     })
   })
@@ -47,6 +48,11 @@ function player_list (context) {
       displayName: undefined,
       vanished: false
     })
+    if (entry.vanished) {
+      bot.emit("player_vanished", entry);
+    } else {
+      bot.emit("player_joined", entry);
+    }
   }
 
   function initializeChat (entry) {

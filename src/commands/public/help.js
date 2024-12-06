@@ -348,12 +348,40 @@ module.exports = {
       setTimeout(() => {
       bot.chat.message(bot.getMessageAsPrismarine(trusted)?.toMotd().replaceAll("§","&"));
       }, 400)
-      setTimeout(() => {
+      setTimexout(() => {
       bot.chat.message(bot.getMessageAsPrismarine(admin)?.toMotd()?.replaceAll('§','&'))
       }, 400)
       setTimeout(() => {
       bot.chat.message(bot.getMessageAsPrismarine(owner).toMotd().replaceAll("§","&"));
       }, 400)
+    } else if (bot.options.isCreayun) {
+      bot.chat.message(bot.getMessageAsPrismarine([
+        {
+          text: 'Commands (',
+          color: 'gray'
+        },
+        {
+          text: length,
+          color: 'gold'
+        },
+        {
+          text: ') ',
+          color: 'gray'
+        },
+        category,
+      ])?.toMotd().replaceAll('§','&'))
+      setTimeout(() => {
+      bot.chat.message(bot.getMessageAsPrismarine(public)?.toMotd().replaceAll("§","&"))
+      }, 2500)
+      setTimeout(() => {
+      bot.chat.message(bot.getMessageAsPrismarine(trusted)?.toMotd().replaceAll("§","&"));
+      }, 2500)
+      setTimeout(() => {
+      bot.chat.message(bot.getMessageAsPrismarine(admin)?.toMotd()?.replaceAll('§','&'))
+      }, 2500)
+      setTimeout(() => {
+      bot.chat.message(bot.getMessageAsPrismarine(owner).toMotd().replaceAll("§","&"));
+      }, 2500)
     } else if (admin.length === 0) {
       bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
                   { text: 'Commands (', color: 'gray' },

@@ -1,21 +1,22 @@
 prefixes:
   - "!"
+
 discord:
   token: "discord token here"
   prefix: "!"
   invite: "discord invite here"
-  enabled: true
+  enabled: false
   roles:
     trusted: "trusted"
     admin: "admin"
+    fullAccess: "full access"
     owner: "FNFBoyfriendBot Owner"
 
 core:
-  # core refill methods:
-  # chat: refill core in chat
-  # item refill core in a command block placed by the bot
-  name: {"translate":"outOfMemory.message"}
-  method: 'item'
+  name: { text: "FNFBoyfriendBot Core", color: "#00FFFF" }
+  itemName: { text: "FNFBoyfriendBot core item", color: "#00FFFF" }
+  itemRefill: true
+  # refilling core via item is buggy rn i recommend setting itemRefill to false for now
   area:
     start:
       x: 0
@@ -26,7 +27,36 @@ core:
       y: 0
       z: 15
 
+team:
+  name: "FNFBoyfriendBot"
+  suffix: {
+    color: "dark_gray",
+    translate: " [ %s ]",
+    with: [
+      { color: "dark_red", text: "https://sus.red" }
+    ]
+  }
+  # make sure if nothing is set as the suffix it is set as { text: "" } as the packet reads "" as { text: "" }
+  prefix: {
+    color: "dark_gray",
+    translate: "[%s: %s] ",
+    with: [
+      { color: "aqua", text: "Prefix" },
+      { color: "dark_aqua", text: "!" }
+    ]
+  }
+  displayName: {
+    translate: "%s%s%s",
+    with: [
+      { color: "dark_blue", text: "FNF" },
+      { color: "dark_aqua", text: "Boyfriend" },
+      { color: "blue", text: "Bot" }
+    ]
+  }
+  # color HAS to come first before any components or it will break! dont ask why, its because of how nmp parses it
+
 commandSetMessage: false
+# ^^ this is for when commands are ran in core
 
 keys:
   trusted: "trusted key here"
@@ -47,7 +77,6 @@ colors:
 
 console:
   prefix: "c."
-  filelogger: false
 
 bots:
   - host: "localhost"

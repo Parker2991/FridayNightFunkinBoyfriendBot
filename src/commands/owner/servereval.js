@@ -6,6 +6,7 @@ module.exports = {
     name: 'servereval',
     trustLevel: 3,
     aliases: [
+      "se"
     ],
     description: 'run code unisolated',
     usages: [
@@ -25,7 +26,7 @@ module.exports = {
       } else if (bot.options.useChat || bot.options.isSavage) {
         bot.chat.message(bot.getMessageAsPrismarine({ text: util.inspect(eval(script), { stylize }).substring(0, 32700) })?.toMotd().replaceAll('§','&'))
       } else {
-        bot.tellraw(`@a`, [
+        bot.tellraw(`@a[name="${source.player.profile.name}"]`, [
           {
             text: util.inspect(eval(script), { stylize }).substring(0, 32700),
             hoverEvent: {

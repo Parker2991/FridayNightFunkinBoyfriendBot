@@ -42,7 +42,7 @@ function discord (context) {
     try {
       bot?.discord?.channel?.send(`\`\`\`ansi\n${discordQueue.join('\n').substring(0, 1984)}\n\`\`\``)
     } catch (error) {
-      bot.console.warn(error.toString())
+      console.error(error.toString())
     }
     discordQueue = []
   }, 2000)

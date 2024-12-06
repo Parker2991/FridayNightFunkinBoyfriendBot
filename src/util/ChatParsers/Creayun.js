@@ -1,6 +1,7 @@
 const ChatMessage = require('prismarine-chat')('1.20.2');
 const util = require('util');
 function creayun (messageobj, data) {
+  try {
   let match;
   let sender;
   const stringify = message => new ChatMessage(message).toString()
@@ -20,6 +21,9 @@ function creayun (messageobj, data) {
 //    if (!sender) return;
 //    console.log(sender)
     return { sender, contents: match[3], type: 'minecraft:chat'};
+  }
+  } catch (e) {
+    console.log(e.toString())
   }
 }
 module.exports = creayun;

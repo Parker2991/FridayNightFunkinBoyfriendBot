@@ -8,7 +8,7 @@ module.exports = {
     ],
     description: 'check the weather of cities',
     usages: [
-      "<message>"
+      "<city/zipcode>"
     ],
   },
   async execute (context) {
@@ -18,7 +18,7 @@ module.exports = {
     const source = context.source;
     try {
       let component = [];
-      const weather = await request(`https://api.weatherapi.com/v1/current.json?key=${config.weatherApiKey}&q=${args.join(' ')}`);
+      const weather = await request(`https://api.weatherapi.com/v1/current.json?key=${config.weatherApiKey}&q=${args.join(' ')?.replaceAll(' ', ',')}`);
       const info = await weather.body.json();
       component.push({
         translate: "%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s%s (%s%s)\n%s: %s %s %s (%s %s %s)\n%s: %s\n%s: %s",
