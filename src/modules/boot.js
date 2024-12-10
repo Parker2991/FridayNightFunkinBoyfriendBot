@@ -1,4 +1,3 @@
-
 function boot (context) {
   const bot = context.bot;
   const config = context.config;

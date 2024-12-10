@@ -348,7 +348,7 @@ module.exports = {
       setTimeout(() => {
       bot.chat.message(bot.getMessageAsPrismarine(trusted)?.toMotd().replaceAll("§","&"));
       }, 400)
-      setTimexout(() => {
+      setTimeout(() => {
       bot.chat.message(bot.getMessageAsPrismarine(admin)?.toMotd()?.replaceAll('§','&'))
       }, 400)
       setTimeout(() => {

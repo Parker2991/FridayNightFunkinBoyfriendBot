@@ -18,7 +18,6 @@ module.exports = (context) => {
     if (options.isSavage || options.isCreayun) return;
     try {
       if (data.team === config.team.name) {
-//        console.log(data);
         data?.players?.map(async (player) => {
           if (player !== bot.options.username) {
             await sleep(100);

@@ -89,11 +89,11 @@ async function command_manager (context) {
           break;
         }
         if (!command?.discordExecute && command && source?.sources?.discord) {
-          throw new CommandError(`${command.name} command is not supported in discord!`)
+          throw new CommandError(`${command.data.name} command is not supported in discord!`)
         } else if (command?.discordExecute && command && source?.sources?.discord) {
           return command.discordExecute({ bot, source, arguments: args, config, discordClient })
         } else if (!command?.execute && command && !source?.sources?.discord) {
-          throw new CommandError(`${command.name} command is not supported in game!`)
+          throw new CommandError(`${command.data.name} command is not supported in game!`)
         } else if (command?.execute && command && !source?.sources?.discord) {
           return command?.execute({ bot, source, arguments: args, config, discordClient });
         }

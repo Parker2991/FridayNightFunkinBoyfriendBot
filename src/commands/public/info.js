@@ -311,40 +311,48 @@ module.exports = {
       break;
       case "version":
       case "ver":
-        if (botInfo.codename === '') {
-
+        if (botInfo.buildstring.codename.length > 0) {
           component.push({
-            translate: "%s %s %s-%s-%s%s-%s\n%s - %s",
+            translate: "%s %s %s-%s-%s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s-%s",
             color: config.colors.commands.tertiary,
             with: [
               { text: "Friday Night Funkin", color: "dark_blue" },
               { text: "Boyfriend", color: "dark_aqua" },
               { text: "Bot", color: "blue" },
               { text: `${botInfo.buildstring.version}`, color: config.colors.integer },
-              { text: "#" },
+              botInfo.buildstring.codename,
+              { text: "Build", color: config.colors.commands.primary },
               { text: `${botInfo.buildstring.build}`, color: config.colors.integer },
-              { text: `${botInfo.buildstring.releaseDate}`, color: config.colors.commands.secondary },
-              { text: "11/22/22", color: config.colors.commands.primary },
-              { text: `${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`, color: config.colors.commands.secondary },
+              { text: "Repo Build", color: config.colors.commands.primary },
+              { text: `${execSync('git rev-list --count --all').toString().replaceAll('\n','')}`, color: config.colors.integer },
+              { text: "Version Release Date", color: config.colors.commands.primary },
+              { text: `${new Date(execSync('git log -1 --format=%ci').toString()).toLocaleString("en-US", {timeZone: "America/CHICAGO"})}`, color: config.colors.commands.secondary },
+              { text: "Commit", color: config.colors.commands.primary },
+              { text: `${execSync("git rev-parse HEAD").toString().substring(0, 10)}`, color: config.colors.commands.secondary },
+              { text: `${new Date().toLocaleDateString("en-US",{timeZone:"America/CHICAGO"})}`, color: config.colors.commands.secondary },
             ]
-          })
+          });
         } else {
           component.push({
-            translate: "%s %s %s-%s-%s%s-%s-%s\n%s - %s",
+            translate: "%s %s %s-%s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s-%s",
             color: config.colors.commands.tertiary,
             with: [
               { text: "Friday Night Funkin", color: "dark_blue" },
               { text: "Boyfriend", color: "dark_aqua" },
               { text: "Bot", color: "blue" },
               { text: `${botInfo.buildstring.version}`, color: config.colors.integer },
-              { text: "#" },
+              { text: "Build", color: config.colors.commands.primary },
               { text: `${botInfo.buildstring.build}`, color: config.colors.integer },
-              { text: `${botInfo.buildstring.releaseDate}`, color: config.colors.commands.secondary },
-              { text: `${botInfo.buildstring.codename}` },
+              { text: "Repo Build", color: config.colors.commands.primary },
+              { text: `${execSync('git rev-list --count --all').toString().replaceAll('\n','')}`, color: config.colors.integer },
+              { text: "Version Release Date", color: config.colors.commands.primary },
+              { text: `${new Date(execSync('git log -1 --format=%ci').toString()).toLocaleString("en-US", {timeZone: "America/CHICAGO"})}`, color: config.colors.commands.secondary },
+              { text: "Commit", color: config.colors.commands.primary },
+              { text: `${execSync("git rev-parse HEAD").toString().substring(0, 10)}`, color: config.colors.commands.secondary },
               { text: "11/22/22", color: config.colors.commands.primary },
-              { text: `${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO" })}`, color: config.colors.commands.secondary },
+              { text: `${new Date().toLocaleDateString("en-US",{timeZone:"America/CHICAGO"})}`, color: config.colors.commands.secondary },
             ]
-          })
+          });
         }
       break;
       default:

@@ -153,7 +153,7 @@ function core (context) {
       const itemPosition = bot.core.itemPosition;
 
       if (!location) return;
-      if (bot.options.isSavage || bot.options.isCreayun || bot.options.useChat) {
+      if (bot.options.isCreayun || bot.options.useChat || bot.options.isSavage) {
         return
       } else {
         if (bot.core.usePlacedCommandBlock) {

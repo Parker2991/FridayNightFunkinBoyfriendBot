@@ -87,60 +87,18 @@ function selfcare (context) {
       }
     }, 1000)
   })
-/*
-  bot.on("packet.teams", async (data) => {
-    if (options.isSavage || options.isCreayun) return;
-    try {
-//      console.log(data);
-//      bot.chat.command('minecraft:team add FNFBoyfriendBot');
-//      if (data.team === "FNFBoyfriendBot") return;
-      if (data.team === "FNFBoyfriendBot" && data.mode === 1) {
-        bot.core.run("minecraft:team add FNFBoyfriendBot");
-      }
-
-      for (const eachPlayer of data?.players) {
-        if (eachPlayer !== bot.options.username) {
-          bot.core.run("minecraft:team empty FNFBoyfriendBot");
-          await sleep(100);
-          bot.core.run("minecraft:team join FNFBoyfriendBot");
-        }
-      }
-    } catch (e) {
-      console.log(e.stack)
-    }
-  })*/
-/*
- {
-  team: 'FNFBoyfriendBot',
-  mode: 3,
-  name: undefined,
-  friendlyFire: undefined,
-  nameTagVisibility: undefined,
-  collisionRule: undefined,
-  formatting: undefined,
-  prefix: undefined,
-  suffix: undefined,
-  players: [ 'Parker2991' ]
-}
-*/
-
 
   let timer;
   bot.on('packet.login', async (packet) => {
     entityId = packet.entityId;
     gameMode = packet.gameMode;
     clientLock = packet.gameMode;
-/*    if (bot.options.isKaboom) {
-      bot.core.run('minecraft:team add FNFBoyfriendBot');
-      await sleep(100);
-      bot.core.run('minecraft:team join FNFBoyfriendBot');
-    }*/
     timer = setInterval(() => {
       if (bot.options.isSavage && !bot.options.isKaboom && !bot.options.isCreayun) {
         if (login) bot.chat.command('login amogusissus');
         else if (register) bot.chat.command('register amogusissus amogusissus');
-//        else if (permissionLevel < 2) bot.chat.command(`minecraft:op ${bot.options.username}`);
         else if (gameMode !== 1) bot.chat.command('minecraft:gamemode creative');
+        else if (permissionLevel < 2) bot.chat.command(`minecraft:op ${bot.options.username}`);
         else if (clientLock !== 4) bot._client.write("client_command", { actionId: 0 });
       } else if (bot.options.isCreayun && !bot.options.isKaboom && !bot.options.isSavage) {
 
