@@ -78,6 +78,11 @@ colors:
 console:
   prefix: "c."
 
+logsFolder:
+  path: "../../"
+  # this is being loaded from the log folder so make sure it starts with ../../
+  name: "logs"
+
 bots:
   - host: "localhost"
     username: "FNFBoyfriendBot"

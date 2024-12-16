@@ -5,11 +5,7 @@ function reconnect (context) {
   const config = context.config;
   const options = context.options;
   bot.on('end', () => {
-    //bot = undefined;
-  
     bot._client.removeAllListeners();
-    //client = undefined;
-    //bot._client = undefined;
     if (bot.reconnectDelay < 0) return
     setTimeout(() => {
       if (options.usernameGen) {

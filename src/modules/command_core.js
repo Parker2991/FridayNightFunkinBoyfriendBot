@@ -49,11 +49,7 @@ function core (context) {
         bot.chat.command('spawn');
         return
       }
-      /*^^^
-      for checking is the core pos is null and if so
-      it will not refill core until the pos is not NaN
-      instead of tping to a set cords cuz fuck you im not doing that
-      */
+
       const command = `minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${JSON.stringify(config.core.name)}'} destroy`
 
       bot._client.write('set_creative_slot', {
@@ -185,13 +181,7 @@ function core (context) {
   })
 
   bot.on('packet.block_change', (data) => {
-//    console.log('data pos ' + JSON.stringify(data.location))
-//    console.log('core pos ' +JSON.stringify(bot.core.position));
-  //  if (data.type === 0) {
-//      console.log('data pos ' + JSON.stringify(data.location));
-//      console.log('core position ' + JSON.stringify(bot.core.position));
-//      bot.core.refill();
-    //}
+
   })
 }
 module.exports = core;

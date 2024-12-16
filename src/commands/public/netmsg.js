@@ -39,20 +39,14 @@ module.exports = {
       }
     }
     bot.bots.filter((eachBot) => {
-      if (eachBot.options.isSavage && !eachBot.options.useChat && !eachBot.options.isKaboom || eachBot.options.isCreayun && !eachBot.options.isSavage && !eachBot.options.useChat && !eachBot.options.isKaboom) {
-        eachBot.chat.message(`[${bot.options.serverName}] ${bot.getMessageAsPrismarine(source.player.displayName ?? source.player.profile.name)?.toMotd().replaceAll('§','&')} \u203a ${args.join(' ')}`)
-      } else if (!eachBot.options.serverName !== "Savage Friends" && !eachBot.options.isSavage && !eachBot.options.useChat && eachBot.options.isKaboom) {
-        eachBot.tellraw("@a", component);
-      } else if (!eachBot.options.serverName !== "Savage Friends" && !eachBot.options.isSavage && eachBot.options.useChat && eachBot.options.isKaboom) {
-        eachBot.chat.message(`&7[&7${bot.options.serverName}&7] ${bot.getMessageAsPrismarine(source.player.displayName ?? source.player.profile.name)?.toMotd().replaceAll('§','&')} &7\u203a ${args.join(' ')}`)
-      } else if (eachBot.options.useChat && !eachBot.options.isSavage) {
-//        eachBot.chat.message(bot.getMessageAsPrismarine(`[${bot.options.host}:${bot.options.port}] ${source.player.displayName ?? source.player.profile.name} \u203a ${args.join(' ')}`)?.toMotd().replaceAll('§','&'))
-        eachBot.chat.message(`&7[&7${bot.options.serverName}&7] ${bot.getMessageAsPrismarine(source.player.displayName ?? source.player.profile.name)?.toMotd().replaceAll('§','&')} &7\u203a ${args.join(' ')}`)
-      } else if (!eachBot.options.useChat && !eachBot.options.isSavage) {
+      if (!eachBot.options.isKaboom || eachBot.options.useChat) {
+        eachBot.chat.message(`${bot.getMessageAsPrismarine(component)?.toMotd().replaceAll('§','&')}`);
+      } else if (eachBot.options.isKaboom && !eachBot.options.useChat) {
         eachBot.tellraw("@a", component);
       }
     })
   },
+
   discordExecute (context) {
     const bot = context.bot;
     const args = context.arguments;
@@ -80,15 +74,9 @@ module.exports = {
       }
     }
     bot.bots.filter((eachBot) => {
-      if (eachBot.options.serverName === "Savage Friends" && eachBot.options.isSavage && !eachBot.options.useChat && !eachBot.options.isKaboom) {
-        eachBot.chat.message(`[${bot.options.serverName}] ${bot.getMessageAsPrismarine(source.player.displayName ?? source.player.profile.name)?.toMotd().replaceAll('§','&')} \u203a ${args.join(' ')}`)
-      } else if (!eachBot.options.serverName !== "Savage Friends" && !eachBot.options.isSavage && !eachBot.options.useChat && eachBot.options.isKaboom) {
-        eachBot.tellraw("@a", component);
-      } else if (!eachBot.options.serverName !== "Savage Friends" && !eachBot.options.isSavage && eachBot.options.useChat && eachBot.options.isKaboom) {
-        eachBot.chat.message(`&7[&7${bot.options.serverName}&7] ${bot.getMessageAsPrismarine(source.player.displayName ?? source.player.profile.name)?.toMotd().replaceAll('§','&')} &7\u203a ${args.join(' ')}`)
-      } else if (eachBot.options.useChat && !eachBot.options.isSavage) {
-        eachBot.chat.message(`&7[&7${bot.options.serverName}&7] ${bot.getMessageAsPrismarine(source.player.displayName ?? source.player.profile.name)?.toMotd().replaceAll('§','&')} &7\u203a ${args.join(' ')}`)
-      } else if (!eachBot.options.useChat && !eachBot.options.isSavage) {
+      if (!eachBot.options.isKaboom || eachBot.options.useChat) {
+        eachBot.chat.message(`${bot.getMessageAsPrismarine(component)?.toMotd().replaceAll('§','&')}`);
+      } else if (eachBot.options.isKaboom && !eachBot.options.useChat) {
         eachBot.tellraw("@a", component);
       }
     })

@@ -9,6 +9,7 @@ async function command_manager (context) {
   const config = context.config;
   const discordClient = context.discordClient;
   const options = context.options;
+  const { MessageBuilder } = require('prismarine-chat')(bot.options.version);
   bot.commandManager = {
     commands: {},
     commandlist: [],
@@ -25,16 +26,33 @@ async function command_manager (context) {
           }
         } else if (!source?.sources?.discord && !source?.sources?.console) {
           if (!command || !command.execute)
-          bot.tellraw("@a", {
-            translate: "%s%s%s %s",
-            color: "dark_gray",
-            with: [
-              { translate: "command.unknown.command", color: "red" },
-              { text: "\n" },
-              { text: `${commandName}` },
-              { translate: "command.context.here", color: "red" }
-            ]
-          })
+          if (bot.options.isSavage) {
+            bot.chat.message(bot.getMessageAsPrismarine({
+              translate: "%s",
+              color: "dark_gray",
+              with: [
+                { translate: "command.unknown.command", color: "red" },
+              ]
+            })?.toMotd().replaceAll('§','&'));
+
+            bot.chat.message(bot.getMessageAsPrismarine({
+              translate: "%s %s",
+              color: "dark_gray",
+              with: [
+                { text: `${commandName}` },
+                { translate: "command.context.here", color: "red" }
+              ]
+            })?.toMotd().replaceAll('§','&'));
+          } else {
+            bot.tellraw("@a", new MessageBuilder()
+              .setTranslate("%s%s%s %s")
+              .setColor("dark_gray")
+              .addWith(new MessageBuilder().setTranslate("command.unknown.command").setColor("red"))
+              .addWith(new MessageBuilder().setText("\n"))
+              .addWith(new MessageBuilder().setText(`${commandName}`))
+              .addWith(new MessageBuilder().setTranslate("command.context.here").setColor("red"))
+            )
+          }
         } else if (source?.sources?.console && !source?.sources?.discord) {
           if (!command || !command.execute)
           bot.console.warn(bot.getMessageAsPrismarine({

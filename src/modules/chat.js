@@ -89,9 +89,11 @@ function chat (context) {
       return
     }
 
-    bot.emit('systemChat', message)
+    if (message.translate === "advMode.notAllowed") return;
 
-    tryParsingMessage(message, { players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine })
+    bot.emit('systemChat', message);
+
+    tryParsingMessage(message, { players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine });
   })
 
   bot.on('packet.action_bar', (message) => {
@@ -165,8 +167,9 @@ function chat (context) {
         acknowledged: Buffer.alloc(3),
         previousMessages: []
       })
-    }
+    },
   }
+
   bot.tellraw = (selector, message) => {
     bot.core.run(`minecraft:tellraw ${selector} ` + JSON.stringify(message))
   }

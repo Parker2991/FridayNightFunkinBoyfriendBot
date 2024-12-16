@@ -22,8 +22,6 @@ function discord (context) {
     channel: undefined,
     invite: config.discord.invite || undefined,
     prefix: config.discord.prefix,
-//    presence: bot.discord.presence,
-//    token: config.discord.token,
   }
   discordClient.once('ready', (context) => {
     bot.discord.channel = discordClient.channels.cache.get(options.channelId)
@@ -72,9 +70,6 @@ function discord (context) {
   bot.on('playerChat', (message) => {
     sendComponent(message);
   })
-/*  bot.on('message', message => {
-    sendComponent(message)
-  })*/
 
   function messageCreate(message, source) {
     bot.discord.message = message;

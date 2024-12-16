@@ -17,13 +17,20 @@ module.exports = {
     const source = context.source;
     const args = context.arguments;
     const bot = context.bot;
+    const { MessageBuilder } = require('prismarine-chat')(bot.options.version);
     try {
       const page = await wiki.page(args.join(' '))
       const summary = await page.intro();
-      bot.tellraw(`@a`, { text: `${summary}`, color: 'gray' });
+      bot.tellraw("@a", new MessageBuilder()
+        .setText(summary)
+        .setColor("gray")
+      )
     } catch (error) {
       if (error.toString() === "pageError: TypeError: Cannot read properties of undefined (reading 'pages')") {
-        bot.tellraw(`@a`, { text: 'Article not found!', color: 'dark_red' })
+        bot.tellraw("@a", new MessageBuilder()
+          .setText("Article not found!")
+          .setColor("red")
+        )
       } else {
         bot.tellraw(`@a`, `${error.toString()}`)
       }

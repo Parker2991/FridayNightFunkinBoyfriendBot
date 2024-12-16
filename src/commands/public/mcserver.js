@@ -44,49 +44,15 @@ module.exports = {
           server.description
         ]
       })
-      bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, component);
-/*      bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, [
-                   {
-                     text: `Ip \u203a ${host}:${Number(port ?? 25565)}\n`,
-                     color: 'gray',
-                     hoverEvent: {
-                       action: 'show_text',
-                       contents: [{
-                         text: 'click here for the servers ip',
-                         color: 'gray'
-                       }]
-                     },
-                     clickEvent: {
-                       action: 'copy_to_clipboard',
-                       value: `${host}:${Number(port ?? 25565)}`
-                     }
-                   },
-                   {
-                     text: `Players \u203a `,
-                     color: 'gray'
-                   },
-                   {
-                     text: `${server.players.online}`,
-                     color: "gold"
-                   },
-                   {
-                     text: ' / ',
-                     color: 'gray'
-                   },
-                   {
-                     text: `${server.players.max}\n`,
-                     color: "gold"
-                   },
-                   {
-                     text: `Version \u203a ${server.version.name}\n`,
-                     color: 'gray',
-                   },
-                   {
-                     text: "Motd \u203a\n",
-                     color: 'gray',
-                   },
-                   server.description,
-       ])*/
+
+      if (bot.options.isSavage) {
+        bot.chat.message(`Ip \u203a ${host}:${Number(port ?? 25565)}`);
+        bot.chat.message(`Players \u203a ${server.players.online} / ${server.players.max}`);
+        bot.chat.message(`Version \u203a ${server.version.name}`);
+        bot.chat.message(bot.getMessageAsPrismarine(server.description)?.toMotd().replaceAll('§','&'));
+      } else {
+        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, component);
+      }
     } catch (e) {
       bot.chat.message(`${e.toString()}`)
     }

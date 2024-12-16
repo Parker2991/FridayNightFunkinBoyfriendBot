@@ -11,15 +11,13 @@ function fileLogger(context) {
   const timestamp = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
     .toString()
     .padStart(2, "0")}-${currentDate.getDate().toString().padStart(2, "0")}`;
-  const logFolder = path.join(__dirname, "../../logs");
+  const logFolder = path.join(__dirname, `${config.logsFolder.path}`, `${config.logsFolder.name}`);
   const logFileName = "latest.log";
   const logFilePath = path.join(logFolder, logFileName);
   const logStream = fs.createWriteStream(logFilePath, { flags: "a" });
-  if (!fs.existsSync(path.join(__dirname, "../../logs"))) {
-     fs.mkdirSync(path.join(__dirname, "../../logs"))
-  }
   try {
     if (!fs.existsSync(logFolder)) {
+      console.info(`logs folder not found recreating it at ${config.logsFolder.path}${config.logsFolder.name}`);
       fs.mkdirSync(logFolder);
     }
   } catch (e) {
@@ -27,7 +25,6 @@ function fileLogger(context) {
   }
 
   function compressFile(input, output) {
-//    if (!bot.Console.filelogging) return
     const plainOutput = output.slice(0, -3);
 
     fs.renameSync(input, plainOutput);

@@ -4,6 +4,7 @@ module.exports = (context) => {
   const bot = context.bot;
   const config = context.config;
   const options = context.options;
+  const { MessageBuilder } = require('prismarine-chat')(bot.options.version);
   bot.on("parsed_message", (data) => {
     if (data.type !== "minecraft:chat") return;
     const prefixes = config.prefixes;
@@ -16,8 +17,9 @@ module.exports = (context) => {
       setTimeout(() => {
         ratelimit--
       }, 1000)
-      if (ratelimit > 2) {
-        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, { text: 'You are using commands too fast!', color: 'dark_red'})
+      if (ratelimit > 2) { // new e.MessageBuilder().setText("e").toJSON()
+        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, new MessageBuilder().setText("You are using commands too fast!").setColor("dark_red").toJSON())
+//        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, { text: 'You are using commands too fast!', color: 'dark_red'})
       } else if (command.split(" ")[0].length === 0) {
       } else {
         bot.commandManager.executeString(source, command)
