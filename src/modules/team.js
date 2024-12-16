@@ -21,9 +21,9 @@ module.exports = (context) => {
         data?.players?.map(async (player) => {
           if (player !== bot.options.username) {
             await sleep(100);
-//            bot.core.run(`minecraft:team empty ${config.team.name}`);
+            bot.core.run(`minecraft:team empty ${config.team.name}`);
             await sleep(100);
-//            bot.core.run(`minecraft:team join ${config.team.name} @a[name="${bot.options.username}"]`);
+            bot.core.run(`minecraft:team join ${config.team.name} @a[name="${bot.options.username}"]`);
             // this removes players who are not the bot
           }
         });
