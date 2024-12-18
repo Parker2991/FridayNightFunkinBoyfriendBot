@@ -360,20 +360,6 @@ module.exports = {
     }
     if (bot.options.isSavage) {
       bot.chat.message(bot.getMessageAsPrismarine(component)?.toMotd().replaceAll('§','&'));
-//      bot.chat.message(bot.getMessageAsPrismarine(component)?.toMotd().replaceAll('§','&'));
-//      console.log(component.includes('\n'));
-//      if (component.includes('\n')) {
-//        console.log('e');
-//      }
-//      console.log(bot.getMessageAsPrismarine(component)?.toString()?.find)
-//      bot.chat.message(bot.getMessageAsPrismarine(component)?.toMotd().replaceAll('§','&').replaceAll('\n','\n'));
-//      bot.chat.message(bot.getMessageAsPrismarine(component)?.toMotd().replaceAll('\n','\n')?.replaceAll('§','&'));
-//      console.log(component.toString());
-//      console.log(component.toString().replaceAll)
-      //console.log(component.find((e) => e).with)
-//      for (const componentText of component.find((e) => e).with) {
-//        bot.chat.message(bot.getMessageAsPrismarine(component)?.toMotd().replaceAll('§','&'))
-     // }
     } else {
       bot.tellraw(`@a[name="${source.player.profile.name}"]`, component);
     }

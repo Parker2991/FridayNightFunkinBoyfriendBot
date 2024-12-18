@@ -20,13 +20,17 @@ module.exports = {
     const discordClient = context.discordClient;
     const args = context.arguments;
     const script = args.slice(1).join(' ');
+    const { MessageBuilder } = require('prismarine-chat')(bot.options.version);
     try {
       if (source.sources.console) {
         bot.console.log(bot.getMessageAsPrismarine({ text: util.inspect(eval(args.join(' ')), { stylize })})?.toAnsi())
       } else if (bot.options.useChat || bot.options.isSavage) {
         bot.chat.message(bot.getMessageAsPrismarine({ text: util.inspect(eval(script), { stylize }).substring(0, 32700) })?.toMotd().replaceAll('§','&'))
       } else {
-        bot.tellraw(`@a[name="${source.player.profile.name}"]`, [
+        bot.tellraw(`@a[name="${source.player.profile.name}"]`, new MessageBuilder()
+          .setText(util.inspect(eval(script), { stylize }).substring(0, 32700))
+        )
+/*        bot.tellraw(`@a[name="${source.player.profile.name}"]`, [
           {
             text: util.inspect(eval(script), { stylize }).substring(0, 32700),
             hoverEvent: {
@@ -41,7 +45,7 @@ module.exports = {
               value: `${script}`
             }
           }
-        ]);
+        ]);*/
       }
     } catch (e) {
       throw new CommandError(e.toString())

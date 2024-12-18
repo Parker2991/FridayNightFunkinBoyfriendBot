@@ -40,6 +40,7 @@ function player_list (context) {
     bot.players = bot.players.filter(_entry => _entry.uuid !== entry.uuid)
     bot.players.push({
       uuid: entry.uuid,
+      mcUUID: "",
       profile: { name: entry.player.name, properties: entry.player.properties },
       chatSession: undefined,
       gamemode: undefined,
