@@ -1,0 +1,11 @@
+{
+  "bot": [
+   
+    {
+      "host": "mcslot.eu",
+      "username":"FNFBoyfriendBot",
+      "version": "1.19.4",
+      "reconnectDelay": 1000
+    }
+  ]
+}
