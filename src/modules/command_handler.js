@@ -1,5 +1,6 @@
 const CommandSource = require('../util/command_source');
-module.exports = (context) => {
+
+function inject (context) {
   let ratelimit = 0;
   const bot = context.bot;
   const config = context.config;
@@ -17,7 +18,7 @@ module.exports = (context) => {
       setTimeout(() => {
         ratelimit--
       }, 1000)
-      if (ratelimit > 2) { // new e.MessageBuilder().setText("e").toJSON()
+      if (ratelimit > 2) {
         bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, new MessageBuilder().setText("You are using commands too fast!").setColor("dark_red").toJSON())
 //        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, { text: 'You are using commands too fast!', color: 'dark_red'})
       } else if (command.split(" ")[0].length === 0) {
@@ -27,3 +28,12 @@ module.exports = (context) => {
     })
   })
 }
+
+module.exports = {
+  data: {
+    enabled: true,
+    name: "command handler",
+    type: "commands"
+  },
+  inject
+};

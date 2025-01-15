@@ -1,6 +1,6 @@
 const mc = require('minecraft-protocol');
 const usernameGen = require("../util/usernameGen");
-function reconnect (context) {
+function inject (context) {
   const bot = context.bot;
   const config = context.config;
   const options = context.options;
@@ -19,4 +19,11 @@ function reconnect (context) {
   })
 }
 
-module.exports = reconnect;
+module.exports = {
+  data: {
+    enabled: true,
+    name: "reconnect",
+    type: "client"
+  },
+  inject
+};

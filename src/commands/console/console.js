@@ -2,7 +2,7 @@ module.exports = {
   data: {
     name: 'console',
     trustLevel: 4,
-    description: "",
+    description: "runs commands made for the bots console",
     aliases: [
 
     ],
@@ -40,22 +40,23 @@ module.exports = {
       break
       case 'customchat':
         if (args[1] === 'off' || args[1] === 'false' || args[1] === 'disable') {
-          bot.console.customChat.enabled = false
+          bot.customChat.enabled = false
           bot.console.info('Custom Chat disabled');
         } if (args[1] === 'on' || args[1] === 'true' || args[1] === 'enable') {
-          bot.console.customChat.enabled = true;
+          bot.customChat.enabled = true;
           bot.console.info('Custom Chat enabled');
         }
       break
       case 'say':
-        if (!bot.console.customChat.enabled) {
-          bot.commandManager.executeString(bot.console.source, `echo ${args.slice(1).join(' ')}`)
-        } else if (bot.console.customChat.enabled) {
+        if (bot.customChat.enabled === false) {
+          bot.chat.send(args.slice(1).join(' '))
+//          bot.commandManager.executeString(bot.console.source, `echo ${args.slice(1).join(' ')}`)
+        } else if (bot.customChat.enabled === true) {
           if (args.slice(1).join(' ').startsWith('/')) {
             bot.chat.command(`${args.slice(1).join(' ').substring(1)}`)
             return;
           }
-          bot.console.customChat.chat(args.slice(1).join(' '));
+          bot.customChat.chat(args.slice(1).join(' '));
         }
 
       break
@@ -65,25 +66,25 @@ module.exports = {
         switch (args[1]?.toLowerCase()) {
           case "owner":
           case "o":
-            if (bot.console.customChat.enabled) {
-              bot.console.customChat.chat(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.owner} ${args.slice(3).join(' ')}`)
-            } else if (!bot.console.customChat.enabled) {
+            if (bot.customChat.enabled === true) {
+              bot.customChat.chat(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.owner} ${args.slice(3).join(' ')}`)
+            } else if (bot.customChat.enabled === false) {
               bot.chat.message(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.owner} ${args.slice(3).join(' ')}`)
             }
           break
           case "admin":
           case "a":
-            if (bot.console.customChat.enabled) {
-              bot.console.customChat.chat(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.admin} ${args.slice(3).join(' ')}`)
-            } else if (!bot.console.customChat.enabled) {
+            if (bot.customChat.enabled === true) {
+              bot.customChat.chat(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.admin} ${args.slice(3).join(' ')}`)
+            } else if (bot.customChat.enabled === false) {
               bot.chat.message(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.admin} ${args.slice(3).join(' ')}`)
             }
           break
           case "trusted":
           case "t":
-            if (bot.console.customChat.enabled) {
-              bot.console.customChat.chat(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.trusted} ${args.slice(3).join(' ')}`);
-            } else if (!bot.console.customChat.enabled) {
+            if (bot.customChat.enabled === true) {
+              bot.customChat.chat(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.trusted} ${args.slice(3).join(' ')}`);
+            } else if (bot.customChat.enabled === false) {
               bot.chat.message(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.trusted} ${args.slice(3).join(' ')}`);
             }
           break

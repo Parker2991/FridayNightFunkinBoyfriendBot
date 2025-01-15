@@ -1,7 +1,7 @@
 const os = require("os");
 const CommandError = require('../../util/command_error');
 const fs = require("fs");
-const botInfo = require('../../../package-lock.json');
+const botInfo = require('../../data/info.json');
 const fixansi = require('../../util/ansi.js');
 const { EmbedBuilder } = require('discord.js');
 const { execSync } = require('child_process')
@@ -329,6 +329,7 @@ module.exports = {
               { text: `${new Date(execSync('git log -1 --format=%ci').toString()).toLocaleString("en-US", {timeZone: "America/CHICAGO"})}`, color: config.colors.commands.secondary },
               { text: "Commit", color: config.colors.commands.primary },
               { text: `${execSync("git rev-parse HEAD").toString().substring(0, 10)}`, color: config.colors.commands.secondary },
+              { text: "11/22/22", color: config.colors.commands.primary },
               { text: `${new Date().toLocaleDateString("en-US",{timeZone:"America/CHICAGO"})}`, color: config.colors.commands.secondary },
             ]
           });
@@ -361,7 +362,7 @@ module.exports = {
     if (bot.options.isSavage) {
       bot.chat.message(bot.getMessageAsPrismarine(component)?.toMotd().replaceAll('§','&'));
     } else {
-      bot.tellraw(`@a[name="${source.player.profile.name}"]`, component);
+      bot.tellraw(`@a`, component);
     }
   },
 }

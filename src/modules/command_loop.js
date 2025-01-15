@@ -1,4 +1,4 @@
-function command_loop (context) {
+function inject (context) {
   const bot = context.bot;
   bot.cloop = {
     list: [],
@@ -29,4 +29,12 @@ function command_loop (context) {
     }
   }
 }
-module.exports = command_loop;
+
+module.exports = {
+  data: {
+    enabled: true,
+    name: "command loop",
+    type: "extras"
+  },
+  inject
+};

@@ -1,6 +1,6 @@
 const sleep = require('../util/sleep');
 
-function selfcare (context) {
+function inject (context) {
   const bot = context.bot;
   const config = context.config;
   const options = context.options;
@@ -19,8 +19,8 @@ function selfcare (context) {
   let register = false;
   let positionCount = 0;
   bot.vanished = true
-  bot.on('systemChat', (message) => {
-    const stringMessage = bot.getMessageAsPrismarine(message)?.toString();
+  bot.on('system_chat', (data) => {
+    const stringMessage = bot.getMessageAsPrismarine(data.message)?.toString();
     if (options.isSavage) {
       if (stringMessage === "Please, login with the command: /login <password>") login = true;
       else if (stringMessage === "Successful login!") login = false;
@@ -128,4 +128,12 @@ function selfcare (context) {
     username = false;
   });
 }
-module.exports = selfcare;
+
+module.exports = {
+  data: {
+    enabled: true,
+    name: "selfcare",
+    type: "extras"
+  },
+  inject
+};

@@ -10,7 +10,15 @@ const discordClient = new Client({ intents: [Guilds, GuildMessages, MessageConte
 console.log('Starting FNFBoyfriendBot');
 process.stdout.write('\x1b]2;Starting FNFBoyfriendBot please wait,.....\x1b\x5c');
 
-if (!fs.existsSync(path.join(__dirname, "../config.yml"))) {
+if (fs.existsSync(path.join(__dirname, "./modules/custom_chat.js")) === false) {
+  console.warn("Custom chat not found creating it from default custom chat");
+  fs.copyFileSync(
+    path.join(__dirname, './data/default_custom_chat.js'),
+    path.join(__dirname, './modules/custom_chat.js')
+  )
+}
+
+if (fs.existsSync(path.join(__dirname, "../config.yml")) === false) {
   console.warn("Config not found creating config from the default config");
   fs.copyFileSync(
     path.join(__dirname, "./data/default_config.yml"),

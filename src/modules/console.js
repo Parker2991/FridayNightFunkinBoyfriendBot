@@ -1,7 +1,7 @@
 const CommandSource = require('../util/command_source');
 const prismarineChat = require('prismarine-chat')('1.20.2');
 
-function Console (context) {
+function inject (context) {
   const bot = context.bot;
   const config = context.config;
   const options = context.options;
@@ -41,73 +41,27 @@ function Console (context) {
     info (message) {
       this.refreshLine(prismarineChat.fromNotch(`§8[§1${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} §3${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} §2info§8] §8[${options.serverName}§8] `)?.toAnsi() + message)
     },
-    customChat: {
-      enabled: false,
-      chat (message) {
-        const prefix = {
-          translate: '[%s] %s \u203a %s',
-          color:'dark_gray',
-            with: [
-              {
-                text: 'FNFBoyfriendBot Console',
-                color:'#00FFFF'
-              },
-              {
-                selector: `${bot.username}`, color:'#00FFFF',
-                clickEvent: { action: 'suggest_command', value:  `${config.prefixes[0]}help` }
-              },
-              {
-                 text: '',
-                 extra: [`${message}`],
-                 color:'white'
-              },
-            ],
-            hoverEvent: { action:"show_text", value: 'FNF Sky is a fangirl but a simp for boyfriend confirmed??'},
-            clickEvent: 'https://doin-your.mom' ?
-            { action: 'open_url', value: 'https://doin-your.mom' } : undefined,
-        }
-        bot.tellraw('@a', prefix)
-      }
+    debug (message) {
+      console.log(prismarineChat.fromNotch(`§8[§1${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} §3${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} §6debug§8] §8[${options.serverName}§8] `)?.toAnsi() + message)
     }
   }
   setInterval(() => ratelimit = 0, 1000 * 2);
 
-  bot.on('profilelessChat', (message) => {
+  bot.on('message', (message) => {
     if (!options.logging) return;
-    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
-    bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
-  })
-
-  bot.on('systemChat', (message) => {
-    if (!options.logging) return;
-    if (ratelimit > 15) return;
+//    if (ratelimit > 10) return
     bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
     bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
     ratelimit++
-  })
+  });
 
-  bot.on('playerChat', (message) => {
-    if (!options.logging) return;
-    if (ratelimit > 15) return;
-    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
-    bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
-    ratelimit++
-  })
-
-  bot.on('bossBar', (message) => {
-    if (!options.logging) return;
-    if (ratelimit > 10) return;
-    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
-    bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
-    ratelimit++
-  })
-
-  bot.on('actionBar', (message) => {
-    if (!options.logging) return;
-    if (ratelimit > 10) return
-    bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
-    bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
-    ratelimit++
-  })
 }
-module.exports = Console;
+
+module.exports = {
+  data: {
+    enabled: true,
+    name: "console",
+    type: "logging"
+  },
+  inject
+};

@@ -1,5 +1,5 @@
 const os = require('os');
-module.exports = (context) => {
+function inject (context) {
   const bot = context.bot;
   const config = context.config;
   const { MessageBuilder } = require('prismarine-chat')(bot.options.version);
@@ -74,3 +74,12 @@ module.exports = (context) => {
     bot.memUsage.enabled = false;
   })
 }
+
+module.exports = {
+  data: {
+    enabled: true,
+    name: "memory usage",
+    type: "extras"
+  },
+  inject
+};

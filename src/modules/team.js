@@ -1,10 +1,11 @@
 const sleep = require('../util/sleep');
 
-module.exports = (context) => {
+function inject (context) {
   const bot = context.bot;
   const options = context.options;
   const config = context.config;
 
+  if (options.isKaboom === false || config.team.enabled === false) return;
   bot.on("packet.login", async () => {
     if (options.isKaboom) {
       await sleep(100);
@@ -15,7 +16,7 @@ module.exports = (context) => {
   })
 
   bot.on("packet.teams", async (data) => {
-    if (options.isSavage || options.isCreayun) return;
+//    if (options.isSavage || options.isCreayun) return;
     try {
       if (data.team === config.team.name) {
         data?.players?.map(async (player) => {
@@ -48,4 +49,13 @@ module.exports = (context) => {
       console.log(e.stack)
     }
   })
+}
+
+module.exports = {
+  data: {
+    enabled: false,
+    name: "teams",
+    type: "extras"
+  },
+  inject
 }

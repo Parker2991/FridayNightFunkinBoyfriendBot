@@ -8,3 +8,4 @@ data/filter.json
 prototyping-crap
 src/data/trustedPlayers.js
 data/trustedPlayers.js
+src/modules/custom_chat.js

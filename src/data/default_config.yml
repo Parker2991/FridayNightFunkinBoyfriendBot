@@ -73,7 +73,13 @@ colors:
   commands:
     primary: "dark_blue"
     secondary: "blue"
-    tertiary: "dark_gray"
+    tertiary: "gray"
+  help:
+    public: "dark_blue"
+    trusted: "blue"
+    admin: "aqua"
+    owner: "light_purple"
+    console: "dark_purple"
 
 console:
   prefix: "c."

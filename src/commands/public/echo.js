@@ -12,21 +12,13 @@ module.exports = {
     ],
   },
   execute (context) {
-    const bot = context.bot
-    const message = context.arguments.join(' ')
-    if (message.startsWith('/')) {
-      bot.chat.command(message.substring(1))
-      return
-    }
-    bot.chat.message(message)
+    const bot = context.bot;
+    const args = context.arguments;
+    bot.chat.send(args.join(' '));
   },
   discordExecute (context) {
     const bot = context.bot;
     const args = context.arguments;
-    if (args.join(' ').startsWith('/')) {
-      bot.chat.command(args.join(' ').substring(1))
-      return
-    }
-    bot.chat.message(args.join(' '))
+    bot.chat.send(args.join(' '));
   }
 }

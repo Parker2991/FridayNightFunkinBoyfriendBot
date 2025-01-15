@@ -1,4 +1,4 @@
-function player_list (context) {
+function inject (context) {
   const bot = context.bot;
   const config = context.config;
   const options = context.options;
@@ -95,4 +95,11 @@ function player_list (context) {
   bot.on('end', () => (bot.players = []))
 }
 
-module.exports = player_list;
+module.exports = {
+  data: {
+    enabled: true,
+    name: "player list",
+    type: "client"
+  },
+  inject
+};

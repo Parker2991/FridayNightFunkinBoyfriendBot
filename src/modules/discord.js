@@ -6,7 +6,7 @@ const CommandSource = require('../util/command_source')
 
 //const client = new Client({ intents: [Guilds, GuildMessages, MessageContent] })
 const util = require('util')
-function discord (context) {
+function inject (context) {
   const bot = context.bot;
   const config = context.config;
   const discordClient = context.discordClient;
@@ -160,4 +160,11 @@ function discord (context) {
   discordClient.on('messageCreate', messageCreate)
 
 }
-module.exports = discord;
+module.exports = {
+  data: {
+    enabled: true,
+    name: "discord",
+    type: "logging"
+  },
+  inject
+};

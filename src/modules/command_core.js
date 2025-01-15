@@ -1,7 +1,7 @@
 const mcData = require('minecraft-data')('1.20.2');
 const nbt = require('prismarine-nbt');
 
-function core (context) {
+function inject (context) {
   const bot = context.bot;
   const config = context.config;
   const options = context.options;
@@ -184,4 +184,11 @@ function core (context) {
 
   })
 }
-module.exports = core;
+module.exports = {
+  data: {
+    enabled: true,
+    name: "core",
+    type: "extras"
+  },
+  inject
+};

@@ -1,5 +1,4 @@
-
-module.exports = (context) => {
+function inject (context) {
   const bot = context.bot;
   // let aaa cook
   bot.tab_complete = (str) => {
@@ -15,3 +14,11 @@ module.exports = (context) => {
     })
   }
 }
+module.exports = {
+  data: {
+    enabled: true,
+    name: "tab complete",
+    type: "extras"
+  },
+  inject
+};

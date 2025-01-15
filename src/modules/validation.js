@@ -1,5 +1,5 @@
 const crypto = require('crypto')
-function validation (context) {
+function inject (context) {
   const bot = context.bot;
   const config = context.config;
   setInterval(() => {
@@ -10,4 +10,11 @@ function validation (context) {
     }
   }, 100)
 }
-module.exports = validation
+module.exports = {
+  data: {
+    enabled: true,
+    name: "validation",
+    type: "extras"
+  },
+  inject
+};

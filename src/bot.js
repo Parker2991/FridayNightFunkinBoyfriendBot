@@ -21,11 +21,8 @@ function createBot(options = {}, config) {
     })
 
     client.on('login', (data) => {
-      bot.uuid = client.uuid
-      bot.username = client.username
-      bot.registry = require('prismarine-registry')(client.version);
-      bot.registry.language = require('./data/language.json');
-      bot.emit('registry_ready', bot.registry);
+      bot.uuid = client.uuid;
+      bot.username = client.username;
     })
 
     client.on('disconnect', data => {

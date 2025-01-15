@@ -1,5 +1,6 @@
-function position (context) {
+function inject (context) {
   const bot = context.bot;
+  const config = context.config;
   bot.position = null;
 
   bot.on('packet.position', packet => {
@@ -14,7 +15,24 @@ function position (context) {
     bot.emit('move')
   })
 
+  bot.on('move', () => {
+    if (config?.debug?.position?.bot === true) {
+      bot.console.debug(`Bot Position: ${JSON.stringify(bot.position)}`)
+    } if (config?.debug?.position?.core === true) {
+      bot.console.debug(`Core Position: ${JSON.stringify(bot.core.position)}`)
+    } if (config?.debug?.position?.coreItem === true) {
+      bot.console.debug(`Core Item Position: ${JSON.stringify(bot.core.itemPosition)}`)
+    }
+  });
+
   bot.on('end', () => { bot.position = null })
 }
 
-module.exports = position
+module.exports = {
+  data: {
+    enabled: true,
+    name: "position",
+    type: "client"
+  },
+  inject
+};

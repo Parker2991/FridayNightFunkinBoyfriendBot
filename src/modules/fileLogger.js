@@ -3,7 +3,7 @@ const path = require("path");
 const { createGzip } = require("zlib");
 const readline = require('readline');
 const { Console } = require("console");
-function fileLogger(context) {
+function inject (context) {
   const bot = context.bot;
   const config = context.config;
   const options = context.options;
@@ -57,4 +57,11 @@ function fileLogger(context) {
     logStream.write(message + "\n");
   };
 }
-module.exports = fileLogger;
+module.exports = {
+  data: {
+    enabled: true,
+    name: "file logger",
+    type: "logging"
+  },
+  inject
+};
