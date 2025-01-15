@@ -55,9 +55,6 @@ team:
   }
   # color HAS to come first before any components or it will break! dont ask why, its because of how nmp parses it
 
-commandSetMessage: false
-# ^^ this is for when commands are ran in core
-
 keys:
   trusted: "trusted key here"
   admin: "admin key here"
