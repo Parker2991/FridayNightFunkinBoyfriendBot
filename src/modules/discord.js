@@ -59,17 +59,9 @@ function inject (context) {
     }
   }
 
-  bot.on('profilelessChat', (message) => {
+  bot.on('message', (message) => {
     sendComponent(message);
-  })
-
-  bot.on('systemChat', (message) => {
-    sendComponent(message);
-  })
-
-  bot.on('playerChat', (message) => {
-    sendComponent(message);
-  })
+  });
 
   function messageCreate(message, source) {
     bot.discord.message = message;
