@@ -1,10 +1,6 @@
-// TODO: Maybe move client creation elsepwhere
-//const { Client, GatewayIntentBits, interaction } = require('discord.js')
-//const { MessageContent, GuildMessages, Guilds } = GatewayIntentBits
 const fixansi = require('../util/ansi');
-const CommandSource = require('../util/command_source')
+const CommandSource = require('../util/command_source');
 
-//const client = new Client({ intents: [Guilds, GuildMessages, MessageContent] })
 const util = require('util')
 function inject (context) {
   const bot = context.bot;
@@ -27,10 +23,10 @@ function inject (context) {
     bot.discord.channel = discordClient.channels.cache.get(options.channelId)
     discordClient.user.setPresence({
       activities: [{
-        name: `your mother`,
+        name: `${config.discord.presence.name}`,
         type: 0
       }],
-      status: `dnd`
+      status: `${config.discord.presence.status}`
     });
   })
 
@@ -79,15 +75,15 @@ function inject (context) {
         console: false
       }, false, message)
 
-      bot.sendFeedback = message => {
+//      bot.sendFeedback = message => {
         sendComponent(message)
-      }
+//      }
 
       bot.commandManager.executeString(source, message.content.substring(config.discord.prefix.length))
       return
     }
     const tag = {
-      translate: '[%s] %s \u203a %s',
+      translate: '[%s] %s \u203a ',
       with: [{
           translate: '%s%s%s %s',
           bold: false,
@@ -109,7 +105,7 @@ function inject (context) {
             {
               text: 'Discord',
               bold: false,
-              color: 'dark_blue'
+              color: 'blue'
             }
           ],
           clickEvent: bot.discord.invite ? {
@@ -124,29 +120,48 @@ function inject (context) {
         {
           text: `${message.member.nickname || message.author.displayName}`,
         },
-        message.content
       ]
     }
+
+    try {
     if (message.attachments.size > 0) {
       message.attachments.forEach(Attachment => {
-        bot.tellraw('@a', [tag, {
-          text: ' ' ? ' [Attachment] ' : ' [Attachment] ',
+        let attachment = {
+          text: `[Attachment: ${Attachment.name}] ${message?.content}`,
+          color: "blue",
           hoverEvent: {
-            action: 'show_text',
-            contents: 'Click here to view attachment'
+            action: "show_text",
+            contents: "click here to view attachment"
           },
           clickEvent: {
-            action: 'open_url',
-            value: `${Attachment.url}`
+            action: "open_url",
+            value: `${Attachment?.url}`
           }
-        }])
+        }
+
+        bot.tellraw("@a", [tag, attachment]);
       })
+    } else if (message?.reference?.type === 0) {
+      // this is for messages that are replied to
+      const repliedMessage = message.channel.messages.cache.get(message.reference.messageId);
+      let reply = [
+        tag,
+        { text: `[Replying to: ${repliedMessage.author.username}] `, color: "blue" },
+        message.content
+      ];
+
+      bot.tellraw("@a", [ reply ]);
+    } else if (message?.reference?.type === 1) {
+      // this is for messages that are forwarded
     } else {
       if (options.useChat || options.isSavage || options.isCreayun) {
         bot.chat.message(bot.getMessageAsPrismarine(`&7[&9FNF&3Boyfriend&1Bot Discord&7] ${message?.member?.displayName} \u203a ${message?.content}`)?.toMotd().replaceAll('§','&'))
       } else {
-        bot.tellraw('@a', tag);
+        bot.tellraw('@a', [tag, message.content]);
       }
+    }
+    } catch (e) {
+      console.log(e.stack);
     }
   }
   discordClient.on('messageCreate', messageCreate)

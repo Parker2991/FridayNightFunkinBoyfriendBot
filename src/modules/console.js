@@ -49,6 +49,7 @@ function inject (context) {
 
   bot.on('message', (message) => {
     if (!options.logging) return;
+    //if (bot.getMessageAsPrismarine(message)?.toString().includes("https://www.innersloth.com/games/among-us/ › amogus")) return;
 //    if (ratelimit > 10) return
     bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
     bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);

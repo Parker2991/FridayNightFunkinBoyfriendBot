@@ -3,7 +3,7 @@ const path = require('path');
 const CommandError = require('../util/command_error.js');
 const CommandSource = require('../util/command_source');
 const { EmbedBuilder } = require('discord.js');
-
+const fixansi = require('../util/ansi');
 async function inject (context) {
   const bot = context.bot;
   const config = context.config;
@@ -67,18 +67,6 @@ async function inject (context) {
           })?.toAnsi())
         };
 
-/*        if (args[0]?.split(' ').length === 0 && command?.data?.args?.max !== 0 && command?.data?.args?.max !== Infinity) {
-          throw new CommandError('recieved 0 arguments');
-        }
-
-        if (args[0]?.split(' ').length > 0 && command?.data?.args?.max === 0 && command?.data?.args?.max !== Infinity) {
-          throw new CommandError('recieved over 0 arguments');
-        }
-
-        if (args[0]?.split(' ').length > command?.data?.args?.max && command?.data?.args?.max !== Infinity) {
-           throw new CommandError(`recieved over ${command.data.args.max} arguments`);
-        }*/
-
         require('../util/command_manager_util')(bot, command, args, source);
 
 //        require('../util/command_manager_arguments')(bot, args, command);
@@ -86,7 +74,7 @@ async function inject (context) {
         if (!command?.discordExecute && command && source?.sources?.discord) {
           throw new CommandError(`${command.data.name} command is not supported in discord!`)
         } else if (command?.discordExecute && command && source?.sources?.discord) {
-          return command.discordExecute({ bot, source, arguments: args, config, discordClient })
+          return command.discordExecute({ bot, source, arguments: args, config, discordClient, EmbedBuilder, fixansi })
         } else if (!command?.execute && command && !source?.sources?.discord) {
           throw new CommandError(`${command.data.name} command is not supported in game!`)
         } else if (command?.execute && command && !source?.sources?.discord) {

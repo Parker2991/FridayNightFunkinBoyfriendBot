@@ -104,39 +104,59 @@ module.exports = {
 
       }
     }
-/*
-      commandComponent.push({
-        translate: "%s %s %s\n%s %s %s\n%s %s %s\n%s %s %s\n%s %s",
-        color: "dark_gray",
-        with: [
-          { text: "Command Name", color: "dark_blue" },
-          { text: "\u203a" },
-          { text: `${command.data.name}`, color: "blue" },
-          { text: "Aliases", color: "dark_blue" },
-          { text: "\u203a" },
-          { text: `${command.data.aliases.toString().replaceAll(',',' ')}`, color: "blue" },
-          { text: "Description", color: "dark_blue" },
-          { text: "\u203a" },
-          { text: `${command.data.description}`, color: "blue" },
-          { text: "Trust Level", color: "dark_blue" },
-          { text: "\u203a" },
-          { text: `${command.data.trustLevel}`, color: "gold" },
-          { text: "Usages", color: "dark_blue" },
-          { text: "\u203a" }
-        ]
-      })
-*/
 
-//    component.push(`${public}\n${console}`);
     component.push(public);
-//    component.push('\n');
     component.push(trusted);
-//    component.push('\n');
     component.push(admin);
-//    component.push('\n');
     component.push(owner);
-//    component.push('\n');
     component.push(Console);
     bot.tellraw("@a", component);
+  },
+  discordExecute (context) {
+    const bot = context.bot;
+    const config = context.config;
+    const EmbedBuilder = context.EmbedBuilder
+    const fixansi = context.fixansi;
+    const args = context.arguments;
+    let public = [];
+    let trusted = [];
+    let admin = [];
+    let owner = [];
+    let Console = [];
+
+    for (const commands of bot.commandManager.commandlist) {
+      switch (commands.data.trustLevel) {
+        case 0:
+          public.push(commands.data.name);
+        break;
+        case 1:
+          trusted.push(commands.data.name);
+        break;
+        case 2:
+          admin.push(commands.data.name);
+        break;
+        case 3:
+          owner.push(commands.data.name);
+        break;
+        case 4:
+          Console.push(commands.data.name);
+        break;
+      }
+    }
+
+    let commandsEmbed = new EmbedBuilder()
+      .setColor(config.colors.discord.embed)
+      .setTitle(`${this.data.name} Command`)
+      .setDescription(`Commands (${bot.commandManager.commandlist.length})`)
+      .addFields(
+         { name: "Public", value: public.toString().replaceAll(',',' '), inline: false },
+         { name: "Trusted", value: trusted.toString().replaceAll(',',' '), inline: false },
+         { name: "Admin", value: admin.toString().replaceAll(',',' '), inline: false },
+         { name: "Owner", value: owner.toString().replaceAll(',',' '), inline: false },
+         { name: "Console", value: Console.toString().replaceAll(',',' '), inline: false },
+      );
+
+    bot.discord.message.reply({ embeds: [ commandsEmbed ] });
+
   }
 }

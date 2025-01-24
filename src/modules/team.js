@@ -53,7 +53,7 @@ function inject (context) {
 
 module.exports = {
   data: {
-    enabled: false,
+    enabled: true,
     name: "teams",
     type: "extras"
   },

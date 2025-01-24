@@ -175,14 +175,7 @@ function inject (context) {
     },
   }
 
-  if (bot.options.isSavage || bot.options.isCreayun) return
-  bot.on('move', () => {
-    bot.core.move(bot.position)
-  })
-
-  bot.on('packet.block_change', (data) => {
-
-  })
+  require('../util/core_util')(bot, config, options);
 }
 module.exports = {
   data: {

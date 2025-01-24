@@ -6,7 +6,7 @@ function usernameGen (bot, config) {
     characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_-+={]}[|\\:;>.<,/?ඞ♋'
   }
   let username = '';
-  for (let i = 0; i < 10; i++ ) {
+  for (let i = 0; i < 3 + Math.floor(Math.random() * 14); i++ ) {
     const randomIndex = Math.floor(Math.random() * characters.length);
     username += characters[randomIndex];
   }

@@ -6,6 +6,9 @@ discord:
   prefix: "!"
   invite: "discord invite here"
   enabled: false
+  presence:
+    name: "amogus"
+    status: "dnd"
   roles:
     trusted: "trusted"
     admin: "admin"
@@ -83,7 +86,7 @@ console:
 
 logsFolder:
   path: "../../"
-  # this is being loaded from the log folder so make sure it starts with ../../
+  # this is being loaded from the modules so make sure it starts with ../../
   name: "logs"
 
 bots:

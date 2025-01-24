@@ -30,6 +30,7 @@ module.exports = {
       "config <client, discord, options, all>",
       "contributors/credits",
       "discord",
+      "loaded",
       "usages <bot, server, all>",
       "uptimes/uptime <bot, server, all>",
       "server",
@@ -191,6 +192,18 @@ module.exports = {
           }
         })
       break;
+      case "loaded":
+        component.push({
+          translate: "%s %s\n%s %s",
+          color: config.colors.commands.tertiary,
+          with: [
+            { text: `${bot.commandManager.commandlist.length}`, color: config.colors.integer },
+            { text: "Commands", color: config.colors.commands.primary },
+            { text: `${bot.modules.length}`, color: config.colors.integer },
+            { text: "Modules", color: config.colors.commands.primary }
+          ]
+        });
+      break;
       case "usages":
       case "usage":
       switch (args.slice(1).join(' ')?.toLowerCase()) {
@@ -289,7 +302,7 @@ module.exports = {
             { text: "User", color: config.colors.commands.primary },
             { text: `${os.userInfo().username}`, color: config.colors.commands.secondary },
             { text: "Working Directory", color: config.colors.commands.primary },
-            { text: `${process.mainModule.path}`, color: config.colors.commands.secondary },
+            { text: `${require.main.path}`, color: config.colors.commands.secondary },
             { text: "Arch", color: config.colors.commands.primary },
             { text: `${os.arch()}`, color: config.colors.commands.secondary },
             { text: "OS", color: config.colors.commands.primary },

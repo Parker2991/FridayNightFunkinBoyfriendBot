@@ -2,10 +2,6 @@ node_modules
 config.yml
 .git
 src/modules/exploits.js
-logs/*
-src/data/filter.json
-data/filter.json
-prototyping-crap
-src/data/trustedPlayers.js
-data/trustedPlayers.js
+logs
 src/modules/custom_chat.js
+src/util/core_util.js
