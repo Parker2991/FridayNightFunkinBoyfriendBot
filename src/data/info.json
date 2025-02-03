@@ -1,7 +1,8 @@
 {
   "buildstring": {
-    "build": "2010",
+    "build": "2030",
     "codename": "§aGame §aTheory",
-    "version": "v7.0.0-alpha"
+    "version": "v7.0.0-beta",
+    "url":"https://code.chipmunk.land/Parker2991/FridayNightFunkinBoyfriendBot"
   }
 }

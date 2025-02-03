@@ -5,9 +5,9 @@ function inject (context) {
   const options = context.options;
   const config = context.config;
 
-  if (options.isKaboom === false || config.team.enabled === false) return;
+  if (options.mode !== "kaboom" || config.team.enabled === false) return;
   bot.on("packet.login", async () => {
-    if (options.isKaboom) {
+    if (options.mode === "kaboom") {
       await sleep(100);
       bot.chat.command(`minecraft:team add ${config.team.name}`);
       await sleep(100);

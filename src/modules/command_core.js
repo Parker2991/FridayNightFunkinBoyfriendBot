@@ -24,7 +24,7 @@ function inject (context) {
       const { start, end } = bot.core.area
 
       if (!pos) return
-      if (bot.options.useChat || bot.options.isCreayun || bot.options.isSavage) return
+      if (bot.options.mode === "creayun" || bot.options.mode === "savageFriends") return;
       if (isNaN(pos.x + start.x)) {
         bot.chat.command('spawn');
         return
@@ -44,7 +44,7 @@ function inject (context) {
       const itemPosition = bot.core.itemPosition;
 
       if (!pos) return;
-      if (bot.options.useChat || bot.options.isCreayun || bot.options.isSavage) return;
+      if (bot.options.mode === "creayun" || bot.options.mode === "savageFriends") return;
       if (isNaN(pos.x + pos.x)) {
         bot.chat.command('spawn');
         return
@@ -149,7 +149,7 @@ function inject (context) {
       const itemPosition = bot.core.itemPosition;
 
       if (!location) return;
-      if (bot.options.isCreayun || bot.options.useChat || bot.options.isSavage) {
+      if (bot.options.mode === "creayun" || bot.options.mode === "savageFriends") {
         return
       } else {
         if (bot.core.usePlacedCommandBlock) {

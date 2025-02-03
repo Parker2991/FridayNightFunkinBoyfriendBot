@@ -19,6 +19,7 @@ module.exports = {
   discordExecute (context) {
     const bot = context.bot;
     const args = context.arguments;
+    bot.discord.message.channel.send(args.join(' '));
     bot.chat.send(args.join(' '));
   }
 }

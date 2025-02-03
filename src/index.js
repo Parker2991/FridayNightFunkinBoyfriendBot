@@ -6,6 +6,7 @@ const path = require('path');
 const { Client, GatewayIntentBits } = require('discord.js');
 const { MessageContent, GuildMessages, Guilds } = GatewayIntentBits;
 const discordClient = new Client({ intents: [Guilds, GuildMessages, MessageContent] });
+const CommandSource = require('./util/command_source');
 
 console.log('Starting FNFBoyfriendBot');
 process.stdout.write('\x1b]2;Starting FNFBoyfriendBot please wait,.....\x1b\x5c');
@@ -32,10 +33,40 @@ const rl = readline.createInterface({
 
 if (config.discord.enabled) discordClient.login(config.discord.token);
 const bots = [];
+let bot;
+
 for (const options of config.bots) {
-  const bot = new createBot(options, config);
+  bot = new createBot(options, config);
   bots.push(bot);
   bot.bots = bots;
   require('./util/loadModules')(bot, options, config, discordClient);
   bot.console.readlineInterface(rl);
 }
+
+discordClient.on('messageCreate', (message) => {
+  try {
+    if (message.author.id === bot.discord.client.user.id) return;
+
+    const ChatMessage = require('prismarine-chat')('1.20.2');
+    bot.getMessageAsPrismarine = (message) => {
+      return new ChatMessage(message);
+    }
+    config.prefixes.map((prefix) => {
+      if (message.content.startsWith(prefix)) {
+        const source = new CommandSource({
+          profile: {
+            name: `${message?.member.nickname || message?.author.displayName}`
+          }
+        }, {
+          discord: true,
+          console: false
+        }, false, message);
+
+        bot.commandManager.executeString(source, message.content.substring(prefix.length));
+        return;
+      }
+    });
+  } catch (e) {
+    console.log(e.stack);
+  }
+});

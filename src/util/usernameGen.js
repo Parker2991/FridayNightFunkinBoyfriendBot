@@ -1,6 +1,6 @@
 function usernameGen (bot, config) {
 //  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-  if (bot.options.isSavage || bot.options.isCreayun && !bot.options.isKaboom) {
+  if (bot.options.mode === "savageFriends" || bot.options.mode === "creayun") {
     characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
   } else {
     characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_-+={]}[|\\:;>.<,/?ඞ♋'

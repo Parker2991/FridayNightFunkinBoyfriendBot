@@ -43,7 +43,7 @@ module.exports = {
     }
 
     for (const eachBot of bot.bots) {
-      if (eachBot.options.isSavage === true || eachBot.options.isCreayun === true) {
+      if (eachBot.options.mode === "savageFriends" || eachBot.options.mode === "creayun") {
         eachBot.chat.message(`${bot.getMessageAsPrismarine(component)?.toMotd()?.replaceAll('§','&')}`)
       } else {
         eachBot.tellraw("@a", component)

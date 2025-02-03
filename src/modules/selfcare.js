@@ -21,7 +21,7 @@ function inject (context) {
   bot.vanished = true
   bot.on('system_chat', (data) => {
     const stringMessage = bot.getMessageAsPrismarine(data.message)?.toString();
-    if (options.isSavage) {
+    if (options.mode === "savageFriends") {
       if (stringMessage === "Please, login with the command: /login <password>") login = true;
       else if (stringMessage === "Successful login!") login = false;
       else if (stringMessage === "You're already logged in!") login = false;
@@ -33,7 +33,7 @@ function inject (context) {
       else if (stringMessage === "You're already logged in!") register = false;
       else if (stringMessage === "Successful login!") register = false;
 
-    } else if (options.isKaboom) {
+    } else if (options.mode === "kaboom") {
       if (stringMessage === "Successfully enabled CommandSpy") commandSpy = true;
       else if (stringMessage === "Successfully enabled CommandSpy.") commandSpy = true;
       else if (stringMessage === "Successfully disabled CommandSpy") commandSpy = false;
@@ -94,7 +94,7 @@ function inject (context) {
     gameMode = packet.gameMode;
     clientLock = packet.gameMode;
     timer = setInterval(() => {
-      if (bot.options.isSavage && !bot.options.isKaboom && !bot.options.isCreayun) {
+      if (bot.options.mode === "savageFriends") {
         if (login) bot.chat.command('login amogusissus');
         else if (register) bot.chat.command('register amogusissus amogusissus');
         else if (gameMode !== 1) bot.chat.command('minecraft:gamemode creative');
@@ -102,7 +102,7 @@ function inject (context) {
         else if (clientLock !== 4) bot._client.write("client_command", { actionId: 0 });
       } else if (bot.options.isCreayun && !bot.options.isKaboom && !bot.options.isSavage) {
 
-      } else if (bot.options.isKaboom && !bot.options.isSavage) {
+      } else if (bot.options.mode === "kaboom") {
         if (permissionLevel < 2) bot.chat.command('op @s[type=player]');
         else if (gameMode !== 1) bot.chat.command('minecraft:gamemode creative');
         else if (!commandSpy) bot.chat.command('commandspy on');

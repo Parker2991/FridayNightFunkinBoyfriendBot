@@ -118,6 +118,8 @@ module.exports = {
     const EmbedBuilder = context.EmbedBuilder
     const fixansi = context.fixansi;
     const args = context.arguments;
+    let infoComponent = [];
+    let usagesComponent = [];
     let public = [];
     let trusted = [];
     let admin = [];
@@ -141,6 +143,38 @@ module.exports = {
         case 4:
           Console.push(commands.data.name);
         break;
+      }
+      if (args[0] === commands.data.name) {
+        for (const usages of commands.data.usages) {
+          usagesComponent.push({
+            translate: "%s%s %s",
+            with: [
+              { text: `${config.prefixes[0]}`, color: config.colors.commands.primary },
+              { text: `${commands.data.name}`, color: config.colors.commands.secondary },
+              { text: `${usages}`, color: config.colors.commands.secondary },
+            ]
+          })
+          usagesComponent.push('\n');
+        }
+
+        infoComponent.push({
+          translate: "%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s:\n",
+          color: config.colors.commands.tertiary,
+          with: [
+            { text: "Name", color: config.colors.commands.primary },
+            { text: `${commands.data.name}`, color: config.colors.commands.secondary },
+            { text: "Aliases", color: config.colors.commands.primary },
+            { text: `${commands.data.aliases.toString().replaceAll(',',' ')}`, color: config.colors.commands.secondary },
+            { text: "Description", color: config.colors.commands.primary },
+            { text: `${commands.data.description}`, color: config.colors.commands.secondary },
+            { text: "Trust Level", color: config.colors.commands.primary },
+            { text: `${commands.data.trustLevel}`, color: config.colors.integer },
+            { text: "Usages", color: config.colors.commands.primary },
+          ]
+        });
+        infoComponent.push(usagesComponent);
+        bot?.discord?.message?.reply(`\`\`\`ansi\n${fixansi(bot.getMessageAsPrismarine(infoComponent)?.toAnsi()?.replaceAll('`', '`\u200b'))}\`\`\``);
+        return;
       }
     }
 

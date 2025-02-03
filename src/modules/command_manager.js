@@ -4,6 +4,8 @@ const CommandError = require('../util/command_error.js');
 const CommandSource = require('../util/command_source');
 const { EmbedBuilder } = require('discord.js');
 const fixansi = require('../util/ansi');
+const cmdMgrUtil = require('../util/command_manager_util');
+
 async function inject (context) {
   const bot = context.bot;
   const config = context.config;
@@ -16,100 +18,48 @@ async function inject (context) {
     execute (source, commandName, args) {
       const command = this.getCommand(commandName.toLowerCase());
       try {
-        if (source?.sources?.discord && !source?.sources?.console) {
-          if (!command || !command?.execute) {
-            const Embed = new EmbedBuilder()
-              .setColor(`${config.colors.discord.error}`)
-              .setTitle("Unknown command")
-              .setDescription(`Unknown command: ${commandName}`)
-            bot?.discord?.message?.reply({ embeds: [Embed] })
-          }
-        } else if (!source?.sources?.discord && !source?.sources?.console) {
-          if (!command || !command.execute)
-          if (bot.options.isSavage) {
-            bot.chat.message(bot.getMessageAsPrismarine({
-              translate: "%s",
+        if (!command) {
+          if (source?.sources?.console) {
+            bot.console.warn(bot.getMessageAsPrismarine({
+              translate: "%s%s%s %s",
               color: "dark_gray",
               with: [
                 { translate: "command.unknown.command", color: "red" },
-              ]
-            })?.toMotd().replaceAll('§','&'));
-
-            bot.chat.message(bot.getMessageAsPrismarine({
-              translate: "%s %s",
-              color: "dark_gray",
-              with: [
+                { text: "\n" },
                 { text: `${commandName}` },
                 { translate: "command.context.here", color: "red" }
               ]
-            })?.toMotd().replaceAll('§','&'));
+            })?.toAnsi());
           } else {
-            bot.tellraw("@a", new MessageBuilder()
-              .setTranslate("%s%s%s %s")
-              .setColor("dark_gray")
-              .addWith(new MessageBuilder().setTranslate("command.unknown.command").setColor("red"))
-              .addWith(new MessageBuilder().setText("\n"))
-              .addWith(new MessageBuilder().setText(`${commandName}`))
-              .addWith(new MessageBuilder().setTranslate("command.context.here").setColor("red"))
-            )
-          }
-        } else if (source?.sources?.console && !source?.sources?.discord) {
-          if (!command || !command.execute)
-          bot.console.warn(bot.getMessageAsPrismarine({
-            translate: "%s%s%s %s",
-            color: "dark_gray",
-            with: [
-              { translate: "command.unknown.command", color: "red" },
-              { text: "\n" },
-              { text: `${commandName}` },
-              { translate: "command.context.here", color: "red" }
-            ]
-          })?.toAnsi())
-        };
-
-        require('../util/command_manager_util')(bot, command, args, source);
-
-//        require('../util/command_manager_arguments')(bot, args, command);
-
-        if (!command?.discordExecute && command && source?.sources?.discord) {
-          throw new CommandError(`${command.data.name} command is not supported in discord!`)
-        } else if (command?.discordExecute && command && source?.sources?.discord) {
-          return command.discordExecute({ bot, source, arguments: args, config, discordClient, EmbedBuilder, fixansi })
-        } else if (!command?.execute && command && !source?.sources?.discord) {
-          throw new CommandError(`${command.data.name} command is not supported in game!`)
-        } else if (command?.execute && command && !source?.sources?.discord) {
-          return command?.execute({ bot, source, arguments: args, config, discordClient });
-        }
-      } catch (error) {
-        console.error(error)
-        if (source?.sources?.discord && !source?.sources?.console) {
-            const Embed = new EmbedBuilder()
-               .setColor(`${config.colors.discord.error}`)
-               .setTitle(`${command?.data?.name} command`)
-               .setDescription(`\`\`\`${error}\`\`\``)
-            bot?.discord?.message?.reply({
-              embeds: [
-                Embed
+            bot.tellraw("@a", {
+              translate: "%s%s%s %s",
+              color: "dark_gray",
+              with: [
+                { translate: "command.unknown.command", color: "red" },
+                { text: "\n" },
+                { text: `${commandName}` },
+                { translate: "command.context.here", color: "red" }
               ]
-            })
-        } else if (!source?.sources?.discord && !source?.sources?.console) {
-          if (error instanceof CommandError) {
-            if (bot.options.isSavage || bot.options.isCreayun) {
-              bot.chat.message(`&4${error.message}`)
-            } else {
-              if (error.toString().length > 256) {
-                bot.tellraw("@a", error._message);
-              } else if (error.toString().length < 256) {
-                bot.chat.message(`${bot.getMessageAsPrismarine(error._message)?.toMotd().replaceAll('§','&')}`)
-              } else {
-                bot.tellraw("@a", error._message);
-              }
-            }
+            });
+          }
+        }
+
+        cmdMgrUtil(bot, command, args, source);
+
+        return command?.execute({ bot, source, arguments: args, config, discordClient });
+      } catch (error) {
+        console.error(error);
+
+        if (error instanceof CommandError) {
+          if (options.mode !== "kaboom") {
+            bot.chat.message(`&4${error._message}`);
           } else {
-            if (bot.options.isSavage || bot.options.isCreayun) {
-              bot.chat.message(`${bot.getMessageAsPrismarine({ translate: "command.failed", color: "dark_red" })?.toMotd().replaceAll('§','&')}`)
+            if (error.toString().length > 256) {
+              bot.tellraw("@a", error._message);
+            } else if (error.toString().length < 256) {
+              bot.chat.message(`${bot.getMessageAsPrismarine(error._message)?.toMotd().replaceAll('§','&')}`);
             } else {
-              bot.tellraw("@a", [{ translate: 'command.failed', color: "dark_red", hoverEvent: { action: 'show_text', contents: `${error.stack}` } }])
+              bot.tellraw("@a", error._message);
             }
           }
         }
@@ -117,14 +67,36 @@ async function inject (context) {
     },
 
     executeString (source, command) {
-      const [commandName, ...args] = command.split(' ')
-      return this.execute(source, commandName, args)
+      const [commandName, ...args] = command.split(' ');
+      if (source?.sources?.discord) {
+        return this.discordExecute(source, commandName, args);
+      } else {
+        return this.execute(source, commandName, args);
+      }
     },
 
-    discordExecute(source, command) {
-      const [commandName, ...args] = command.split(" ");
-      if (source?.sources?.discord && !source?.sources?.console) {
-        return this.discordExecute(source, commandName, args)
+    discordExecute(source, commandName, args) {
+      const command = this.getCommand(commandName.toLowerCase());
+
+      try {
+        if (!command) {
+          throw new CommandError(`Unknown Command: ${commandName}`);
+        }
+
+        cmdMgrUtil(bot, command, args, source);
+
+        if (!command?.discordExecute) {
+          throw new CommandError(`${command.data.name} command is not supported in discord!`);
+        } else {
+          return command?.discordExecute({ bot, source, arguments: args, config, discordClient, EmbedBuilder, fixansi });
+        }
+      } catch (error) {
+        console.error(error);
+        if (error instanceof CommandError) {
+          bot?.discord?.message?.reply(`${bot.getMessageAsPrismarine(error._message)}`);
+        } else {
+          bot?.discord?.message?.reply(`\`\`\`${error}\`\`\``);
+        }
       }
     },
 

@@ -4,7 +4,7 @@ function inject (context) {
   const options = context.options;
   const info = require('../data/info.json');
   bot.on("packet.login", (data) => {
-    if (bot.options.isCreayun === true) return
+    if (bot.options.mode === "creayun") return
     if (new Date().getDay() === 5) {
       bot.chat.message('Gettin\' freaky on a friday night!');
     } else {
