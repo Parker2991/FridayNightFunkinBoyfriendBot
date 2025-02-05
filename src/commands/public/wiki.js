@@ -39,17 +39,28 @@ module.exports = {
         bot.tellraw(`@a`, `${e.toString()}`)
       }
     }
+  },
+  async discordExecute (context) {
+    const bot = context.bot;
+    const args = context.arguments;
+    const fixansi = context.fixansi;
 
-/*    try {
-      const page = await wiki.page(args.join(' '))
+    let component = [];
+
+    try {
+      const page = await wiki.page(args.join(' '));
       const summary = await page.intro();
-      bot.tellraw(`@a`, { text: `${summary}`, color: 'gray' });
-    } catch (error) {
-      if (error.toString() === "pageError: TypeError: Cannot read properties of undefined (reading 'pages')") {
-        bot.chat.message('&cArticle not found!');
+
+      components(config, summary, component);
+
+      bot?.discord?.message?.reply(`\`\`\`ansi\n${fixansi(bot.getMessageAsPrismarine(component)?.toAnsi()?.replaceAll('`', '`\u200b'))}\`\`\``);
+
+    } catch (e) {
+      if (e.toString() === "pageError: TypeError: Cannot read properties of undefined (reading 'pages')") {
+        bot?.discord?.message?.reply('Article not found!');
       } else {
-        bot.tellraw(`@a`, `${error.toString()}`)
+        bot?.discord?.message?.reply(`${e.toString()}`);
       }
-    }*/
+    }
   }
 }

@@ -15,4 +15,10 @@ module.exports = {
     bot._client.end();
     bot.chat.message('reconnecting')
   },
+  discordExecute (context) {
+    const bot = context.bot;
+
+    bot._client.end();
+    bot?.discord?.message?.reply('reconnecting');
+  }
 }
