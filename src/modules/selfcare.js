@@ -28,8 +28,6 @@ function inject (context) {
       else if (stringMessage === "Please, register to the server with the command: /register <password> <ConfirmPassword>") register = true;
       else if (stringMessage === "This user isn't registered!") register = true;
       else if (stringMessage === "Successfully registered!") register = false;
-//      else if (stringMessage === "You already have registered this username!") register = false;
-
       else if (stringMessage === "You're already logged in!") register = false;
       else if (stringMessage === "Successful login!") register = false;
 

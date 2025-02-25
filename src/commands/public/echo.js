@@ -19,7 +19,11 @@ module.exports = {
   discordExecute (context) {
     const bot = context.bot;
     const args = context.arguments;
-    bot.discord.message.channel.send(args.join(' '));
+    if (args.includes("@everyone") || args.includes("@here")) {
+      bot.discord.message.reply("go fuck yourself");
+    } else {
+      bot.discord.message.channel.send(args.join(' '));
+    }
 //    bot.chat.send(args.join(' '));
   }
 }

@@ -73,11 +73,9 @@ function inject (context) {
       }, {
         discord: true,
         console: false
-      }, false, message)
+      }, false, message);
 
-//      bot.sendFeedback = message => {
-        sendComponent(message)
-//      }
+      sendComponent(message);
 
       bot.commandManager.executeString(source, message.content.substring(config.discord.prefix.length))
       return

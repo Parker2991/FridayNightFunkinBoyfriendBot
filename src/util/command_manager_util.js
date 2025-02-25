@@ -2,7 +2,6 @@ const CommandError = require('./command_error');
 module.exports = (bot, command, args, source) => {
   const event = bot.discord.message;
   const roles = event?.member?.roles?.cache;
-
   switch (command?.data?.trustLevel) {
     case 0:
       // do nothing since trust level 0 is public

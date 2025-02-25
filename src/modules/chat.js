@@ -21,7 +21,7 @@ function inject (context) {
   bot.on('registry_ready', registry => {
     ChatMessage = loadPrismarineChat(registry)
   })
-  if (options.isSavage || options.isCreayun) {
+  if (options.mode === "savageFriends" || options.mode === "creayun") {
     bot.chatParsers = [CreayunChatParser, sayConsoleChatParser]
   } else {
     bot.chatParsers = [KaboomChatParser, ChipmunkModChatParser, VanillaChatParser, sayConsoleChatParser, yfdCustomChatParser]

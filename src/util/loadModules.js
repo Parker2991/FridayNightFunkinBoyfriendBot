@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-async function loadModules (bot, options, config, discordClient) {
+async function loadModules (bot, options, config, discordClient, mxClient) {
   bot.modules = [];
   for (const filename of fs.readdirSync(path.join(__dirname, '../', 'modules'))) {
     try {
@@ -9,12 +9,12 @@ async function loadModules (bot, options, config, discordClient) {
         if (module.data.enabled === false) {
           bot.modules.push(module);
         } else {
-          module.inject({ bot, options, config, discordClient });
+          module.inject({ bot, options, config, discordClient, mxClient });
           bot.modules.push(module);
         }
       } if (filename.endsWith(".mjs")) {
         const module = await import(path.join(__dirname, '../modules', filename));
-        module.default({ bot, options, config, discordClient });
+        module.default({ bot, options, config, discordClient, mxClient });
       }
     } catch (error) {
       console.error(`Failed to load module ${filename} due to error`);

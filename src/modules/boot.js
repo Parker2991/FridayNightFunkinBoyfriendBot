@@ -17,9 +17,6 @@ function inject (context) {
     process.exit(5);
   });
 
-  setInterval(() => {
-    process.stdout.write(`\x1b]2; FNFBoyfriendBot | Time: ${new Date().toLocaleString("en-US",{timeZone: "America/CHICAGO"})} | \x1b\x5c`)
-  }, 1000)
 }
 
 module.exports = {

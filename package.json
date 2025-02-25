@@ -2,6 +2,7 @@
   "dependencies": {
     "discord.js": "^14.17.3",
     "js-yaml": "^4.1.0",
+    "matrix-js-sdk": "^36.2.0",
     "minecraft-data": "^3.83.1",
     "minecraft-protocol": "^1.54.0",
     "prismarine-chat": "^1.10.1",

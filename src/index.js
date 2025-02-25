@@ -7,10 +7,9 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const { MessageContent, GuildMessages, Guilds } = GatewayIntentBits;
 const discordClient = new Client({ intents: [Guilds, GuildMessages, MessageContent] });
 const CommandSource = require('./util/command_source');
+const matrix = require('matrix-js-sdk');
 
 console.log('Starting FNFBoyfriendBot');
-process.stdout.write('\x1b]2;Starting FNFBoyfriendBot please wait,.....\x1b\x5c');
-
 
 if (fs.existsSync(path.join(__dirname, "../config.yml")) === false) {
   console.warn("Config not found creating config from the default config");
@@ -32,6 +31,17 @@ const rl = readline.createInterface({
 })
 
 if (config.discord.enabled) discordClient.login(config.discord.token);
+
+const mxClient = matrix.createClient({
+  baseUrl: config.matrix.host,
+  accessToken: config.matrix.token,
+  userId: config.matrix.id
+});
+
+if (config.matrix.enabled) mxClient.startClient();
+
+
+
 const bots = [];
 let bot;
 
@@ -39,7 +49,7 @@ for (const options of config.bots) {
   bot = new createBot(options, config);
   bots.push(bot);
   bot.bots = bots;
-  require('./util/loadModules')(bot, options, config, discordClient);
+  require('./util/loadModules')(bot, options, config, discordClient, mxClient);
   bot.console.readlineInterface(rl);
 }
 
@@ -59,7 +69,8 @@ discordClient.on('messageCreate', (message) => {
           }
         }, {
           discord: true,
-          console: false
+          console: false,
+          matrix: false
         }, false, message);
 
         bot.commandManager.executeString(source, message.content.substring(prefix.length));

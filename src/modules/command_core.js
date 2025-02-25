@@ -25,15 +25,7 @@ function inject (context) {
 
       if (!pos) return
       if (bot.options.mode === "creayun" || bot.options.mode === "savageFriends") return;
-      if (isNaN(pos.x + start.x)) {
-        bot.chat.command('spawn');
-        return
-      }
-      /*^^^
-      for checking is the core pos is null and if so
-      it will not refill core until the pos is not NaN
-      instead of tping to a set cords cuz fuck you im not doing that
-      */
+
       const command = `minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${JSON.stringify(config.core.name)}'} destroy`
       bot.chat.command(`${command}`)
     },
@@ -45,10 +37,6 @@ function inject (context) {
 
       if (!pos) return;
       if (bot.options.mode === "creayun" || bot.options.mode === "savageFriends") return;
-      if (isNaN(pos.x + pos.x)) {
-        bot.chat.command('spawn');
-        return
-      }
 
       const command = `minecraft:fill ${pos.x + start.x} ${pos.y + start.y} ${pos.z + start.z} ${pos.x + end.x} ${pos.y + end.y} ${pos.z + end.z} repeating_command_block{CustomName:'${JSON.stringify(config.core.name)}'} destroy`
 
