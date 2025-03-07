@@ -36,7 +36,6 @@ function inject (context) {
     try {
       bot?.discord?.channel?.send(`\`\`\`ansi\n${discordQueue.join('\n').substring(0, 1984)}\n\`\`\``)
     } catch (error) {
-      console.error(error.toString())
     }
     discordQueue = []
   }, 2000)
@@ -50,7 +49,7 @@ function inject (context) {
     try {
       sendDiscordMessage(fixansi(ansi?.replaceAll('`', '`\u200b')))
     } catch (e) {
-      bot.console.error(`Error sending a message to Discord:\n${e.message}`)
+      bot.console.warn(`Error sending a message to Discord: ${e.message}`)
       sendDiscordMessage(e.message)
     }
   }
@@ -152,7 +151,7 @@ function inject (context) {
     } else if (message?.reference?.type === 1) {
       // this is for messages that are forwarded
     } else {
-      if (options.mode === "savageFriends" || options.mode === "creayun") {
+      if (options.mode === "creayun") {
         bot.chat.message(bot.getMessageAsPrismarine(`&7[&9FNF&3Boyfriend&1Bot Discord&7] ${message?.member?.displayName} \u203a ${message?.content}`)?.toMotd().replaceAll('§','&'))
       } else {
         bot.tellraw('@a', [tag, message.content]);

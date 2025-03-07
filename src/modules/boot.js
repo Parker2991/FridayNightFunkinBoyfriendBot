@@ -16,7 +16,6 @@ function inject (context) {
     bot.chat.message('Killing bot.....');
     process.exit(5);
   });
-
 }
 
 module.exports = {

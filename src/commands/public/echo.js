@@ -24,6 +24,5 @@ module.exports = {
     } else {
       bot.discord.message.channel.send(args.join(' '));
     }
-//    bot.chat.send(args.join(' '));
   }
 }

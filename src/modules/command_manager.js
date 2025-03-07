@@ -5,6 +5,7 @@ const CommandSource = require('../util/command_source');
 const { EmbedBuilder } = require('discord.js');
 const fixansi = require('../util/ansi');
 const cmdMgrUtil = require('../util/command_manager_util');
+const sleep = require('../util/sleep.js');
 
 async function inject (context) {
   const bot = context.bot;
@@ -52,7 +53,7 @@ async function inject (context) {
 
         if (error instanceof CommandError) {
           if (options.mode !== "kaboom") {
-            bot.chat.message(`&4${error._message}`);
+            bot.chat.message(`&4${bot.getMessageAsPrismarine(error._message)?.toMotd().replaceAll('§','&')}`);
           } else {
             if (error.toString().length > 256) {
               bot.tellraw("@a", error._message);
@@ -70,7 +71,7 @@ async function inject (context) {
       const [commandName, ...args] = command.split(' ');
       if (source?.sources?.discord) {
         return this.discordExecute(source, commandName, args);
-      } else {
+      } else if (!source?.sources?.discord) {
         return this.execute(source, commandName, args);
       }
     },
@@ -87,7 +88,7 @@ async function inject (context) {
 
         if (!command?.discordExecute) {
           throw new CommandError(`${command.data.name} command is not supported in discord!`);
-        } else {
+        } else if (source.sources.discord) {
           return command?.discordExecute({ bot, source, arguments: args, config, discordClient, EmbedBuilder, fixansi });
         }
       } catch (error) {

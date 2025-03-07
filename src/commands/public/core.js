@@ -12,12 +12,20 @@ module.exports = {
     const bot = context.bot;
     const args = context.arguments;
 
-    bot.core.run(args.join(' '));
+    if (bot.options.mode === "savageFriends") {
+      bot.core.run(args.join(' '));
+    } else if (bot.options.mode === "kaboom") {
+      bot.core.runTracked(args.join(' '));
+    }
   },
   discordExecute (context) {
     const bot = context.bot;
     const args = context.arguments;
 
-    bot.core.run(args.join(' '));
+    if (bot.options.mode === "savageFriends") {
+      bot.core.run(args.join(' '));
+    } else if (bot.options.mode === "kaboom") {
+      bot.core.runTracked(args.join(' '));
+    }
   }
 }

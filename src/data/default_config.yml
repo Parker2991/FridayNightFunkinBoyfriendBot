@@ -30,34 +30,6 @@ core:
       y: 0
       z: 15
 
-team:
-  name: "FNFBoyfriendBot"
-  suffix: {
-    color: "dark_gray",
-    translate: " [ %s ]",
-    with: [
-      { color: "dark_red", text: "https://sus.red" }
-    ]
-  }
-  # make sure if nothing is set as the suffix it is set as { text: "" } as the packet reads "" as { text: "" }
-  prefix: {
-    color: "dark_gray",
-    translate: "[%s: %s] ",
-    with: [
-      { color: "aqua", text: "Prefix" },
-      { color: "dark_aqua", text: "!" }
-    ]
-  }
-  displayName: {
-    translate: "%s%s%s",
-    with: [
-      { color: "dark_blue", text: "FNF" },
-      { color: "dark_aqua", text: "Boyfriend" },
-      { color: "blue", text: "Bot" }
-    ]
-  }
-  # color HAS to come first before any components or it will break! dont ask why, its because of how nmp parses it
-
 keys:
   trusted: "trusted key here"
   admin: "admin key here"
@@ -90,6 +62,12 @@ logsFolder:
   name: "logs"
 
 bots:
+  # modes: kaboom, savageFriends, creayun
+  # private is for hiding the server ip in netmsg
+  # reconnectDelay is for reconnecting the bot to the server on a delay
+  # serverName is whatever you set the name as for the server
+  # usernameGen is for generating random usernames
+  # channelId is for the discord channel
   - host: "localhost"
     username: "FNFBoyfriendBot"
     usernameGen: true
@@ -99,8 +77,5 @@ bots:
     reconnectDelay: 6000
     channelId: "discord channel id here"
     logging: false
-    useChat: false
-    isKaboom: true
-    isSavage: false
-    isCreayun: false
+    mode: "kaboom"
 

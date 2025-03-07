@@ -25,7 +25,7 @@ module.exports = {
         color: config.colors.commands.tertiary,
         with: [
           { text: `${bot.options.serverName}`, color: config.colors.commands.primary },
-          source.player.displayName ?? source.player.profile.name,
+          source?.player?.displayName ?? source?.player?.profile?.name,
           { text: `${args.join(' ')}`, color: config.colors.commands.secondary }
         ]
       })
@@ -43,11 +43,11 @@ module.exports = {
     }
 
     for (const eachBot of bot.bots) {
-      if (eachBot.options.mode === "savageFriends" || eachBot.options.mode === "creayun") {
+/*      if (eachBot.options.mode === "savageFriends" || eachBot.options.mode === "creayun") {
         eachBot.chat.message(`${bot.getMessageAsPrismarine(component)?.toMotd()?.replaceAll('§','&')}`)
-      } else {
+      } else {*/
         eachBot.tellraw("@a", component)
-      }
+//      }
     }
   }
 }

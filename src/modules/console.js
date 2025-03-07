@@ -23,7 +23,13 @@ function inject (context) {
         })
       })
     },
-    source: new CommandSource(bot._client.username, { console: true, discord: false }),
+    source: new CommandSource({
+      profile: {
+        name: bot._client.username
+      }, uuid: bot._client.uuid },
+      { console: true, discord: false
+    }),
+
     refreshLine (...args) {
       this.readline.output.write("\x1b[2K\r");
       console.log.apply(console, arguments);

@@ -7,7 +7,6 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const { MessageContent, GuildMessages, Guilds } = GatewayIntentBits;
 const discordClient = new Client({ intents: [Guilds, GuildMessages, MessageContent] });
 const CommandSource = require('./util/command_source');
-const matrix = require('matrix-js-sdk');
 
 console.log('Starting FNFBoyfriendBot');
 
@@ -32,16 +31,6 @@ const rl = readline.createInterface({
 
 if (config.discord.enabled) discordClient.login(config.discord.token);
 
-const mxClient = matrix.createClient({
-  baseUrl: config.matrix.host,
-  accessToken: config.matrix.token,
-  userId: config.matrix.id
-});
-
-if (config.matrix.enabled) mxClient.startClient();
-
-
-
 const bots = [];
 let bot;
 
@@ -49,7 +38,7 @@ for (const options of config.bots) {
   bot = new createBot(options, config);
   bots.push(bot);
   bot.bots = bots;
-  require('./util/loadModules')(bot, options, config, discordClient, mxClient);
+  require('./util/loadModules')(bot, options, config, discordClient);
   bot.console.readlineInterface(rl);
 }
 
@@ -70,7 +59,6 @@ discordClient.on('messageCreate', (message) => {
         }, {
           discord: true,
           console: false,
-          matrix: false
         }, false, message);
 
         bot.commandManager.executeString(source, message.content.substring(prefix.length));

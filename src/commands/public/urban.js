@@ -70,7 +70,7 @@ module.exports = {
        },
      ])
    }
-   bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, component)
+   bot.tellraw(`@a`, component)
   },
   async discordExecute (context) {
     const bot = context.bot;

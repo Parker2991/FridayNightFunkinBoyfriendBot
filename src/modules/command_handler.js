@@ -19,7 +19,7 @@ function inject (context) {
         ratelimit--
       }, 1000)
       if (ratelimit > 2) {
-        bot.tellraw(`@a[name="${source?.player?.profile?.name}"]`, { text: 'You are using commands too fast!', color: 'dark_red'})
+        bot.tellraw('@a', { text: 'You are using commands too fast!', color: 'dark_red'})
       } else if (command.split(" ")[0].length === 0) {
       } else {
         bot.commandManager.executeString(source, command)

@@ -59,6 +59,10 @@ module.exports = (bot) => {
   }
 
   bot.tellraw = (selector, message) => {
-    bot.core.run(`minecraft:tellraw ${selector} ` + JSON.stringify(message))
+    if (bot.options.mode === "savageFriends") {
+      bot.core.run(`minecraft:tellraw ${selector} ` + JSON.stringify(bot.getMessageAsPrismarine(message)?.toMotd()))
+    } else {
+      bot.core.run(`minecraft:tellraw ${selector} ` + JSON.stringify(message))
+    }
   }
 }

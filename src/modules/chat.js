@@ -5,6 +5,7 @@ const CreayunChatParser = require('../util/ChatParsers/Creayun');
 const sayConsoleChatParser = require('../util/ChatParsers/sayConsole');
 const VanillaChatParser = require("../util/ChatParsers/VanillaChat");
 const yfdCustomChatParser = require('../util/ChatParsers/yfdCustomChat');
+
 function tryParse (json) {
   try {
     return JSON.parse(json)

@@ -14,14 +14,22 @@ module.exports = {
   execute (context) {
     const bot = context.bot;
     const config = context.config;
-    bot.core.move();
+    if (bot.options.mode === "savageFriends") {
+      bot.core.chatRefill();
+    } else {
+      bot.core.move();
+    }
     bot.tellraw("@a", "Refilling core,...")
   },
 
   discordExecute (context) {
     const bot = context.bot;
     const config = context.config;
-    bot.core.move();
+    if (bot.options.mode === "savageFriends") {
+      bot.core.chatRefill();
+    } else {
+      bot.core.move();
+    }
     bot.tellraw("@a", "Refilling core,...");
   }
 }

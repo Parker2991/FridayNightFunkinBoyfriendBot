@@ -20,6 +20,7 @@ function inject (context) {
   let positionCount = 0;
   bot.vanished = true
   bot.on('system_chat', (data) => {
+    try {
     const stringMessage = bot.getMessageAsPrismarine(data.message)?.toString();
     if (options.mode === "savageFriends") {
       if (stringMessage === "Please, login with the command: /login <password>") login = true;
@@ -30,7 +31,12 @@ function inject (context) {
       else if (stringMessage === "Successfully registered!") register = false;
       else if (stringMessage === "You're already logged in!") register = false;
       else if (stringMessage === "Successful login!") register = false;
-
+      else if (stringMessage === ` > Prefix for user ${bot.options.username} set to: [Prefix: ${config.prefixes[0]}]`) prefix = true;
+      else if (stringMessage?.startsWith(` > Prefix for user ${bot.options.username} set to: `) || stringMessage === ` > Prefix for user ${bot.options.username} removed.`) prefix = false;
+      else if (stringMessage === `You no longer have a nickname.`) nickname = false;
+      else if (stringMessage?.startsWith('Your nickname is now ')) nickname = true;
+      else if (stringMessage === `Vanish for ${bot.options.username}: enabled`) vanished = true;
+      else if (stringMessage === `Vanish for ${bot.options.username}: disabled`) vanished = false;
     } else if (options.mode === "kaboom") {
       if (stringMessage === "Successfully enabled CommandSpy") commandSpy = true;
       else if (stringMessage === "Successfully enabled CommandSpy.") commandSpy = true;
@@ -56,6 +62,9 @@ function inject (context) {
       else if (stringMessage === `You no longer have a nickname.`) nickname = false;
       else if (stringMessage?.startsWith('Your nickname is now ')) nickname = true;
     }
+    } catch (e) {
+      console.log(e.stack);
+    }
   })
 
   bot.on('packet.entity_status', packet => {
@@ -74,7 +83,7 @@ function inject (context) {
   })
 
   bot.on("packet.position", (packet, position) => {
-    if (options.isSavage || options.isCreayun) return
+    if (options.mode === "savageFriends" || options.mode === "creayun") return;
     positionCount++
     setTimeout(() => {
       positionCount--
@@ -97,6 +106,9 @@ function inject (context) {
         else if (register) bot.chat.command('register amogusissus amogusissus');
         else if (gameMode !== 1) bot.chat.command('minecraft:gamemode creative');
         else if (permissionLevel < 2) bot.chat.command(`minecraft:op ${bot.options.username}`);
+        else if (!prefix) bot.chat.command(`rank ${bot.options.username} &8[&bPrefix&8: &3${config.prefixes[0]}&8]`);
+        else if (nickname) bot.chat.command('nick off');
+        else if (!vanished && bot.vanished) bot.chat.command('essentials:vanish on');
         else if (clientLock !== 4) bot._client.write("client_command", { actionId: 0 });
       } else if (bot.options.isCreayun && !bot.options.isKaboom && !bot.options.isSavage) {
 

@@ -377,11 +377,7 @@ module.exports = {
 
     componentPush(bot, args, config, discordClient, source, component);
 
-    if (bot.options.mode === "savageFriends") {
-      bot.chat.message(bot.getMessageAsPrismarine(component)?.toMotd().replaceAll('§','&'));
-    } else {
-      bot.tellraw(`@a`, component);
-    }
+    bot.tellraw(`@a`, component);
   },
   discordExecute (context) {
     const bot = context.bot;
