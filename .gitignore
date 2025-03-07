@@ -5,3 +5,4 @@ src/modules/exploits.js
 logs
 src/modules/custom_chat.js
 src/util/core_util.js
+src/data/info.json
