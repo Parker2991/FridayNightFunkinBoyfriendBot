@@ -4,7 +4,7 @@ module.exports = {
     trustLevel: 4,
     description: "runs commands made for the bots console",
     aliases: [
-
+      "c"
     ],
     usages: [
       'server/srv <all/servername>',

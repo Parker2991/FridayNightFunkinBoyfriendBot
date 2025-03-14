@@ -314,7 +314,7 @@ function inject (context) {
       return
     }
 
-    if (message.translate === "advMode.notAllowed") return;
+    if (message.translate === "advMode.notAllowed" || message?.translate?.startsWith("قيادة المجموعة")) return;
 
     if (config?.debug?.chat?.system?.packetType === true) {
       bot.emit('message', {
@@ -336,31 +336,6 @@ function inject (context) {
       bot.emit('message', message);
     }
     tryParsingMessage(message, { players: bot.players, getMessageAsPrismarine: bot.getMessageAsPrismarine });
-  })
-
-  bot.on('packet.action_bar', (message) => {
-    let parsedMessage = tryParse(message.text)
-    bot.emit('actionBar', {
-      translate: '[%s] %s',
-      color: 'dark_gray',
-      with: [
-        { text: "Action Bar", color: "light_purple" },
-        parsedMessage
-      ]
-    });
-  })
-
-  bot.on('packet.boss_bar', (data) => {
-    bot.emit('bossBar', {
-      translate: '[%s | %s: %s] %s',
-      color: 'dark_gray',
-      with: [
-        { text: "Boss Bar", color: "dark_aqua" },
-        { text: "Action ID", color: "blue" },
-        { text: `${data.action}`, color: 'gold' },
-        tryParse(data.title)
-      ]
-    })
   })
 
   function tryParsingMessage (message, data) {

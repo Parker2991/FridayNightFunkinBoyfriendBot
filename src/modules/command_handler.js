@@ -11,6 +11,8 @@ function inject (context) {
     const prefixes = config.prefixes;
     prefixes.map((prefix) => {
       const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString();
+
+//      console.log(plainMessage);
       if (!plainMessage.startsWith(prefix)) return
       const command = plainMessage.substring(prefix.length)
       const source = new CommandSource(data.sender, { discord: false, console: false }, true)

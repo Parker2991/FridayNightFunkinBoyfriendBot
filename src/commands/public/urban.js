@@ -27,9 +27,17 @@ module.exports = {
    const query = new URLSearchParams({ term });
    const dictResult = await request(`https://api.urbandictionary.com/v0/define?${query}`);
    const { list } = await dictResult.body.json();
-   if (!list.length) {
-     bot.tellraw('@a', { text: 'No results found', color: 'dark_red' });
+
+   if (bot.options.mode === "savageFriends") {
+     bot.chat.message('this command is disabled for this server for right now sorry!');
+     return;
    }
+
+   if (!list.length) {
+     bot.tellraw("@a", { text: "No results found", color: "dark_red" });
+   }
+
+
    for (definitions of list) {
      component.push(prefix, [
        {
@@ -70,7 +78,12 @@ module.exports = {
        },
      ])
    }
-   bot.tellraw(`@a`, component)
+
+   if (bot.options.mode === "savageFriends") {
+     bot.core.run(`minecraft:tellraw @a ${JSON.stringify(component)}`);
+   } else {
+     bot.tellraw(`@a`, component)
+   }
   },
   async discordExecute (context) {
     const bot = context.bot;

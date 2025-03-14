@@ -6,7 +6,7 @@ module.exports = {
     ],
     description: "reconnects the bot",
     usages: [
-
+      ""
     ],
     trustLevel: 2,
   },

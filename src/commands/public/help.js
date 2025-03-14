@@ -3,31 +3,161 @@ function commandListComponent (commands, config, public, trusted, admin, owner, 
     case 0:
       public.push({
         text: commands.data.name + ' ',
-        color: config.colors.help.public
+        color: config.colors.help.public,
+        translate: "",
+        hoverEvent: {
+          action: "show_text",
+          value: [
+            {
+              translate: "%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s",
+              color: config.colors.commands.tertiary,
+              with: [
+                { text: "Command Name", color: config.colors.commands.primary },
+                { text: `${commands.data.name}`, color: config.colors.commands.secondary },
+                { text: "Trust Level", color: config.colors.commands.primary },
+                { text: `${commands.data.trustLevel}`, color: config.colors.integer },
+                { text: "Description", color: config.colors.commands.primary },
+                { text: `${commands.data.description}`, color: config.colors.commands.secondary },
+                { text: "Aliases", color: config.colors.commands.primary },
+                { text: `${commands.data.aliases}`, color: config.colors.commands.secondary },
+                { text: "Usages", color: config.colors.commands.primary },
+                { text: `${commands.data.usages}`, color: config.colors.commands.secondary }
+              ]
+            }
+          ]
+        },
+        clickEvent: {
+          action: "suggest_command",
+          value: `${config.prefixes[0]}${commands.data.name}`
+        }
       });
     break;
     case 1:
       trusted.push({
         text: commands.data.name + ' ',
-        color: config.colors.help.trusted
+        color: config.colors.help.trusted,
+        translate: "",
+        hoverEvent: {
+          action: "show_text",
+          value: [
+            {
+              translate: "%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s",
+              color: config.colors.commands.tertiary,
+              with: [
+                { text: "Command Name", color: config.colors.commands.primary },
+                { text: `${commands.data.name}`, color: config.colors.commands.secondary },
+                { text: "Trust Level", color: config.colors.commands.primary },
+                { text: `${commands.data.trustLevel}`, color: config.colors.integer },
+                { text: "Description", color: config.colors.commands.primary },
+                { text: `${commands.data.description}`, color: config.colors.commands.secondary },
+                { text: "Aliases", color: config.colors.commands.primary },
+                { text: `${commands.data.aliases}`, color: config.colors.commands.secondary },
+                { text: "Usages", color: config.colors.commands.primary },
+                { text: `${commands.data.usages}`, color: config.colors.commands.secondary }
+              ]
+            }
+          ]
+        },
+        clickEvent: {
+          action: "suggest_command",
+          value: `${config.prefixes[0]}${commands.data.name}`
+        }
       });
     break;
     case 2:
       admin.push({
         text: commands.data.name + ' ',
-        color: config.colors.help.admin
+        color: config.colors.help.admin,
+        translate: "",
+        hoverEvent: {
+          action: "show_text",
+          value: [
+            {
+              translate: "%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s",
+              color: config.colors.commands.tertiary,
+              with: [
+                { text: "Command Name", color: config.colors.commands.primary },
+                { text: `${commands.data.name}`, color: config.colors.commands.secondary },
+                { text: "Trust Level", color: config.colors.commands.primary },
+                { text: `${commands.data.trustLevel}`, color: config.colors.integer },
+                { text: "Description", color: config.colors.commands.primary },
+                { text: `${commands.data.description}`, color: config.colors.commands.secondary },
+                { text: "Aliases", color: config.colors.commands.primary },
+                { text: `${commands.data.aliases}`, color: config.colors.commands.secondary },
+                { text: "Usages", color: config.colors.commands.primary },
+                { text: `${commands.data.usages}`, color: config.colors.commands.secondary }
+              ]
+            }
+          ]
+        },
+        clickEvent: {
+          action: "suggest_command",
+          value: `${config.prefixes[0]}${commands.data.name}`
+        }
       });
     break;
     case 3:
       owner.push({
         text: commands.data.name + ' ',
-        color: config.colors.help.owner
+        color: config.colors.help.owner,
+        translate: "",
+        hoverEvent: {
+          action: "show_text",
+          value: [
+            {
+              translate: "%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s",
+              color: config.colors.commands.tertiary,
+              with: [
+                { text: "Command Name", color: config.colors.commands.primary },
+                { text: `${commands.data.name}`, color: config.colors.commands.secondary },
+                { text: "Trust Level", color: config.colors.commands.primary },
+                { text: `${commands.data.trustLevel}`, color: config.colors.integer },
+                { text: "Description", color: config.colors.commands.primary },
+                { text: `${commands.data.description}`, color: config.colors.commands.secondary },
+                { text: "Aliases", color: config.colors.commands.primary },
+                { text: `${commands.data.aliases}`, color: config.colors.commands.secondary },
+                { text: "Usages", color: config.colors.commands.primary },
+                { text: `${commands.data.usages}`, color: config.colors.commands.secondary }
+              ]
+            }
+          ]
+        },
+        clickEvent: {
+          action: "suggest_command",
+          value: `${config.prefixes[0]}${commands.data.name}`
+        }
       });
     break;
     case 4:
       Console.push({
         text: commands.data.name + ' ',
-        color: config.colors.help.console
+        color: config.colors.help.console,
+        translate: "",
+        hoverEvent: {
+          action: "show_text",
+          value: [
+            {
+              translate: "%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s",
+              color: config.colors.commands.tertiary,
+              with: [
+                { text: "Command Name", color: config.colors.commands.primary },
+                { text: `${commands.data.name}`, color: config.colors.commands.secondary },
+                { text: "Trust Level", color: config.colors.commands.primary },
+                { text: `${commands.data.trustLevel}`, color: config.colors.integer },
+                { text: "Description", color: config.colors.commands.primary },
+                { text: `${commands.data.description}`, color: config.colors.commands.secondary },
+                { text: "Aliases", color: config.colors.commands.primary },
+                { text: `${commands.data.aliases}`, color: config.colors.commands.secondary },
+                { text: "Usages", color: config.colors.commands.primary },
+                { text: `${commands.data.usages}`, color: config.colors.commands.secondary }
+              ]
+            }
+          ]
+        },
+        clickEvent: {
+          action: "suggest_command",
+          value: `${config.prefixes[0]}${commands.data.name}`
+        }
       });
     break;
     default:
@@ -37,6 +167,7 @@ function commandListComponent (commands, config, public, trusted, admin, owner, 
 
 function infoComponents (commands, config, infoComponent, usagesComponent) {
   for (const usages of commands.data.usages) {
+
     usagesComponent.push({
       translate: "%s%s %s",
       with: [
@@ -89,6 +220,8 @@ module.exports = {
     const bot = context.bot;
     const args = context.arguments;
     const config = context.config;
+    const source = context.source;
+
     let component = [];
     let infoComponent = [];
     let usagesComponent = [];
@@ -120,7 +253,10 @@ module.exports = {
     component.push(trusted);
     component.push(admin);
     component.push(owner);
-    component.push(Console);
+
+    if (source.sources.console) {
+      component.push(Console);
+    }
     bot.tellraw("@a", component);
   },
   discordExecute (context) {
@@ -160,7 +296,6 @@ module.exports = {
     component.push(trusted);
     component.push(admin);
     component.push(owner);
-    component.push(Console);
 
     bot?.discord?.message?.reply(`\`\`\`ansi\n${fixansi(bot.getMessageAsPrismarine(component)?.toAnsi()?.replaceAll('`', '`\u200b'))}\`\`\``);
   }

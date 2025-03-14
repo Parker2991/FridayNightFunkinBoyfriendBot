@@ -56,7 +56,7 @@ function inject (context) {
   bot.on('message', (message) => {
     if (!options.logging) return;
 
-    if (ratelimit > 10) return
+    if (ratelimit > 10 || message?.translate === "fnfboyfriendbot_command_block_output" || message?.translate === "fnfboyfriendbot_request_command_suggestion") return;
     bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
     bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
     ratelimit++

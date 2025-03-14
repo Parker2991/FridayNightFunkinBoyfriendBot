@@ -70,7 +70,7 @@ module.exports = {
     let component = [];
 
     try {
-      const url = await request(`https://api.weatherapi.com/v1/current.json?key=${config.weatherApiKey}&q=${args.join(' ').replaceAll(' ','&')}`);
+      const url = await request(`https://api.weatherapi.com/v1/current.json?key=${config.weatherApiKey}&q=${args.join(' ').replaceAll(' ','%20')}`);
       const info = await url.body.json();
 
       components(config, info, component);

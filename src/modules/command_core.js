@@ -94,12 +94,12 @@ function inject (context) {
       };
 
       bot.core.itemPosition = {
-        x: pos.x,
-        y: pos.y -1,
-        z: pos.z
+        x: Math.floor(pos.x - 2),
+        y: Math.floor(pos.y - 2),
+        z: Math.floor(pos.z - 2)
       }
 
-      if (config.core.itemRefill) {
+      if (config.core.itemRefill && bot.options.mode !== "savageFriends") {
         bot.core.itemRefill();
       } else {
         bot.core.chatRefill();
@@ -231,9 +231,14 @@ function inject (context) {
       bot.on('packet.nbt_query_response', (data) => {
         try {
           if (data.transactionId == transactionId) {
-
             if (data?.nbt?.value?.LastOutput) {
-              bot.tellraw("@a", JSON.parse(data.nbt.value.LastOutput.value));
+              bot.tellraw("@a", JSON.parse(data.nbt.value.LastOutput.value).extra);
+              bot.tellraw(`@a[name="${bot.options.username}"]`, {
+                translate: "fnfboyfriendbot_command_block_output",
+                extra: [
+                  JSON.parse(data.nbt.value.LastOutput.value).extra
+                ]
+              });
             }
           }
         } catch (e) {

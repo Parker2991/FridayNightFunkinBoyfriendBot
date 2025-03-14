@@ -55,6 +55,7 @@ function inject (context) {
   }
 
   bot.on('message', (message) => {
+    if (message?.translate === "fnfboyfriendbot_command_block_output" || message?.translate === "fnfboyfriendbot_request_command_suggestion") return;
     sendComponent(message);
   });
 

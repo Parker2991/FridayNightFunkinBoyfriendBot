@@ -10,7 +10,7 @@ module.exports = {
     description: "check whos online on the server",
     trustLevel: 0,
     usages: [
-
+      ""
     ]
   },
   execute (context) {

@@ -8,7 +8,7 @@ module.exports = (bot) => {
       bitset[1] = (acc >> 8) & 0xFF;
       bitset[2] = (acc >> 16) & 0xFF;
       bot._client.write('chat_message', {
-        message: message?.substring(0, 256),
+        message: message?.substring(0, 256)?.replaceAll('§','&'),
         timestamp: BigInt(Date.now()),
         salt: 0n,
         offset: 0,
@@ -18,7 +18,7 @@ module.exports = (bot) => {
 
     command (command) {
       bot._client.write('chat_command', {
-        command: command?.substring(0, 256),
+        command: command?.substring(0, 256)?.replaceAll('§','&'),
         timestamp: BigInt(Date.now()),
         salt: 0n,
         argumentSignatures: [],
@@ -32,7 +32,7 @@ module.exports = (bot) => {
     send (message) {
       if (message.startsWith('/')) {
         bot._client.write('chat_command', {
-          command: message?.substring(1).substring(0, 256),
+          command: message?.substring(1).substring(0, 256)?.replaceAll('§','&'),
           timestamp: BigInt(Date.now()),
           salt: 0n,
           argumentSignatures: [],
@@ -49,7 +49,7 @@ module.exports = (bot) => {
       bitset[1] = (acc >> 8) & 0xFF;
       bitset[2] = (acc >> 16) & 0xFF;
       bot._client.write('chat_message', {
-        message: message?.substring(0, 256),
+        message: message?.substring(0, 256)?.replaceAll('§','&'),
         timestamp: BigInt(Date.now()),
         salt: 0n,
         offset: 0,

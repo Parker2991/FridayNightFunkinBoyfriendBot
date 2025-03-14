@@ -49,7 +49,7 @@ async function inject (context) {
 
         return command?.execute({ bot, source, arguments: args, config, discordClient });
       } catch (error) {
-        console.error(error);
+//        console.error(error);
 
         if (error instanceof CommandError) {
           if (options.mode !== "kaboom") {
@@ -63,6 +63,17 @@ async function inject (context) {
               bot.tellraw("@a", error._message);
             }
           }
+        } else {
+          bot.tellraw("@a", {
+            translate: "command.failed",
+            color: "red",
+            hoverEvent: {
+              action: "show_text",
+              contents: String(error.stack)
+            }
+          });
+
+          bot?.console?.warn(error.stack);
         }
       }
     },
@@ -92,11 +103,11 @@ async function inject (context) {
           return command?.discordExecute({ bot, source, arguments: args, config, discordClient, EmbedBuilder, fixansi });
         }
       } catch (error) {
-        console.error(error);
         if (error instanceof CommandError) {
           bot?.discord?.message?.reply(`${bot.getMessageAsPrismarine(error._message)}`);
         } else {
           bot?.discord?.message?.reply(`\`\`\`${error}\`\`\``);
+          bot?.console?.warn(error.stack);
         }
       }
     },

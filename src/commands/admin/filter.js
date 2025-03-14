@@ -27,6 +27,7 @@ module.exports = {
 
     switch (args[1]) {
       case "add":
+        if (bot.filter.list().find((e) => e.name === args[2])) throw new CommandError('this player is already in the filter!');
         bot.filter.add(`${args[2]}`, false, false);
         bot.chat.message(`added ${args[2]} to the filter`);
       break;
@@ -45,15 +46,50 @@ module.exports = {
           let filterList = [];
 
           for (const players of bot.filter.list()) {
-            filterList.push({
-              translate: "%s: %s",
-              color: config.colors.commands.tertiary,
-              with: [
-                { text: `${index}`, color: config.colors.integer },
-                { text: players.name, color: config.colors.commands.primary }
-              ]
-            });
 
+            if (players.regex) {
+              if (players.ignorecase) {
+                filterList.push({
+                  translate: "%s: %s (%s %s)",
+                  color: config.colors.commands.tertiary,
+                  with: [
+                    { text: `${index}`, color: config.colors.integer },
+                    { text: `${players.name}`, color: config.colors.commands.primary },
+                    { text: "regexed", color: config.colors.commands.primary },
+                    { text: "ignorecased", color: config.colors.commands.primary },
+                  ]
+                });
+              } else {
+                filterList.push({
+                  translate: "%s: %s (%s)",
+                  color: config.colors.commands.tertiary,
+                  with: [
+                    { text: `${index}`, color: config.colors.integer },
+                    { text: `${players.name}`, color: config.colors.commands.primary },
+                    { text: "regexed", color: config.colors.commands.primary },
+                  ]
+                });
+              }
+            } else if (players.ignorecase) {
+              filterList.push({
+                translate: "%s: %s (%s)",
+                color: config.colors.commands.tertiary,
+                with: [
+                  { text: `${index}`, color: config.colors.integer },
+                  { text: `${players.name}`, color: config.colors.commands.primary },
+                  { text: "ignorecase", color: config.colors.commands.primary },
+                ]
+              });
+            } else {
+              filterList.push({
+                translate: "%s: %s",
+                color: config.colors.commands.tertiary,
+                with: [
+                  { text: `${index}`, color: config.colors.integer },
+                  { text: `${players.name}`, color: config.colors.commands.primary }
+                ]
+              });
+            }
             filterList.push('\n');
             index++;
           }
@@ -78,19 +114,22 @@ module.exports = {
       break;
       case "remove":
         bot.filter.remove(args[2]);
-        bot.chat.message(`removed ${args[2]} from the filter`);
+        bot.chat.message(`removed the index ${args[2]} from the filter`);
       break;
       case "-ignorecase":
         switch (args[2]) {
           case "-regex":
             switch (args[3]) {
               case "add":
+                if (bot.filter.list().find((e) => e.name === args[4])) throw new CommandError('this player is already in the filter!');
                 bot.filter.add(`${args[4]}`, true, true);
                 bot.chat.message(`added ${args[4]} to the filter`);
               break;
             }
           break;
           case "add":
+            if (bot.filter.list().find((e) => e.name === args[3])) throw new CommandError('this player is already in the filter!');
+
             bot.filter.add(`${args[3]}`, true, false);
             bot.chat.message(`added ${args[3]} to the filter`);
           break;
@@ -99,6 +138,7 @@ module.exports = {
       case "-regex":
         switch (args[2]) {
           case "add":
+            if (bot.filter.list().find((e) => e.name === args[3])) throw new CommandError('this player is already in the filter!');
             bot.filter.add(`${args[3]}`, false, true);
             bot.chat.message(`added ${args[3]} to the filter`);
           break;

@@ -10,7 +10,10 @@ module.exports = {
     description: "loops commands",
     trustLevel: 1,
     usages: [
-
+      "add <interval> <command>",
+      "remove <index>",
+      "list",
+      "clear"
     ]
   },
   execute (context) {

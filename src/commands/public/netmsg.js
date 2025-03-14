@@ -6,9 +6,9 @@ module.exports = {
       "netmessage"
     ],
     description: "send a message to other servers",
-    trustLevel: 0,
+    trustLevel: 1,
     usages: [
-      "message"
+      "<message>"
     ]
   },
   execute (context) {

@@ -8,7 +8,7 @@ module.exports = {
     ],
     description: 'refill the bots core',
     usages: [
-
+      ""
     ],
   },
   execute (context) {

@@ -6,7 +6,11 @@ module.exports = {
       "cbrun",
       "corerun"
     ],
-    trustLevel: 0
+    trustLevel: 0,
+    description: "run commands in core",
+    usages: [
+      "<message>"
+    ]
   },
   execute (context) {
     const bot = context.bot;
