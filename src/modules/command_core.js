@@ -1,6 +1,6 @@
-const mcData = require('minecraft-data')('1.20.2');
 const nbt = require('prismarine-nbt');
 const sleep = require('../util/sleep');
+
 function inject (context) {
   const bot = context.bot;
   const config = context.config;
@@ -48,7 +48,7 @@ function inject (context) {
         slot: 36,
         item: {
           present: true,
-          itemId: mcData.itemsByName.repeating_command_block.id,
+          itemId: bot.registry.itemsByName.repeating_command_block.id,
           itemCount: 1,
           nbtData: nbt.comp({
             BlockEntityTag: nbt.comp({
@@ -175,7 +175,7 @@ function inject (context) {
       }
     },
 
-    async runTracked (command) {
+    async runTracked (command, selector) {
       const location = bot.core.itemPosition;
       let transactionId = Math.floor(Math.random() * 10000);
 
@@ -183,7 +183,7 @@ function inject (context) {
         slot: 36,
         item: {
           present: true,
-          itemId: mcData.itemsByName.repeating_command_block.id,
+          itemId: bot.registry.itemsByName.repeating_command_block.id,
           itemCount: 1,
           nbtData: nbt.comp({
             BlockEntityTag: nbt.comp({
@@ -233,22 +233,81 @@ function inject (context) {
           if (data.transactionId == transactionId) {
             if (data?.nbt?.value?.LastOutput) {
               bot.tellraw("@a", JSON.parse(data.nbt.value.LastOutput.value).extra);
-              bot.tellraw(`@a[name="${bot.options.username}"]`, {
-                translate: "fnfboyfriendbot_command_block_output",
-                extra: [
-                  JSON.parse(data.nbt.value.LastOutput.value).extra
-                ]
-              });
             }
           }
         } catch (e) {
           console.log(e.stack)
         }
       });
+
+      bot._client.removeListener('nbt_query_response');
     }
   }
 
-  require('../util/core_util')(bot, config, options);
+  if (options.mode === "creayun") return;
+  let timer;
+  bot.on('packet.block_change', (data) => {
+    try {
+      if (data?.location?.x === bot?.core?.position?.x && data?.location?.y === bot?.core?.position?.y && data?.location?.z === bot?.core?.position?.z && data.type === 0) {
+        bot.core.move(bot.position);
+      }
+    } catch (e) {
+      bot.console.warn(e.toString());
+    }
+  });
+
+  bot.on('move', async () => {
+    try {
+      if (bot.options.mode === "savageFriends") {
+        await sleep(2000);
+        bot.chat.command('/removenear commandblock');
+        await sleep(2000);
+        bot.core.move(bot.position);
+
+      } else {
+        bot.core.move(bot.position);
+      }
+    } catch (e) {
+      bot.console.warn(e.toString());
+    }
+  });
+
+  bot.on('packet.login', () => {
+    timer = setInterval(() => {
+      bot.core.move(bot.position)
+    }, config.core.refillInterval)
+  });
+
+  bot.on('end', () => {
+    if (timer) clearInterval(timer);
+  });
+
+  bot.on('packet.multi_block_change', (data) => {
+    try {
+      if (bot.options.mode !== "kaboom") return;
+
+      let broken = true;
+
+      if (
+        data.chunkCoordinates.x === Math.floor(bot.core.position.x / 16)
+        &&
+        data.chunkCoordinates.y === Math.floor(bot.core.position.y / 16)
+        &&
+        data.chunkCoordinates.z === Math.floor(bot.core.position.z / 16)
+      ) {
+        for (const state of data.records) {
+          if ((state >= 7906) && (state >= 7917)) broken = false;
+          if ((state >= 12527) && (state >= 12538)) broken = false;
+          if ((state >= 12515) && (state >= 12526)) broken = false;
+          else broken = true;
+        }
+
+        if (broken === true) bot.core.move(bot.position);
+      }
+    } catch (e) {
+      console.log(e.stack);
+    }
+  })
 }
 module.exports = {
   data: {

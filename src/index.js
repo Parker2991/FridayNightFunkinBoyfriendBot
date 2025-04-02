@@ -1,6 +1,5 @@
 const createBot = require('./bot.js');
 const readline = require('readline');
-const js_yaml = require('js-yaml');
 const fs = require('fs');
 const path = require('path');
 const { Client, GatewayIntentBits } = require('discord.js');
@@ -10,19 +9,15 @@ const CommandSource = require('./util/command_source');
 
 console.log('Starting FNFBoyfriendBot');
 
-if (fs.existsSync(path.join(__dirname, "../config.yml")) === false) {
+if (!fs.existsSync(path.join(__dirname, "../config.js"))) {
   console.warn("Config not found creating config from the default config");
   fs.copyFileSync(
-    path.join(__dirname, "./data/default_config.yml"),
-    path.join(__dirname, "../config.yml")
+    path.join(__dirname, "./data/default_config.js"),
+    path.join(__dirname, "../config.js")
   )
 }
 
-try {
-  config = require('js-yaml').load(fs.readFileSync(path.join(__dirname, '../', 'config.yml')))
-} catch (e) {
-  console.log(e.stack);
-}
+const config = require('../config.js');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -35,11 +30,32 @@ const bots = [];
 let bot;
 
 for (const options of config.bots) {
-  bot = new createBot(options, config);
+  bot = createBot(options, config);
   bots.push(bot);
   bot.bots = bots;
   require('./util/loadModules')(bot, options, config, discordClient);
+
+  let disconnectCount = 0;
   bot.console.readlineInterface(rl);
+
+  bot.on('clientDisconnect', (data) => {
+    try {
+      disconnectCount++
+
+      if (disconnectCount === 10) {
+        bot.console.info('stopped logging disconnect messages for now...');
+        bot?.discord?.channel?.send('stopped logging disconnect messages for now...');
+        return;
+      } else if (disconnectCount > 10) {
+        return;
+      } else {
+        bot.console.warn(bot.getMessageAsPrismarine(`§8[§bClient Reconnect§8]§r ${data}`)?.toAnsi())
+        bot?.discord?.channel?.send(data.toString());
+      }
+    } catch (e) {
+      console.log(e.stack);
+    }
+  });
 }
 
 discordClient.on('messageCreate', (message) => {

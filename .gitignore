@@ -1,8 +1,4 @@
 node_modules
-config.yml
+config.js
 .git
 src/modules/exploits.js
-logs
-src/modules/custom_chat.js
-src/util/core_util.js
-src/data/filter.json

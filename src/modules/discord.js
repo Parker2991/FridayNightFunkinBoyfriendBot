@@ -1,7 +1,6 @@
 const fixansi = require('../util/ansi');
 const CommandSource = require('../util/command_source');
 
-const util = require('util')
 function inject (context) {
   const bot = context.bot;
   const config = context.config;
@@ -55,7 +54,6 @@ function inject (context) {
   }
 
   bot.on('message', (message) => {
-    if (message?.translate === "fnfboyfriendbot_command_block_output" || message?.translate === "fnfboyfriendbot_request_command_suggestion") return;
     sendComponent(message);
   });
 

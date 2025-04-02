@@ -249,10 +249,22 @@ module.exports = {
       }
     }
 
-    component.push(public);
-    component.push(trusted);
-    component.push(admin);
-    component.push(owner);
+    if (public.length > 0) {
+      component.push(public);
+    }
+
+    if (trusted.length > 0) {
+      component.push(trusted);
+    }
+
+    if (admin.length > 0) {
+      component.push(admin);
+    }
+
+    if (owner.length > 0) {
+      component.push(owner);
+    }
+
 
     if (source.sources.console) {
       component.push(Console);

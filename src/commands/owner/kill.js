@@ -1,7 +1,7 @@
 module.exports = {
   data: {
     name: 'kill',
-    trustLevel: 3,
+    trustLevel: 4,
     aliases: [
       "suicide",
       "quit",

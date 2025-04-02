@@ -6,7 +6,6 @@ function inject (context) {
   const options = context.options;
   bot.on('end', () => {
     bot._client.removeAllListeners();
-    if (bot.reconnectDelay < 0) return
     setTimeout(() => {
       if (options.usernameGen) {
         client = options.client ?? mc.createClient(options, options.username = usernameGen(bot))

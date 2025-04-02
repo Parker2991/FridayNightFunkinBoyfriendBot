@@ -4,7 +4,7 @@ const util = require('util');
 module.exports = {
   data: {
     name: 'servereval',
-    trustLevel: 3,
+    trustLevel: 4,
     aliases: [
       "se"
     ],

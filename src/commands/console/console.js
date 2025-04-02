@@ -1,3 +1,5 @@
+const CommandError = require('../../util/command_error');
+
 module.exports = {
   data: {
     name: 'console',
@@ -38,27 +40,8 @@ module.exports = {
            eachBot.console.server = server;
         }
       break
-      case 'customchat':
-        if (args[1] === 'off' || args[1] === 'false' || args[1] === 'disable') {
-          bot.customChat.enabled = false
-          bot.console.info('Custom Chat disabled');
-        } if (args[1] === 'on' || args[1] === 'true' || args[1] === 'enable') {
-          bot.customChat.enabled = true;
-          bot.console.info('Custom Chat enabled');
-        }
-      break
       case 'say':
-        if (bot.customChat.enabled === false) {
-          bot.chat.send(args.slice(1).join(' '))
-//          bot.commandManager.executeString(bot.console.source, `echo ${args.slice(1).join(' ')}`)
-        } else if (bot.customChat.enabled === true) {
-          if (args.slice(1).join(' ').startsWith('/')) {
-            bot.chat.command(`${args.slice(1).join(' ').substring(1)}`)
-            return;
-          }
-          bot.customChat.chat(args.slice(1).join(' '));
-        }
-
+        bot.chat.send(args.slice(1).join(' '));
       break
       case "validate":
       case "validation":
@@ -66,30 +49,18 @@ module.exports = {
         switch (args[1]?.toLowerCase()) {
           case "owner":
           case "o":
-            if (bot.customChat.enabled === true) {
-              bot.customChat.chat(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.owner} ${args.slice(3).join(' ')}`)
-            } else if (bot.customChat.enabled === false) {
-              bot.chat.message(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.owner} ${args.slice(3).join(' ')}`)
-            }
+            bot.chat.message(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.owner} ${args.slice(3).join(' ')}`)
           break
           case "admin":
           case "a":
-            if (bot.customChat.enabled === true) {
-              bot.customChat.chat(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.admin} ${args.slice(3).join(' ')}`)
-            } else if (bot.customChat.enabled === false) {
-              bot.chat.message(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.admin} ${args.slice(3).join(' ')}`)
-            }
+            bot.chat.message(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.admin} ${args.slice(3).join(' ')}`)
           break
           case "trusted":
           case "t":
-            if (bot.customChat.enabled === true) {
-              bot.customChat.chat(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.trusted} ${args.slice(3).join(' ')}`);
-            } else if (bot.customChat.enabled === false) {
-              bot.chat.message(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.trusted} ${args.slice(3).join(' ')}`);
-            }
+            bot.chat.message(`${config.prefixes[0]}${args.slice(2).shift()} ${bot.validation.trusted} ${args.slice(3).join(' ')}`);
           break
           default:
-            bot.chat.message(bot.getMessageAsPrismarine({ translate: "command.unknown.argument", color: "dark_red" })?.toMotd().replaceAll("§","&"))
+            throw new CommandError({ translate: "command.unknown.argument", color: "dark_red" })
         }
       break
       case 'logging':
@@ -121,7 +92,7 @@ module.exports = {
         }
       break
       default:
-        bot.chat.message(bot.getMessageAsPrismarine({ translate: "command.unknown.argument", color: "dark_red" })?.toMotd().replaceAll("§","&"))
+        throw new CommandError({ translate: "command.unknown.argument", color: "dark_red" })
     }
   }
 }

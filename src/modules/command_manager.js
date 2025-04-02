@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const CommandError = require('../util/command_error.js');
 const CommandSource = require('../util/command_source');
-const { EmbedBuilder } = require('discord.js');
 const fixansi = require('../util/ansi');
 const cmdMgrUtil = require('../util/command_manager_util');
 const sleep = require('../util/sleep.js');
@@ -32,7 +31,7 @@ async function inject (context) {
               ]
             })?.toAnsi());
           } else {
-            bot.tellraw("@a", {
+            throw new CommandError({
               translate: "%s%s%s %s",
               color: "dark_gray",
               with: [
@@ -49,20 +48,8 @@ async function inject (context) {
 
         return command?.execute({ bot, source, arguments: args, config, discordClient });
       } catch (error) {
-//        console.error(error);
-
         if (error instanceof CommandError) {
-          if (options.mode !== "kaboom") {
-            bot.chat.message(`&4${bot.getMessageAsPrismarine(error._message)?.toMotd().replaceAll('§','&')}`);
-          } else {
-            if (error.toString().length > 256) {
-              bot.tellraw("@a", error._message);
-            } else if (error.toString().length < 256) {
-              bot.chat.message(`${bot.getMessageAsPrismarine(error._message)?.toMotd().replaceAll('§','&')}`);
-            } else {
-              bot.tellraw("@a", error._message);
-            }
-          }
+          bot.tellraw("@a", error._message);
         } else {
           bot.tellraw("@a", {
             translate: "command.failed",
@@ -100,7 +87,7 @@ async function inject (context) {
         if (!command?.discordExecute) {
           throw new CommandError(`${command.data.name} command is not supported in discord!`);
         } else if (source.sources.discord) {
-          return command?.discordExecute({ bot, source, arguments: args, config, discordClient, EmbedBuilder, fixansi });
+          return command?.discordExecute({ bot, source, arguments: args, config, discordClient, fixansi });
         }
       } catch (error) {
         if (error instanceof CommandError) {

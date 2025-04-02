@@ -5,14 +5,13 @@ function inject (context) {
   const bot = context.bot;
   const config = context.config;
   const options = context.options;
-  const { MessageBuilder } = require('prismarine-chat')(bot.options.version);
+
   bot.on("parsed_message", (data) => {
     if (data.type !== "minecraft:chat") return;
     const prefixes = config.prefixes;
     prefixes.map((prefix) => {
       const plainMessage = bot.getMessageAsPrismarine(data.contents)?.toString();
 
-//      console.log(plainMessage);
       if (!plainMessage.startsWith(prefix)) return
       const command = plainMessage.substring(prefix.length)
       const source = new CommandSource(data.sender, { discord: false, console: false }, true)

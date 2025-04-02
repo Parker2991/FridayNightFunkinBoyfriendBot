@@ -16,7 +16,7 @@ function inject (context) {
         if (args.startsWith(config.console.prefix)) {
           return bot.commandManager.executeString(bot.console.source, args.substring(config.console.prefix.length))
         } else if (args.startsWith("")) {
-          return bot.commandManager.executeString(bot.console.source, `console say ${args.substring(0)}`);
+          bot.chat.send(args);
         }
         rl.on('close', () => {
           this.readline = null;
@@ -56,12 +56,11 @@ function inject (context) {
   bot.on('message', (message) => {
     if (!options.logging) return;
 
-    if (ratelimit > 10 || message?.translate === "fnfboyfriendbot_command_block_output" || message?.translate === "fnfboyfriendbot_request_command_suggestion") return;
+    if (ratelimit > 10) return;
     bot.console.log(bot.getMessageAsPrismarine(message)?.toAnsi());
     bot.console.fileLogger(`[${new Date().toLocaleTimeString("en-US", { timeZone: "America/CHICAGO", })} ${new Date().toLocaleDateString("en-US", { timeZone: "America/CHICAGO", })} logs] [${options.serverName}] ${bot.getMessageAsPrismarine(message)?.toString()}`);
     ratelimit++
   });
-
 }
 
 module.exports = {

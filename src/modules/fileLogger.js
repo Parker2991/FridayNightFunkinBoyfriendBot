@@ -3,6 +3,7 @@ const path = require("path");
 const { createGzip } = require("zlib");
 const readline = require('readline');
 const { Console } = require("console");
+
 function inject (context) {
   const bot = context.bot;
   const config = context.config;

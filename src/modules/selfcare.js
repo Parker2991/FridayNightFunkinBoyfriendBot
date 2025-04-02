@@ -19,9 +19,9 @@ function inject (context) {
   let register = false;
   let positionCount = 0;
   bot.vanished = true
-  bot.on('system_chat', (data) => {
+  bot.on('message', (data) => {
     try {
-    const stringMessage = bot.getMessageAsPrismarine(data.message)?.toString();
+    const stringMessage = bot.getMessageAsPrismarine(data)?.toString();
     if (options.mode === "savageFriends") {
       if (stringMessage === "Please, login with the command: /login <password>") login = true;
       else if (stringMessage === "Successful login!") login = false;
@@ -42,8 +42,8 @@ function inject (context) {
       else if (stringMessage === "Successfully enabled CommandSpy.") commandSpy = true;
       else if (stringMessage === "Successfully disabled CommandSpy") commandSpy = false;
       else if (stringMessage === "Successfully disabled CommandSpy.") commandSpy = false;
-      else if (stringMessage === `Vanish for ${bot.options.username}: enabled`) vanished = true;
-      else if (stringMessage === `Vanish for ${bot.options.username}: disabled`) vanished = false;
+      else if (stringMessage === `Vanish for ${bot._client.username}: enabled`) vanished = true;
+      else if (stringMessage === `Vanish for ${bot._client.username}: disabled`) vanished = false;
       else if (stringMessage === `You now have the tag: &8[&bPrefix&8: &3${config.prefixes[0]}&8]` || stringMessage === "Something went wrong while saving the prefix. Please check console.") prefix = true;
       else if (stringMessage?.startsWith("You now have the tag: ") || stringMessage === "You no longer have a tag") prefix = false
       else if (stringMessage?.startsWith("You have been muted")) unmuted = true;
@@ -53,12 +53,12 @@ function inject (context) {
       else if (stringMessage === "God mode enabled.") god = true;
       else if (stringMessage === "Teleportation disabled.") teleportToggle = true;
       else if (stringMessage === "Teleportation enabled.") teleportToggle = false;
-      else if (stringMessage === `Successfully set your username to "${bot.username}"`) {
+      else if (stringMessage === `Successfully set your username to "${bot._client.username}"`) {
         username = false
         return
       }
       else if (stringMessage?.startsWith("Successfully set your username to ")) username = true
-      else if (stringMessage === `You already have the username "${bot.username}"`) username = false
+      else if (stringMessage === `You already have the username "${bot._client.username}"`) username = false
       else if (stringMessage === `You no longer have a nickname.`) nickname = false;
       else if (stringMessage?.startsWith('Your nickname is now ')) nickname = true;
     }
@@ -115,17 +115,17 @@ function inject (context) {
       } else if (bot.options.mode === "kaboom") {
         if (permissionLevel < 2) bot.chat.command('op @s[type=player]');
         else if (gameMode !== 1) bot.chat.command('minecraft:gamemode creative');
-        else if (!commandSpy) bot.chat.command('commandspy on');
-        else if (username) bot.chat.command(`username ${bot.options.username}`)
+        else if (username) bot.chat.command(`username ${bot._client.username}`)
         else if (nickname) bot.chat.command(`nick off`)
         else if (!prefix) bot.chat.command(`prefix &8[&bPrefix&8: &3${config.prefixes[0]}&8]`);
-        else if (!vanished && bot.vanished) bot.chat.command(`essentials:vanish on`);
+        else if (!vanished && bot.vanished) bot.core.run(`essentials:vanish ${bot._client.username} on`);
+        else if (!commandSpy) bot.core.run(`commandspy ${bot.uuid} on`);
         else if (unmuted) bot.core.run(`essentials:mute ${bot.uuid}`);
         else if (!god) bot.core.run(`god ${bot.options.username} enable`);
         else if (!teleportToggle) bot.core.run(`tptoggle ${bot.options.username} disable`);
         else if (clientLock !== 4) bot._client.write("client_command", { actionId: 0 });
       }
-    }, 1000);
+    }, options.selfcareInterval);
   });
   bot.on('end', () => {
     if (timer) clearInterval(timer)

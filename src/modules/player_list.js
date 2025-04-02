@@ -31,6 +31,7 @@ function inject (context) {
         player.vanished = true;
       } else {
         bot.players = bot.players.filter(_ => _.uuid != player.uuid);
+        bot._client.removeListener('tab_complete');
         bot.emit("player_left", player);
       }
     })
