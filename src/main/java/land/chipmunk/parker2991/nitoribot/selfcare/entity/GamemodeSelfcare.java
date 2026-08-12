@@ -11,7 +11,9 @@ import org.geysermc.mcprotocollib.network.packet.Packet;
 import org.geysermc.mcprotocollib.network.Session;
 
 public class GamemodeSelfcare extends Listener {
-  public int gamemode = 1;
+    @org.jetbrains.annotations.NotNull
+    private final Bot bot;
+    public int gamemode = 1;
 
   @Override
   public void packetReceived (Session session, Packet packet) {
@@ -42,6 +44,7 @@ public class GamemodeSelfcare extends Listener {
   }
 
   public GamemodeSelfcare (Bot bot) {
-    bot.ListenerManager.addListener(this);
+      this.bot = bot;
+      bot.listenerManager.addListener(this);
   }
 }

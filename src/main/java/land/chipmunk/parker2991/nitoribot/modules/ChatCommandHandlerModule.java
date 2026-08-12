@@ -14,10 +14,6 @@ import java.util.List;
 public class ChatCommandHandlerModule extends Listener {
   private Bot bot;
 
-  public void sendFeedback (Component message, boolean broadcast) {
-    bot.core.run("say meow");
-  }
-
   @Override
   public void parsedMessage (Component message, PlayerMessageData data) {
     if (data.chatType != "minecraft:chat") return;
@@ -32,8 +28,6 @@ public class ChatCommandHandlerModule extends Listener {
       String command = plainMessage.substring(prefix.length());
 
       CommandSource source = new CommandSource(bot, data.sender);
-
-      Component testMessage = Component.text("hello world!");
       
       bot.commandManager.executeString(source, command);
 
@@ -43,6 +37,6 @@ public class ChatCommandHandlerModule extends Listener {
   public ChatCommandHandlerModule (Bot bot) {
     this.bot = bot;
 
-    bot.ListenerManager.addListener(this);
+    bot.listenerManager.addListener(this);
   }
 }

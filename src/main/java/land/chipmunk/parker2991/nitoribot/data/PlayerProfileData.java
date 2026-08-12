@@ -7,6 +7,8 @@ import org.geysermc.mcprotocollib.auth.GameProfile;
 
 import net.kyori.adventure.text.Component;
 
+import org.cloudburstmc.math.vector.Vector3d;
+
 import java.util.UUID;
 
 public class PlayerProfileData {
@@ -19,6 +21,9 @@ public class PlayerProfileData {
   public Component displayName;
   public boolean showHat;
   public int listOrder;
+  public PlayerPositionData position;
+  public int entityId;
+  public String dimension;
 
   public PlayerProfileData (
     UUID uuid,

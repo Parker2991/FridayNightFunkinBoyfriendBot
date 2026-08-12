@@ -39,7 +39,7 @@ public class PositionModule extends Listener {
       )
     );
 
-    for (Listener listener : bot.ListenerManager.listeners) {
+    for (Listener listener : bot.listenerManager.listeners) {
       listener.botMoved();
     }
   }
@@ -47,6 +47,6 @@ public class PositionModule extends Listener {
   public PositionModule (Bot bot) {
     this.bot = bot;
 
-    bot.ListenerManager.addListener(this);
+    bot.listenerManager.addListener(this);
   }
 }

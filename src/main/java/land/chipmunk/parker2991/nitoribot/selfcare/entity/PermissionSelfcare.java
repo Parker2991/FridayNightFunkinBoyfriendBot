@@ -9,6 +9,8 @@ import org.geysermc.mcprotocollib.protocol.data.game.entity.EntityEvent;
 import org.geysermc.mcprotocollib.network.packet.Packet;
 import org.geysermc.mcprotocollib.network.Session;
 
+import static org.geysermc.mcprotocollib.protocol.data.game.entity.EntityEvent.*;
+
 
 public class PermissionSelfcare extends Listener {
   public int level;
@@ -27,28 +29,17 @@ public class PermissionSelfcare extends Listener {
 
     if (permEntityId == botEntityId) {
       switch (event) {
-        case EntityEvent.PLAYER_OP_PERMISSION_LEVEL_0:
-          level = 0;
-        break;
-        case EntityEvent.PLAYER_OP_PERMISSION_LEVEL_1:
-          level = 1;
-        break;
-        case EntityEvent.PLAYER_OP_PERMISSION_LEVEL_2:
-          level = 2;
-        break;
-        case EntityEvent.PLAYER_OP_PERMISSION_LEVEL_3:
-          level = 3;
-        break;
-        case EntityEvent.PLAYER_OP_PERMISSION_LEVEL_4:
-          level = 4;
-        break;
-        default:
+        case EntityEvent.PLAYER_SET_NO_PERMISSIONS -> level = 0;
+        case EntityEvent.PLAYER_SET_MODERATOR -> level = 1;
+        case EntityEvent.PLAYER_SET_GAMEMASTER -> level = 2;
+        case EntityEvent.PLAYER_SET_ADMIN -> level = 3;
+        case EntityEvent.PLAYER_SET_OWNER -> level = 4;
       }
     }
   };
 
   public PermissionSelfcare (Bot bot) {
     this.bot = bot;
-    bot.ListenerManager.addListener(this);
+    bot.listenerManager.addListener(this);
   }
 }

@@ -1,30 +1,47 @@
 package land.chipmunk.parker2991.nitoribot.modules;
 
-import land.chipmunk.parker2991.nitoribot.Bot;
-import land.chipmunk.parker2991.nitoribot.data.PlayerProfileData;
-import land.chipmunk.parker2991.nitoribot.listeners.*;
-import net.kyori.adventure.text.Component;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.UUID;
 
-import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.ClientboundPlayerInfoRemovePacket;
-import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.ClientboundPlayerInfoUpdatePacket;
+import org.cloudburstmc.math.vector.Vector3d;
 import org.geysermc.mcprotocollib.network.Session;
 import org.geysermc.mcprotocollib.network.packet.Packet;
 import org.geysermc.mcprotocollib.protocol.data.game.PlayerListEntry;
 import org.geysermc.mcprotocollib.protocol.data.game.PlayerListEntryAction;
+import org.geysermc.mcprotocollib.protocol.data.game.entity.type.EntityType;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.ClientboundPlayerInfoRemovePacket;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.ClientboundPlayerInfoUpdatePacket;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.entity.ClientboundMoveEntityPosPacket;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.entity.ClientboundMoveEntityPosRotPacket;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.entity.ClientboundAddEntityPacket;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.entity.ClientboundRemoveEntitiesPacket;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.entity.ClientboundTeleportEntityPacket;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.entity.ClientboundRotateHeadPacket;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.entity.ClientboundEntityPositionSyncPacket;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.serverbound.level.ServerboundEntityTagQuery;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.level.ClientboundTagQueryPacket;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.EnumSet;
-import java.util.UUID;
+import land.chipmunk.parker2991.nitoribot.Bot;
+import land.chipmunk.parker2991.nitoribot.data.PlayerPositionData;
+import land.chipmunk.parker2991.nitoribot.data.PlayerProfileData;
+import land.chipmunk.parker2991.nitoribot.listeners.Listener;
+import net.kyori.adventure.text.Component;
 
-// private final List<Listener> listeners = new ArrayList<>();
 public class PlayerListModule extends Listener {
+  private Bot bot;
+  
   public final List<PlayerProfileData> list = new ArrayList<>();
+
+  public int transactionId = 0;
 
   @Override
   public void packetReceived (Session session, Packet packet) {
     if (packet instanceof ClientboundPlayerInfoUpdatePacket) playerInfo((ClientboundPlayerInfoUpdatePacket) packet);
     else if (packet instanceof ClientboundPlayerInfoRemovePacket) playerRemove((ClientboundPlayerInfoRemovePacket) packet);
+    else if (packet instanceof ClientboundAddEntityPacket) getPlayerPosition((ClientboundAddEntityPacket) packet);
+    else if (packet instanceof ClientboundTagQueryPacket) queryPlayerData((ClientboundTagQueryPacket) packet);
   }
 
   public void playerInfo (ClientboundPlayerInfoUpdatePacket packet) {
@@ -46,14 +63,56 @@ public class PlayerListModule extends Listener {
     }
   }
 
+  public void queryPlayerData (ClientboundTagQueryPacket packet) {
+
+  }
+
+  public void getPlayerPosition (ClientboundAddEntityPacket packet) {
+    if (packet.getType() == EntityType.PLAYER) {
+      UUID uuid = packet.getUuid();
+
+      int entityId = packet.getEntityId();
+
+      Vector3d playerPosition = Vector3d.from(packet.getX(), packet.getY(), packet.getZ());
+
+      float yaw = packet.getYaw();
+
+      float pitch = packet.getPitch();
+
+      PlayerProfileData player = getPlayerUUID(uuid);
+
+      player.entityId = entityId;
+
+      player.position = new PlayerPositionData(pitch, yaw, playerPosition);
+
+     // bot.session.send(
+       // new Server
+      //)
+    }
+  }
+
+  public final PlayerProfileData getPlayerByEntityID (int entityId) {
+    for (PlayerProfileData player : list) {
+      if (player.entityId == entityId) {
+        return player;
+      }
+    }
+
+    return null;
+  }
+
   public final PlayerProfileData getPlayerUUID (UUID uuid) {
+    PlayerProfileData playerInfo = null;
+
     for (PlayerProfileData player : list) {
       if (player.profile.getId().equals(uuid)) {
-        return player;
+        playerInfo = player;
       }
     };
 
-    return null;
+    if (playerInfo == null) {};
+
+    return playerInfo;
   }
 
   public final PlayerProfileData getDisplayName (Component displayName) {
@@ -68,6 +127,7 @@ public class PlayerListModule extends Listener {
 
   public void updateListed (PlayerListEntry player) {
     PlayerProfileData getPlayer = getPlayerUUID(player.getProfileId());
+
     if (getPlayer == null) return;
 
     getPlayer.listed = player.isListed();
@@ -122,6 +182,6 @@ public class PlayerListModule extends Listener {
   }
 
   public PlayerListModule (Bot bot) {
-    bot.ListenerManager.addListener(this);
+    bot.listenerManager.addListener(this);
   }
 }

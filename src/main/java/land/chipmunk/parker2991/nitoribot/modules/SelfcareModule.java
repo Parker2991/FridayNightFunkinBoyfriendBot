@@ -52,7 +52,7 @@ public class SelfcareModule extends Listener {
 
   public SelfcareModule (Bot bot) {
     this.bot = bot;
-    bot.ListenerManager.addListener(this);
+    bot.listenerManager.addListener(this);
     loadSelfcare();
   }
 }

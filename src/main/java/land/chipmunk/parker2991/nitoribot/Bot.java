@@ -1,8 +1,8 @@
 package land.chipmunk.parker2991.nitoribot;
 
+import land.chipmunk.parker2991.nitoribot.logger.LoggerManager;
 import land.chipmunk.parker2991.nitoribot.modules.*;
 import land.chipmunk.parker2991.nitoribot.util.ComponentUtil;
-import land.chipmunk.parker2991.nitoribot.logger.LoggerManager;
 import land.chipmunk.parker2991.nitoribot.listeners.*;
 import net.kyori.adventure.text.Component;
 
@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Bot extends SessionAdapter {
-  public final ListenerManager ListenerManager = new ListenerManager();
+  public final ListenerManager listenerManager = new ListenerManager();
 
   public boolean loggedIn = false;
 
@@ -60,24 +60,28 @@ public class Bot extends SessionAdapter {
   public RegistryModule registry;
 
   public CommandManagerModule commandManager;
-  //private ChatCommandHandlerModule ChatCommandHandler;
 
   public void loadModules () {
     this.chat = new ChatModule(this);
-    this.console = new ConsoleModule(this);
+   // this.console = new ConsoleModule(this);
     this.selfcare = new SelfcareModule(this);
     this.position = new PositionModule(this);
     this.core = new CommandCoreModule(this);
     this.registry = new RegistryModule(this);
     this.players = new PlayerListModule(this);
+    new LoggingModule(this);
     new ChatCommandHandlerModule(this);
     this.commandManager = new CommandManagerModule(this);
+    new TextDisplayModule(this);
   }
 
   public Bot (Config.Options options, List<Bot> bots, Config config) {
     this.options = options;
     this.bots = bots;
     this.config = config;
+
+    this.console = new ConsoleModule(this);
+
     connect();
   };
 
@@ -94,7 +98,6 @@ public class Bot extends SessionAdapter {
       session.addListener(this);
     loadModules();
     session.connect(false); 
-    
   }
 
   @Override
@@ -105,19 +108,19 @@ public class Bot extends SessionAdapter {
 
   @Override
   public void packetSent (Session session, Packet packet) {
-    for (Listener listener : ListenerManager.listeners) {
+    for (Listener listener : listenerManager.listeners) {
       listener.packetSent(session, packet);
     }
   }
 
   @Override
   public void packetError (PacketErrorEvent error) {
-    System.out.println(error.getCause());
+
   }
 
   @Override
   public void packetReceived (Session session, Packet packet) {
-    for (Listener listener : ListenerManager.listeners) {
+    for (Listener listener : listenerManager.listeners) {
       listener.packetReceived(session, packet);
     }
 
@@ -127,7 +130,7 @@ public class Bot extends SessionAdapter {
 
   
   public void getProfile (ClientboundLoginFinishedPacket packet) {
-    //profile = packet.getProfile();
+    profile = packet.getProfile();
 
     loggedIn = true;
   }
@@ -138,16 +141,18 @@ public class Bot extends SessionAdapter {
 
   @Override
   public void disconnected (DisconnectedEvent event) {
-    ListenerManager.clearListener();
-    //final Throwable cause = disconnectedEvent.getCause();
-    Throwable cause = event.getCause();
-    System.out.println(cause);
+    listenerManager.clearListener();
+
     loggedIn = false;
+
     Component component = event.getReason();
+
     String reason = ComponentUtil.componentToAnsi(component);
-    Component host = Component.text(options.host + ":" + options.port);
-    LoggerManager.RECONNECT(host, reason);
+    
     int reconnectDelay = options.reconnectDelay;
+
+    System.out.println(reason);
+    //LoggerManager.RECONNECT(this, reason);
 
     executor.schedule(() -> connect(), reconnectDelay, TimeUnit.MILLISECONDS);
   }

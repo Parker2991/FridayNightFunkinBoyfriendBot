@@ -1,44 +1,53 @@
 package land.chipmunk.parker2991.nitoribot.modules;
 
 import land.chipmunk.parker2991.nitoribot.Bot;
-import land.chipmunk.parker2991.nitoribot.logger.LoggerManager;
-import land.chipmunk.parker2991.nitoribot.util.ComponentUtil;
-import land.chipmunk.parker2991.nitoribot.listeners.*;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+//import org.jline
+import land.chipmunk.parker2991.nitoribot.Main;
+import org.jline.reader.*;
+import org.jline.terminal.*;
 
-public class ConsoleModule extends Listener {
+import javax.sound.sampled.Line;
+import java.util.List;
+
+public class ConsoleModule implements Completer {
   private Bot bot;
 
-  @Override
-  public void playerChatReceived (Component message) {
-    handleMessages(message);
-  };
+  private List<Bot> servers;
 
-  @Override
-  public void disguisedChatReceived (Component message) {
-    handleMessages(message);
+  public LineReader reader;
 
+  public Terminal terminal;
+
+  public String server = "all";
+
+  public String readLine (String message) {
+    return "";
   }
 
   @Override
-  public void systemChatReceived (Component message) {
-    handleMessages(message);
-  }
-
-  public void handleMessages (Component message) {
-    final String host = bot.options.host;
-    final int port = bot.options.port;
-    String parsed = ComponentUtil.componentToAnsi(message);
-    Component component = Component.text(host + ":" + port).color(NamedTextColor.BLUE);
-    LoggerManager.LOG(component, parsed);
+  public void complete (LineReader reader, ParsedLine line, List<Candidate> candidates) {
 
   }
 
+  public void handleLine (String line) {
+
+  }
   public ConsoleModule (Bot bot) {
-    this.bot = bot;
+    try {
+      this.bot = bot;
 
-    bot.ListenerManager.addListener(this);
+      this.servers = bot.bots;
+
+      terminal = TerminalBuilder.builder().build();
+
+      reader = LineReaderBuilder.builder().terminal(terminal).build();
+
+      Main.executorService.submit(() -> {
+        while (true) {
+          reader.readLine("> ");
+        }
+      });
+    } catch (Exception e) {}
   }
 }

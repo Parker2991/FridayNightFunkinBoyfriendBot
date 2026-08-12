@@ -44,7 +44,7 @@ public class ChatModule extends Listener {
   public void systemChat (ClientboundSystemChatPacket packet) {
     final Component message = packet.getContent();
 
-    for (Listener listener : bot.ListenerManager.listeners) {
+    for (Listener listener : bot.listenerManager.listeners) {
       listener.systemChatReceived(message);
     }
   }
@@ -65,25 +65,8 @@ public class ChatModule extends Listener {
         getMessage
       );
     }
-/*
-      parseMessage(message, {
-        players: bot.players,
-        getMessageAsPrismarine: bot.getMessageAsPrismarine,
-        chatType: "minecraft:system_chat",
-      }
-          public PlayerProfileData sender;
-  public Component contents;
-  public String chatType;
-  public Component senderName;
-*/
-   // parseMessage(
-     // message, 
-      //new PlayerMessageData(
 
-      //)
-    //);
-
-    for (Listener listener : bot.ListenerManager.listeners) {
+    for (Listener listener : bot.listenerManager.listeners) {
       listener.disguisedChatReceived(message);
     }
   }
@@ -94,7 +77,7 @@ public class ChatModule extends Listener {
     //final PlayerProfileData sender = bot.players.getPlayerUUID(packet.getSender());
     //System.out.println(packet.getSender());
 
-    for (Listener listener : bot.ListenerManager.listeners) {
+    for (Listener listener : bot.listenerManager.listeners) {
       listener.playerChatReceived(unsignedContent);
     }
 
@@ -107,8 +90,6 @@ public class ChatModule extends Listener {
         bot.players.getPlayerUUID(packet.getSender()).displayName
       )
     );
-//final PlayerMessage playerMessage = new PlayerMessage(sender, parsedFromMessage.contents(), "minecraft:chat", packet.getName());
-    //parseMessage(unsignedContent, packet);
   }
 
   public void parseMessage (Component message, PlayerMessageData data) {
@@ -122,7 +103,7 @@ public class ChatModule extends Listener {
 
       if (parsed == null) return;
 
-      for (Listener listener : bot.ListenerManager.listeners) {
+      for (Listener listener : bot.listenerManager.listeners) {
         listener.parsedMessage(message, data);
       }
 
@@ -151,6 +132,12 @@ public class ChatModule extends Listener {
     );
   }
 
+  public void send (String message) {
+    if (message.startsWith("/")) bot.chat.command(message.substring(1));
+
+    else bot.chat.message(message);
+  }
+
   public void tellraw (String selector, Component message) {
     bot.core.run("minecraft:tellraw " + selector + " " + GsonComponentSerializer.gson().serialize(message));
   }
@@ -160,6 +147,6 @@ public class ChatModule extends Listener {
   
     chatParsers.add(new KaboomChatParser(bot));
 
-    bot.ListenerManager.addListener(this);
+    bot.listenerManager.addListener(this);
   };
 }

@@ -26,7 +26,7 @@ repositories {
 
   maven("https://maven.maxhenkel.de/repository/public/")
 
-  maven("https://libraries.minecraft.net")
+ // maven("https://libraries.minecraft.net")
 
  /* maven("https://code.optmstc.dev/api/packages/kso/maven") {
     content {
@@ -39,9 +39,8 @@ repositories {
 //  maven("https://code.chipmunk.land/api/packages/kaboomstandardsorganization/maven/")
 }
 
-kotlin {
 dependencies {
-  implementation("org.geysermc.mcprotocollib:protocol:1.21.11-SNAPSHOT")
+  implementation("org.geysermc.mcprotocollib:protocol:26.2-SNAPSHOT")
   implementation("org.slf4j:slf4j-api:2.0.13")
   implementation("org.tinylog:slf4j-tinylog:2.7.0")
   implementation("org.tinylog:tinylog-impl:2.7.0")
@@ -50,11 +49,12 @@ dependencies {
   implementation("net.kyori:adventure-text-serializer-plain:4.26.1")
   implementation("net.kyori:adventure-text-serializer-legacy:4.26.1")
   implementation("net.kyori:adventure-text-serializer-gson:4.26.1")
-  implementation("com.mojang:brigadier:1.3.10")
-  //implementation("land.chipmunk.code.kaboomstandardsorganization.messaginglib:mcprotocollib:3.1.1-SNAPSHOT")
-//  implementation("land.chipmunk.code.kaboomstandardsorganization.messaginglib:3.1.1-SNAPSHOT")
+  implementation("net.dv8tion:JDA:6.4.1")
+  implementation("de.connect2x.trixnity:trixnity-client:5.0.0")
+  implementation("org.pircbotx:pircbotx:2.1")
+  implementation("org.jline:jline:4.1.0")
 }
-}
+
 application {
   mainClass.set("land.chipmunk.parker2991.nitoribot.Main")
 }

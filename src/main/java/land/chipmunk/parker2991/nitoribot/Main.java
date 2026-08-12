@@ -1,9 +1,7 @@
 package land.chipmunk.parker2991.nitoribot;
 
-import land.chipmunk.parker2991.nitoribot.logger.LoggerManager;
 import land.chipmunk.parker2991.nitoribot.util.ErrorToString;
-
-import net.kyori.adventure.text.Component;
+import land.chipmunk.parker2991.nitoribot.logger.LoggerManager;
 
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.LoaderOptions;
@@ -31,8 +29,6 @@ public class Main {
     Runtime.getRuntime().availableProcessors()
   );
 
-  public final Component host = Component.text("Nitori Jar");
-
   public static Config config;
 
   public final List<Bot> Bots = new ArrayList<>();
@@ -43,7 +39,7 @@ public class Main {
     final Path configPath = Path.of("config.yaml");
     if (!Files.exists(configPath)) {
       
-      LoggerManager.INFO(host, "config not found making config now");
+      //LoggerManager.INFO(null, "config not found making config now");
 
       InputStream defaultConfig = Main.class.getClassLoader().getResourceAsStream("default_config.yaml");
       Files.copy(defaultConfig, Paths.get("config.yaml"));
@@ -69,7 +65,7 @@ public class Main {
       };
     } catch (Exception e) {
       String Error = ErrorToString.errorToString(e);
-      LoggerManager.ERROR(host, Error);
+     // LoggerManager.ERROR(null, Error);
     }
   };
 }

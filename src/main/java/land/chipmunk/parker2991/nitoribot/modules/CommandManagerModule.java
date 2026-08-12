@@ -57,8 +57,7 @@ public class CommandManagerModule {
         Component.translatable("command.failed").color(NamedTextColor.DARK_RED)
       );
       String Error = ErrorToString.errorToString(error);
-      Component host = Component.text(bot.options.host + ":" + bot.options.port).color(NamedTextColor.BLUE);
-      LoggerManager.ERROR(host, Error);
+      LoggerManager.ERROR(bot, Error);
     }
   }
 

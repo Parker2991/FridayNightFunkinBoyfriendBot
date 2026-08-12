@@ -1,14 +1,39 @@
 package land.chipmunk.parker2991.nitoribot.modules;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.cloudburstmc.math.vector.Vector3d;
 import org.cloudburstmc.math.vector.Vector3i;
+
+import org.cloudburstmc.nbt.NbtMap;
+import org.cloudburstmc.nbt.NbtType;
+import org.cloudburstmc.nbt.NbtMapBuilder;
+
+import org.geysermc.mcprotocollib.protocol.data.game.entity.object.Direction;
+import org.geysermc.mcprotocollib.protocol.data.game.level.block.BlockEntityType;
+import org.geysermc.mcprotocollib.protocol.data.game.entity.player.Hand;
+import org.geysermc.mcprotocollib.protocol.data.game.entity.player.PlayerAction;
+import org.geysermc.mcprotocollib.protocol.data.game.item.ItemStack;
+import org.geysermc.mcprotocollib.protocol.data.game.item.component.DataComponent;
+import org.geysermc.mcprotocollib.protocol.data.game.item.component.DataComponentType;
+import org.geysermc.mcprotocollib.protocol.data.game.item.component.DataComponentTypes;
+import org.geysermc.mcprotocollib.protocol.data.game.item.component.DataComponents;
+import org.geysermc.mcprotocollib.protocol.data.game.item.component.TypedEntityData;
+import org.geysermc.mcprotocollib.protocol.data.game.item.component.TypedEntityData.TypedEntityDataBuilder;
 import org.geysermc.mcprotocollib.protocol.data.game.level.block.CommandBlockMode;
 import org.geysermc.mcprotocollib.protocol.packet.ingame.serverbound.inventory.ServerboundSetCommandBlockPacket;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.serverbound.inventory.ServerboundSetCreativeModeSlotPacket;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.serverbound.player.ServerboundPlayerActionPacket;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.serverbound.player.ServerboundUseItemOnPacket;
+
+import net.kyori.adventure.text.Component;
 
 import land.chipmunk.parker2991.nitoribot.Bot;
 import land.chipmunk.parker2991.nitoribot.data.CommandCoreAreaData;
 import land.chipmunk.parker2991.nitoribot.data.PositionData;
-import land.chipmunk.parker2991.nitoribot.listeners.*;
+import land.chipmunk.parker2991.nitoribot.listeners.Listener;
+import land.chipmunk.parker2991.nitoribot.util.ComponentUtil;
 
 public class CommandCoreModule extends Listener {
   private Bot bot;
@@ -22,6 +47,8 @@ public class CommandCoreModule extends Listener {
 
   public Vector3i position;
 
+  public Vector3i itemPosition;
+
   public void move () {
     Vector3d botPos = bot.position.positionAsVector;
     position = Vector3i.from(
@@ -30,10 +57,16 @@ public class CommandCoreModule extends Listener {
       Math.floor(botPos.getZ() / 16) * 16
     );
 
-    refill();
+    itemPosition = Vector3i.from(
+      botPos.getX(),
+      botPos.getY() - 1,
+      botPos.getZ()
+    );
+
+    chatRefill();
   };
 
-  public void refill () {
+  public void chatRefill () {
     Vector3i pos = position;
     CommandCoreAreaData coreArea = area;
 
@@ -58,6 +91,115 @@ public class CommandCoreModule extends Listener {
     bot.chat.command(command);
   }
 
+  public void itemRefill () {
+    final NbtMapBuilder blockEntityTagBuilder = NbtMap.builder();
+
+    blockEntityTagBuilder.putString("Command", "say meow")
+      .putByte("auto", (byte) 1)
+      .putByte("TrackOutput", (byte) 1);
+
+    final NbtMap blockEntityTag = blockEntityTagBuilder.build();
+
+    final Map<DataComponentType<?>, DataComponent<?, ?>> map = new HashMap<>();
+
+    map.put(
+      DataComponentTypes.BLOCK_ENTITY_DATA,
+      DataComponentTypes.BLOCK_ENTITY_DATA
+      .getDataComponentFactory()
+      .create(
+        DataComponentTypes.BLOCK_ENTITY_DATA,
+        TypedEntityData.<BlockEntityType>builder()
+          .type(BlockEntityType.COMMAND_BLOCK)
+          .tag(blockEntityTag)
+          .build()
+      )
+    );
+
+    map.put(
+      DataComponentTypes.ITEM_NAME,
+      DataComponentTypes.ITEM_NAME
+      .getDataComponentFactory()
+      .create(
+        DataComponentTypes.ITEM_NAME,
+        ComponentUtil.componentFromJSON(bot.config.core.coreName)
+      )
+    );
+
+    map.put(
+      DataComponentTypes.CUSTOM_NAME,
+      DataComponentTypes.CUSTOM_NAME
+      .getDataComponentFactory()
+      .create(
+        DataComponentTypes.CUSTOM_NAME,
+        ComponentUtil.componentFromJSON(bot.config.core.coreName)
+      )
+    );
+
+    final DataComponents dataComponents = new DataComponents(map);
+
+    bot.session.send(
+      new ServerboundSetCreativeModeSlotPacket(
+        (short) 36,
+        new ItemStack(
+          454,
+          64,
+          dataComponents
+        )
+      )
+    );
+
+    bot.session.send(
+      new ServerboundPlayerActionPacket(
+        PlayerAction.START_DIGGING,
+        itemPosition,
+        Direction.NORTH,
+        0
+      )
+    );
+
+    bot.session.send(
+      new ServerboundUseItemOnPacket(
+        itemPosition,
+        Direction.NORTH,
+        Hand.MAIN_HAND,
+        0.5f,
+        0.5f,
+        0.5f,
+        false,
+        false,
+        1
+      )
+    );
+  }
+  /*
+  ServerboundUseItemOnPacket(
+  Vector3i position, 
+  Direction face, 
+  Hand hand, 
+  float cursorX, 
+  float cursorY, 
+  float cursorZ, 
+  boolean insideBlock, 
+  boolean hitWorldBorder, 
+  int sequence
+  )
+          itemPosition,
+        Direction.UP,
+        Hand.MAIN_HAND,
+        0.5f,
+        0.5f,
+        0.5f,
+        false,
+        1
+      )
+  */
+//session.send(new ServerboundPlayerActionPacket(PlayerAction.START_DIGGING, temporaryBlockPosition, Direction.NORTH, 0));
+  //  
+  /*   
+  session.send(
+  new ServerboundUseItemOnPacket(temporaryBlockPosition, D
+  irection.UP, Hand.MAIN_HAND, 0.5f, 0.5f, 0.5f, false, 1));
+  */
   public Vector3i currentBlockRelative = Vector3i.from(0, 0, 0);
 
   public PositionData currentBlock () {
@@ -133,6 +275,6 @@ public class CommandCoreModule extends Listener {
       )
     );
 
-    bot.ListenerManager.addListener(this);
+    bot.listenerManager.addListener(this);
   }
 }
