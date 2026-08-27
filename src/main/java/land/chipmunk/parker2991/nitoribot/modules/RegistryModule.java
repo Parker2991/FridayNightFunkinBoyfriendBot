@@ -26,6 +26,8 @@ public class RegistryModule extends Listener {
     }
   }
 
+
+
   public RegistryModule (Bot bot) {
     bot.listenerManager.addListener(this);
   }

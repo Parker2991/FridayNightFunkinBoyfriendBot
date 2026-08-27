@@ -28,7 +28,7 @@ public class ChatCommandHandlerModule extends Listener {
       String command = plainMessage.substring(prefix.length());
 
       CommandSource source = new CommandSource(bot, data.sender);
-      
+
       bot.commandManager.executeString(source, command);
 
     }

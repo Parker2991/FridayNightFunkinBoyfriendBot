@@ -32,7 +32,7 @@ public final class ComponentUtil {
 
     private static final int MAX_DEPTH = 512; //translate depth limit
 
-    private static Map<String, String> loadJsonStringMap(String name) {
+    public static Map<String, String> loadJsonStringMap(String name) {
         Map<String, String> map = new HashMap<>();
 
         var is = ClassLoader.getSystemClassLoader().getResourceAsStream(name);

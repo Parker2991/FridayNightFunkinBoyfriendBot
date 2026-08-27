@@ -56,6 +56,7 @@ public class Config {
   public static class Options {
     public String host;
     public int port;
+    public boolean useProxy;
     public String serverName;
     public String username;
     public int reconnectDelay;

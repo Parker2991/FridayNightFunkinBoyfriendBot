@@ -3,6 +3,7 @@ package land.chipmunk.parker2991.nitoribot.modules;
 import java.util.HashMap;
 import java.util.Map;
 
+import land.chipmunk.parker2991.nitoribot.logger.Logger;
 import org.cloudburstmc.math.vector.Vector3d;
 import org.cloudburstmc.math.vector.Vector3i;
 
@@ -63,7 +64,7 @@ public class CommandCoreModule extends Listener {
       botPos.getZ()
     );
 
-    chatRefill();
+    itemRefill();
   };
 
   public void chatRefill () {
@@ -78,7 +79,7 @@ public class CommandCoreModule extends Listener {
     int endPosZ = pos.getZ() - coreArea.end.getZ();
 
     String command = String.format(
-      "minecraft:fill %s %s %s %s %s %s command_block{CustomName:%s} destroy",
+      "minecraft:fill %s %s %s %s %s %s command_block{CustomName:%s}",
       startPosX,
       startPosY,
       startPosZ,
@@ -94,7 +95,28 @@ public class CommandCoreModule extends Listener {
   public void itemRefill () {
     final NbtMapBuilder blockEntityTagBuilder = NbtMap.builder();
 
-    blockEntityTagBuilder.putString("Command", "say meow")
+    Vector3i pos = position;
+    CommandCoreAreaData coreArea = area;
+
+    int startPosX = pos.getX() - coreArea.start.getX();
+    int startPosY = pos.getY() - coreArea.start.getY();
+    int startPosZ = pos.getZ() - coreArea.start.getZ();
+    int endPosX = pos.getX() - coreArea.end.getX();
+    int endPosY = pos.getY() - coreArea.end.getY();
+    int endPosZ = pos.getZ() - coreArea.end.getZ();
+
+    String command = String.format(
+      "minecraft:fill %s %s %s %s %s %s command_block{CustomName:%s} replace",
+      startPosX,
+      startPosY,
+      startPosZ,
+      endPosX,
+      endPosY,
+      endPosZ,
+      bot.config.core.coreName
+    );
+
+    blockEntityTagBuilder.putString("Command", command)
       .putByte("auto", (byte) 1)
       .putByte("TrackOutput", (byte) 1);
 
@@ -141,7 +163,7 @@ public class CommandCoreModule extends Listener {
       new ServerboundSetCreativeModeSlotPacket(
         (short) 36,
         new ItemStack(
-          454,
+          482,
           64,
           dataComponents
         )
@@ -171,35 +193,7 @@ public class CommandCoreModule extends Listener {
       )
     );
   }
-  /*
-  ServerboundUseItemOnPacket(
-  Vector3i position, 
-  Direction face, 
-  Hand hand, 
-  float cursorX, 
-  float cursorY, 
-  float cursorZ, 
-  boolean insideBlock, 
-  boolean hitWorldBorder, 
-  int sequence
-  )
-          itemPosition,
-        Direction.UP,
-        Hand.MAIN_HAND,
-        0.5f,
-        0.5f,
-        0.5f,
-        false,
-        1
-      )
-  */
-//session.send(new ServerboundPlayerActionPacket(PlayerAction.START_DIGGING, temporaryBlockPosition, Direction.NORTH, 0));
-  //  
-  /*   
-  session.send(
-  new ServerboundUseItemOnPacket(temporaryBlockPosition, D
-  irection.UP, Hand.MAIN_HAND, 0.5f, 0.5f, 0.5f, false, 1));
-  */
+
   public Vector3i currentBlockRelative = Vector3i.from(0, 0, 0);
 
   public PositionData currentBlock () {
@@ -241,6 +235,7 @@ public class CommandCoreModule extends Listener {
   }
 
   public void commandBlock (String command, boolean doesTrackOutput, boolean conditional, boolean automatic) {
+    if (command.length() > 32767) return;
     bot.session.send(
       new ServerboundSetCommandBlockPacket(
         position,

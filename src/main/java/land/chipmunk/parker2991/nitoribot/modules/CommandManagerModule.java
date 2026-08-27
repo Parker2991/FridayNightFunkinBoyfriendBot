@@ -6,7 +6,8 @@ import land.chipmunk.parker2991.nitoribot.command.CommandContext;
 import land.chipmunk.parker2991.nitoribot.command.CommandInfo;
 import land.chipmunk.parker2991.nitoribot.command.CommandSource;
 import land.chipmunk.parker2991.nitoribot.commands.Public.*;
-import land.chipmunk.parker2991.nitoribot.logger.LoggerManager;
+import land.chipmunk.parker2991.nitoribot.commands.trusted.ReconnectCommand;
+import land.chipmunk.parker2991.nitoribot.logger.Logger;
 import land.chipmunk.parker2991.nitoribot.util.ErrorToString;
 
 import net.kyori.adventure.text.Component;
@@ -15,6 +16,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class CommandManagerModule {
   private Bot bot;
@@ -27,6 +29,9 @@ public class CommandManagerModule {
 
   public CommandInfo getCommand (String getCommand) {
     for (CommandInfo command : commands) {
+      for (String aliases : command.aliases) {
+        if (getCommand.equals(aliases)) return command;
+      }
       if (getCommand.equals(command.name)) return command;
     }
     return null;
@@ -34,7 +39,7 @@ public class CommandManagerModule {
 
   public void execute (CommandSource source, String commandName, String[] args) {
     try {
-      CommandInfo command = getCommand(commandName);
+      CommandInfo command = getCommand(commandName.toLowerCase());
 
       if (command == null) throw new CommandError(
         Component.translatable(
@@ -57,7 +62,7 @@ public class CommandManagerModule {
         Component.translatable("command.failed").color(NamedTextColor.DARK_RED)
       );
       String Error = ErrorToString.errorToString(error);
-      LoggerManager.ERROR(bot, Error);
+      Logger.ERROR(bot, Error);
     }
   }
 
@@ -74,5 +79,8 @@ public class CommandManagerModule {
 
     registerCommand(new EchoCommand());
     registerCommand(new HelpCommand());
+    registerCommand(new ReconnectCommand());
+    registerCommand(new RCCommand());
+    registerCommand(new MCServerCommand());
   }
 }

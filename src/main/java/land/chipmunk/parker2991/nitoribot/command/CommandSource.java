@@ -24,7 +24,7 @@ public class CommandSource {
   public void sendFeedback (Component message) {
     String convertToJson = ComponentUtil.componentToJSON(message);
     Vector3d playerPos = sender.position.position();
-//    System.out.println(sender.position.position().getX());
+
     String formatCommand = String.format(
       "minecraft:summon text_display %s %s %s {tag:[%s], text:%s}",
       playerPos.getX(),
@@ -33,8 +33,7 @@ public class CommandSource {
       "NitoriBot",
       convertToJson
     );
-    
-//    bot.core.run(formatCommand);
+
     String selector = String.format(
       "@p[nbt={UUID:%s}]",
       sender.entityUUID

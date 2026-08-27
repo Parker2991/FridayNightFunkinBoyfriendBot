@@ -74,8 +74,7 @@ public class ChatModule extends Listener {
   public void playerChat (ClientboundPlayerChatPacket packet) {
     final Component unsignedContent = packet.getUnsignedContent();
     final Component content = Component.text(packet.getContent());
-    //final PlayerProfileData sender = bot.players.getPlayerUUID(packet.getSender());
-    //System.out.println(packet.getSender());
+
 
     for (Listener listener : bot.listenerManager.listeners) {
       listener.playerChatReceived(unsignedContent);

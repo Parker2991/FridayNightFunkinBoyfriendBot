@@ -1,6 +1,41 @@
+prefixes:
+  - "!"
+
+core:
+  area:
+    start:
+      x: 0
+      y: 0
+      z: 0
+    end:
+      x: 15
+      y: 0
+      z: 15
+  coreName: "[{text:\"Nitori\",color:\"blue\"},{text:\"Bot \",color:\"green\"},{text:\"Core\"}]"
+
+colors:
+  integer: "gold"
+  commands:
+    primary: "blue"
+    secondary: "aqua"
+    tertiary: "dark_aqua"
+  help:
+    Public: "blue"
+    trusted: "dark_aqua"
+    admin: "aqua"
+    owner: "light_purple"
+    console: "dark_purple"
+
+console:
+  prefix: "c."
+
+chatAttestation:
+  url: "https://optmstc.dev/key-manifest-v1.json"
+
 bots:
   - host: "localhost"
     port: 25565
-    username: "meow"
+    serverName: "localhost"
+    username: "NitoriBotJava"
     reconnectDelay: 6000
     selfcareInterval: 1000

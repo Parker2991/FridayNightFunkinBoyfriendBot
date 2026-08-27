@@ -36,7 +36,7 @@ repositories {
 
   //maven("https://libraries.minecraft.net")
 
-//  maven("https://code.chipmunk.land/api/packages/kaboomstandardsorganization/maven/")
+  maven("https://code.chipmunk.land/api/packages/kaboomstandardsorganization/maven/")
 }
 
 dependencies {
@@ -53,8 +53,10 @@ dependencies {
   implementation("de.connect2x.trixnity:trixnity-client:5.0.0")
   implementation("org.pircbotx:pircbotx:2.1")
   implementation("org.jline:jline:4.1.0")
+  implementation("land.chipmunk.code.kaboomstandardsorganization.messaginglib:mcprotocollib:3.1.2")
 }
 
 application {
   mainClass.set("land.chipmunk.parker2991.nitoribot.Main")
 }
+

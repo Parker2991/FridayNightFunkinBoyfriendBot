@@ -13,7 +13,7 @@ public abstract class CommandInfo {
     this.description = description;
   }
 
-  public abstract CommandContext execute (CommandContext context);
+  public abstract void execute (CommandContext context);
   
 
 }

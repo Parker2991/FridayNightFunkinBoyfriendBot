@@ -1,7 +1,6 @@
 package land.chipmunk.parker2991.nitoribot;
 
-import land.chipmunk.parker2991.nitoribot.util.ErrorToString;
-import land.chipmunk.parker2991.nitoribot.logger.LoggerManager;
+import land.chipmunk.parker2991.nitoribot.modules.ConsoleModule;
 
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.LoaderOptions;
@@ -31,7 +30,7 @@ public class Main {
 
   public static Config config;
 
-  public final List<Bot> Bots = new ArrayList<>();
+  public static final List<Bot> Bots = new ArrayList<>();
 
   public Config loadConfig() throws IOException {
     final Constructor yamlConfig = new Constructor(Config.class, new LoaderOptions());
@@ -51,21 +50,24 @@ public class Main {
     return config;
   }
 
+  public static ConsoleModule console;
+
   public void main(String[] args) {
     try {
       config = loadConfig();
       Config.Options[] bots = config.bots;
 
+      console = new ConsoleModule(config);
       for (Config.Options options : bots) {
         final Bot bot = new Bot(options, Bots, config);
         Bots.add(bot);
       }
+
       synchronized(obj) {
         obj.wait();
       };
     } catch (Exception e) {
-      String Error = ErrorToString.errorToString(e);
-     // LoggerManager.ERROR(null, Error);
+
     }
   };
 }

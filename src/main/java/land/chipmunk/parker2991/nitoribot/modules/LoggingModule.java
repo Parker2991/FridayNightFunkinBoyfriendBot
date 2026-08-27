@@ -1,7 +1,7 @@
 package land.chipmunk.parker2991.nitoribot.modules;
 
 import land.chipmunk.parker2991.nitoribot.Bot;
-import land.chipmunk.parker2991.nitoribot.logger.LoggerManager;
+import land.chipmunk.parker2991.nitoribot.logger.Logger;
 import land.chipmunk.parker2991.nitoribot.util.ComponentUtil;
 import land.chipmunk.parker2991.nitoribot.listeners.*;
 
@@ -31,7 +31,8 @@ public class LoggingModule extends Listener {
     final int port = bot.options.port;
     
     String message = ComponentUtil.componentToAnsi(_message);
-    LoggerManager.LOG(bot, message);
+    //if (host.equals("kaboom.pw")) return;
+   // Logger.LOG(bot, message);
   }
 
   public LoggingModule (Bot bot) {

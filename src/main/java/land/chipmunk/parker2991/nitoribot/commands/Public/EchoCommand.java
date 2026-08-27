@@ -16,18 +16,13 @@ public class EchoCommand extends CommandInfo {
   }
 
   @Override
-  public CommandContext execute(CommandContext context) {
+  public void execute(CommandContext context) {
     Bot bot = context.bot;
-    String args = String.join(" ", context.args);//context.args.join(' ');
-
+    String args = String.join(" ", context.args);
     if (args.startsWith("/")) {
       bot.chat.command(args.substring("/".length()));
-//      return;
     } else {
       bot.chat.message(args);
     }
-    //CommandSource source = context.source;
-
-    return null;
   }
 }

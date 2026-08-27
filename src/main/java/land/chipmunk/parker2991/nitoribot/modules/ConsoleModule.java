@@ -3,51 +3,49 @@ package land.chipmunk.parker2991.nitoribot.modules;
 import land.chipmunk.parker2991.nitoribot.Bot;
 
 //import org.jline
+import land.chipmunk.parker2991.nitoribot.Config;
 import land.chipmunk.parker2991.nitoribot.Main;
 import org.jline.reader.*;
 import org.jline.terminal.*;
 
 import javax.sound.sampled.Line;
+import java.io.IOException;
 import java.util.List;
 
 public class ConsoleModule implements Completer {
-  private Bot bot;
-
-  private List<Bot> servers;
+  private static final List<Bot> servers = Main.Bots;
 
   public LineReader reader;
 
-  public Terminal terminal;
-
   public String server = "all";
-
-  public String readLine (String message) {
-    return "";
-  }
 
   @Override
   public void complete (LineReader reader, ParsedLine line, List<Candidate> candidates) {
 
   }
 
-  public void handleLine (String line) {
-
+  private void handleLine (String line) {
+    for (Bot bot : servers) {
+      if (line.equals("c.kill")) System.exit(0);
+      bot.chat.send(line);
+    }
   }
-  public ConsoleModule (Bot bot) {
-    try {
-      this.bot = bot;
 
-      this.servers = bot.bots;
+  public ConsoleModule (Config config) {
+    this.reader = LineReaderBuilder.builder()
+      .completer(this)
+      .build();
 
-      terminal = TerminalBuilder.builder().build();
+    Main.executorService.submit(() -> {
+      while (true) {
+        try {
+          String line = null;
 
-      reader = LineReaderBuilder.builder().terminal(terminal).build();
+          line = reader.readLine(String.format("[%s] > ", this.server));
 
-      Main.executorService.submit(() -> {
-        while (true) {
-          reader.readLine("> ");
-        }
-      });
-    } catch (Exception e) {}
+          handleLine(line);
+        } catch (Exception e) {}
+      }
+    }, "Console Thread");
   }
 }
